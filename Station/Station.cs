@@ -2,11 +2,12 @@
 
 namespace Station
 {
-    class Station
+    public struct Station
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-        }
+        public int Id { get; set; }
+        public int Name { get; set; }
+        public Double Longitude { get; set; }
+        public Double Lattitude { get; set; }
+        public int ChargeSlots { get; set; }
     }
 }

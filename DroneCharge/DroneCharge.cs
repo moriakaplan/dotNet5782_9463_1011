@@ -2,11 +2,9 @@
 
 namespace DroneCharge
 {
-    class DroneCharge
+    public struct DroneCharge
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-        }
+        public int DroneId { get; set; }
+        public int StationId { get; set; }
     }
 }
