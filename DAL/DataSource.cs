@@ -21,16 +21,16 @@ namespace DalObject
             drones.Add(new Drone { 
                 Id = 3456,// for parcel use: Config.parcelCode++, 
                 Battery = 98.99,
-                MaxWeight = WeightCategories.easy, 
+                MaxWeight = WeightCategories.Easy, 
                 Model = "superFalcon",
-                Status = DroneStatuses.vacant 
+                Status = DroneStatuses.Vacant 
             });
             drones.Add(new Drone { 
                 Id = 6778, 
                 Battery = 98.99,
-                MaxWeight = WeightCategories.medium, 
+                MaxWeight = WeightCategories.Medium, 
                 Model = "AnaAref",
-                Status = DroneStatuses.vacant 
+                Status = DroneStatuses.Sending 
             });
         }
 
