@@ -18,7 +18,7 @@ namespace IDAL
             public DateTime Delivered { get; set; }
             public override string ToString()
             {
-                return $"parcel #{Id}: ";
+                return $"parcel #{Id}: sender ID- {Senderld}, target ID- {TargetId}, weight- {Weight}, priority- {Priority}, requested- {Requested} ,droneld- {Droneld}, scheduled- {Scheduled}, picked up- {PickedUp}, delivered- {Delivered}";
             }
         }
     }
