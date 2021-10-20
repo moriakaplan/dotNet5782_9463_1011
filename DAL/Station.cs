@@ -4,6 +4,9 @@ namespace IDAL
 {
     namespace DO
     {
+        /// <summary>
+        /// תחנות בסיס
+        /// </summary>
         public struct Station
         {
             public int Id { get; set; }

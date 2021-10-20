@@ -4,6 +4,9 @@ namespace IDAL
 {
     namespace DO
     {
+        /// <summary>
+        /// טעינת סוללת רחפן
+        /// </summary>
         public struct DroneCharge
         {
             public int DroneId { get; set; }

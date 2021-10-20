@@ -4,6 +4,9 @@ namespace IDAL
 {
     namespace DO
     {
+        /// <summary>
+        /// רחפן
+        /// </summary>
         public struct Drone
         {
             public int Id { get; set; }

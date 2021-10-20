@@ -4,6 +4,9 @@ namespace IDAL
 {
     namespace DO
     {
+        /// <summary>
+        /// לקוח
+        /// </summary>
         struct Customer
         {
             public int Id { get; set; }
