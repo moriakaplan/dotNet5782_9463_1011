@@ -4,6 +4,9 @@ namespace IDAL
 {
     namespace DO
     {
+        /// <summary>
+        /// חבילה 
+        /// </summary>
         struct Parcel
         {
             public int Id { get; set; }

@@ -154,7 +154,128 @@ namespace DalObject
                 Longitude = random.Next(-180, 180),
                 Lattitude = random.Next(-180, 180)
             });
-
+            parcels.Add(new Parcel
+            {
+                Id = random.Next(10000, 100000),
+                Senderld = random.Next(1000000000),
+                TargetId = random.Next(1000000000),
+                Droneld = random.Next(100000, 1000000),
+                Weight = WeightCategories.Easy,
+                Priority = Priorities.Emergency,
+                Requested = new DateTime(2021, 01, 01),
+                Scheduled = DateTime.MinValue,
+                PickedUp = DateTime.MinValue,
+                Delivered = DateTime.MinValue,
+            });
+            parcels.Add(new Parcel
+            {
+                Id = random.Next(10000, 100000),
+                Senderld = random.Next(1000000000),
+                TargetId = random.Next(1000000000),
+                Droneld = random.Next(100000, 1000000),
+                Weight = WeightCategories.Easy,
+                Priority = Priorities.Emergency,
+                Requested = new DateTime(2021, 01, 01),
+                Scheduled = DateTime.MinValue,
+                PickedUp = DateTime.MinValue,
+                Delivered = DateTime.MinValue,
+            }); parcels.Add(new Parcel
+            {
+                Id = random.Next(10000, 100000),
+                Senderld = random.Next(1000000000),
+                TargetId = random.Next(1000000000),
+                Droneld = random.Next(100000, 1000000),
+                Weight = WeightCategories.Easy,
+                Priority = Priorities.Emergency,
+                Requested = new DateTime(2021, 01, 01),
+                Scheduled = DateTime.MinValue,
+                PickedUp = DateTime.MinValue,
+                Delivered = DateTime.MinValue,
+            }); parcels.Add(new Parcel
+            {
+                Id = random.Next(10000, 100000),
+                Senderld = random.Next(1000000000),
+                TargetId = random.Next(1000000000),
+                Droneld = random.Next(100000, 1000000),
+                Weight = WeightCategories.Easy,
+                Priority = Priorities.Emergency,
+                Requested = new DateTime(2021, 01, 01),
+                Scheduled = DateTime.MinValue,
+                PickedUp = DateTime.MinValue,
+                Delivered = DateTime.MinValue,
+            }); parcels.Add(new Parcel
+            {
+                Id = random.Next(10000, 100000),
+                Senderld = random.Next(1000000000),
+                TargetId = random.Next(1000000000),
+                Droneld = random.Next(100000, 1000000),
+                Weight = WeightCategories.Easy,
+                Priority = Priorities.Emergency,
+                Requested = new DateTime(2021, 01, 01),
+                Scheduled = DateTime.MinValue,
+                PickedUp = DateTime.MinValue,
+                Delivered = DateTime.MinValue,
+            }); parcels.Add(new Parcel
+            {
+                Id = random.Next(10000, 100000),
+                Senderld = random.Next(1000000000),
+                TargetId = random.Next(1000000000),
+                Droneld = random.Next(100000, 1000000),
+                Weight = WeightCategories.Easy,
+                Priority = Priorities.Emergency,
+                Requested = new DateTime(2021, 01, 01),
+                Scheduled = DateTime.MinValue,
+                PickedUp = DateTime.MinValue,
+                Delivered = DateTime.MinValue,
+            }); parcels.Add(new Parcel
+            {
+                Id = random.Next(10000, 100000),
+                Senderld = random.Next(1000000000),
+                TargetId = random.Next(1000000000),
+                Droneld = random.Next(100000, 1000000),
+                Weight = WeightCategories.Easy,
+                Priority = Priorities.Emergency,
+                Requested = new DateTime(2021, 01, 01),
+                Scheduled = DateTime.MinValue,
+                PickedUp = DateTime.MinValue,
+                Delivered = DateTime.MinValue,
+            }); parcels.Add(new Parcel
+            {
+                Id = random.Next(10000, 100000),
+                Senderld = random.Next(1000000000),
+                TargetId = random.Next(1000000000),
+                Droneld = random.Next(100000, 1000000),
+                Weight = WeightCategories.Easy,
+                Priority = Priorities.Emergency,
+                Requested = new DateTime(2021, 01, 01),
+                Scheduled = DateTime.MinValue,
+                PickedUp = DateTime.MinValue,
+                Delivered = DateTime.MinValue,
+            }); parcels.Add(new Parcel
+            {
+                Id = random.Next(10000, 100000),
+                Senderld = random.Next(1000000000),
+                TargetId = random.Next(1000000000),
+                Droneld = random.Next(100000, 1000000),
+                Weight = WeightCategories.Easy,
+                Priority = Priorities.Emergency,
+                Requested = new DateTime(2021, 01, 01),
+                Scheduled = DateTime.MinValue,
+                PickedUp = DateTime.MinValue,
+                Delivered = DateTime.MinValue,
+            }); parcels.Add(new Parcel
+            {
+                Id = random.Next(10000, 100000),
+                Senderld = random.Next(1000000000),
+                TargetId = random.Next(1000000000),
+                Droneld = random.Next(100000, 1000000),
+                Weight = WeightCategories.Easy,
+                Priority = Priorities.Emergency,
+                Requested = new DateTime(2021, 01, 01),
+                Scheduled = DateTime.MinValue,
+                PickedUp = DateTime.MinValue,
+                Delivered = DateTime.MinValue,
+            });
         }
     }
 }
