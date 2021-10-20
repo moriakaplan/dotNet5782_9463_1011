@@ -81,69 +81,76 @@ namespace DalObject
             customers.Add(new Customer
             {
                 Id = random.Next(1000000000),
-                Name = "Yosef",
-                Phone = "0501234567",
+                Name = "Avi",
+                Phone = "0503456789",
                 Longitude = random.Next(-180, 180),
                 Lattitude = random.Next(-180, 180)
             });
             customers.Add(new Customer
             {
                 Id = random.Next(1000000000),
-                Name = "Yosef",
-                Phone = "0501234567",
+                Name = "Nahum",
+                Phone = "0545678901",
                 Longitude = random.Next(-180, 180),
                 Lattitude = random.Next(-180, 180)
-            }); customers.Add(new Customer
+            }); 
+            customers.Add(new Customer
             {
                 Id = random.Next(1000000000),
-                Name = "Yosef",
-                Phone = "0501234567",
+                Name = "Moshe",
+                Phone = "0523456789",
                 Longitude = random.Next(-180, 180),
                 Lattitude = random.Next(-180, 180)
-            }); customers.Add(new Customer
+            }); 
+            customers.Add(new Customer
             {
                 Id = random.Next(1000000000),
-                Name = "Yosef",
-                Phone = "0501234567",
+                Name = "Shlomo",
+                Phone = "0521234567",
                 Longitude = random.Next(-180, 180),
                 Lattitude = random.Next(-180, 180)
-            }); customers.Add(new Customer
+            }); 
+            customers.Add(new Customer
             {
                 Id = random.Next(1000000000),
-                Name = "Yosef",
-                Phone = "0501234567",
+                Name = "Shira",
+                Phone = "0502345678",
                 Longitude = random.Next(-180, 180),
                 Lattitude = random.Next(-180, 180)
-            }); customers.Add(new Customer
+            }); 
+            customers.Add(new Customer
             {
                 Id = random.Next(1000000000),
-                Name = "Yosef",
-                Phone = "0501234567",
+                Name = "Naama",
+                Phone = "0531234567",
                 Longitude = random.Next(-180, 180),
                 Lattitude = random.Next(-180, 180)
-            }); customers.Add(new Customer
+            }); 
+            customers.Add(new Customer
             {
                 Id = random.Next(1000000000),
-                Name = "Yosef",
-                Phone = "0501234567",
+                Name = "Etya",
+                Phone = "0501234569",
                 Longitude = random.Next(-180, 180),
                 Lattitude = random.Next(-180, 180)
-            }); customers.Add(new Customer
+            }); 
+            customers.Add(new Customer
             {
                 Id = random.Next(1000000000),
-                Name = "Yosef",
-                Phone = "0501234567",
+                Name = "Yosefa",
+                Phone = "0501237567",
                 Longitude = random.Next(-180, 180),
                 Lattitude = random.Next(-180, 180)
-            }); customers.Add(new Customer
+            }); 
+            customers.Add(new Customer
             {
                 Id = random.Next(1000000000),
-                Name = "Yosef",
-                Phone = "0501234567",
+                Name = "Yosi",
+                Phone = "0541234567",
                 Longitude = random.Next(-180, 180),
                 Lattitude = random.Next(-180, 180)
             });
-        }
 
+        }
     }
 }
