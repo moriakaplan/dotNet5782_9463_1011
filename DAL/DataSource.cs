@@ -202,7 +202,7 @@ namespace DalObject
                 Weight = WeightCategories.Easy,
                 Priority = Priorities.Regular,
                 Requested = new DateTime(2021, 01, 01),
-                Scheduled = new DateTime(2021,01,03)
+                Scheduled = new DateTime(2021,01,03),
                 PickedUp = DateTime.MinValue,
                 Delivered = DateTime.MinValue,
             }); 
@@ -218,7 +218,8 @@ namespace DalObject
                 Scheduled = new DateTime(2021,01,03),
                 PickedUp = new DateTime(2021, 01, 05),
                 Delivered = new DateTime(2021, 01, 06)
-            }); parcels.Add(new Parcel
+            }); 
+            parcels.Add(new Parcel
             {
                 Id = random.Next(10000, 100000),
                 Senderld = random.Next(1000000000),
