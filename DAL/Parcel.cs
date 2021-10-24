@@ -7,7 +7,7 @@ namespace IDAL
         /// <summary>
         /// חבילה 
         /// </summary>
-        struct Parcel
+        public struct Parcel
         {
             public int Id { get; set; }
             public int Senderld { get; set; }
