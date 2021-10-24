@@ -199,9 +199,5 @@ namespace DalObject
             }
             return StationsWithAvailableCargingSlots;
         }
-
-
-
     }
-
 }
