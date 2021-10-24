@@ -14,7 +14,7 @@ namespace DalObject
         internal static Random random = new Random();
         internal static class Config
         {
-            internal static int parcelCode = 0;
+            internal static int parcelCode = 1000000;
         }
         static void Initialize()
         {
