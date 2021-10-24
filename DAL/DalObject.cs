@@ -21,10 +21,12 @@ namespace DalObject
         {
             DataSource.customers.Add(cu);
         }
-        public void AddParcelToTheList(Parcel pa)
+        public int AddParcelToTheList(Parcel pa)
         {
+            //לא ברור מה עושים עם המספר הרץ
             DataSource.parcels.Add(pa);
             DataSource.Config.parcelCode++;
+            return DataSource.Config.parcelCode;
         }
         public void AssignParcelToDrone(int parcelId, int droneId)//שיוך חבילה לרחפן
         {
@@ -63,19 +65,63 @@ namespace DalObject
         }
         public void PickParcelByDrone(int parcelId)
         {
+            Parcel parcel = DisplayParcel(parcelId); 
+            DataSource.parcels.Remove(parcel);
+            parcel.PickedUp = DateTime.Now;
+            AddParcelToTheList(parcel);
 
+            Drone drone = DisplayDrone(parcel.Droneld); // פה לא בטוח צריך
+            DataSource.drones.Remove(drone);
+            drone.Status = DroneStatuses.Sending;
+            AddDroneToTheList(drone);
         }
         public void DeliverParcelToCustomer(int parcelId)
         {
+            Parcel parcel = DisplayParcel(parcelId);
+            DataSource.parcels.Remove(parcel);
+            parcel.Delivered = DateTime.Now;
+            AddParcelToTheList(parcel);
 
+            Drone drone = DisplayDrone(parcel.Droneld); 
+            DataSource.drones.Remove(drone);
+            drone.Status = DroneStatuses.Vacant;
+            AddDroneToTheList(drone);
         }
-        public void SendDroneToCharge(int DroneId, int stationId)
+        public void SendDroneToCharge(int droneId, int stationId)
         {
+            DroneCharge droneCharge = new DroneCharge{ DroneId = droneId, StationId = stationId };
+            DataSource.droneCharges.Add(droneCharge);
 
+            Drone drone = DisplayDrone(droneId);
+            DataSource.drones.Remove(drone);
+            drone.Status = DroneStatuses.Maintenance;
+            AddDroneToTheList(drone);
+
+            Station station = DisplayStation(stationId);
+            DataSource.stations.Remove(station);
+            station.ChargeSlots++;
+            AddStationToTheList(station);
         }
         public void ReleaseDroneFromeCharge(int droneId)
         {
+            DroneCharge dCharge = DataSource.droneCharges.Find(x => x.DroneId == droneId);
+            //DroneCharge dCharge = new DroneCharge();
+            //foreach (DroneCharge item in DataSource.droneCharges)
+            //{
+            //    if (item.DroneId == droneId)
+            //        dCharge = item;
+            //}
+            DataSource.droneCharges.Remove(dCharge);
 
+            Drone drone = DisplayDrone(droneId);
+            DataSource.drones.Remove(drone);
+            drone.Status = DroneStatuses.Vacant;
+            AddDroneToTheList(drone);
+
+            Station station = DisplayStation(dCharge.StationId);
+            DataSource.stations.Remove(station);
+            station.ChargeSlots--;
+            AddStationToTheList(station);
         }
         public Station DisplayStation(int stationId)
         {
