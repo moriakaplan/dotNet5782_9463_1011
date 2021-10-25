@@ -9,6 +9,14 @@ namespace IDAL
         /// </summary>
         public struct Customer
         {
+            public Customer(int id, string name, string phone, double longitude, double lattitude)
+            {
+                Id = id;
+                Name = name;
+                Phone = phone;
+                Longitude = longitude;
+                Lattitude = lattitude;
+            }
             public int Id { get; set; }
             public string Name { get; set; }
             public string Phone { get; set; }
