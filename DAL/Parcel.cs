@@ -5,10 +5,23 @@ namespace IDAL
     namespace DO
     {
         /// <summary>
-        /// חבילה 
+        /// stract of parcels. 
         /// </summary>
         public struct Parcel
         {
+            public Parcel(int id, int senderId, int targetId, int droneId, WeightCategories weight, Priorities priority, DateTime requested, DateTime scheduled, DateTime pickedUp, DateTime delivered)
+            {
+                Id = id;
+                Senderld = senderId;
+                TargetId = targetId;
+                Droneld = droneId;
+                Weight = weight;
+                Priority = priority;
+                Requested = requested;
+                Scheduled = scheduled;
+                PickedUp = pickedUp;
+                Delivered = delivered;
+            }
             public int Id { get; set; }
             public int Senderld { get; set; }
             public int TargetId { get; set; }
