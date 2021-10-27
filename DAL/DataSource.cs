@@ -76,7 +76,7 @@ namespace DalObject
             });
             customers.Add(new Customer
             {
-                Id = random.Next(1000000000),
+                Id = random.Next(100000000, 1000000000),
                 Name = "Yosef",
                 Phone = "0501234567",
                 Longitude = /*random.Next(-180, 180)*/35.2,
