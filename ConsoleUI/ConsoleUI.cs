@@ -38,7 +38,8 @@ namespace ConsoleUI
                     case Options.Adding:
                         int id, senderId, targetId, droneId, chargeSlots;
                         double longitude, lattitude, battery;
-                        string name, phone;
+                        string name, phone, model;
+                        Priorities priority;
                         WeightCategories weight;
                         DroneStatuses status;
                         Priorities priority;
@@ -67,12 +68,7 @@ Station ID-");
                                 Console.WriteLine("Available charge slots-");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out chargeSlots);
-                                Station st = new Station { Id = id,
-                                    Name = name, 
-                                    Longitude = longitude,
-                                    Lattitude = lattitude, 
-                                    ChargeSlots = chargeSlots };
-                                DalObject.DalObject.AddStationToTheList(st);
+                                DalObject.DalObject.AddStationToTheList(id, name, longitude, lattitude, chargeSlots);
                                 break;
                             case AddingOptions.Drone:
                                 Console.WriteLine(@"Please enter the following details:
@@ -80,7 +76,7 @@ Drone ID-");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
                                 Console.WriteLine("Dron model-");
-                                name = Console.ReadLine();
+                                model = Console.ReadLine();
                                 Console.WriteLine("Dron max weight (Easy/Medium/Heavy)-");
                                 input = Console.ReadLine();
                                 WeightCategories.TryParse(input, out weight);
@@ -90,15 +86,7 @@ Drone ID-");
                                 Console.WriteLine("Drone battery-");
                                 input = Console.ReadLine();
                                 double.TryParse(input, out battery);
-                                Drone dr = new Drone
-                                {
-                                    Id = id,
-                                    Model = input,
-                                    MaxWeight = weight,
-                                    Status = status,
-                                    Battery = battery
-                                };
-                                DalObject.DalObject.AddDroneToTheList(dr);
+                                DalObject.DalObject.AddDroneToTheList(id, model, weight, status, battery);
                                 break;
                             case AddingOptions.Customer:
                                 Console.WriteLine(@"Please enter the following details:
@@ -115,47 +103,28 @@ Customer ID-");
                                 Console.WriteLine("Station lattitude-");
                                 input = Console.ReadLine();
                                 double.TryParse(input, out lattitude);
-                                Customer cus = new Customer
-                                {
-                                    Id = id,
-                                    Name = name,
-                                    Phone = phone,
-                                    Longitude = longitude,
-                                    Lattitude = lattitude,
-                                };
-                                DalObject.DalObject.AddCustomerToTheList(cus);
+                                DalObject.DalObject.AddCustomerToTheList(id, name, phone, longitude, lattitude);
                                 break;
                             case AddingOptions.Parcel:
-                                Console.WriteLine(@"Please enter the following details:
-Parcel ID-");
-                                input = Console.ReadLine();
-                                int.TryParse(input, out id);
+                                Console.WriteLine(@"Please enter the following details:");
                                 Console.WriteLine("Parcel name-");
                                 name = Console.ReadLine();
                                 Console.WriteLine("Sender ID");
                                 input = Console.ReadLine();
-                                double.TryParse(input, out longitude);
+                                int.TryParse(input, out senderId);
                                 Console.WriteLine("Target ID-");
                                 input = Console.ReadLine();
-                                double.TryParse(input, out lattitude);
+                                int.TryParse(input, out targetId);
                                 Console.WriteLine("Drone ID-");
                                 input = Console.ReadLine();
-                                int.TryParse(input, out chargeSlots);
+                                int.TryParse(input, out droneId);
                                 Console.WriteLine("Parcel weight (Easy/Medium/Heavy)-");
                                 input = Console.ReadLine();
                                 WeightCategories.TryParse(input, out weight);
                                 Console.WriteLine("Parcel priority (Regular/Fast/Emergency)-");
                                 input = Console.ReadLine();
                                 Priorities.TryParse(input, out priority);
-                                Station st = new Station
-                                {
-                                    Id = id,
-                                    Name = name,
-                                    Longitude = longitude,
-                                    Lattitude = lattitude,
-                                    ChargeSlots = chargeSlots
-                                };
-                                DalObject.DalObject.AddStationToTheList(st);
+                                DalObject.DalObject.AddParcelToTheList(senderId, targetId, droneId, weight, priority, DateTime.Now, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
                                 break;
                             default: break;
                         };
@@ -172,6 +141,7 @@ Parcel ID-");
                         switch (updateChoise)
                         {
                             case UpdatingOptions.Assign:
+
 
                                 break;
                             case UpdatingOptions.Pick:
