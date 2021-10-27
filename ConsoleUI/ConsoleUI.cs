@@ -10,9 +10,9 @@ namespace ConsoleUI
     enum UpdatingOptions { Assign = 1, Pick, Deliver, SendToCharge, ReleaseFromCharge };
     enum DisplayOptions { Station = 1, Drone, Customer, Parcel };
     enum DisplayListOptions { Stations = 1, Drones, Customers, Parcels, UnassignedParcels, StationsWithAvailableCargingSlots };
+    
     class ConsoleUI
     {
-        //DalObject.DalObject project = new DalObject.DalObject();
         static void Main(string[] args)
         {
             string input;
