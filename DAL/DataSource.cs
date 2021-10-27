@@ -84,7 +84,7 @@ namespace DalObject
             });
             customers.Add(new Customer
             {
-                Id = random.Next(1000000000),
+                Id = random.Next(100000000, 1000000000),
                 Name = "Avi",
                 Phone = "0503456789",
                 Longitude = 34.8,
@@ -92,7 +92,7 @@ namespace DalObject
             });
             customers.Add(new Customer
             {
-                Id = random.Next(1000000000),
+                Id = random.Next(100000000, 1000000000),
                 Name = "Nahum",
                 Phone = "0545678901",
                 Longitude = 35.2,
@@ -100,7 +100,7 @@ namespace DalObject
             });
             customers.Add(new Customer
             {
-                Id = random.Next(1000000000),
+                Id = random.Next(100000000, 1000000000),
                 Name = "Moshe",
                 Phone = "0523456789",
                 Longitude = 34.7,
@@ -108,7 +108,7 @@ namespace DalObject
             });
             customers.Add(new Customer
             {
-                Id = random.Next(1000000000),
+                Id = random.Next(100000000, 1000000000),
                 Name = "Shlomo",
                 Phone = "0521234567",
                 Longitude = 34.6,
@@ -116,7 +116,7 @@ namespace DalObject
             });
             customers.Add(new Customer
             {
-                Id = random.Next(1000000000),
+                Id = random.Next(100000000, 1000000000),
                 Name = "Shira",
                 Phone = "0502345678",
                 Longitude = 35,
@@ -124,7 +124,7 @@ namespace DalObject
             });
             customers.Add(new Customer
             {
-                Id = random.Next(1000000000),
+                Id = random.Next(100000000, 1000000000),
                 Name = "Naama",
                 Phone = "0531234567",
                 Longitude = 35.2,
@@ -132,7 +132,7 @@ namespace DalObject
             });
             customers.Add(new Customer
             {
-                Id = random.Next(1000000000),
+                Id = random.Next(100000000, 1000000000),
                 Name = "Etya",
                 Phone = "0501234569",
                 Longitude = 34.8,
@@ -140,7 +140,7 @@ namespace DalObject
             });
             customers.Add(new Customer
             {
-                Id = random.Next(1000000000),
+                Id = random.Next(100000000, 1000000000),
                 Name = "Yosefa",
                 Phone = "0501237567",
                 Longitude = 34.78,
@@ -148,7 +148,7 @@ namespace DalObject
             });
             customers.Add(new Customer
             {
-                Id = random.Next(1000000000),
+                Id = random.Next(100000000, 1000000000),
                 Name = "Yosi",
                 Phone = "0541234567",
                 Longitude = 35.2,
