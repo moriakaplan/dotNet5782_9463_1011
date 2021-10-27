@@ -1,6 +1,7 @@
 ﻿using IDAL.DO;
 using DalObject;
 using System;
+//לבדוק האם צריך לשלוח לפונקציות ההוספה שדות או אובייקטים
 
 namespace ConsoleUI
 {
@@ -12,7 +13,6 @@ namespace ConsoleUI
     class ConsoleUI
     {
         //DalObject.DalObject project = new DalObject.DalObject();
-
         static void Main(string[] args)
         {
             string input;
@@ -69,11 +69,12 @@ Station ID-");
                                 Console.WriteLine("Available charge slots-");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out chargeSlots);
-                                Station station = new Station({ Id = id,
+                                Station station = new Station{ 
+                                    Id = id,
                                     Name = name,
                                     Longitude = longitude,
                                     Lattitude = lattitude,
-                                    ChargeSlots = chargeSlots });
+                                    ChargeSlots = chargeSlots };
                                 DalObject.DalObject.AddStationToTheList(station);
                                 break;
                             case AddingOptions.Drone:
@@ -92,11 +93,12 @@ Drone ID-");
                                 Console.WriteLine("Drone battery-");
                                 input = Console.ReadLine();
                                 double.TryParse(input, out battery);
-                                Drone drone = new Drone({ Id = id,
+                                Drone drone = new Drone{ 
+                                    Id = id,
                                     Model = model,
                                     MaxWeight = weight,
                                     Status = status,
-                                    Battery = battery });
+                                    Battery = battery };
                                 DalObject.DalObject.AddDroneToTheList(drone);
                                 break;
                             case AddingOptions.Customer:
@@ -114,11 +116,13 @@ Customer ID-");
                                 Console.WriteLine("Station lattitude-");
                                 input = Console.ReadLine();
                                 double.TryParse(input, out lattitude);
-                                Customer customer = new Customer({ Id = id,
-                                Name = name,
-                                Phone = phone,
-                                Longitude = longitude,
-                                Lattitude = lattitude});
+                                Customer customer = new Customer{
+                                    Id = id,
+                                    Name = name,
+                                    Phone = phone,
+                                    Longitude = longitude,
+                                    Lattitude = lattitude
+                                };
                                 DalObject.DalObject.AddCustomerToTheList(customer);
                                 break;
                             case AddingOptions.Parcel:
@@ -142,7 +146,9 @@ Customer ID-");
                                 Priorities.TryParse(input, out priority);
                                 DalObject.DalObject.AddParcelToTheList(senderId, targetId, droneId, weight, priority, DateTime.Now, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
                                 break;
-                            default: break;
+                            default:
+                                Console.WriteLine("ERROR"); 
+                                break;
                         };
                         break;
                     case Options.Updating:
@@ -193,6 +199,7 @@ Customer ID-");
                                 DalObject.DalObject.ReleaseDroneFromeCharge(droneId);
                                 break;
                             default:
+                                Console.WriteLine("ERROR");
                                 break;
                         };
                         break;
@@ -207,18 +214,31 @@ Customer ID-");
                         switch (displayChoise)
                         {
                             case DisplayOptions.Station:
-
+                                Console.WriteLine("Enter the station ID:");
+                                input = Console.ReadLine();
+                                int.TryParse(input, out id);
+                                Console.WriteLine(DalObject.DalObject.DisplayStation(id));
                                 break;
                             case DisplayOptions.Drone:
-
+                                Console.WriteLine("Enter the drone ID:");
+                                input = Console.ReadLine();
+                                int.TryParse(input, out id);
+                                Console.WriteLine(DalObject.DalObject.DisplayDrone(id));
                                 break;
                             case DisplayOptions.Customer:
-
+                                Console.WriteLine("Enter the customer ID:");
+                                input = Console.ReadLine();
+                                int.TryParse(input, out id);
+                                Console.WriteLine(DalObject.DalObject.DisplayCustomer(id));
                                 break;
                             case DisplayOptions.Parcel:
-
+                                Console.WriteLine("Enter the parcel ID:");
+                                input = Console.ReadLine();
+                                int.TryParse(input, out id);
+                                Console.WriteLine(DalObject.DalObject.DisplayParcel(id));
                                 break;
                             default:
+                                Console.WriteLine("ERROR");
                                 break;
                         };
                         break;
@@ -235,31 +255,56 @@ Customer ID-");
                         switch (displayListChoise)
                         {
                             case DisplayListOptions.Stations:
-
+                                Console.WriteLine("The stations are:");
+                                foreach(Station item in DalObject.DalObject.DisplayListOfStations())
+                                {
+                                    Console.WriteLine(item);
+                                }
                                 break;
                             case DisplayListOptions.Drones:
-
+                                Console.WriteLine("The drones are:");
+                                foreach (Drone item in DalObject.DalObject.DisplayListOfDrones())
+                                {
+                                    Console.WriteLine(item);
+                                }
                                 break;
                             case DisplayListOptions.Customers:
-
+                                Console.WriteLine("The customers are:");
+                                foreach (Customer item in DalObject.DalObject.DisplayListOfCustomers())
+                                {
+                                    Console.WriteLine(item);
+                                }
                                 break;
                             case DisplayListOptions.Parcels:
-
+                                Console.WriteLine("The parcels are:");
+                                foreach (Parcel item in DalObject.DalObject.DisplayListOfParcels())
+                                {
+                                    Console.WriteLine(item);
+                                }
                                 break;
                             case DisplayListOptions.UnassignedParcels:
-
+                                Console.WriteLine("The parcels that not assigned to drone are:"); //לכתוב תיאור של מה מודפס
+                                foreach (Parcel item in DalObject.DalObject.DisplayListOfUnassignedParcels())
+                                {
+                                    Console.WriteLine(item);
+                                }
                                 break;
                             case DisplayListOptions.StationsWithAvailableCargingSlots:
-
+                                Console.WriteLine("The stations with available charge slots are:"); //לכתוב תיאור של מה מודפס
+                                foreach (Station item in DalObject.DalObject.DisplayListOfStationsWithAvailableCargeSlots())
+                                {
+                                    Console.WriteLine(item);
+                                }
                                 break;
                             default:
+                                Console.WriteLine("ERROR");
                                 break;
                         };
                         break;
                     case Options.Exit:
                         break;
                     default:
-
+                        Console.WriteLine("ERROR");
                         break;
                 };
             }

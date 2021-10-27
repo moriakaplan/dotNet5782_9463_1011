@@ -190,7 +190,7 @@ namespace DalObject
             }
             return unassignedParcels;
         }
-        public static List<Station> DisplayListOfStationsWithAvailableCargingSlots()
+        public static List<Station> DisplayListOfStationsWithAvailableCargeSlots()
         {
             List<Station> StationsWithAvailableCargingSlots = new List<Station>();
             foreach (Station item in DataSource.stations)
