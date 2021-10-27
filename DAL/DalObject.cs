@@ -9,19 +9,16 @@ namespace DalObject
 {
     public static class DalObject
     {
-        public static void AddStationToTheList(int id, string name, double longitude, double lattitude, int chargeSlots)
-        {
-            Station station = new Station(id, name, longitude, lattitude, chargeSlots);
+        public static void AddStationToTheList(Station station)
+        { 
             DataSource.stations.Add(station);
         }
-        public static void AddDroneToTheList(int id, string model, WeightCategories maxWeight, DroneStatuses status, double battery)
+        public static void AddDroneToTheList(Drone drone)
         {
-            Drone drone = new Drone(id, model, maxWeight, status, battery);
             DataSource.drones.Add(drone);
         }
-        public static void AddCustomerToTheList(int id, string name, string phone, double longitude, double lattitude)
+        public static void AddCustomerToTheList(Customer customer)
         {
-            Customer customer = new Customer(id, name, phone, longitude, lattitude);
             DataSource.customers.Add(customer);
         }
         public static int AddParcelToTheList(int senderId, int targetId, int droneId, WeightCategories weight, Priorities priority, DateTime requested, DateTime scheduled, DateTime pickedUp, DateTime delivered)

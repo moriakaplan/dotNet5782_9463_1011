@@ -12,7 +12,7 @@ namespace ConsoleUI
     class ConsoleUI
     {
         //DalObject.DalObject project = new DalObject.DalObject();
-        
+
         static void Main(string[] args)
         {
             string input;
@@ -21,6 +21,13 @@ namespace ConsoleUI
             UpdatingOptions updateChoise;
             DisplayOptions displayChoise;
             DisplayListOptions displayListChoise;
+
+            int id, senderId, targetId, droneId, chargeSlots;
+            double longitude, lattitude, battery;
+            string name, phone, model;
+            WeightCategories weight;
+            DroneStatuses status;
+            Priorities priority;
             DalObject.DataSource.Initialize();
             do
             {
@@ -36,13 +43,7 @@ namespace ConsoleUI
                 switch (options)
                 {
                     case Options.Adding:
-                        int id, senderId, targetId, droneId, chargeSlots;
-                        double longitude, lattitude, battery;
-                        string name, phone, model;
-                        Priorities priority;
-                        WeightCategories weight;
-                        DroneStatuses status;
-                        Priorities priority;
+
                         Console.WriteLine(@"Wich option you want?
 1-Add new base station
 2-Add new drone
@@ -68,7 +69,12 @@ Station ID-");
                                 Console.WriteLine("Available charge slots-");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out chargeSlots);
-                                DalObject.DalObject.AddStationToTheList(id, name, longitude, lattitude, chargeSlots);
+                                Station station = new Station({ Id = id,
+                                    Name = name,
+                                    Longitude = longitude,
+                                    Lattitude = lattitude,
+                                    ChargeSlots = chargeSlots });
+                                DalObject.DalObject.AddStationToTheList(station);
                                 break;
                             case AddingOptions.Drone:
                                 Console.WriteLine(@"Please enter the following details:
@@ -86,7 +92,12 @@ Drone ID-");
                                 Console.WriteLine("Drone battery-");
                                 input = Console.ReadLine();
                                 double.TryParse(input, out battery);
-                                DalObject.DalObject.AddDroneToTheList(id, model, weight, status, battery);
+                                Drone drone = new Drone({ Id = id,
+                                    Model = model,
+                                    MaxWeight = weight,
+                                    Status = status,
+                                    Battery = battery });
+                                DalObject.DalObject.AddDroneToTheList(drone);
                                 break;
                             case AddingOptions.Customer:
                                 Console.WriteLine(@"Please enter the following details:
@@ -103,7 +114,12 @@ Customer ID-");
                                 Console.WriteLine("Station lattitude-");
                                 input = Console.ReadLine();
                                 double.TryParse(input, out lattitude);
-                                DalObject.DalObject.AddCustomerToTheList(id, name, phone, longitude, lattitude);
+                                Customer customer = new Customer({ Id = id,
+                                Name = name,
+                                Phone = phone,
+                                Longitude = longitude,
+                                Lattitude = lattitude});
+                                DalObject.DalObject.AddCustomerToTheList(customer);
                                 break;
                             case AddingOptions.Parcel:
                                 Console.WriteLine(@"Please enter the following details:");
@@ -141,20 +157,40 @@ Customer ID-");
                         switch (updateChoise)
                         {
                             case UpdatingOptions.Assign:
-
-
+                                Console.WriteLine("Enter the parcel ID:");
+                                input = Console.ReadLine();
+                                int.TryParse(input, out id);
+                                Console.WriteLine("Enter the drone ID:");
+                                input = Console.ReadLine();
+                                int.TryParse(input, out senderId);
+                                DalObject.DalObject.AssignParcelToDrone(id, senderId);
                                 break;
                             case UpdatingOptions.Pick:
-
+                                Console.WriteLine("Enter the parcel ID:");
+                                input = Console.ReadLine();
+                                int.TryParse(input, out id);
+                                DalObject.DalObject.PickParcelByDrone(id);
                                 break;
                             case UpdatingOptions.Deliver:
-
+                                Console.WriteLine("Enter the parcel ID:");
+                                input = Console.ReadLine();
+                                int.TryParse(input, out id);
+                                DalObject.DalObject.DeliverParcelToCustomer(id);
                                 break;
                             case UpdatingOptions.SendToCharge:
-
+                                Console.WriteLine("Enter the drone ID:");
+                                input = Console.ReadLine();
+                                int.TryParse(input, out droneId);
+                                Console.WriteLine("Enter the station ID:");
+                                input = Console.ReadLine();
+                                int.TryParse(input, out id);
+                                DalObject.DalObject.SendDroneToCharge(droneId, id);
                                 break;
                             case UpdatingOptions.ReleaseFromCharge:
-
+                                Console.WriteLine("Enter the drone ID:");
+                                input = Console.ReadLine();
+                                int.TryParse(input, out droneId);
+                                DalObject.DalObject.ReleaseDroneFromeCharge(droneId);
                                 break;
                             default:
                                 break;
