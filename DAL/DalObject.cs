@@ -21,12 +21,12 @@ namespace DalObject
         {
             DataSource.customers.Add(customer);
         }
-        public static int AddParcelToTheList(int senderId, int targetId, int droneId, WeightCategories weight, Priorities priority, DateTime requested, DateTime scheduled, DateTime pickedUp, DateTime delivered)
+        public static int AddParcelToTheList(Parcel parcel/*int senderId, int targetId, int droneId, WeightCategories weight, Priorities priority, DateTime requested, DateTime scheduled, DateTime pickedUp, DateTime delivered*/)
         {
-            Parcel parcel = new Parcel(DataSource.Config.parcelCode, senderId, targetId, droneId, weight, priority, requested, scheduled, pickedUp, delivered);
-            //לא ברור מה עושים עם המספר הרץ
+            //Parcel parcel = new Parcel(DataSource.Config.parcelCode, senderId, targetId, droneId, weight, priority, requested, scheduled, pickedUp, delivered);
+            ////לא ברור מה עושים עם המספר הרץ
+            parcel.Id = DataSource.Config.parcelCode++;
             DataSource.parcels.Add(parcel);
-            DataSource.Config.parcelCode++;
             return DataSource.Config.parcelCode;
         }
         public static void AssignParcelToDrone(int parcelId, int droneId)//שיוך חבילה לרחפן
