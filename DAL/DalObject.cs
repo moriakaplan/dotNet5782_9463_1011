@@ -200,6 +200,14 @@ namespace DalObject
             }
             return StationsWithAvailableCargingSlots;
         }
+        public static String SexagesimalCoordinates(double longitude, double lattitude)
+        {
+            string longi, latt;
+            int help = (int)lattitude;
+            longi = "°"+help;
+            return longi;
+
+        }
     }
 }
 
