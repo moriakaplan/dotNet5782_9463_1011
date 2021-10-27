@@ -69,7 +69,7 @@ Station ID-");
                                 Console.WriteLine("Available charge slots-");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out chargeSlots);
-                                Station station = new Station{ 
+                                Station station = new Station {
                                     Id = id,
                                     Name = name,
                                     Longitude = longitude,
@@ -93,7 +93,7 @@ Drone ID-");
                                 Console.WriteLine("Drone battery-");
                                 input = Console.ReadLine();
                                 double.TryParse(input, out battery);
-                                Drone drone = new Drone{ 
+                                Drone drone = new Drone {
                                     Id = id,
                                     Model = model,
                                     MaxWeight = weight,
@@ -116,7 +116,7 @@ Customer ID-");
                                 Console.WriteLine("Station lattitude-");
                                 input = Console.ReadLine();
                                 double.TryParse(input, out lattitude);
-                                Customer customer = new Customer{
+                                Customer customer = new Customer {
                                     Id = id,
                                     Name = name,
                                     Phone = phone,
@@ -127,8 +127,6 @@ Customer ID-");
                                 break;
                             case AddingOptions.Parcel:
                                 Console.WriteLine(@"Please enter the following details:");
-                                Console.WriteLine("Parcel name-");
-                                name = Console.ReadLine();
                                 Console.WriteLine("Sender ID");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out senderId);
@@ -144,7 +142,20 @@ Customer ID-");
                                 Console.WriteLine("Parcel priority (Regular/Fast/Emergency)-");
                                 input = Console.ReadLine();
                                 Priorities.TryParse(input, out priority);
-                                DalObject.DalObject.AddParcelToTheList(senderId, targetId, droneId, weight, priority, DateTime.Now, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+                                Parcel pa = new Parcel
+                                {
+                                    Id = 0,
+                                    Senderld = senderId,
+                                    TargetId = targetId,
+                                    Droneld = droneId,
+                                    Weight = weight,
+                                    Priority = priority,
+                                    Requested = DateTime.Now,
+                                    Scheduled = DateTime.MinValue,
+                                    PickedUp = DateTime.MinValue,
+                                    Delivered = DateTime.MinValue
+                                };
+                                DalObject.DalObject.AddParcelToTheList(pa);
                                 break;
                             default:
                                 Console.WriteLine("ERROR"); 
