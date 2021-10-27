@@ -41,6 +41,7 @@ namespace ConsoleUI
                         string name, phone;
                         WeightCategories weight;
                         DroneStatuses status;
+                        Priorities priority;
                         Console.WriteLine(@"Wich option you want?
 1-Add new base station
 2-Add new drone
