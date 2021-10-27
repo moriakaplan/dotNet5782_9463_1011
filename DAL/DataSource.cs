@@ -14,7 +14,7 @@ namespace DalObject
         internal static Random random = new Random();
         internal static class Config
         {
-            internal static int parcelCode = 1000000;
+            internal static int parcelCode = random.Next(10000000, 50000000);
         }
         public static void Initialize()
         {

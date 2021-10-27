@@ -29,9 +29,10 @@ namespace ConsoleUI
             DroneStatuses status;
             Priorities priority;
             DalObject.DataSource.Initialize();
+            Console.Write("Hello! ");
             do
             {
-                Console.WriteLine(@"Hello! what do you want to do?
+                Console.WriteLine(@"what do you want to do?
 1-Adding options
 2-Updating options
 3-Display options
@@ -48,14 +49,15 @@ namespace ConsoleUI
 1-Add new base station
 2-Add new drone
 3-Add new customer
-4-Add new parcel");
+4-Add new parcel
+");
                         input = Console.ReadLine();
                         AddingOptions.TryParse(input, out addChoise);
                         switch (addChoise)
                         {
                             case AddingOptions.Station:
                                 Console.WriteLine(@"Please enter the following details:
-Station ID-");
+Station ID (4 digits)-");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
                                 Console.WriteLine("Station name-");
@@ -79,7 +81,7 @@ Station ID-");
                                 break;
                             case AddingOptions.Drone:
                                 Console.WriteLine(@"Please enter the following details:
-Drone ID-");
+Drone ID (6 digits)-");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
                                 Console.WriteLine("Dron model-");
@@ -103,17 +105,17 @@ Drone ID-");
                                 break;
                             case AddingOptions.Customer:
                                 Console.WriteLine(@"Please enter the following details:
-Customer ID-");
+Customer ID (9 digits)-");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
                                 Console.WriteLine("Customer name-");
                                 name = Console.ReadLine();
                                 Console.WriteLine("Customer phone-");
                                 phone = Console.ReadLine();
-                                Console.WriteLine("Station longitude-");
+                                Console.WriteLine("Customer longitude-");
                                 input = Console.ReadLine();
                                 double.TryParse(input, out longitude);
-                                Console.WriteLine("Station lattitude-");
+                                Console.WriteLine("Customer lattitude-");
                                 input = Console.ReadLine();
                                 double.TryParse(input, out lattitude);
                                 Customer customer = new Customer {
@@ -127,13 +129,13 @@ Customer ID-");
                                 break;
                             case AddingOptions.Parcel:
                                 Console.WriteLine(@"Please enter the following details:");
-                                Console.WriteLine("Sender ID");
+                                Console.WriteLine("Sender ID (9 digits)");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out senderId);
-                                Console.WriteLine("Target ID-");
+                                Console.WriteLine("Target ID (9 digits)-");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out targetId);
-                                Console.WriteLine("Drone ID-");
+                                Console.WriteLine("Drone ID (6 digits)-");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out droneId);
                                 Console.WriteLine("Parcel weight (Easy/Medium/Heavy)-");
@@ -168,43 +170,44 @@ Customer ID-");
 2-Pick parcel by drone
 3-Deliver parcel to customer
 4-Send drone to charge
-5-Release drone frome charge");
+5-Release drone frome charge
+");
                         input = Console.ReadLine();
                         UpdatingOptions.TryParse(input, out updateChoise);
                         switch (updateChoise)
                         {
                             case UpdatingOptions.Assign:
-                                Console.WriteLine("Enter the parcel ID:");
+                                Console.WriteLine("Enter the parcel ID (8 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
-                                Console.WriteLine("Enter the drone ID:");
+                                Console.WriteLine("Enter the drone ID (6 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out senderId);
                                 DalObject.DalObject.AssignParcelToDrone(id, senderId);
                                 break;
                             case UpdatingOptions.Pick:
-                                Console.WriteLine("Enter the parcel ID:");
+                                Console.WriteLine("Enter the parcel ID (8 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
                                 DalObject.DalObject.PickParcelByDrone(id);
                                 break;
                             case UpdatingOptions.Deliver:
-                                Console.WriteLine("Enter the parcel ID:");
+                                Console.WriteLine("Enter the parcel ID (8 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
                                 DalObject.DalObject.DeliverParcelToCustomer(id);
                                 break;
                             case UpdatingOptions.SendToCharge:
-                                Console.WriteLine("Enter the drone ID:");
+                                Console.WriteLine("Enter the drone ID (6 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out droneId);
-                                Console.WriteLine("Enter the station ID:");
+                                Console.WriteLine("Enter the station ID (4 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
                                 DalObject.DalObject.SendDroneToCharge(droneId, id);
                                 break;
                             case UpdatingOptions.ReleaseFromCharge:
-                                Console.WriteLine("Enter the drone ID:");
+                                Console.WriteLine("Enter the drone ID (6 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out droneId);
                                 DalObject.DalObject.ReleaseDroneFromeCharge(droneId);
@@ -219,31 +222,32 @@ Customer ID-");
 1-Display base station
 2-Display drone
 3-Display customer
-4-Display parcel");
+4-Display parcel
+");
                         input = Console.ReadLine();
                         DisplayOptions.TryParse(input, out displayChoise);
                         switch (displayChoise)
                         {
                             case DisplayOptions.Station:
-                                Console.WriteLine("Enter the station ID:");
+                                Console.WriteLine("Enter the station ID (4 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
                                 Console.WriteLine(DalObject.DalObject.DisplayStation(id));
                                 break;
                             case DisplayOptions.Drone:
-                                Console.WriteLine("Enter the drone ID:");
+                                Console.WriteLine("Enter the drone ID (6 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
                                 Console.WriteLine(DalObject.DalObject.DisplayDrone(id));
                                 break;
                             case DisplayOptions.Customer:
-                                Console.WriteLine("Enter the customer ID:");
+                                Console.WriteLine("Enter the customer ID (9 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
                                 Console.WriteLine(DalObject.DalObject.DisplayCustomer(id));
                                 break;
                             case DisplayOptions.Parcel:
-                                Console.WriteLine("Enter the parcel ID:");
+                                Console.WriteLine("Enter the parcel ID (8 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
                                 Console.WriteLine(DalObject.DalObject.DisplayParcel(id));
@@ -260,7 +264,8 @@ Customer ID-");
 3-Display customers list
 4-Display parcels list
 5-Display list of unassigned parcels
-6-Display list of stations with available carging slots");
+6-Display list of stations with available carging slots
+");
                         input = Console.ReadLine();
                         DisplayListOptions.TryParse(input, out displayListChoise);
                         switch (displayListChoise)
