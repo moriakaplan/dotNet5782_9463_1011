@@ -9,22 +9,26 @@ namespace DalObject
 {
     public static class DalObject
     {
-        public static void AddStationToTheList(Station st)
+        public static void AddStationToTheList(int id, string name, double longitude, double lattitude, int chargeSlots)
         {
-            DataSource.stations.Add(st);
+            Station station = new Station(id, name, longitude, lattitude, chargeSlots);
+            DataSource.stations.Add(station);
         }
-        public static void AddDroneToTheList(Drone dr)
+        public static void AddDroneToTheList(int id, string model, WeightCategories maxWeight, DroneStatuses status, double battery)
         {
-            DataSource.drones.Add(dr);
+            Drone drone = new Drone(id, model, maxWeight, status, battery);
+            DataSource.drones.Add(drone);
         }
-        public static void AddCustomerToTheList(Customer cu)
+        public static void AddCustomerToTheList(int id, string name, string phone, double longitude, double lattitude)
         {
-            DataSource.customers.Add(cu);
+            Customer customer = new Customer(id, name, phone, longitude, lattitude);
+            DataSource.customers.Add(customer);
         }
-        public static int AddParcelToTheList(Parcel pa)
+        public static int AddParcelToTheList(int senderId, int targetId, int droneId, WeightCategories weight, Priorities priority, DateTime requested, DateTime scheduled, DateTime pickedUp, DateTime delivered)
         {
+            Parcel parcel = new Parcel(DataSource.Config.parcelCode, senderId, targetId, droneId, weight, priority, requested, scheduled, pickedUp, delivered);
             //לא ברור מה עושים עם המספר הרץ
-            DataSource.parcels.Add(pa);
+            DataSource.parcels.Add(parcel);
             DataSource.Config.parcelCode++;
             return DataSource.Config.parcelCode;
         }
