@@ -5,7 +5,7 @@ using System;
 
 namespace ConsoleUI
 {
-    enum Options { Exit, Adding, Updating, Display, ListsDisplay };
+    enum Options { Exit, Adding, Updating, Display, ListsDisplay, Distance };
     enum AddingOptions { Station = 1, Drone, Customer, Parcel };
     enum UpdatingOptions { Assign = 1, Pick, Deliver, SendToCharge, ReleaseFromCharge };
     enum DisplayOptions { Station = 1, Drone, Customer, Parcel };
@@ -318,6 +318,30 @@ Customer ID (9 digits)-");
                                 Console.WriteLine("ERROR");
                                 break;
                         };
+                        break;
+                    case Options.Distance:
+                        Console.WriteLine(@"Enter Coordinates of place in the world:
+longitude- ");
+                        input = Console.ReadLine();
+                        double.TryParse(input, out longitude);
+                        Console.WriteLine("lattitude- ");
+                        input = Console.ReadLine();
+                        double.TryParse(input, out lattitude);
+                        Console.WriteLine("Do you want to know the distance to station or customer");
+                        input = Console.ReadLine();
+                        if (input=="station"||input=="Station")
+                        {
+                            input = "station";
+                            Console.WriteLine("Enter the station ID: (4 digits) ");
+                        }
+                        else if (input == "customers" || input == "Customers")
+                        {
+                            input = "customers";
+                            Console.WriteLine("Enter the customer ID: (9 digits) ");
+                        }
+                        input = Console.ReadLine();
+                        int.TryParse(input, out id);
+                        double distance = DalObject.DalObject.Distance(longitude, lattitude, id, input); //צריך לממש את הפונקציה הזו
                         break;
                     case Options.Exit:
                         break;
