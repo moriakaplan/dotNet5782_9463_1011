@@ -38,6 +38,7 @@ namespace ConsoleUI
 2-Updating options
 3-Display options
 4-Lists display options
+5-Distance between places
 0-Exit
 ");
                 input = Console.ReadLine();
