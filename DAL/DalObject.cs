@@ -57,8 +57,14 @@ namespace DalObject
             //DataSource.parcels.Remove(temp);
 
             //Parcel parcel = DataSource.parcels.Find(x=>x.Id==parcelId); //option a
-            Parcel parcel = DisplayParcel(parcelId); //option b
+            Parcel parcel = DisplayParcel(parcelId);//option b
             DataSource.parcels.Remove(parcel);
+
+            Drone drone = DisplayDrone(droneId);
+            DataSource.drones.Remove(drone);
+            drone.Status = DroneStatuses.Assigned;
+            AddDroneToTheList(drone);
+
             DataSource.Config.parcelCode--;
             parcel.Droneld = droneId;
             parcel.Scheduled = DateTime.Now;
