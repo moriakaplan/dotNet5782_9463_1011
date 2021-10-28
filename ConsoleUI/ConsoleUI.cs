@@ -15,6 +15,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            //Console.WriteLine(DalObject.DalObject.LongitudeSexagesimalCoordinates(-36.123456));
             string input;
             Options options;
             AddingOptions addChoise;

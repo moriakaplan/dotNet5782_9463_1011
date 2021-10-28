@@ -37,7 +37,7 @@ namespace DalObject
             drones.Add(new Drone
             {
                 Id = random.Next(100000, 1000000),// for parcel use: Config.parcelCode++, 
-                Battery = random.Next(100),
+                Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "superFalcon",
                 Status = DroneStatuses.Vacant
@@ -45,7 +45,7 @@ namespace DalObject
             drones.Add(new Drone
             {
                 Id = random.Next(100000, 1000000),// for parcel use: Config.parcelCode++, 
-                Battery = random.Next(100),
+                Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "superFalcon",
                 Status = DroneStatuses.Vacant
@@ -53,7 +53,7 @@ namespace DalObject
             drones.Add(new Drone
             {
                 Id = random.Next(100000, 1000000),// for parcel use: Config.parcelCode++, 
-                Battery = random.Next(100),
+                Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "superFalcon2",
                 Status = DroneStatuses.Sending
@@ -61,7 +61,7 @@ namespace DalObject
             drones.Add(new Drone
             {
                 Id = random.Next(100000, 1000000),// for parcel use: Config.parcelCode++, 
-                Battery = random.Next(100),
+                Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "nimbus2000",
                 Status = DroneStatuses.Sending
@@ -69,7 +69,7 @@ namespace DalObject
             drones.Add(new Drone
             {
                 Id = random.Next(100000, 1000000),
-                Battery = random.Next(100),
+                Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "AnaAref",
                 Status = DroneStatuses.Maintenance
@@ -160,7 +160,7 @@ namespace DalObject
                 Senderld = customers[1].Id,
                 TargetId = customers[2].Id,
                 Droneld = 0,
-                Weight = (WeightCategories)random.Next(0,3),
+                Weight = (WeightCategories)random.Next(0, 3),
                 Priority = (Priorities)random.Next(0, 3),
                 Requested = new DateTime(2021, 01, 01),
                 Scheduled = DateTime.MinValue,
@@ -219,7 +219,7 @@ namespace DalObject
                 Weight = (WeightCategories)random.Next(0, (int)drones[0].MaxWeight),
                 Priority = (Priorities)random.Next(0, 3),
                 Requested = new DateTime(2021, 01, 01),
-                Scheduled = new DateTime(2021,01,02),
+                Scheduled = new DateTime(2021, 01, 02),
                 PickedUp = DateTime.MinValue,
                 Delivered = DateTime.MinValue,
             });
@@ -247,7 +247,7 @@ namespace DalObject
                 Weight = (WeightCategories)random.Next(0, (int)drones[2].MaxWeight),
                 Priority = (Priorities)random.Next(0, 3),
                 Requested = new DateTime(2021, 01, 05),
-                Scheduled = new DateTime(2021,01,08),
+                Scheduled = new DateTime(2021, 01, 08),
                 PickedUp = new DateTime(2021, 01, 12),
                 Delivered = DateTime.MinValue,
             });
@@ -275,7 +275,7 @@ namespace DalObject
                 Weight = (WeightCategories)random.Next(0, (int)drones[2].MaxWeight),
                 Priority = (Priorities)random.Next(0, 3),
                 Requested = new DateTime(2021, 01, 01),
-                Scheduled = new DateTime(2021,01,03),
+                Scheduled = new DateTime(2021, 01, 03),
                 PickedUp = new DateTime(2021, 01, 05),
                 Delivered = new DateTime(2021, 01, 06)
             });
