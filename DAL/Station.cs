@@ -21,11 +21,13 @@ namespace IDAL
             public string Name { get; set; }
             public double Longitude { get; set; }
             public double Lattitude { get; set; }
+            
             public int ChargeSlots { get; set; }
             public override string ToString()
             {
+                
                 return $"station #{Id}: number- {Name}, " +
-                    $"longitude- {DalObject.DalObject.LongitudeSexagesimalCoordinates(Longitude)}, lattitude- {DalObject.DalObject.LattitudeSexagesimalCoordinates(Lattitude)}, charge slots- {ChargeSlots}";
+                    $"longitude- {Coordinates.LongitudeSexagesimalCoordinates(Longitude)}, lattitude- {Coordinates.LattitudeSexagesimalCoordinates(Lattitude)}, charge slots- {ChargeSlots}";
             }
         }
     }

@@ -16,7 +16,7 @@ namespace DalObject
         {
             internal static int parcelCode = random.Next(10000000, 50000000);
         }
-        public static void Initialize()
+        public static void Initialize()//Initializes 2 stations, 5 drones, 10 customers and 10 parcels.
         {
             stations.Add(new Station
             {
@@ -40,7 +40,7 @@ namespace DalObject
                 Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "superFalcon",
-                Status = DroneStatuses.Vacant
+                Status = DroneStatuses.Assigned
             });
             drones.Add(new Drone
             {
@@ -48,7 +48,7 @@ namespace DalObject
                 Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "superFalcon",
-                Status = DroneStatuses.Vacant
+                Status = DroneStatuses.Assigned
             });
             drones.Add(new Drone
             {

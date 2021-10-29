@@ -4,14 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Device.Location;
+//using System.Device.Location;
 
 namespace DalObject
 {
     public static class DalObject
     {
+        //public DalObject()
+        //{
+        //    DataSource.Initialize();
+        //}
         public static void AddStationToTheList(Station station)
-        { 
+        {
             DataSource.stations.Add(station);
         }
         public static void AddDroneToTheList(Drone drone)
@@ -207,40 +211,59 @@ namespace DalObject
             }
             return StationsWithAvailableCargingSlots;
         }
-        internal static String LongitudeSexagesimalCoordinates(double longitude)
+        public static double Distance(double sLatitude, double sLongitude, double eLatitude,double eLongitude)
         {
-            char direction = 'N';
-            string result;
-            double temp, minutes, seconds;
-            if(longitude<0)
-            {
-                longitude = -longitude;
-                direction = 'S';
-            }
-            temp = (longitude - (int)longitude) * 60;
-            minutes = (int)temp;
-            temp -= minutes;
-            seconds = temp * 60;
-            result = (int)longitude + "° " + minutes + "' " + seconds + "'' " + direction;
-            return result;
+            var radiansOverDegrees = (Math.PI / 180.0);
+
+            var sLatitudeRadians = sLatitude * radiansOverDegrees;
+            var sLongitudeRadians = sLongitude * radiansOverDegrees;
+            var eLatitudeRadians = eLatitude * radiansOverDegrees;
+            var eLongitudeRadians = eLongitude * radiansOverDegrees;
+
+            var dLongitude = eLongitudeRadians - sLongitudeRadians;
+            var dLatitude = eLatitudeRadians - sLatitudeRadians;
+
+            var result1 = Math.Pow(Math.Sin(dLatitude / 2.0), 2.0) + Math.Cos(sLatitudeRadians) * Math.Cos(eLatitudeRadians) * Math.Pow(Math.Sin(dLongitude / 2.0), 2.0);
+
+            // Using 3956 as the number of miles around the earth
+            var result2 = 3956.0 * 2.0 * Math.Atan2(Math.Sqrt(result1), Math.Sqrt(1.0 - result1));
+
+            return result2;
         }
-        internal static String LattitudeSexagesimalCoordinates(double lattitude)
-        {
-            char direction = 'E';
-            string result;
-            double temp, minutes, seconds;
-            if (lattitude < 0)
-            {
-                lattitude = -lattitude;
-                direction = 'W';
-            }
-            temp = (lattitude - (int)lattitude) * 60;
-            minutes = (int)temp;
-            temp -= minutes;
-            seconds = temp * 60;
-            result = (int)lattitude + "° " + minutes + "' " + seconds + "'' " + direction;
-            return result;
-        }
+        //internal static String LongitudeSexagesimalCoordinates(double longitude)
+        //{
+        //    char direction = 'N';
+        //    string result;
+        //    double temp, minutes, seconds;
+        //    if(longitude<0)
+        //    {
+        //        longitude = -longitude;
+        //        direction = 'S';
+        //    }
+        //    temp = (longitude - (int)longitude) * 60;
+        //    minutes = (int)temp;
+        //    temp -= minutes;
+        //    seconds = temp * 60;
+        //    result = (int)longitude + "° " + minutes + "' " + seconds + "'' " + direction;
+        //    return result;
+        //}
+        //internal static String LattitudeSexagesimalCoordinates(double lattitude)
+        //{
+        //    char direction = 'E';
+        //    string result;
+        //    double temp, minutes, seconds;
+        //    if (lattitude < 0)
+        //    {
+        //        lattitude = -lattitude;
+        //        direction = 'W';
+        //    }
+        //    temp = (lattitude - (int)lattitude) * 60;
+        //    minutes = (int)temp;
+        //    temp -= minutes;
+        //    seconds = temp * 60;
+        //    result = (int)lattitude + "° " + minutes + "' " + seconds + "'' " + direction;
+        //    return result;
+        //}
     }
 }
 
