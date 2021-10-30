@@ -8,25 +8,25 @@ using System.Threading.Tasks;
 
 namespace DalObject
 {
-    public static class DalObject
+    public class DalObject
     {
-        //public DalObject()
-        //{
-        //    DataSource.Initialize();
-        //}
-        public static void AddStationToTheList(Station station)
+        public DalObject()
+        {
+            DataSource.Initialize();
+        }
+        public  void AddStationToTheList(Station station)
         {
             DataSource.stations.Add(station);
         }
-        public static void AddDroneToTheList(Drone drone)
+        public void AddDroneToTheList(Drone drone)
         {
             DataSource.drones.Add(drone);
         }
-        public static void AddCustomerToTheList(Customer customer)
+        public  void AddCustomerToTheList(Customer customer)
         {
             DataSource.customers.Add(customer);
         }
-        public static int AddParcelToTheList(Parcel parcel/*int senderId, int targetId, int droneId, WeightCategories weight, Priorities priority, DateTime requested, DateTime scheduled, DateTime pickedUp, DateTime delivered*/)
+        public  int AddParcelToTheList(Parcel parcel/*int senderId, int targetId, int droneId, WeightCategories weight, Priorities priority, DateTime requested, DateTime scheduled, DateTime pickedUp, DateTime delivered*/)
         {
             //Parcel parcel = new Parcel(DataSource.Config.parcelCode, senderId, targetId, droneId, weight, priority, requested, scheduled, pickedUp, delivered);
             ////לא ברור מה עושים עם המספר הרץ
@@ -34,7 +34,7 @@ namespace DalObject
             DataSource.parcels.Add(parcel);
             return DataSource.Config.parcelCode;
         }
-        public static void AssignParcelToDrone(int parcelId, int droneId)//שיוך חבילה לרחפן
+        public  void AssignParcelToDrone(int parcelId, int droneId)//שיוך חבילה לרחפן
         {
             //int index = 0;
             //Parcel temp=new Parcel();
@@ -75,7 +75,7 @@ namespace DalObject
             parcel.Scheduled = DateTime.Now;
             AddParcelToTheList(parcel);
         }
-        public static void PickParcelByDrone(int parcelId)
+        public  void PickParcelByDrone(int parcelId)
         {
             Parcel parcel = DisplayParcel(parcelId);
             DataSource.parcels.Remove(parcel);
@@ -87,7 +87,7 @@ namespace DalObject
             drone.Status = DroneStatuses.Sending;
             AddDroneToTheList(drone);
         }
-        public static void DeliverParcelToCustomer(int parcelId)
+        public  void DeliverParcelToCustomer(int parcelId)
         {
             Parcel parcel = DisplayParcel(parcelId);
             DataSource.parcels.Remove(parcel);
@@ -99,7 +99,7 @@ namespace DalObject
             drone.Status = DroneStatuses.Vacant;
             AddDroneToTheList(drone);
         }
-        public static void SendDroneToCharge(int droneId, int stationId)
+        public  void SendDroneToCharge(int droneId, int stationId)
         {
             DroneCharge droneCharge = new DroneCharge { DroneId = droneId, StationId = stationId };
             DataSource.droneCharges.Add(droneCharge);
@@ -114,7 +114,7 @@ namespace DalObject
             station.ChargeSlots++;
             AddStationToTheList(station);
         }
-        public static void ReleaseDroneFromeCharge(int droneId)
+        public  void ReleaseDroneFromeCharge(int droneId)
         {
             DroneCharge dCharge = DataSource.droneCharges.Find(x => x.DroneId == droneId);
             //DroneCharge dCharge = new DroneCharge();
@@ -135,7 +135,7 @@ namespace DalObject
             station.ChargeSlots--;
             AddStationToTheList(station);
         }
-        public static Station DisplayStation(int stationId)
+        public  Station DisplayStation(int stationId)
         {
             Station temp = new Station();
             foreach (Station item in DataSource.stations)
@@ -145,7 +145,7 @@ namespace DalObject
             }
             return temp;
         }
-        public static Drone DisplayDrone(int droneId)
+        public  Drone DisplayDrone(int droneId)
         {
             Drone temp = new Drone();
             foreach (Drone item in DataSource.drones)
@@ -155,7 +155,7 @@ namespace DalObject
             }
             return temp;
         }
-        public static Customer DisplayCustomer(int customerId)
+        public  Customer DisplayCustomer(int customerId)
         {
             Customer temp = new Customer();
             foreach (Customer item in DataSource.customers)
@@ -165,7 +165,7 @@ namespace DalObject
             }
             return temp;
         }
-        public static Parcel DisplayParcel(int parcelId)
+        public  Parcel DisplayParcel(int parcelId)
         {
             Parcel temp = new Parcel();
             foreach (Parcel item in DataSource.parcels)
@@ -175,23 +175,23 @@ namespace DalObject
             }
             return temp;
         }
-        public static List<Station> DisplayListOfStations()
+        public  List<Station> DisplayListOfStations()
         {
             return DataSource.stations;
         }
-        public static List<Drone> DisplayListOfDrones()
+        public  List<Drone> DisplayListOfDrones()
         {
             return DataSource.drones;
         }
-        public static List<Customer> DisplayListOfCustomers()
+        public  List<Customer> DisplayListOfCustomers()
         {
             return DataSource.customers;
         }
-        public static List<Parcel> DisplayListOfParcels()
+        public  List<Parcel> DisplayListOfParcels()
         {
             return DataSource.parcels;
         }
-        public static List<Parcel> DisplayListOfUnassignedParcels()
+        public  List<Parcel> DisplayListOfUnassignedParcels()
         {
             List<Parcel> unassignedParcels = new List<Parcel>();
             foreach (Parcel item in DataSource.parcels)
@@ -201,7 +201,7 @@ namespace DalObject
             }
             return unassignedParcels;
         }
-        public static List<Station> DisplayListOfStationsWithAvailableCargeSlots()
+        public  List<Station> DisplayListOfStationsWithAvailableCargeSlots()
         {
             List<Station> StationsWithAvailableCargingSlots = new List<Station>();
             foreach (Station item in DataSource.stations)
@@ -211,7 +211,7 @@ namespace DalObject
             }
             return StationsWithAvailableCargingSlots;
         }
-        public static double Distance(double sLatitude, double sLongitude, double eLatitude,double eLongitude)
+        public  double Distance(double sLatitude, double sLongitude, double eLatitude,double eLongitude)
         {
             var radiansOverDegrees = (Math.PI / 180.0);
 
