@@ -15,6 +15,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            DalObject.DalObject dalObject = new DalObject.DalObject();
             //Console.WriteLine(DalObject.DalObject.LongitudeSexagesimalCoordinates(-36.123456));
             string input;
             Options options;
@@ -79,7 +80,7 @@ Station ID (4 digits)-");
                                     Longitude = longitude,
                                     Lattitude = lattitude,
                                     ChargeSlots = chargeSlots };
-                                DalObject.DalObject.AddStationToTheList(station);
+                                dalObject.AddStationToTheList(station);
                                 break;
                             case AddingOptions.Drone:
                                 Console.WriteLine(@"Please enter the following details:
@@ -103,7 +104,7 @@ Drone ID (6 digits)-");
                                     MaxWeight = weight,
                                     Status = status,
                                     Battery = battery };
-                                DalObject.DalObject.AddDroneToTheList(drone);
+                                dalObject.AddDroneToTheList(drone);
                                 break;
                             case AddingOptions.Customer:
                                 Console.WriteLine(@"Please enter the following details:
@@ -127,7 +128,7 @@ Customer ID (9 digits)-");
                                     Longitude = longitude,
                                     Lattitude = lattitude
                                 };
-                                DalObject.DalObject.AddCustomerToTheList(customer);
+                                dalObject.AddCustomerToTheList(customer);
                                 break;
                             case AddingOptions.Parcel:
                                 Console.WriteLine(@"Please enter the following details:");
@@ -159,7 +160,7 @@ Customer ID (9 digits)-");
                                     PickedUp = DateTime.MinValue,
                                     Delivered = DateTime.MinValue
                                 };
-                                DalObject.DalObject.AddParcelToTheList(pa);
+                                dalObject.AddParcelToTheList(pa);
                                 break;
                             default:
                                 Console.WriteLine("ERROR"); 
@@ -185,19 +186,19 @@ Customer ID (9 digits)-");
                                 Console.WriteLine("Enter the drone ID (6 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out senderId);
-                                DalObject.DalObject.AssignParcelToDrone(id, senderId);
+                                dalObject.AssignParcelToDrone(id, senderId);
                                 break;
                             case UpdatingOptions.Pick:
                                 Console.WriteLine("Enter the parcel ID (8 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
-                                DalObject.DalObject.PickParcelByDrone(id);
+                                dalObject.PickParcelByDrone(id);
                                 break;
                             case UpdatingOptions.Deliver:
                                 Console.WriteLine("Enter the parcel ID (8 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
-                                DalObject.DalObject.DeliverParcelToCustomer(id);
+                                dalObject.DeliverParcelToCustomer(id);
                                 break;
                             case UpdatingOptions.SendToCharge:
                                 Console.WriteLine("Enter the drone ID (6 digits):");
@@ -206,13 +207,13 @@ Customer ID (9 digits)-");
                                 Console.WriteLine("Enter the station ID (4 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
-                                DalObject.DalObject.SendDroneToCharge(droneId, id);
+                                dalObject.SendDroneToCharge(droneId, id);
                                 break;
                             case UpdatingOptions.ReleaseFromCharge:
                                 Console.WriteLine("Enter the drone ID (6 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out droneId);
-                                DalObject.DalObject.ReleaseDroneFromeCharge(droneId);
+                                dalObject.ReleaseDroneFromeCharge(droneId);
                                 break;
                             default:
                                 Console.WriteLine("ERROR");
@@ -234,25 +235,25 @@ Customer ID (9 digits)-");
                                 Console.WriteLine("Enter the station ID (4 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
-                                Console.WriteLine(DalObject.DalObject.DisplayStation(id));
+                                Console.WriteLine(dalObject.DisplayStation(id));
                                 break;
                             case DisplayOptions.Drone:
                                 Console.WriteLine("Enter the drone ID (6 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
-                                Console.WriteLine(DalObject.DalObject.DisplayDrone(id));
+                                Console.WriteLine(dalObject.DisplayDrone(id));
                                 break;
                             case DisplayOptions.Customer:
                                 Console.WriteLine("Enter the customer ID (9 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
-                                Console.WriteLine(DalObject.DalObject.DisplayCustomer(id));
+                                Console.WriteLine(dalObject.DisplayCustomer(id));
                                 break;
                             case DisplayOptions.Parcel:
                                 Console.WriteLine("Enter the parcel ID (8 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
-                                Console.WriteLine(DalObject.DalObject.DisplayParcel(id));
+                                Console.WriteLine(dalObject.DisplayParcel(id));
                                 break;
                             default:
                                 Console.WriteLine("ERROR");
@@ -274,42 +275,42 @@ Customer ID (9 digits)-");
                         {
                             case DisplayListOptions.Stations:
                                 Console.WriteLine("The stations are:");
-                                foreach(Station item in DalObject.DalObject.DisplayListOfStations())
+                                foreach(Station item in dalObject.DisplayListOfStations())
                                 {
                                     Console.WriteLine(item);
                                 }
                                 break;
                             case DisplayListOptions.Drones:
                                 Console.WriteLine("The drones are:");
-                                foreach (Drone item in DalObject.DalObject.DisplayListOfDrones())
+                                foreach (Drone item in dalObject.DisplayListOfDrones())
                                 {
                                     Console.WriteLine(item);
                                 }
                                 break;
                             case DisplayListOptions.Customers:
                                 Console.WriteLine("The customers are:");
-                                foreach (Customer item in DalObject.DalObject.DisplayListOfCustomers())
+                                foreach (Customer item in dalObject.DisplayListOfCustomers())
                                 {
                                     Console.WriteLine(item);
                                 }
                                 break;
                             case DisplayListOptions.Parcels:
                                 Console.WriteLine("The parcels are:");
-                                foreach (Parcel item in DalObject.DalObject.DisplayListOfParcels())
+                                foreach (Parcel item in dalObject.DisplayListOfParcels())
                                 {
                                     Console.WriteLine(item);
                                 }
                                 break;
                             case DisplayListOptions.UnassignedParcels:
                                 Console.WriteLine("The parcels that not assigned to drone are:"); //לכתוב תיאור של מה מודפס
-                                foreach (Parcel item in DalObject.DalObject.DisplayListOfUnassignedParcels())
+                                foreach (Parcel item in dalObject.DisplayListOfUnassignedParcels())
                                 {
                                     Console.WriteLine(item);
                                 }
                                 break;
                             case DisplayListOptions.StationsWithAvailableCargingSlots:
                                 Console.WriteLine("The stations with available charge slots are:"); //לכתוב תיאור של מה מודפס
-                                foreach (Station item in DalObject.DalObject.DisplayListOfStationsWithAvailableCargeSlots())
+                                foreach (Station item in dalObject.DisplayListOfStationsWithAvailableCargeSlots())
                                 {
                                     Console.WriteLine(item);
                                 }
@@ -331,17 +332,18 @@ longitude- ");
                         input = Console.ReadLine();
                         if (input=="station"||input=="Station")
                         {
-                            input = "station";
                             Console.WriteLine("Enter the station ID: (4 digits) ");
+                            input = Console.ReadLine();
+                            int.TryParse(input, out id);
+                            double distance = dalObject.DistanceForStation(longitude, lattitude, id); //צריך לממש את הפונקציה הזו
                         }
                         else if (input == "customers" || input == "Customers")
                         {
-                            input = "customers";
                             Console.WriteLine("Enter the customer ID: (9 digits) ");
-                        }
-                        input = Console.ReadLine();
-                        int.TryParse(input, out id);
-                        double distance = DalObject.DalObject.Distance(longitude, lattitude, id, input); //צריך לממש את הפונקציה הזו
+                            input = Console.ReadLine();
+                            int.TryParse(input, out id);
+                            double distance = dalObject.DistanceForCustomer(longitude, lattitude, id); //צריך לממש את הפונקציה הזו
+                            }
                         break;
                     case Options.Exit:
                         break;

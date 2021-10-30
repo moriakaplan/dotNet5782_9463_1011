@@ -211,19 +211,35 @@ namespace DalObject
             }
             return StationsWithAvailableCargingSlots;
         }
-        public  double Distance(double sLatitude, double sLongitude, double eLatitude,double eLongitude)
+        public double DistanceForStation(double longitudeA, double lattitudeA, int id)
+        {
+            double longitudeB = 0, lattitudeB = 0;
+            Station st = DisplayStation(id);
+            longitudeB = st.Longitude;
+            lattitudeB = st.Lattitude;
+            return Distance(longitudeA, lattitudeA, longitudeB, lattitudeB);
+        }
+        public double DistanceForCustomer(double longitudeA, double lattitudeA, int id)
+        {
+            double longitudeB = 0, lattitudeB = 0;
+            Customer cu = DisplayCustomer(id);
+            longitudeB = cu.Longitude;
+            lattitudeB = cu.Lattitude;
+            return Distance(longitudeA, lattitudeA, longitudeB, lattitudeB);
+        }
+        public  double Distance(double latitudeA, double longitudeA, double latitudeB,double longitudeB)
         {
             var radiansOverDegrees = (Math.PI / 180.0);
 
-            var sLatitudeRadians = sLatitude * radiansOverDegrees;
-            var sLongitudeRadians = sLongitude * radiansOverDegrees;
-            var eLatitudeRadians = eLatitude * radiansOverDegrees;
-            var eLongitudeRadians = eLongitude * radiansOverDegrees;
+            var latitudeRadiansA = latitudeA * radiansOverDegrees;
+            var longitudeRadiansA = longitudeA * radiansOverDegrees;
+            var latitudeRadiansB = latitudeB * radiansOverDegrees;
+            var longitudeRadiansB = longitudeB * radiansOverDegrees;
 
-            var dLongitude = eLongitudeRadians - sLongitudeRadians;
-            var dLatitude = eLatitudeRadians - sLatitudeRadians;
+            var dLongitude = longitudeRadiansB - longitudeRadiansA;
+            var dLatitude = latitudeRadiansB - latitudeRadiansA;
 
-            var result1 = Math.Pow(Math.Sin(dLatitude / 2.0), 2.0) + Math.Cos(sLatitudeRadians) * Math.Cos(eLatitudeRadians) * Math.Pow(Math.Sin(dLongitude / 2.0), 2.0);
+            var result1 = Math.Pow(Math.Sin(dLatitude / 2.0), 2.0) + Math.Cos(latitudeRadiansB) * Math.Cos(latitudeRadiansA) * Math.Pow(Math.Sin(dLongitude / 2.0), 2.0);
 
             // Using 3956 as the number of miles around the earth
             var result2 = 3956.0 * 2.0 * Math.Atan2(Math.Sqrt(result1), Math.Sqrt(1.0 - result1));

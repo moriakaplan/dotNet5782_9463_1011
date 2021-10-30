@@ -8,7 +8,7 @@ namespace IDAL
 {
     namespace DO
     {
-        internal static class Coordinates
+        internal class Coordinates
         {
             private static String LongitudeSexagesimalCoordinates(double longitude)
             {
@@ -45,7 +45,5 @@ namespace IDAL
                 return result;
             }
         }
-
     }
-   
 }
