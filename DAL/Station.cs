@@ -19,15 +19,32 @@ namespace IDAL
             //}
             public int Id { get; set; }
             public string Name { get; set; }
-            public double Longitude { get; set; }
-            public double Lattitude { get; set; }
-            
+            private Coordinate longi;
+            private Coordinate latti;
+            public double Longitude {
+                get { return longi.Value; }
+                set 
+                {
+                    longi = new Coordinate();
+                    longi.Value = value;
+                    longi.IsLongitude = true;
+                }
+            }
+            public double Lattitude
+            {
+                get { return latti.Value; }
+                set
+                {
+                    latti = new Coordinate();
+                    latti.Value = value;
+                    latti.IsLongitude = false;
+                }
+            }
             public int ChargeSlots { get; set; }
             public override string ToString()
             {
-                
                 return $"station #{Id}: number- {Name}, " +
-                    $"longitude- {Coordinates.LongitudeSexagesimalCoordinates(Longitude)}, lattitude- {Coordinates.LattitudeSexagesimalCoordinates(Lattitude)}, charge slots- {ChargeSlots}";
+                    $"longitude- {longi}, lattitude- {latti}, charge slots- {ChargeSlots}";
             }
         }
     }
