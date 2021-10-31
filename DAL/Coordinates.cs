@@ -58,21 +58,21 @@ namespace IDAL
             private String SexagesimalCoordinates()
             {
                 char direction;
+                double temp = Value, minutes, seconds;
                 if (IsLongitude) 
                     direction = 'N';
                 else 
                     direction = 'E';
                 string result;
-                double temp, minutes, seconds;
-                if (Value < 0)
+                if (temp < 0)
                 {
-                    Value = -Value;
+                    temp = -temp;
                     if (IsLongitude) 
                         direction = 'S';
                     else 
                         direction = 'W';
                 }
-                temp = (Value - (int)Value) * 60;
+                temp = (temp - (int)temp) * 60;
                 minutes = (int)temp;
                 temp -= minutes;
                 seconds = temp * 60;

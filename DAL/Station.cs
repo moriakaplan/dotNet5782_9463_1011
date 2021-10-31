@@ -16,12 +16,7 @@ namespace IDAL
             public double Longitude//bonus 1
             {
                 get { return longi.Value; }
-                set
-                {
-                    longi = new Coordinate();
-                    longi.Value = value;
-                    longi.IsLongitude = true;
-                }
+                set { longi = new Coordinate(value, true); }
             }
             public double Lattitude//bonus 1
             {

@@ -214,7 +214,8 @@ namespace DalObject
        /// <returns></returns>
         public List<Station> DisplayListOfStations()
         {
-            return DataSource.stations;
+            List<Station> result = new List<Station>(DataSource.stations);
+            return result;
         }
         /// <summary>
         /// display the list of the drones.
@@ -222,7 +223,8 @@ namespace DalObject
         /// <returns></returns>
         public List<Drone> DisplayListOfDrones()
         {
-            return DataSource.drones;
+            List<Drone> result = new List<Drone>(DataSource.drones);
+            return result;
         }
         /// <summary>
         /// display the list of thecustomers
@@ -230,7 +232,8 @@ namespace DalObject
         /// <returns></returns>
         public List<Customer> DisplayListOfCustomers()
         {
-            return DataSource.customers;
+            List<Customer> result = new List<Customer>(DataSource.customers);
+            return result;
         }
         /// <summary>
        /// display the list of the customers
@@ -238,7 +241,8 @@ namespace DalObject
        /// <returns></returns>
         public List<Parcel> DisplayListOfParcels()
         {
-            return DataSource.parcels;
+            List<Parcel> result = new List<Parcel>(DataSource.parcels);
+            return result;
         }
         /// <summary>
         /// display the list of the unassign parcels
@@ -278,11 +282,8 @@ namespace DalObject
         /// <returns></returns>
         public double DistanceForStation(double longitudeA, double lattitudeA, int id)
         {
-            double longitudeB = 0, lattitudeB = 0;
             Station st = DisplayStation(id);
-            longitudeB = st.Longitude;
-            lattitudeB = st.Lattitude;
-            return Distance(longitudeA, lattitudeA, longitudeB, lattitudeB);
+            return Distance(longitudeA, lattitudeA, st.Longitude, st.Lattitude);
         }
         /// <summary>
         /// bonus2
@@ -294,11 +295,8 @@ namespace DalObject
         /// <returns></returns>
         public double DistanceForCustomer(double longitudeA, double lattitudeA, int id)
         {
-            double longitudeB = 0, lattitudeB = 0;
             Customer cu = DisplayCustomer(id);
-            longitudeB = cu.Longitude;
-            lattitudeB = cu.Lattitude;
-            return Distance(longitudeA, lattitudeA, longitudeB, lattitudeB);
+            return Distance(longitudeA, lattitudeA, cu.Longitude, cu.Lattitude);
         }
         /// <summary>
         /// bonus 2
