@@ -10,93 +10,97 @@ namespace DalObject
 {
     public class DalObject
     {
+        /// <summary>
+        /// constractor.call the static function initialize.
+        /// </summary>
         public DalObject()
         {
             DataSource.Initialize();
         }
-        public  void AddStationToTheList(Station station)
+        /// <summary>
+        /// add the station that he gets to the list of the stations.
+        /// </summary>
+        /// <param name="station"></param>
+        public void AddStationToTheList(Station station)
         {
             DataSource.stations.Add(station);
         }
+        /// <summary>
+        /// add the drone that he gets to the list of the drones.
+        /// </summary>
+        /// <param name="drone"></param>
         public void AddDroneToTheList(Drone drone)
         {
             DataSource.drones.Add(drone);
         }
-        public  void AddCustomerToTheList(Customer customer)
+        /// <summary>
+        /// add the customer that he gets to the list of the customers.
+        /// </summary>
+        /// <param name="customer"></param>
+        public void AddCustomerToTheList(Customer customer)
         {
             DataSource.customers.Add(customer);
         }
-        public  int AddParcelToTheList(Parcel parcel/*int senderId, int targetId, int droneId, WeightCategories weight, Priorities priority, DateTime requested, DateTime scheduled, DateTime pickedUp, DateTime delivered*/)
+        /// <summary>
+        /// add the parcel that he gets to the list of the parcels.
+        /// </summary>
+        /// <param name="parcel"></param>
+        /// <returns></returns>
+        public int AddParcelToTheList(Parcel parcel)
         {
-            //Parcel parcel = new Parcel(DataSource.Config.parcelCode, senderId, targetId, droneId, weight, priority, requested, scheduled, pickedUp, delivered);
-            ////לא ברור מה עושים עם המספר הרץ
             parcel.Id = DataSource.Config.parcelCode++;
             DataSource.parcels.Add(parcel);
             return DataSource.Config.parcelCode;
         }
-        public  void AssignParcelToDrone(int parcelId, int droneId)//שיוך חבילה לרחפן
-        {
-            //int index = 0;
-            //Parcel temp=new Parcel();
-            //foreach (Parcel item in DataSource.parcels)
-            //{
-            //    //index++;
-            //    if (item.Id == parcelId)
-            //    {
-            //        DataSource.parcels.Add(new Parcel
-            //        {
-            //            Id = item.Id,
-            //            Delivered = item.Delivered,
-            //            Droneld = droneId,
-            //            PickedUp = item.PickedUp,
-            //            Priority = item.Priority,
-            //            Requested = item.Requested,
-            //            Scheduled = item.Scheduled,
-            //            Senderld = item.Senderld,
-            //            TargetId = item.TargetId,
-            //            Weight = item.Weight
-            //        });
-            //        temp = item;
-            //    }
-            //}
-            //DataSource.parcels.Remove(temp);
-
-            //Parcel parcel = DataSource.parcels.Find(x=>x.Id==parcelId); //option a
-            Parcel parcel = DisplayParcel(parcelId);//option b
-            DataSource.parcels.Remove(parcel);
-
+        /// <summary>
+        /// assign the parcel to the drone.
+        /// </summary>
+        /// <param name="parcelId"></param>
+        /// <param name="droneId"></param>
+        public  void AssignParcelToDrone(int parcelId, int droneId)
+        {  
             Drone drone = DisplayDrone(droneId);
             DataSource.drones.Remove(drone);
-            drone.Status = DroneStatuses.Assigned;
+            drone.Status = DroneStatuses.Assigned;//update the status of the drone
             AddDroneToTheList(drone);
 
+            Parcel parcel = DisplayParcel(parcelId);
+            DataSource.parcels.Remove(parcel);
             DataSource.Config.parcelCode--;
-            parcel.Droneld = droneId;
-            parcel.Scheduled = DateTime.Now;
+            parcel.Droneld = droneId;//assign the pecel to the drone
+            parcel.Scheduled = DateTime.Now;//update the time that the parcel was scheduled
             AddParcelToTheList(parcel);
         }
+        /// <summary>
+        /// pick the parcel by the drone
+        /// </summary>
+        /// <param name="parcelId"></param>
         public  void PickParcelByDrone(int parcelId)
         {
             Parcel parcel = DisplayParcel(parcelId);
             DataSource.parcels.Remove(parcel);
-            parcel.PickedUp = DateTime.Now;
+            parcel.PickedUp = DateTime.Now;//update the time that the drone pick up the parcel
             AddParcelToTheList(parcel);
 
-            Drone drone = DisplayDrone(parcel.Droneld); // פה לא בטוח צריך
+            Drone drone = DisplayDrone(parcel.Droneld); 
             DataSource.drones.Remove(drone);
-            drone.Status = DroneStatuses.Sending;
+            drone.Status = DroneStatuses.Sending;//update the status of the drone(sending)
             AddDroneToTheList(drone);
         }
+        /// <summary>
+        /// deliver the parcel to the customer
+        /// </summary>
+        /// <param name="parcelId"></param>
         public  void DeliverParcelToCustomer(int parcelId)
         {
             Parcel parcel = DisplayParcel(parcelId);
             DataSource.parcels.Remove(parcel);
-            parcel.Delivered = DateTime.Now;
+            parcel.Delivered = DateTime.Now;//update the delivering time
             AddParcelToTheList(parcel);
 
             Drone drone = DisplayDrone(parcel.Droneld);
             DataSource.drones.Remove(drone);
-            drone.Status = DroneStatuses.Vacant;
+            drone.Status = DroneStatuses.Vacant;//after the drone gives the parcel, he is vacant 
             AddDroneToTheList(drone);
         }
         public  void SendDroneToCharge(int droneId, int stationId)

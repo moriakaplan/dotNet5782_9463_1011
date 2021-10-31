@@ -5,18 +5,10 @@ namespace IDAL
     namespace DO
     {
         /// <summary>
-        /// רחפן
+        ///רחפנים 
         /// </summary>
         public struct Drone
         {
-            //public Drone(int id, string model, WeightCategories maxWeight, DroneStatuses status, double battery)
-            //{
-            //    Id = id;
-            //    Model = model;
-            //    MaxWeight = maxWeight;
-            //    Status = status;
-            //    Battery = battery;
-            //}
             public int Id { get; set; }
             public string Model { get; set; }
             public WeightCategories MaxWeight { get; set; }
@@ -24,7 +16,11 @@ namespace IDAL
             public double Battery { get; set; }
             public override string ToString()
             {
-                return $"drone #{Id}: model- {Model}, max weight- {MaxWeight}, status- {Status}, battery- {Battery}";
+                return @$"drone #{Id}:
+model- {Model},
+max weight- {MaxWeight},
+status- {Status},
+battery- {Battery}";
             }
         }
     }

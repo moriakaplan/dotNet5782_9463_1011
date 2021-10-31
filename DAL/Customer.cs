@@ -9,20 +9,13 @@ namespace IDAL
         /// </summary>
         public struct Customer
         {
-            //public Customer(int id, string name, string phone, double longitude, double lattitude)
-            //{
-            //    Id = id;
-            //    Name = name;
-            //    Phone = phone;
-            //    Longitude = longitude;
-            //    Lattitude = lattitude;
-            //}
             public int Id { get; set; }
             public string Name { get; set; }
             public string Phone { get; set; }
             private Coordinate longi;
             private Coordinate latti;
-            public double Longitude
+            
+            public double Longitude//bonus 1
             {
                 get { return longi.Value; }
                 set
@@ -32,7 +25,7 @@ namespace IDAL
                     longi.IsLongitude = true;
                 }
             }
-            public double Lattitude
+            public double Lattitude//bonus 1
             {
                 get { return latti.Value; }
                 set
@@ -44,8 +37,12 @@ namespace IDAL
             }
             public override string ToString()
             {
-                return $"customer #{Id}: number- {Name}, phone- {Phone}, " +
-                    $"longitude- {longi}, lattitude- {latti}";
+                return @$"customer #{Id}:
+number- {Name},
+phone- {Phone},
+longitude- {longi},
+lattitude- {latti}
+";
             }
         }
     }
