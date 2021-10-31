@@ -31,6 +31,7 @@ namespace IDAL
             public int ChargeSlots { get; set; }
             public override string ToString()
             {
+
                 return @$"station #{Id}:
 number- {Name}, 
 longitude- {longi},
