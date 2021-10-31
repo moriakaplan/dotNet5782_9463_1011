@@ -333,22 +333,24 @@ longitude- ");
                         Console.WriteLine("lattitude- ");
                         input = Console.ReadLine();
                         double.TryParse(input, out lattitude);
-                        Console.WriteLine("Do you want to know the distance to station or customer");
+                        Console.WriteLine("Do you want to know the distance to station or customer?");
                         input = Console.ReadLine();
+                        double distance = 0;
                         if (input == "station" || input == "Station")//if the user want to know the distance between station and another place
                         {
                             Console.WriteLine("Enter the station ID: (4 digits) ");
                             input = Console.ReadLine();
                             int.TryParse(input, out id);
-                            double distance = dalObject.DistanceForStation(longitude, lattitude, id); 
+                            distance = dalObject.DistanceForStation(longitude, lattitude, id); 
                         }
                         else if (input == "customers" || input == "Customers")//if the user want to know the distance between customer and another place
                         {
                             Console.WriteLine("Enter the customer ID: (9 digits) ");
                             input = Console.ReadLine();
                             int.TryParse(input, out id);
-                            double distance = dalObject.DistanceForCustomer(longitude, lattitude, id); 
+                            distance = dalObject.DistanceForCustomer(longitude, lattitude, id); 
                         }
+                        Console.WriteLine(distance);
                         break;
                     case Options.Exit:
                         break;
