@@ -181,19 +181,23 @@ namespace DalObject
         }
         public  List<Station> DisplayListOfStations()
         {
-            return DataSource.stations;
+            List<Station> result = new List<Station>(DataSource.stations);
+            return result;
         }
         public  List<Drone> DisplayListOfDrones()
         {
-            return DataSource.drones;
+            List<Drone> result = new List<Drone>(DataSource.drones);
+            return result;
         }
         public  List<Customer> DisplayListOfCustomers()
         {
-            return DataSource.customers;
+            List<Customer> result = new List<Customer>(DataSource.customers);
+            return result;
         }
         public  List<Parcel> DisplayListOfParcels()
         {
-            return DataSource.parcels;
+            List<Parcel> result = new List<Parcel>(DataSource.parcels);
+            return result;
         }
         public  List<Parcel> DisplayListOfUnassignedParcels()
         {
@@ -217,19 +221,13 @@ namespace DalObject
         }
         public double DistanceForStation(double longitudeA, double lattitudeA, int id)
         {
-            double longitudeB = 0, lattitudeB = 0;
             Station st = DisplayStation(id);
-            longitudeB = st.Longitude;
-            lattitudeB = st.Lattitude;
-            return Distance(longitudeA, lattitudeA, longitudeB, lattitudeB);
+            return Distance(longitudeA, lattitudeA, st.Longitude, st.Lattitude);
         }
         public double DistanceForCustomer(double longitudeA, double lattitudeA, int id)
         {
-            double longitudeB = 0, lattitudeB = 0;
             Customer cu = DisplayCustomer(id);
-            longitudeB = cu.Longitude;
-            lattitudeB = cu.Lattitude;
-            return Distance(longitudeA, lattitudeA, longitudeB, lattitudeB);
+            return Distance(longitudeA, lattitudeA, cu.Longitude, cu.Lattitude);
         }
         public  double Distance(double latitudeA, double longitudeA, double latitudeB,double longitudeB)
         {
