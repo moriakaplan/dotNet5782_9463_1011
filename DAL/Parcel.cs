@@ -30,7 +30,8 @@ requested- {Requested}
 ,droneld- {Droneld}, 
 scheduled- {Scheduled}, 
 picked up- {PickedUp},
-delivered- {Delivered}";
+delivered- {Delivered}
+";
             }
         }
     }

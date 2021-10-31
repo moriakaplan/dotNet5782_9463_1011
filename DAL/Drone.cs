@@ -20,7 +20,8 @@ namespace IDAL
 model- {Model},
 max weight- {MaxWeight},
 status- {Status},
-battery- {Battery}";
+battery- {Battery}
+";
             }
         }
     }

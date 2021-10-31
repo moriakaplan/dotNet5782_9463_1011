@@ -301,6 +301,7 @@ namespace DalObject
         /// <summary>
         /// bonus 2
         /// Calculates the distance between two places.
+        /// (https://www.geeksforgeeks.org/program-distance-two-points-earth/) לקחנו משם את הנוסחא לפונקציה
         /// </summary>
         /// <param name="latitudeA"></param>
         /// <param name="longitudeA"></param>

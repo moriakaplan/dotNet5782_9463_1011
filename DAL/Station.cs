@@ -44,7 +44,8 @@ namespace IDAL
 number- {Name}, 
 longitude- {longi},
 lattitude- {latti}, 
-charge slots- {ChargeSlots}";
+charge slots- {ChargeSlots}
+";
             }
         }
     }
