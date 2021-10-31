@@ -350,7 +350,7 @@ longitude- ");
                             int.TryParse(input, out id);
                             distance = dalObject.DistanceForCustomer(longitude, lattitude, id); 
                         }
-                        Console.WriteLine(distance);
+                        Console.WriteLine("the distance is: "+distance);
                         break;
                     case Options.Exit:
                         break;

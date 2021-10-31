@@ -307,24 +307,27 @@ namespace DalObject
         /// <param name="latitudeB"></param>
         /// <param name="longitudeB"></param>
         /// <returns></returns>
-        public double Distance(double latitudeA, double longitudeA, double latitudeB, double longitudeB)
+        public double Distance(double lattitudeA, double longitudeA, double lattitudeB, double longitudeB)
         {
             var radiansOverDegrees = (Math.PI / 180.0);
 
-            var latitudeRadiansA = latitudeA * radiansOverDegrees;
+            var latitudeRadiansA = lattitudeA * radiansOverDegrees;
             var longitudeRadiansA = longitudeA * radiansOverDegrees;
-            var latitudeRadiansB = latitudeB * radiansOverDegrees;
+            var latitudeRadiansB = lattitudeB * radiansOverDegrees;
             var longitudeRadiansB = longitudeB * radiansOverDegrees;
+            // Haversine formula
+            double dlon = longitudeB - longitudeA;
+            double dlat = lattitudeB - lattitudeA;
+            double a = Math.Pow(Math.Sin(dlat / 2), 2) +
+                       Math.Cos(lattitudeA) * Math.Cos(lattitudeB) *
+                       Math.Pow(Math.Sin(dlon / 2), 2);
+            double c = 2 * Math.Asin(Math.Sqrt(a));
+            //Radius of earth in kilometers.
+            double r = 6371;
+            // calculate the result
+            return (c * r);
 
-            var dLongitude = longitudeRadiansB - longitudeRadiansA;
-            var dLatitude = latitudeRadiansB - latitudeRadiansA;
-
-            var result1 = Math.Pow(Math.Sin(dLatitude / 2.0), 2.0) + Math.Cos(latitudeRadiansB) * Math.Cos(latitudeRadiansA) * Math.Pow(Math.Sin(dLongitude / 2.0), 2.0);
-
-            // Using 3956 as the number of miles around the earth
-            var result2 = 3956.0 * 2.0 * Math.Atan2(Math.Sqrt(result1), Math.Sqrt(1.0 - result1));
-
-            return result2;
+            
         }
     }
 }
