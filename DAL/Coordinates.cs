@@ -8,6 +8,9 @@ namespace IDAL
 {
     namespace DO
     {
+        /// <summary>
+        /// The class represents coordinates (for the first bonus).
+        /// </summary>
         public class Coordinate
         {
             public double Value { set; get; }

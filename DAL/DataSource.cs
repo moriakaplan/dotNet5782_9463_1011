@@ -36,7 +36,7 @@ namespace DalObject
             });
             drones.Add(new Drone
             {
-                Id = random.Next(100000, 1000000),// for parcel use: Config.parcelCode++, 
+                Id = random.Next(100000, 1000000),
                 Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "superFalcon",
@@ -44,7 +44,7 @@ namespace DalObject
             });
             drones.Add(new Drone
             {
-                Id = random.Next(100000, 1000000),// for parcel use: Config.parcelCode++, 
+                Id = random.Next(100000, 1000000), 
                 Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "superFalcon",
@@ -52,7 +52,7 @@ namespace DalObject
             });
             drones.Add(new Drone
             {
-                Id = random.Next(100000, 1000000),// for parcel use: Config.parcelCode++, 
+                Id = random.Next(100000, 1000000),
                 Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "superFalcon2",
@@ -60,7 +60,7 @@ namespace DalObject
             });
             drones.Add(new Drone
             {
-                Id = random.Next(100000, 1000000),// for parcel use: Config.parcelCode++, 
+                Id = random.Next(100000, 1000000),
                 Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "nimbus2000",
@@ -79,7 +79,7 @@ namespace DalObject
                 Id = random.Next(100000000, 1000000000),
                 Name = "Yosef",
                 Phone = "0501234567",
-                Longitude = /*random.Next(-180, 180)*/35.2,
+                Longitude = 35.2,
                 Lattitude = 31.1
             });
             customers.Add(new Customer

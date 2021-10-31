@@ -57,8 +57,8 @@ namespace DalObject
         /// </summary>
         /// <param name="parcelId"></param>
         /// <param name="droneId"></param>
-        public  void AssignParcelToDrone(int parcelId, int droneId)
-        {  
+        public void AssignParcelToDrone(int parcelId, int droneId)
+        {
             Drone drone = DisplayDrone(droneId);
             DataSource.drones.Remove(drone);
             drone.Status = DroneStatuses.Assigned;//update the status of the drone
@@ -75,14 +75,14 @@ namespace DalObject
         /// pick the parcel by the drone
         /// </summary>
         /// <param name="parcelId"></param>
-        public  void PickParcelByDrone(int parcelId)
+        public void PickParcelByDrone(int parcelId)
         {
             Parcel parcel = DisplayParcel(parcelId);
             DataSource.parcels.Remove(parcel);
             parcel.PickedUp = DateTime.Now;//update the time that the drone pick up the parcel
             AddParcelToTheList(parcel);
 
-            Drone drone = DisplayDrone(parcel.Droneld); 
+            Drone drone = DisplayDrone(parcel.Droneld);
             DataSource.drones.Remove(drone);
             drone.Status = DroneStatuses.Sending;//update the status of the drone(sending)
             AddDroneToTheList(drone);
@@ -91,7 +91,7 @@ namespace DalObject
         /// deliver the parcel to the customer
         /// </summary>
         /// <param name="parcelId"></param>
-        public  void DeliverParcelToCustomer(int parcelId)
+        public void DeliverParcelToCustomer(int parcelId)
         {
             Parcel parcel = DisplayParcel(parcelId);
             DataSource.parcels.Remove(parcel);
@@ -103,7 +103,12 @@ namespace DalObject
             drone.Status = DroneStatuses.Vacant;//after the drone gives the parcel, he is vacant 
             AddDroneToTheList(drone);
         }
-        public  void SendDroneToCharge(int droneId, int stationId)
+       /// <summary>
+       /// send the drone for charging
+       /// </summary>
+       /// <param name="droneId"></param>
+       /// <param name="stationId"></param>
+        public void SendDroneToCharge(int droneId, int stationId)
         {
             DroneCharge droneCharge = new DroneCharge { DroneId = droneId, StationId = stationId };
             DataSource.droneCharges.Add(droneCharge);
@@ -118,7 +123,11 @@ namespace DalObject
             station.ChargeSlots++;
             AddStationToTheList(station);
         }
-        public  void ReleaseDroneFromeCharge(int droneId)
+        /// <summary>
+        /// release the drone frome charging 
+        /// </summary>
+        /// <param name="droneId"></param>
+        public void ReleaseDroneFromeCharge(int droneId)
         {
             DroneCharge dCharge = DataSource.droneCharges.Find(x => x.DroneId == droneId);
             //DroneCharge dCharge = new DroneCharge();
@@ -139,7 +148,12 @@ namespace DalObject
             station.ChargeSlots--;
             AddStationToTheList(station);
         }
-        public  Station DisplayStation(int stationId)
+       /// <summary>
+       /// display a station
+       /// </summary>
+       /// <param name="stationId"></param>
+       /// <returns></returns>
+        public Station DisplayStation(int stationId)
         {
             Station temp = new Station();
             foreach (Station item in DataSource.stations)
@@ -149,7 +163,12 @@ namespace DalObject
             }
             return temp;
         }
-        public  Drone DisplayDrone(int droneId)
+        /// <summary>
+        /// display a drone
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <returns></returns>
+        public Drone DisplayDrone(int droneId)
         {
             Drone temp = new Drone();
             foreach (Drone item in DataSource.drones)
@@ -159,7 +178,12 @@ namespace DalObject
             }
             return temp;
         }
-        public  Customer DisplayCustomer(int customerId)
+        /// <summary>
+        /// display a customer
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        public Customer DisplayCustomer(int customerId)
         {
             Customer temp = new Customer();
             foreach (Customer item in DataSource.customers)
@@ -169,7 +193,12 @@ namespace DalObject
             }
             return temp;
         }
-        public  Parcel DisplayParcel(int parcelId)
+        /// <summary>
+        /// display a parcel
+        /// </summary>
+        /// <param name="parcelId"></param>
+        /// <returns></returns>
+        public Parcel DisplayParcel(int parcelId)
         {
             Parcel temp = new Parcel();
             foreach (Parcel item in DataSource.parcels)
@@ -179,23 +208,43 @@ namespace DalObject
             }
             return temp;
         }
-        public  List<Station> DisplayListOfStations()
+       /// <summary>
+       /// display the list of the stations.
+       /// </summary>
+       /// <returns></returns>
+        public List<Station> DisplayListOfStations()
         {
             return DataSource.stations;
         }
-        public  List<Drone> DisplayListOfDrones()
+        /// <summary>
+        /// display the list of the drones.
+        /// </summary>
+        /// <returns></returns>
+        public List<Drone> DisplayListOfDrones()
         {
             return DataSource.drones;
         }
-        public  List<Customer> DisplayListOfCustomers()
+        /// <summary>
+        /// display the list of thecustomers
+        /// </summary>
+        /// <returns></returns>
+        public List<Customer> DisplayListOfCustomers()
         {
             return DataSource.customers;
         }
-        public  List<Parcel> DisplayListOfParcels()
+        /// <summary>
+       /// display the list of the customers
+       /// </summary>
+       /// <returns></returns>
+        public List<Parcel> DisplayListOfParcels()
         {
             return DataSource.parcels;
         }
-        public  List<Parcel> DisplayListOfUnassignedParcels()
+        /// <summary>
+        /// display the list of the unassign parcels
+        /// </summary>
+        /// <returns></returns>
+        public List<Parcel> DisplayListOfUnassignedParcels()
         {
             List<Parcel> unassignedParcels = new List<Parcel>();
             foreach (Parcel item in DataSource.parcels)
@@ -205,7 +254,11 @@ namespace DalObject
             }
             return unassignedParcels;
         }
-        public  List<Station> DisplayListOfStationsWithAvailableCargeSlots()
+        /// <summary>
+        /// display a list of all the station with empty charge slots
+        /// </summary>
+        /// <returns></returns>
+        public List<Station> DisplayListOfStationsWithAvailableCargeSlots()
         {
             List<Station> StationsWithAvailableCargingSlots = new List<Station>();
             foreach (Station item in DataSource.stations)
@@ -215,6 +268,14 @@ namespace DalObject
             }
             return StationsWithAvailableCargingSlots;
         }
+        /// <summary>
+        /// bonus 2
+        /// calculates the distance between a point and a station
+        /// </summary>
+        /// <param name="longitudeA"></param>
+        /// <param name="lattitudeA"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public double DistanceForStation(double longitudeA, double lattitudeA, int id)
         {
             double longitudeB = 0, lattitudeB = 0;
@@ -223,6 +284,14 @@ namespace DalObject
             lattitudeB = st.Lattitude;
             return Distance(longitudeA, lattitudeA, longitudeB, lattitudeB);
         }
+        /// <summary>
+        /// bonus2
+        /// Calculates the distance between a point and a customer
+        /// </summary>
+        /// <param name="longitudeA"></param>
+        /// <param name="lattitudeA"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public double DistanceForCustomer(double longitudeA, double lattitudeA, int id)
         {
             double longitudeB = 0, lattitudeB = 0;
@@ -231,7 +300,16 @@ namespace DalObject
             lattitudeB = cu.Lattitude;
             return Distance(longitudeA, lattitudeA, longitudeB, lattitudeB);
         }
-        public  double Distance(double latitudeA, double longitudeA, double latitudeB,double longitudeB)
+        /// <summary>
+        /// bonus 2
+        /// Calculates the distance between two places.
+        /// </summary>
+        /// <param name="latitudeA"></param>
+        /// <param name="longitudeA"></param>
+        /// <param name="latitudeB"></param>
+        /// <param name="longitudeB"></param>
+        /// <returns></returns>
+        public double Distance(double latitudeA, double longitudeA, double latitudeB, double longitudeB)
         {
             var radiansOverDegrees = (Math.PI / 180.0);
 
@@ -250,243 +328,15 @@ namespace DalObject
 
             return result2;
         }
-        //internal static String LongitudeSexagesimalCoordinates(double longitude)
-        //{
-        //    char direction = 'N';
-        //    string result;
-        //    double temp, minutes, seconds;
-        //    if(longitude<0)
-        //    {
-        //        longitude = -longitude;
-        //        direction = 'S';
-        //    }
-        //    temp = (longitude - (int)longitude) * 60;
-        //    minutes = (int)temp;
-        //    temp -= minutes;
-        //    seconds = temp * 60;
-        //    result = (int)longitude + "° " + minutes + "' " + seconds + "'' " + direction;
-        //    return result;
-        //}
-        //internal static String LattitudeSexagesimalCoordinates(double lattitude)
-        //{
-        //    char direction = 'E';
-        //    string result;
-        //    double temp, minutes, seconds;
-        //    if (lattitude < 0)
-        //    {
-        //        lattitude = -lattitude;
-        //        direction = 'W';
-        //    }
-        //    temp = (lattitude - (int)lattitude) * 60;
-        //    minutes = (int)temp;
-        //    temp -= minutes;
-        //    seconds = temp * 60;
-        //    result = (int)lattitude + "° " + minutes + "' " + seconds + "'' " + direction;
-        //    return result;
-        //}
     }
 }
+     
 
-//using IDAL.DO;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
 
-//namespace DalObject
-//{
-//    public class DalObject
-//    {
-//        public void AddStationToTheList(Station st)
-//        {
-//            DataSource.stations.Add(st);
-//        }
-//        public void AddDroneToTheList(Drone dr)
-//        {
-//            DataSource.drones.Add(dr);
-//        }
-//        public void AddCustomerToTheList(Customer cu)
-//        {
-//            DataSource.customers.Add(cu);
-//        }
-//        public int AddParcelToTheList(Parcel pa)
-//        {
-//            //לא ברור מה עושים עם המספר הרץ
-//            DataSource.parcels.Add(pa);
-//            DataSource.Config.parcelCode++;
-//            return DataSource.Config.parcelCode;
-//        }
-//        public void AssignParcelToDrone(int parcelId, int droneId)//שיוך חבילה לרחפן
-//        {
-//            //int index = 0;
-//            //Parcel temp=new Parcel();
-//            //foreach (Parcel item in DataSource.parcels)
-//            //{
-//            //    //index++;
-//            //    if (item.Id == parcelId)
-//            //    {
-//            //        DataSource.parcels.Add(new Parcel
-//            //        {
-//            //            Id = item.Id,
-//            //            Delivered = item.Delivered,
-//            //            Droneld = droneId,
-//            //            PickedUp = item.PickedUp,
-//            //            Priority = item.Priority,
-//            //            Requested = item.Requested,
-//            //            Scheduled = item.Scheduled,
-//            //            Senderld = item.Senderld,
-//            //            TargetId = item.TargetId,
-//            //            Weight = item.Weight
-//            //        });
-//            //        temp = item;
-//            //    }
-//            //}
-//            //DataSource.parcels.Remove(temp);
 
-//            //Parcel parcel = DataSource.parcels.Find(x=>x.Id==parcelId); //option a
-//            Parcel parcel = DisplayParcel(parcelId); //option b
-//            DataSource.parcels.Remove(parcel);
-//            DataSource.Config.parcelCode--;
-//            parcel.Droneld = droneId;
-//            parcel.Scheduled = DateTime.Now;
-//            AddParcelToTheList(parcel);
-//        }
-//        public void PickParcelByDrone(int parcelId)
-//        {
-//            Parcel parcel = DisplayParcel(parcelId); 
-//            DataSource.parcels.Remove(parcel);
-//            parcel.PickedUp = DateTime.Now;
-//            AddParcelToTheList(parcel);
 
-//            Drone drone = DisplayDrone(parcel.Droneld); // פה לא בטוח צריך
-//            DataSource.drones.Remove(drone);
-//            drone.Status = DroneStatuses.Sending;
-//            AddDroneToTheList(drone);
-//        }
-//        public void DeliverParcelToCustomer(int parcelId)
-//        {
-//            Parcel parcel = DisplayParcel(parcelId);
-//            DataSource.parcels.Remove(parcel);
-//            parcel.Delivered = DateTime.Now;
-//            AddParcelToTheList(parcel);
 
-//            Drone drone = DisplayDrone(parcel.Droneld); 
-//            DataSource.drones.Remove(drone);
-//            drone.Status = DroneStatuses.Vacant;
-//            AddDroneToTheList(drone);
-//        }
-//        public void SendDroneToCharge(int droneId, int stationId)
-//        {
-//            DroneCharge droneCharge = new DroneCharge{ DroneId = droneId, StationId = stationId };
-//            DataSource.droneCharges.Add(droneCharge);
 
-//            Drone drone = DisplayDrone(droneId);
-//            DataSource.drones.Remove(drone);
-//            drone.Status = DroneStatuses.Maintenance;
-//            AddDroneToTheList(drone);
 
-//            Station station = DisplayStation(stationId);
-//            DataSource.stations.Remove(station);
-//            station.ChargeSlots++;
-//            AddStationToTheList(station);
-//        }
-//        public void ReleaseDroneFromeCharge(int droneId)
-//        {
-//            DroneCharge dCharge = DataSource.droneCharges.Find(x => x.DroneId == droneId);
-//            //DroneCharge dCharge = new DroneCharge();
-//            //foreach (DroneCharge item in DataSource.droneCharges)
-//            //{
-//            //    if (item.DroneId == droneId)
-//            //        dCharge = item;
-//            //}
-//            DataSource.droneCharges.Remove(dCharge);
 
-//            Drone drone = DisplayDrone(droneId);
-//            DataSource.drones.Remove(drone);
-//            drone.Status = DroneStatuses.Vacant;
-//            AddDroneToTheList(drone);
 
-//            Station station = DisplayStation(dCharge.StationId);
-//            DataSource.stations.Remove(station);
-//            station.ChargeSlots--;
-//            AddStationToTheList(station);
-//        }
-//        public Station DisplayStation(int stationId)
-//        {
-//            Station temp= new Station();
-//            foreach (Station item in DataSource.stations)
-//            {
-//                if (item.Id == stationId)
-//                    temp = item;
-//            }
-//            return temp;
-//        }
-//        public Drone DisplayDrone(int droneId)
-//        {
-//            Drone temp = new Drone();
-//            foreach (Drone item in DataSource.drones)
-//            {
-//                if (item.Id == droneId)
-//                    temp = item;
-//            }
-//            return temp;
-//        }
-//        public Customer DisplayCustomer(int customerId)
-//        {
-//            Customer temp = new Customer();
-//            foreach (Customer item in DataSource.customers)
-//            {
-//                if (item.Id == customerId)
-//                    temp = item;
-//            }
-//            return temp;
-//        }
-//        public Parcel DisplayParcel(int parcelId)
-//        {
-//            Parcel temp = new Parcel();
-//            foreach (Parcel item in DataSource.parcels)
-//            {
-//                if (item.Id == parcelId)
-//                    temp = item;
-//            }
-//            return temp;
-//        }
-//        public List<Station> DisplayListOfStations()
-//        {
-//            return DataSource.stations;
-//        }
-//        public List<Drone> DisplayListOfDrones()
-//        {
-//            return DataSource.drones;
-//        }
-//        public List<Customer> DisplayListOfCustomers()
-//        {
-//            return DataSource.customers;
-//        }
-//        public List<Parcel> DisplayListOfParcels()
-//        {
-//            return DataSource.parcels;
-//        }
-//        public List<Parcel> DisplayListOfUnassignedParcels()
-//        {
-//            List<Parcel> unassignedParcels = new List<Parcel>();
-//            foreach (Parcel item in DataSource.parcels)
-//            {
-//                if (item.Scheduled == DateTime.MinValue)
-//                    unassignedParcels.Add(item);
-//            }
-//            return unassignedParcels;
-//        }
-//        public List<Station> DisplayListOfStationsWithAvailableCargingSlots()
-//        {
-//            List<Station> StationsWithAvailableCargingSlots = new List<Station>();
-//            foreach (Station item in DataSource.stations)
-//            {
-//                if (item.ChargeSlots > 0)
-//                    StationsWithAvailableCargingSlots.Add(item);
-//            }
-//            return StationsWithAvailableCargingSlots;
-//        }
-//    }
-//}
