@@ -13,6 +13,7 @@ namespace IDAL
             public string Name { get; set; }
             public double Longitude { get; set; }
             public double Lattitude { get; set; }
+
             //private Coordinate longi;
             //private Coordinate latti;
             //public double Longitude//bonus 1
