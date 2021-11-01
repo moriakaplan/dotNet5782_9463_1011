@@ -31,9 +31,9 @@ namespace DalObject
             {
                 Id = random.Next(1000, 10000),
                 Name = "the biggest station",
-                Longitude = -45,
-                Lattitude = 78.3,
-                ChargeSlots = 5408
+                Longitude = 35,
+                Lattitude = 32,
+                ChargeSlots = 540
             });
             drones.Add(new Drone
             {
