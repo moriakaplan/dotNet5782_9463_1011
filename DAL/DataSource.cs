@@ -11,6 +11,7 @@ namespace DalObject
         internal static List<Parcel> parcels = new List<Parcel>();
         internal static List<Customer> customers = new List<Customer>();
         internal static List<Station> stations = new List<Station>();
+
         internal static Random random = new Random();
         internal static class Config
         {
@@ -156,7 +157,7 @@ namespace DalObject
             });
             parcels.Add(new Parcel
             {
-                Id = Config.parcelCode,
+                Id = ++Config.parcelCode,
                 Senderld = customers[1].Id,
                 TargetId = customers[2].Id,
                 Droneld = 0,
@@ -167,10 +168,9 @@ namespace DalObject
                 PickedUp = DateTime.MinValue,
                 Delivered = DateTime.MinValue,
             });
-            Config.parcelCode++;
             parcels.Add(new Parcel
             {
-                Id = Config.parcelCode,
+                Id = ++Config.parcelCode,
                 Senderld = customers[3].Id,
                 TargetId = customers[4].Id,
                 Droneld = 0,
@@ -181,10 +181,9 @@ namespace DalObject
                 PickedUp = DateTime.MinValue,
                 Delivered = DateTime.MinValue,
             });
-            Config.parcelCode++;
             parcels.Add(new Parcel
             {
-                Id = Config.parcelCode,
+                Id = ++Config.parcelCode,
                 Senderld = customers[5].Id,
                 TargetId = customers[6].Id,
                 Droneld = 0,
@@ -195,10 +194,9 @@ namespace DalObject
                 PickedUp = DateTime.MinValue,
                 Delivered = DateTime.MinValue,
             });
-            Config.parcelCode++;
             parcels.Add(new Parcel
             {
-                Id = Config.parcelCode,
+                Id = ++Config.parcelCode,
                 Senderld = customers[7].Id,
                 TargetId = customers[8].Id,
                 Droneld = 0,
@@ -209,10 +207,9 @@ namespace DalObject
                 PickedUp = DateTime.MinValue,
                 Delivered = DateTime.MinValue,
             });
-            Config.parcelCode++;
             parcels.Add(new Parcel
             {
-                Id = Config.parcelCode,
+                Id = ++Config.parcelCode,
                 Senderld = customers[1].Id,
                 TargetId = customers[7].Id,
                 Droneld = drones[0].Id,
@@ -223,10 +220,9 @@ namespace DalObject
                 PickedUp = DateTime.MinValue,
                 Delivered = DateTime.MinValue,
             });
-            Config.parcelCode++;
             parcels.Add(new Parcel
             {
-                Id = Config.parcelCode,
+                Id = ++Config.parcelCode,
                 Senderld = customers[9].Id,
                 TargetId = customers[8].Id,
                 Droneld = drones[1].Id,
@@ -237,10 +233,9 @@ namespace DalObject
                 PickedUp = DateTime.MinValue,
                 Delivered = DateTime.MinValue,
             });
-            Config.parcelCode++;
             parcels.Add(new Parcel
             {
-                Id = Config.parcelCode,
+                Id = ++Config.parcelCode,
                 Senderld = customers[1].Id,
                 TargetId = customers[2].Id,
                 Droneld = drones[2].Id,
@@ -251,10 +246,9 @@ namespace DalObject
                 PickedUp = new DateTime(2021, 01, 12),
                 Delivered = DateTime.MinValue,
             });
-            Config.parcelCode++;
             parcels.Add(new Parcel
             {
-                Id = Config.parcelCode,
+                Id = ++Config.parcelCode,
                 Senderld = customers[3].Id,
                 TargetId = customers[4].Id,
                 Droneld = drones[3].Id,
@@ -265,10 +259,9 @@ namespace DalObject
                 PickedUp = new DateTime(2021, 08, 24),
                 Delivered = DateTime.MinValue,
             });
-            Config.parcelCode++;
             parcels.Add(new Parcel
             {
-                Id = Config.parcelCode,
+                Id = ++Config.parcelCode,
                 Senderld = customers[6].Id,
                 TargetId = customers[4].Id,
                 Droneld = drones[2].Id,
@@ -279,10 +272,9 @@ namespace DalObject
                 PickedUp = new DateTime(2021, 01, 05),
                 Delivered = new DateTime(2021, 01, 06)
             });
-            Config.parcelCode++;
             parcels.Add(new Parcel
             {
-                Id = Config.parcelCode,
+                Id = ++Config.parcelCode,
                 Senderld = customers[2].Id,
                 TargetId = customers[5].Id,
                 Droneld = drones[3].Id,
@@ -293,7 +285,6 @@ namespace DalObject
                 PickedUp = new DateTime(2021, 02, 23),
                 Delivered = new DateTime(2021, 03, 01),
             });
-            Config.parcelCode++;
         }
     }
 }
