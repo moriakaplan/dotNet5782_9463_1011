@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace DalObject
 {
-    public class DalObject
+    public class DalObject : IDal
     {
+        public static object DataSource { get; private set; }
+
         /// <summary>
-        /// constractor.call the static function initialize.
+        /// constructor.call the static function initialize.
         /// </summary>
         public DalObject()
         {
@@ -48,7 +50,7 @@ namespace DalObject
         /// <returns></returns>
         public int AddParcelToTheList(Parcel parcel)
         {
-            parcel.Id = DataSource.Config.parcelCode++;
+            parcel.Id = ++DataSource.Config.parcelCode;
             DataSource.parcels.Add(parcel);
             return DataSource.Config.parcelCode;
         }
@@ -61,7 +63,7 @@ namespace DalObject
         {
             Drone drone = DisplayDrone(droneId);
             DataSource.drones.Remove(drone);
-            drone.Status = DroneStatuses.Assigned;//update the status of the drone
+            //drone.Status = DroneStatuses.Assigned;//update the status of the drone
             AddDroneToTheList(drone);
 
             Parcel parcel = DisplayParcel(parcelId);
@@ -84,7 +86,7 @@ namespace DalObject
 
             Drone drone = DisplayDrone(parcel.Droneld);
             DataSource.drones.Remove(drone);
-            drone.Status = DroneStatuses.Sending;//update the status of the drone(sending)
+            //drone.Status = DroneStatuses.Sending;//update the status of the drone(sending)
             AddDroneToTheList(drone);
         }
         /// <summary>
@@ -100,14 +102,14 @@ namespace DalObject
 
             Drone drone = DisplayDrone(parcel.Droneld);
             DataSource.drones.Remove(drone);
-            drone.Status = DroneStatuses.Vacant;//after the drone gives the parcel, he is vacant 
+            //drone.Status = DroneStatuses.Vacant;//after the drone gives the parcel, he is vacant 
             AddDroneToTheList(drone);
         }
-       /// <summary>
-       /// send the drone for charging
-       /// </summary>
-       /// <param name="droneId"></param>
-       /// <param name="stationId"></param>
+        /// <summary>
+        /// send the drone for charging
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <param name="stationId"></param>
         public void SendDroneToCharge(int droneId, int stationId)
         {
             DroneCharge droneCharge = new DroneCharge { DroneId = droneId, StationId = stationId };
@@ -115,7 +117,7 @@ namespace DalObject
 
             Drone drone = DisplayDrone(droneId);
             DataSource.drones.Remove(drone);
-            drone.Status = DroneStatuses.Maintenance;
+            //drone.Status = DroneStatuses.Maintenance;
             AddDroneToTheList(drone);
 
             Station station = DisplayStation(stationId);
@@ -140,7 +142,7 @@ namespace DalObject
 
             Drone drone = DisplayDrone(droneId);
             DataSource.drones.Remove(drone);
-            drone.Status = DroneStatuses.Vacant;
+            //drone.Status = DroneStatuses.Vacant;
             AddDroneToTheList(drone);
 
             Station station = DisplayStation(dCharge.StationId);
@@ -148,11 +150,11 @@ namespace DalObject
             station.ChargeSlots--;
             AddStationToTheList(station);
         }
-       /// <summary>
-       /// display a station
-       /// </summary>
-       /// <param name="stationId"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// display a station
+        /// </summary>
+        /// <param name="stationId"></param>
+        /// <returns></returns>
         public Station DisplayStation(int stationId)
         {
             Station temp = new Station();
@@ -208,11 +210,11 @@ namespace DalObject
             }
             return temp;
         }
-       /// <summary>
-       /// display the list of the stations.
-       /// </summary>
-       /// <returns></returns>
-        public List<Station> DisplayListOfStations()
+        /// <summary>
+        /// display the list of the stations.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Station> DisplayListOfStations()
         {
             List<Station> result = new List<Station>(DataSource.stations);
             return result;
@@ -221,7 +223,7 @@ namespace DalObject
         /// display the list of the drones.
         /// </summary>
         /// <returns></returns>
-        public List<Drone> DisplayListOfDrones()
+        public IEnumerable<Drone> DisplayListOfDrones()
         {
             List<Drone> result = new List<Drone>(DataSource.drones);
             return result;
@@ -230,16 +232,16 @@ namespace DalObject
         /// display the list of thecustomers
         /// </summary>
         /// <returns></returns>
-        public List<Customer> DisplayListOfCustomers()
+        public IEnumerable<Customer> DisplayListOfCustomers()
         {
             List<Customer> result = new List<Customer>(DataSource.customers);
             return result;
         }
         /// <summary>
-       /// display the list of the customers
-       /// </summary>
-       /// <returns></returns>
-        public List<Parcel> DisplayListOfParcels()
+        /// display the list of the customers
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Parcel> DisplayListOfParcels()
         {
             List<Parcel> result = new List<Parcel>(DataSource.parcels);
             return result;
@@ -248,7 +250,7 @@ namespace DalObject
         /// display the list of the unassign parcels
         /// </summary>
         /// <returns></returns>
-        public List<Parcel> DisplayListOfUnassignedParcels()
+        public IEnumerable<Parcel> DisplayListOfUnassignedParcels()
         {
             List<Parcel> unassignedParcels = new List<Parcel>();
             foreach (Parcel item in DataSource.parcels)
@@ -262,7 +264,7 @@ namespace DalObject
         /// display a list of all the station with empty charge slots
         /// </summary>
         /// <returns></returns>
-        public List<Station> DisplayListOfStationsWithAvailableCargeSlots()
+        public IEnumerable<Station> DisplayListOfStationsWithAvailableCargeSlots()
         {
             List<Station> StationsWithAvailableCargingSlots = new List<Station>();
             foreach (Station item in DataSource.stations)
@@ -327,8 +329,15 @@ namespace DalObject
             double r = 6371;
             // calculate the result
             return (c * r);
-
-            
+        }
+        double[] askBattery(Drone drone)
+        {
+            return new double[] {
+                DataSource.Config.available,
+                DataSource.Config.easy,
+                DataSource.Config.medium,
+                DataSource.Config.heavy,
+                DataSource.Config.rate };
         }
     }
 }

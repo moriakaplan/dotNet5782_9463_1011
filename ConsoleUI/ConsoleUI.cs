@@ -14,7 +14,8 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            DalObject.DalObject dalObject = new DalObject.DalObject();
+            //DalObject.DalObject dalObject = new DalObject.DalObject();
+            IDal dalObject = new DalObject.DalObject();
             string input;
             Options options;
             AddingOptions addChoise;
@@ -22,10 +23,10 @@ namespace ConsoleUI
             DisplayOptions displayChoise;
             DisplayListOptions displayListChoise;
             int id, senderId, targetId, droneId, chargeSlots;
-            double longitude, lattitude, battery;
+            double longitude, lattitude/*, battery*/;
             string name, phone, model;
             WeightCategories weight;
-            DroneStatuses status;
+            //DroneStatuses status;
             Priorities priority;
          
             Console.Write("Hello! ");
@@ -94,19 +95,19 @@ Drone ID (6 digits)-");
                                 Console.WriteLine("Dron max weight (Easy/Medium/Heavy)-");
                                 input = Console.ReadLine();
                                 WeightCategories.TryParse(input, out weight);
-                                Console.WriteLine("Drone status (Vacant/Maintenance/Sending)-");
-                                input = Console.ReadLine();
-                                DroneStatuses.TryParse(input, out status);
-                                Console.WriteLine("Drone battery-");
-                                input = Console.ReadLine();
-                                double.TryParse(input, out battery);
+                                //Console.WriteLine("Drone status (Vacant/Maintenance/Sending)-");
+                                //input = Console.ReadLine();
+                                //DroneStatuses.TryParse(input, out status);
+                                //Console.WriteLine("Drone battery-");
+                                //input = Console.ReadLine();
+                                //double.TryParse(input, out battery);
                                 Drone drone = new Drone//Creates a new drone
                                 {
                                     Id = id,
                                     Model = model,
                                     MaxWeight = weight,
-                                    Status = status,
-                                    Battery = battery
+                                    //Status = status,
+                                    //Battery = battery
                                 };
                                 dalObject.AddDroneToTheList(drone);//Add the drone to the list
                                 break;

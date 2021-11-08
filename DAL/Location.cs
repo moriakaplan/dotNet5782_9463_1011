@@ -11,10 +11,10 @@ namespace IDAL
         /// <summary>
         /// The class represents coordinates (for the first bonus).
         /// </summary>
-        internal class Coordinate
+        internal class Location
         {
-            public double Longi { get; set; }
-            public double Latti { get; set; }
+            public double Longi { get; init; }
+            public double Latti { get; init; }
 
             public override string ToString()
             {

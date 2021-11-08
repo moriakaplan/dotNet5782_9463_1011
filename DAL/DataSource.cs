@@ -16,6 +16,11 @@ namespace DalObject
         internal static class Config
         {
             internal static int parcelCode = 10000000;
+            public static double available;
+            public static double easy;
+            public static double medium;
+            public static double heavy;
+            public static double rate;
         }
         public static void Initialize()//Initializes 2 stations, 5 drones, 10 customers and 10 parcels.
         {
@@ -38,42 +43,42 @@ namespace DalObject
             drones.Add(new Drone
             {
                 Id = random.Next(100000, 1000000),
-                Battery = random.NextDouble() * 100,
+                //Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "superFalcon",
-                Status = DroneStatuses.Assigned
+                //Status = DroneStatuses.Assigned
             });
             drones.Add(new Drone
             {
                 Id = random.Next(100000, 1000000), 
-                Battery = random.NextDouble() * 100,
+                //Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "superFalcon",
-                Status = DroneStatuses.Assigned
+                //Status = DroneStatuses.Assigned
             });
             drones.Add(new Drone
             {
                 Id = random.Next(100000, 1000000),
-                Battery = random.NextDouble() * 100,
+                //Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "superFalcon2",
-                Status = DroneStatuses.Sending
+                //Status = DroneStatuses.Sending
             });
             drones.Add(new Drone
             {
                 Id = random.Next(100000, 1000000),
-                Battery = random.NextDouble() * 100,
+                //Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "nimbus2000",
-                Status = DroneStatuses.Sending
+                //Status = DroneStatuses.Sending
             });
             drones.Add(new Drone
             {
                 Id = random.Next(100000, 1000000),
-                Battery = random.NextDouble() * 100,
+                //Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "AnaAref",
-                Status = DroneStatuses.Maintenance
+                //Status = DroneStatuses.Maintenance
             });
             customers.Add(new Customer
             {

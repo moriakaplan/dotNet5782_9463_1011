@@ -38,7 +38,7 @@ namespace IDAL
             public int ChargeSlots { get; set; }
             public override string ToString()
             {
-                Coordinate coordinate = new Coordinate { Longi = Longitude, Latti = Lattitude };
+                Location coordinate = new Location { Longi = Longitude, Latti = Lattitude };
                 return @$"station #{Id}:
 number- {Name}, 
 {coordinate}, 
