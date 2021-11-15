@@ -1,4 +1,5 @@
 ﻿using IDAL.DO;
+using IDAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace DalObject
 {
     public class DalObject : IDal
     {
-        public static object DataSource { get; private set; }
+        //public static DataSource DataSource { get; private set; }
 
         /// <summary>
         /// constructor.call the static function initialize.
@@ -330,7 +331,7 @@ namespace DalObject
             // calculate the result
             return (c * r);
         }
-        double[] askBattery(Drone drone)
+        public double[] askBattery(Drone drone)
         {
             return new double[] {
                 DataSource.Config.available,

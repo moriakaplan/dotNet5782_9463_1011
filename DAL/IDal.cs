@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using IDAL.DO;
 
-namespace IDAL.DO
+namespace IDAL
 {
     public interface IDal
     {
@@ -26,14 +27,6 @@ namespace IDAL.DO
         void PickParcelByDrone(int parcelId);
         void ReleaseDroneFromeCharge(int droneId);
         void SendDroneToCharge(int droneId, int stationId);
-        double[] askBattery(Drone drone)
-        {
-            return new double[] { 
-                DalObject.DataSource.Config.available, 
-                DalObject.DataSource.Config.easy, 
-                DalObject.DataSource.Config.medium, 
-                DalObject.DataSource.Config.heavy, 
-                DalObject.DataSource.Config.rate };
-        }
+        double[] askBattery(Drone drone);
     }
 }
