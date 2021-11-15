@@ -13,6 +13,7 @@ namespace IDAL
             public string Name { get; set; }
             public double Longitude { get; set; }
             public double Lattitude { get; set; }
+            public int ChargeSlots { get; set; }
 
             //private Coordinate longi;
             //private Coordinate latti;
@@ -35,7 +36,6 @@ namespace IDAL
             //        latti.IsLongitude = false;
             //    }
             //}
-            public int ChargeSlots { get; set; }
             public override string ToString()
             {
                 Location coordinate = new Location { Longi = Longitude, Latti = Lattitude };

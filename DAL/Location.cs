@@ -47,8 +47,6 @@ lattitude- {SexagesimalCoordinates(Latti, false)}";
                 return result;
             }
 
-
-
             //public double Value { set; get; }
             //public bool IsLongitude { set; get; }
             /// <summary>

@@ -20,7 +20,7 @@ namespace DalObject
             public static double easy;
             public static double medium;
             public static double heavy;
-            public static double rate;
+            public static double rate; //per hour
         }
         public static void Initialize()//Initializes 2 stations, 5 drones, 10 customers and 10 parcels.
         {
