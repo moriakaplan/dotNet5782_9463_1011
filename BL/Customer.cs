@@ -16,6 +16,13 @@ namespace IBL.BO
         public IEnumerable<ParcelInCustomer> parcelTo { get; set; }
         public override string ToString()
         {
+            return @$"Id #{Id}:
+Name- {Name},
+Phone- {Phone},
+Location- {Location},
+parcel In  customer- From The Customer- {parcelFrom},
+parcel In  customer- To The Customer- {parcelTo}.
+";
 
         }
     }

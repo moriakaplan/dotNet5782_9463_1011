@@ -14,6 +14,11 @@ namespace IBL.BO
         public int NotAvailableChargeSlots { get; set; }
         public override string ToString()
         {
+            return @$"Station Id: #{Id}:
+name- {Name},
+Available Charge Slots- {AvailableChargeSlots},
+Not Available Charge Slots- {NotAvailableChargeSlots},
+";
 
         }
     }

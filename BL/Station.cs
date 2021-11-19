@@ -15,6 +15,12 @@ namespace IBL.BO
         public IEnumerable<DroneInCharge> DronesInCharge { get; set; }
         public override string ToString()
         {
+            return @$"Station Id: #{Id}:
+name- {Name},
+location- {Location},
+Available Charge Slots- {AvailableChargeSlots},
+Drones In Charge- {DronesInCharge}.
+";
         }
     }
 }

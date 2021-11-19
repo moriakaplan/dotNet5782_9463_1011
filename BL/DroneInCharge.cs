@@ -12,7 +12,9 @@ namespace IBL.BO
         public double Battery { get; set; }
         public override string ToString()
         {
-
+            return @$"drone #{Id}:
+battery- {Battery}.
+";
         }
     }
 }

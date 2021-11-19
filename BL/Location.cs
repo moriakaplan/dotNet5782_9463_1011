@@ -13,7 +13,11 @@ namespace IBL.BO
 
         public override string ToString()
         {
-            
+            return @$"longitude- {Longi},
+lattitude- {Latti}.
+";
+
+
         }
     }
 }

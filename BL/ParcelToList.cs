@@ -16,7 +16,13 @@ namespace IBL.BO
         public ParcelStatus Status { get; set; } //הוגדרה(נוצרה), שויכה, נאספקה על ידי הרחפן, סופקה ללקוח
         public override string ToString()
         {
-
+            return @$"Id: #{Id}:
+sender name- {SenderName},
+reciver name- {TargetName},
+weight- {Weight},
+priority- {Priority},
+status- {Status}.
+";
         }
     }
 }

@@ -20,7 +20,17 @@ namespace IBL.BO
         public DateTime Delivered { get; set; } //מסירה ליעד
         public override string ToString()
         {
-
+            return @$"Id: #{Id}:
+sender- {Sender},
+reciver- {Target},
+drone- {Drone},
+weight- {Weight},
+priority- {Priority},
+create- {Requested},
+scheduled- {Scheduled},
+picked up- {PickedUp},
+delivered- {Delivered}.
+";
         }
     }
 }

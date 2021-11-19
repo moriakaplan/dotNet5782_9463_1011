@@ -19,6 +19,17 @@ namespace IBL.BO
         public double TransportDistance { get; set; }
         public override string ToString()
         {
+            return @$"Id: #{Id}:
+sender- {Sender},
+parcel mode- {InTheWay},
+sender- {Sender},
+reciver- {Target},
+weight- {Weight},
+priority- {Priority},
+picking up place- {PickingPlace},
+delivering place- {TargetPlace},
+Transport Distance- {TransportDistance}.
+";
 
         }
     }
