@@ -8,13 +8,13 @@ namespace IBL.BO
 {
     public class Location
     {
-        public double Longi { get; init; }
-        public double Latti { get; init; }
+        public double Longitude { get; init; }
+        public double Lattitude { get; init; }
 
         public override string ToString()
         {
-            return @$"longitude- {Longi},
-lattitude- {Latti}.
+            return @$"longitude- {Longitude},
+lattitude- {Lattitude}.
 ";
 
 

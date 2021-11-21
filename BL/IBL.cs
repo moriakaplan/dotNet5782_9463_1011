@@ -11,7 +11,7 @@ namespace IBL
     {
         //הוספה
         void AddStation(Station station);
-        void AddStation(Drone station);
+        void AddDrone(Drone drone);
         void AddCustomer(Customer station);
         void AddParcelToDelivery(Parcel parcel);//*מה הוא מקבל
         //עדכון
