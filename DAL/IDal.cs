@@ -13,14 +13,14 @@ namespace IDAL
         void DeliverParcelToCustomer(int parcelId);
         Customer DisplayCustomer(int customerId);
         Drone DisplayDrone(int droneId);
+        Parcel DisplayParcel(int parcelId);
+        Station DisplayStation(int stationId);
         IEnumerable<Customer> DisplayListOfCustomers();
         IEnumerable<Drone> DisplayListOfDrones();
         IEnumerable<Parcel> DisplayListOfParcels();
         IEnumerable<Station> DisplayListOfStations();
         IEnumerable<Station> DisplayListOfStationsWithAvailableCargeSlots();
         IEnumerable<Parcel> DisplayListOfUnassignedParcels();
-        Parcel DisplayParcel(int parcelId);
-        Station DisplayStation(int stationId);
         double Distance(double lattitudeA, double longitudeA, double lattitudeB, double longitudeB);
         double DistanceForCustomer(double longitudeA, double lattitudeA, int id);
         double DistanceForStation(double longitudeA, double lattitudeA, int id);
