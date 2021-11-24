@@ -4,14 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IBL.BO;
+using IDAL;
 
-namespace BL
+namespace IBL
 {
-    public partial class BL:IBL.Ibl
+    public partial class BL
     {
+        IDal dalObject = new DalObject.DalObject();
         void AddParcelToDelivery(Parcel parcel)//*מה הוא מקבל
         {
-
+            IDAL.DO.Parcel pa=new IDAL.DO.Parcel { Id=parcel.Id, Delivered=parcel.Delivered, Droneld=parcel.Drone.Id, }
+            dalObject.AddParcelToTheList(pa);
         }
         void AssignParcelToDrone(int parcelId, int droneId)//איפה הוא צריך להיות
         {
@@ -31,7 +34,7 @@ namespace BL
         }
         Parcel DisplayParcel(int parcelId)
         {
-            return null;
+            return ;
         }
         IEnumerable<ParcelToList> DisplayListOfParcels()
         {

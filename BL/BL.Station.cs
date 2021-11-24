@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL;
 using DalObject;
 using IBL.BO;
+using IDAL;
 
-namespace BL
+namespace IBL
 {
-    public partial class BL : Ibl
+    public partial class BL
     {
         public void AddStation(Station station)
         {
