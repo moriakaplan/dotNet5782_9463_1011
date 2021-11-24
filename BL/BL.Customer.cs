@@ -11,15 +11,42 @@ namespace BL
     {
         void AddCustomer(Customer customer)
         {
-
+            //creates a new station in the data level
+            IDAL.DO.Customer dCustomer = new IDAL.DO.Customer
+            {
+                Id = customer.Id,
+                Name = customer.Name,
+                Lattitude = customer.Location.Latti,
+                Longitude = customer.Location.Longi,
+                Phone = customer.Phone
+            };
+            //try
+            //{
+               dl.AddCustomerToTheList(dCustomer);
+            //add the new station to the list in the data level
+            // }
+            // catch(Exception ex)
+            //{
+            //    throw new ExistIdException(ex.Message, ex)
+            // }
         }
-        void UpdateCustomer(int id, params string[] args /*name and phone*/)//לשאול אנשים
+        void UpdateCustomer(int customerId, params string[] args /*name and phone*/)//לשאול אנשים
         {
+            IDAL.DO.Customer dCustomer = dl.DisplayCustomer(customerId);
+
 
         }
         Customer DisplayCustomer(int customerId)
         {
-            return null;
+            IDAL.DO.Customer dCustomer = dl.DisplayCustomer(customerId);
+            Customer bCustomer = new Customer();
+            bCustomer.Id = dCustomer.Id;
+            bCustomer.Name = dCustomer.Name;
+            bCustomer.Phone = dCustomer.Phone;
+            bCustomer.Location = new Location() { Latti = dCustomer.Lattitude, Longi = dCustomer.Lattitude };
+            bCustomer.parcelFrom = getCustomerParcelFrom(customerId);
+            bCustomer.parcelTo = getCustomerParcelTo(customerId);
+            return bCustomer;
         }
         IEnumerable<CustomerToList> DisplayListOfCustomers()
         {
