@@ -11,7 +11,7 @@ namespace BL
     public partial class BL
     {
         public List<DroneToList> lstdrn;
-        public IDal dl;
+        public IDal dl = new DalObject.DalObject();
         public BL()
         {
             dl = new DalObject.DalObject();

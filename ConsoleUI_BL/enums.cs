@@ -5,8 +5,7 @@
         Adding, 
         Updating, 
         Display, 
-        ListsDisplay, 
-        Distance 
+        ListsDisplay
     };
     enum AddingOptions { 
         Station = 1, 

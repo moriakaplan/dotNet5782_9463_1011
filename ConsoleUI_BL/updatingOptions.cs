@@ -58,7 +58,7 @@ namespace ConsoleUI_BL
                     Console.WriteLine("Enter the new phone of the customer (optional):");
                     phone = Console.ReadLine();
                     if (phone == "\n") phone = null;
-                    if (name != null || phone != null) blObject.UpdateStation(id, name, phone);
+                    if (name != null || phone != null) blObject.UpdateCustomer(id, name, phone);
                     break;
                 case UpdatingOptions.SendDroneToCharge://if the user wants to send the parcel to charge
                     Console.WriteLine("Enter the drone ID (6 digits):");

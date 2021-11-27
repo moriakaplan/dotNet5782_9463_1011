@@ -1,6 +1,7 @@
 ﻿using System;
 using IBL.BO;
 using IBL;
+using System.Collections.Generic;
 
 namespace ConsoleUI_BL
 {
@@ -10,7 +11,7 @@ namespace ConsoleUI_BL
         {
             string input;
             AddingOptions addChoise;
-            int id, senderId, targetId, chargeSlots;
+            int id, senderId, targetId, stationId, chargeSlots;
             double longitude, lattitude, battery;
             string name, phone, model;
             WeightCategories weight;
@@ -50,9 +51,9 @@ longitude-");
                     Station station = new Station//Creates a new station
                     {
                         Id = id,
-                        Name = name, 
-                        Location=location, 
-                        AvailableChargeSlots=chargeSlots
+                        Name = name,
+                        Location = location,
+                        AvailableChargeSlots = chargeSlots
                     };
                     blObject.AddStation(station);//Add the station to the list
                     break;
@@ -68,27 +69,15 @@ Drone ID (6 digits)-");
                     Console.WriteLine("Dron max weight (Easy/Medium/Heavy)-");
                     input = Console.ReadLine();
                     WeightCategories.TryParse(input, out weight);
-                    Console.WriteLine("Drone status (Vacant/Maintenance/Sending)-"); //
+                    Console.WriteLine("Enter ID of station for first charging of the drone-");
                     input = Console.ReadLine();
-                    DroneStatus.TryParse(input, out status);
-                    Console.WriteLine("Drone battery-");
-                    input = Console.ReadLine();
-                    double.TryParse(input, out battery);
-                    Console.WriteLine(@"drone location:
-longitude-");
-                    input = Console.ReadLine();
-                    double.TryParse(input, out longitude);
-                    Console.WriteLine("lattitude-");
-                    input = Console.ReadLine();
-                    double.TryParse(input, out lattitude);
-                    location = new Location { Longi = longitude, Latti = lattitude };
+                    int.TryParse(input, out stationId);
+                    location = blObject.DisplayStation(stationId).Location;
                     Drone drone = new Drone//Creates a new drone
                     {
                         Id = id,
                         Model = model,
-                        MaxWeight = weight,
-                        Status = status,
-                        Battery = battery, 
+                        MaxWeight = weight, 
                         CurrentLocation = location
                     };
                     blObject.AddDrone(drone);//Add the drone to the list

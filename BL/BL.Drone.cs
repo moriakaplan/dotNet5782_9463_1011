@@ -4,15 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IBL.BO;
+using IBL;
 using IDAL;
 
 namespace IBL
 {
-    public partial class BL
+    public partial class BL: Ibl
     {
         void AddDrone(Drone drone)
         {
-
+            //creates a new station in the data level
+            IDAL.DO.Drone dalDrone = new IDAL.DO.Drone
+            {
+                Id = drone.Id,
+                Model=drone.Model, MaxWeight=drone.MaxWeight, 
+            };
+            //try
+            //{
+            dl.AddCustomerToTheList(dCustomer);
+            //add the new station to the list in the data level
+            // }
+            // catch(Exception ex)
+            //{
+            //    throw new ExistIdException(ex.Message, ex)
+            // }
         }
         void UpdateDroneModel(int id, string model)
         {

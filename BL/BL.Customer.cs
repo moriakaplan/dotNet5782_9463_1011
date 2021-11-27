@@ -30,7 +30,7 @@ namespace BL
             //    throw new ExistIdException(ex.Message, ex)
             // }
         }
-        void UpdateCustomer(int customerId, params string[] args /*name and phone*/)//לשאול אנשים
+        void UpdateCustomer(int customerId, string name, string phone)//לשאול אנשים
         {
             IDAL.DO.Customer dCustomer = dl.DisplayCustomer(customerId);
 

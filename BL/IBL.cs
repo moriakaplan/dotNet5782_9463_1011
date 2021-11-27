@@ -17,7 +17,7 @@ namespace IBL
         //עדכון
        void UpdateDroneModel(int id, string model);
        void UpdateStation(int id, string name, int cargeSlots);//לשאול אנשים
-       void UpdateCustomer(int id, params string[] args /*name and phone*/);//לשאול אנשים
+       void UpdateCustomer(int id, string name, string phone);//לשאול אנשים
        void SendDroneToCharge(int droneId);
        void ReleaseDroneFromeCharge(int droneId, DateTime timeInCharge);
        void AssignParcelToDrone(int parcelId, int droneId);//איפה הוא צריך להיות
