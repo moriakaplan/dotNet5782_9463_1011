@@ -13,7 +13,7 @@ namespace IBL
         IDal dalObject = new DalObject.DalObject();
         void AddParcelToDelivery(Parcel parcel)//*מה הוא מקבל
         {
-            IDAL.DO.Parcel pa=new IDAL.DO.Parcel { Id=parcel.Id, Delivered=parcel.Delivered, Droneld=parcel.Drone.Id, }
+            IDAL.DO.Parcel pa = new IDAL.DO.Parcel { Id = parcel.Id, Delivered = parcel.Delivered, Droneld = parcel.Drone.Id, };
             dalObject.AddParcelToTheList(pa);
         }
         void AssignParcelToDrone(int parcelId, int droneId)//איפה הוא צריך להיות
