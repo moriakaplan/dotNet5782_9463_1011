@@ -22,7 +22,7 @@ namespace IBL
                 Id = drone.Id,
                 MaxWeight = (IDAL.DO.WeightCategories)drone.MaxWeight,
                 Model = drone.Model
-            });
+            });//add drone to the data layer
             lstdrn.Add(new DroneToList
             {
                 Id = drone.Id,
@@ -32,19 +32,15 @@ namespace IBL
                 Model = drone.Model,
                 ParcelId = 0,
                 Status = DroneStatus.Maintenance
-            });
-            //add the new station to the list in the data level
-            // }
-            // catch(Exception ex)
-            //{
-            //    throw new ExistIdException(ex.Message, ex)
-            // }
+            });//add drone to the list of the drone in the logical layer
         }
         public void UpdateDroneModel(int id, string model)
         {
+            //update the model in the logical layer
             DroneToList drone = lstdrn.Find(item => item.Id == id);
             drone.Model = model;
             //לעדכן בדאל
+            
         }
         public void SendDroneToCharge(int droneId)
         {

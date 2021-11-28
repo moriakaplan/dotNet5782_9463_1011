@@ -8,7 +8,7 @@ namespace ConsoleUI_BL
     {
         static void Main(string[] args)
         {
-            IBL.Ibl blObject = new IBL.BL(); //need to be the interface Ibl
+            Ibl blObject = new BL(); //need to be the interface Ibl
             string input;
             Options options;
 

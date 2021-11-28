@@ -10,8 +10,7 @@ namespace IBL
 {
     public partial class BL
     {
-        //IDal dalObject = new DalObject.DalObject();
-        public void AddParcelToDelivery(Parcel parcel)//*מה הוא מקבל
+        public void AddParcelToDelivery(Parcel parcel)
         {
             dl.AddParcelToTheList(new IDAL.DO.Parcel
             {

@@ -411,7 +411,7 @@ namespace DalObject
             // calculate the result
             return (c * r);
         }
-        public double[] askBattery(Drone drone)
+        public double[] AskBattery(Drone drone)
         {
             return new double[] {
                 DataSource.Config.available,
@@ -419,6 +419,23 @@ namespace DalObject
                 DataSource.Config.medium,
                 DataSource.Config.heavy,
                 DataSource.Config.rate };
+        }
+        public void DeleteDrone(int droneId)
+        {
+
+            DataSource.drones.Remove(DisplayDrone(droneId));
+        }
+        public void DeleteCustomer(int customerId)
+        {
+            DataSource.customers.Remove(DisplayCustomer(customerId));
+        }
+        public void DeleteStation(int stationId)
+        {
+            DataSource.stations.Remove(DisplayStation(stationId));
+        }
+        public void DeleteParcel(int parcelId)
+        {
+            DataSource.drones.Remove(DisplayDrone(parcelId));
         }
     }
 }
