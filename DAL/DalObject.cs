@@ -190,7 +190,7 @@ namespace DalObject
             try { dCharge = DataSource.droneCharges.Find(x => x.DroneId == droneId); }
             catch (ArgumentNullException)
             {
-                throw new DroneChargeException($"drone charge of the drone {droneId} does not exist");
+                throw new DroneChargeException($"drone chare with the drone ID {droneId} does not exist");
             }
             DataSource.droneCharges.Remove(dCharge);
 

@@ -10,8 +10,9 @@ namespace BL
 {
     public partial class BL
     {
-        public List<DroneToList> lstdrn;
-        public IDal dl = new DalObject.DalObject();
+        private List<DroneToList> lstdrn;
+        private IDal dl;
+        private static Random random = new Random();
         public BL()
         {
             dl = new DalObject.DalObject();
@@ -28,28 +29,109 @@ namespace BL
             {
                 foreach (IDAL.DO.Parcel parcel in dl.DisplayListOfParcels())
                 {
-                    IDAL.DO.Drone tempDrone = dl.DisplayDrone(parcel.Droneld);//מציאת הרחפן שהחבילה משוייכת אליו, צריך לבדוק אם הוא קיים(אם החבילה משוייכת)
-                    if ((parcel.Droneld == drone.Id) && (parcel.Delivered == DateTime.MinValue) && (tempDrone.Status == DroneStatus.associated))//אם יש חבילה שעוד לא סופקה אבל אבל הרחפן שוייך
+                    IDAL.DO.Customer tempCustomer = dl.DisplayCustomer(parcel.Senderld);//לבדוק אם הוא קיים
+                    if ((parcel.Droneld == drone.Id) && (parcel.Delivered == DateTime.MinValue))//אם יש חבילה שעוד לא סופקה אבל אבל הרחפן שוייך
                     {
-                        drone.Status = DroneStatus.delivery;
+                        drone.Status = DroneStatus.Delivery;
                         if ((parcel.Scheduled != DateTime.MinValue) && (parcel.PickedUp == DateTime.MinValue))//אם החבילה שויכה אבל לא נאספה
                         {
-                            // drone.CurrentLocation;המיקום צריך להיות בתחנה הקרובה לשולח
+                            drone.CurrentLocation=closestStation(tempCustomer.Lattitude, tempCustomer.Longitude);//המיקום צריך להיות בתחנה הקרובה לשולח
                         }
                         if ((parcel.PickedUp != DateTime.MinValue) && (parcel.Delivered == DateTime.MinValue))//אם החבילה נאספה אבל לא סופקה
                         {
-                            IDAL.DO.Customer tempCustomer = dl.DisplayCustomer(parcel.Senderld);//לבדוק אם הוא קיים
                             drone.CurrentLocation = new Location() { Longi = tempCustomer.Longitude, Latti = tempCustomer.Lattitude };//מיקום הרחפן הוא במיקום השולח
                         }
-                        drone.Battery = 0;//יוגרל בין טעינה מינימאלית שתאפשר לרחפן לבצע את המשלוח ולהגיע לתחנה הקרובה לבין טעינה מלאה
+                        drone.Battery = random.Next(minBattery(tempCustomer.Lattitude,tempCustomer.Longitude,100));//יוגרל בין טעינה מינימאלית שתאפשר לרחפן לבצע את המשלוח ולהגיע לתחנה הקרובה לבין טעינה מלאה
                     }
-                    if ()//אם הרחפן לא מבצע משלוח
+                    if (DroneNotInDelivery(drone))//אם הרחפן לא מבצע משלוח
                     {
-                        //drone.Status=מוגרל בין תחזוקה לפנוי
+                        drone.Status = (DroneStatus)random.Next(1, 2);//מוגרל בין תחזוקה לפנוי
+                    }
+                    if (drone.Status == DroneStatus.Maintenance)//הרחפן בתחזוקה
+                    {
+                        //המיקום מוגרל בין תחנות קיימות***********************************************
+                        drone.Battery = random.Next(0, 20);//מצב סוללה מוגרל בין 0 ל-20
+                    }
+                    if (drone.Status == DroneStatus.Available)//הרחפן פנוי
+                    {
+                        //מיקום מוגרל בין לקוחות שיש חבילות שסופקו להם***********************************
+                        drone.Battery = random.Next(minBattery(tempCustomer.Lattitude, tempCustomer.Longitude, 100));//מצב סוללה מוגרל בין טעינה מינימאלית שמאפשרת לו להגיע לתחנה הקרובה לבין טעינה מלאה
                     }
 
                 }
             }
         }
+        /// <summary>
+        /// בודק אם הרחפן לא מבצע משלוח
+        /// </summary>
+        /// <param name="drone"></param>
+        /// <returns></returns>
+        private bool DroneNotInDelivery(DroneToList drone)
+        {
+            foreach (IDAL.DO.Parcel parcel in dl.DisplayListOfParcels())
+            {
+                if ((parcel.Droneld == drone.Id) && (parcel.PickedUp != DateTime.MinValue) && (parcel.Delivered == DateTime.MinValue))//אם הרחפן במשלוח (כבר אסף את החבילה) 
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        /// <summary>
+        /// מוצא את הבטריה המינימאלית שצריך בשביל להגיע מהמיקום לתחנה הקרובה
+        /// </summary>
+        /// <param name="lattitude"></param>
+        /// <param name="longitude"></param>
+        /// <returns></returns>
+        private double minBattery(double lattitude, double longitude)
+        {
+           // return 0;
+        }
+        /// <summary>
+        /// מוצא את התחנה הקרובה למיקום
+        /// </summary>
+        /// <param name="lattitude"></param>
+        /// <param name="longitude"></param>
+        /// <returns></returns>
+        private Location closestStation(double lattitude, double longitude)
+        {
+            List<Station> stations = new List<Station>();
+            foreach(IDAL.DO.Station dstation in dl.DisplayListOfStations())//מוצא את המיקום של כל התחנות
+            {
+                stations.Add(new Station { Location = new Location { Latti = dstation.Lattitude, Longi = dstation.Lattitude } });
+            }
+            Location minLocation = stations[0].Location;
+            double minDistance =  dl.Distance(lattitude, longitude, stations[0].Location.Latti, stations[0].Location.Longi);
+            foreach (Station station in stations)
+            {
+                if (dl.Distance(lattitude, longitude, station.Location.Latti, station.Location.Longi)<minDistance)
+                {
+                    minDistance = dl.Distance(lattitude, longitude, station.Location.Latti, station.Location.Longi);
+                    minLocation=station.Location;
+                }
+            }
+            return minLocation;
+        }
+        ///תחנה הכי קרובה עם עמדות הטענה פנויות
+        private Station closestStationWithAvailableChargeSlosts(Location location)
+        {
+            List<Station> stations = new List<Station>();
+            foreach (IDAL.DO.Station dstation in dl.DisplayListOfStationsWithAvailableCargeSlots())//מוצא את המיקום של כל התחנות
+            {
+                stations.Add(new Station { Location = new Location { Latti = dstation.Lattitude, Longi = dstation.Lattitude }});
+            }
+           Station minLocation = stations[0];
+            double minDistance = dl.Distance(location.Latti, location.Longi, stations[0].Location.Latti, stations[0].Location.Longi);
+            foreach (Station station in stations)
+            {
+                if (dl.Distance(location.Latti, location.Longi, station.Location.Latti, station.Location.Longi) < minDistance)
+                {
+                    minDistance = dl.Distance(location.Latti, location.Longi, station.Location.Latti, station.Location.Longi);
+                    minLocation = station;
+                }
+            }
+            return minLocation;
+        }
+
     }
 }

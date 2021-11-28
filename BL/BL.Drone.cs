@@ -9,30 +9,19 @@ using IDAL;
 
 namespace IBL
 {
-    public partial class BL : Ibl
+    public partial class BL: Ibl
     {
-        public List<DroneToList> lstdrn;
-        public IDal dl = new DalObject.DalObject();
-
-        internal static Random rand = new Random();
-        public void AddDrone(Drone drone)
+        void AddDrone(Drone drone)
         {
-            dl.AddDroneToTheList(new IDAL.DO.Drone 
-            { 
-                Id=drone.Id, 
-                MaxWeight= (IDAL.DO.WeightCategories)drone.MaxWeight, 
-                Model=drone.Model
-            });
-            lstdrn.Add(new DroneToList
+            //creates a new station in the data level
+            IDAL.DO.Drone dalDrone = new IDAL.DO.Drone
             {
                 Id = drone.Id,
-                Battery = rand.Next(20, 39) + rand.NextDouble(),
-                CurrentLocation = drone.CurrentLocation,
-                MaxWeight = drone.MaxWeight,
-                Model = drone.Model,
-                ParcelId = 0,
-                Status = DroneStatus.maintenance
-            });
+                Model=drone.Model, MaxWeight=drone.MaxWeight, 
+            };
+            //try
+            //{
+            dl.AddCustomerToTheList(dCustomer);
             //add the new station to the list in the data level
             // }
             // catch(Exception ex)
@@ -40,82 +29,146 @@ namespace IBL
             //    throw new ExistIdException(ex.Message, ex)
             // }
         }
-        public void UpdateDroneModel(int id, string model)
+        void UpdateDroneModel(int id, string model)
         {
-            DroneToList drone= lstdrn.Find(item => item.Id == id);
-            drone.Model = model;
-            //לעדכן בדאל
+
         }
-        public void SendDroneToCharge(int droneId)
+        void SendDroneToCharge(int droneId)
         {
-            DroneToList drone = lstdrn.Find(item => item.Id == droneId);
-            double lo = drone.CurrentLocation.Longi, la = drone.CurrentLocation.Latti;
-            if (drone.Status != DroneStatus.available) throw new DroneCantGoToChargeExeption { 
-                message = "the drone {droneId} is not available so it can't be sended to charging" };
-            //IEnumerable<IDAL.DO.Station> stationsWithAvailable = dl.DisplayListOfStationsWithAvailableCargeSlots();
-            //double min = dl.DistanceForStation(lo, la, stationsWithAvailable..Id);
-            //double distance;
-            //IDAL.DO.Station closerStation;
-            //foreach (IDAL.DO.Station station in stationsWithAvailable)
-            //{
-            //    distance = dl.DistanceForStation(lo, la, station.Id);
-            //    if (distance < min) min = distance;
-            //}
-            dl.SendDroneToCharge(droneId, closerStationWithAvailableChargeSlots().Id);
+
         }
         void ReleaseDroneFromeCharge(int droneId, DateTime timeInCharge)
         {
-            Drone drone= DisplayDrone(droneId);
-            if(drone.Status!=DroneStatus.maintenance) throw new DroneCantReleaseFromChargeExeption {
-                message = "the drone {droneId} is not in maintenance so it can't be released from charging" };
-            //עדכון סוללה
-            //לשנות מצב רחפן לפנוי
-            dl.ReleaseDroneFromeCharge(droneId); //מוחק את הישות טעינה ומוסיף 1 לעמדות טעינה של התחנה
+
         }
         Drone DisplayDrone(int droneId)
         {
-            DroneToList droneFromList = lstdrn.Find(item => item.Id == droneId);
+            DroneToList droneFromList = drones.Find(item => item.Id == droneId);
             Parcel parcelFromFunc = DisplayParcel(droneFromList.ParcelId);
             ParcelInTransfer parcel = new ParcelInTransfer
             {
                 Id = parcelFromFunc.Id,
                 InTheWay = (parcelFromFunc.PickedUp != DateTime.MinValue && parcelFromFunc.Delivered == DateTime.MinValue),
-                
+                /*PickingPlace= , PickingPlace= ,*/
                 Priority = parcelFromFunc.Priority,
                 Sender = parcelFromFunc.Sender,
                 Target = parcelFromFunc.Target,
-                PickingPlace = DisplayCustomer(parcelFromFunc.Sender.Id).location,
-                //PickingPlace= ,*/
-                TransportDistance = dl.Distance(PickingPlace.longitude, PickingPlace.lattitude, TargetPlace.longitude, TargetPlace.lattitude),
-                Weight = parcelFromFunc.Weight
+                TransportDistance = dl.Distance(PickingPlace.longitude, PickingPlace.lattitude, TargetPlace.longitude, TargetPlace.lattitude), 
+                Weight=parcelFromFunc.Weight
             };
-            return new Drone
-            {
-                Id = droneFromList.Id,
-                Battery = droneFromList.Battery,
-                CurrentLocation = droneFromList.CurrentLocation,
-                MaxWeight = droneFromList.MaxWeight,
+            return new Drone { 
+                Id = droneFromList.Id, 
+                Battery = droneFromList.Battery, 
+                CurrentLocation = droneFromList.CurrentLocation, 
+                MaxWeight = droneFromList.MaxWeight, 
                 Model = droneFromList.Model,
                 Status = droneFromList.Status,
-                ParcelInT = parcel
-            };
+                ParcelInT = parcel };
         }
         IEnumerable<DroneToList> DisplayListOfDrones(Predicate<DroneToList> pre)
         {
-            //if (pre != null)
-            //{
-            //    List<DroneToList> result = new List<DroneToList>();
-            //    foreach (DroneToList item in drones)
-            //    {
-            //        if (pre(item)) result.Add(item);
-            //    }
-            //    return result;
-            //}
-            //else
-            //{
-            //    return drones;
-            //}
-            return lstdrn;
+            if (pre != null)
+            {
+                List<DroneToList> result = new List<DroneToList>();
+                foreach(DroneToList item in drones)
+                {
+                    if (pre(item)) result.Add(item);
+                }
+                return result;
+            }
+            else
+            {
+                return drones;
+            }
         }
+
+        //void Ibl.AddDrone(Drone drone)
+        //{
+        //    throw new NotImplementedException();
+        //}
+        //void Ibl.AddCustomer(Customer customer)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //void Ibl.AddParcelToDelivery(Parcel parcel)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //void Ibl.UpdateDroneModel(int id, string model)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //void Ibl.UpdateCustomer(int id, params string[] args)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //void Ibl.SendDroneToCharge(int droneId)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //void Ibl.ReleaseDroneFromeCharge(int droneId, DateTime timeInCharge)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //void Ibl.AssignParcelToDrone(int parcelId, int droneId)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //void Ibl.AssignParcelToDrone(int droneId)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //void Ibl.PickParcelByDrone(int parcelId)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //void Ibl.DeliverParcelByDrone(int droneId)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //Customer Ibl.DisplayCustomer(int customerId)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //Drone Ibl.DisplayDrone(int droneId)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //Parcel Ibl.DisplayParcel(int parcelId)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //IEnumerable<DroneToList> Ibl.DisplayListOfDrones()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //IEnumerable<CustomerToList> Ibl.DisplayListOfCustomers()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //IEnumerable<ParcelToList> Ibl.DisplayListOfParcels()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //IEnumerable<ParcelToList> Ibl.DisplayListOfUnassignedParcels()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

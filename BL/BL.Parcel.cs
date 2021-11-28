@@ -13,19 +13,8 @@ namespace IBL
         IDal dalObject = new DalObject.DalObject();
         void AddParcelToDelivery(Parcel parcel)//*מה הוא מקבל
         {
-            dalObject.AddParcelToTheList(new IDAL.DO.Parcel
-            {
-                Id = parcel.Id,
-                Delivered = parcel.Delivered,
-                Droneld = parcel.Drone.Id,
-                PickedUp = parcel.PickedUp,
-                Priority = (IDAL.DO.Priorities)parcel.Priority,
-                Requested = parcel.Requested,
-                Scheduled = parcel.Scheduled,
-                Senderld = parcel.Sender.Id,
-                TargetId = parcel.Target.Id,
-                Weight = (IDAL.DO.WeightCategories)parcel.Weight
-            });
+            IDAL.DO.Parcel pa = new IDAL.DO.Parcel { Id = parcel.Id, Delivered = parcel.Delivered, Droneld = parcel.Drone.Id, };
+            dalObject.AddParcelToTheList(pa);
         }
         void AssignParcelToDrone(int parcelId, int droneId)//איפה הוא צריך להיות
         {
@@ -45,91 +34,15 @@ namespace IBL
         }
         Parcel DisplayParcel(int parcelId)
         {
-            IDAL.DO.Parcel parcelFromDal = dalObject.DisplayParcel(parcelId);
-            Drone droneFromFunc = DisplayDrone(parcelFromDal.Droneld);
-            DroneInParcel drone = new DroneInParcel
-            {
-                Id = droneFromFunc.Id,
-                Battery = droneFromFunc.Battery,
-                CurrentLocation = droneFromFunc.CurrentLocation
-            };
-            CustomerInParcel sender = new CustomerInParcel
-            {
-                Id = parcelFromDal.Senderld,
-                Name = DisplayCustomer(parcelFromDal.Senderld).Name
-            };
-            CustomerInParcel target = new CustomerInParcel
-            {
-                Id = parcelFromDal.TargetId,
-                Name = DisplayCustomer(parcelFromDal.TargetId).Name
-            };
-            return new Parcel
-            {
-                Id = parcelFromDal.Id,
-                Delivered = parcelFromDal.Delivered,
-                Drone = drone,
-                PickedUp = parcelFromDal.PickedUp,
-                Priority = (Priorities)parcelFromDal.Priority,
-                Requested = parcelFromDal.Requested,
-                Scheduled = parcelFromDal.Scheduled,
-                Sender = sender,
-                Target = target,
-                Weight = (WeightCategories)parcelFromDal.Weight
-            };
+            return ;
         }
         IEnumerable<ParcelToList> DisplayListOfParcels()
         {
-            List<ParcelToList> answer = new List<ParcelToList>();
-            IEnumerable<IDAL.DO.Parcel> listFromDal = dalObject.DisplayListOfParcels();
-            ParcelStatus st;
-            foreach (IDAL.DO.Parcel parcel in listFromDal)
-            {
-                if (parcel.Delivered != DateTime.MinValue) st = ParcelStatus.delivered;
-                else
-                {
-                    if (parcel.PickedUp != DateTime.MinValue) st = ParcelStatus.pickedUp;
-                    else
-                    {
-                        if (parcel.Scheduled != DateTime.MinValue) st = ParcelStatus.associated;
-                        else st = ParcelStatus.created;
-                    }
-                }
-                answer.Add(new ParcelToList
-                {
-                    Id = parcel.Id,
-                    Priority = (Priorities)parcel.Priority,
-                    SenderName = DisplayCustomer(parcel.Senderld).Name,
-                    TargetName = DisplayCustomer(parcel.TargetId).Name,
-                    Status = st,
-                    Weight = (WeightCategories)parcel.Weight
-                });
-            }
-            return answer;
+            return null;
         }
         IEnumerable<ParcelToList> DisplayListOfUnassignedParcels()
         {
-            List<ParcelToList> answer = new List<ParcelToList>();
-            IEnumerable<IDAL.DO.Parcel> listFromDal = dalObject.DisplayListOfParcels();
-            ParcelStatus st;
-            foreach (IDAL.DO.Parcel parcel in listFromDal)
-            {
-
-                if (parcel.Scheduled == DateTime.MinValue) st = ParcelStatus.created;
-                else st = ParcelStatus.associated;
-                if (st == ParcelStatus.created)
-                {
-                    answer.Add(new ParcelToList
-                    {
-                        Id = parcel.Id,
-                        Priority = (Priorities)parcel.Priority,
-                        SenderName = DisplayCustomer(parcel.Senderld).Name,
-                        TargetName = DisplayCustomer(parcel.TargetId).Name,
-                        Status = st,
-                        Weight = (WeightCategories)parcel.Weight
-                    });
-                }
-            }
-            return answer;
+            return null;
         }
 
     }
