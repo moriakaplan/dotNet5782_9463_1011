@@ -40,7 +40,10 @@ namespace IBL
             DroneToList drone = lstdrn.Find(item => item.Id == id);
             drone.Model = model;
             //לעדכן בדאל
-            
+            IDAL.DO.Drone ddrone = dl.DisplayDrone(id);
+            dl.DeleteDrone(id);
+            ddrone.Model = model;
+            dl.AddDroneToTheList(ddrone);
         }
         public void SendDroneToCharge(int droneId)
         {
