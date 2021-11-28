@@ -36,7 +36,7 @@ namespace BL
 
 
         }
-        Customer DisplayCustomer(int customerId)
+        public Customer DisplayCustomer(int customerId)
         {
             IDAL.DO.Customer dCustomer = dl.DisplayCustomer(customerId);
             Customer bCustomer = new Customer();
