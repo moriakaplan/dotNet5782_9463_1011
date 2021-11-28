@@ -12,10 +12,9 @@ namespace ConsoleUI_BL
             string input;
             AddingOptions addChoise;
             int id, senderId, targetId, stationId, chargeSlots;
-            double longitude, lattitude, battery;
+            double longitude, lattitude;
             string name, phone, model;
             WeightCategories weight;
-            DroneStatus status;
             Priorities priority;
             Location location;
 

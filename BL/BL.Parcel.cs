@@ -10,10 +10,10 @@ namespace IBL
 {
     public partial class BL
     {
-        IDal dalObject = new DalObject.DalObject();
-        void AddParcelToDelivery(Parcel parcel)//*מה הוא מקבל
+        //IDal dalObject = new DalObject.DalObject();
+        public void AddParcelToDelivery(Parcel parcel)//*מה הוא מקבל
         {
-            dalObject.AddParcelToTheList(new IDAL.DO.Parcel
+            dl.AddParcelToTheList(new IDAL.DO.Parcel
             {
                 Id = parcel.Id,
                 Delivered = parcel.Delivered,
@@ -27,25 +27,25 @@ namespace IBL
                 Weight = (IDAL.DO.WeightCategories)parcel.Weight
             });
         }
-        void AssignParcelToDrone(int parcelId, int droneId)//איפה הוא צריך להיות
+        public void AssignParcelToDrone(int parcelId, int droneId)//איפה הוא צריך להיות
         {
 
         }
-        void AssignParcelToDrone(int droneId)//איפה הוא צריך להיות
+        public void AssignParcelToDrone(int droneId)//איפה הוא צריך להיות
         {
 
         }
-        void PickParcelByDrone(int parcelId)//איפה הוא צריך להיות
+        public void PickParcelByDrone(int parcelId)//איפה הוא צריך להיות
         {
 
         }
-        void DeliverParcelByDrone(int droneId)//איפה הוא צריך להיות
+        public void DeliverParcelByDrone(int droneId)//איפה הוא צריך להיות
         {
 
         }
-        Parcel DisplayParcel(int parcelId)
+        public Parcel DisplayParcel(int parcelId)
         {
-            IDAL.DO.Parcel parcelFromDal = dalObject.DisplayParcel(parcelId);
+            IDAL.DO.Parcel parcelFromDal = dl.DisplayParcel(parcelId);
             Drone droneFromFunc = DisplayDrone(parcelFromDal.Droneld);
             DroneInParcel drone = new DroneInParcel
             {
@@ -77,7 +77,7 @@ namespace IBL
                 Weight = (WeightCategories)parcelFromDal.Weight
             };
         }
-        IEnumerable<ParcelToList> DisplayListOfParcels()
+        public IEnumerable<ParcelToList> DisplayListOfParcels()
         {
             List<ParcelToList> answer = new List<ParcelToList>();
             IEnumerable<IDAL.DO.Parcel> listFromDal = dalObject.DisplayListOfParcels();
@@ -106,10 +106,10 @@ namespace IBL
             }
             return answer;
         }
-        IEnumerable<ParcelToList> DisplayListOfUnassignedParcels()
+        public IEnumerable<ParcelToList> DisplayListOfUnassignedParcels()
         {
             List<ParcelToList> answer = new List<ParcelToList>();
-            IEnumerable<IDAL.DO.Parcel> listFromDal = dalObject.DisplayListOfParcels();
+            IEnumerable<IDAL.DO.Parcel> listFromDal = dl.DisplayListOfParcels();
             ParcelStatus st;
             foreach (IDAL.DO.Parcel parcel in listFromDal)
             {

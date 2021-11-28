@@ -7,9 +7,9 @@ using IBL.BO;
 
 namespace BL
 {
-    public partial class BL : IBL.Ibl
+    public partial class BL 
     {
-        void AddCustomer(Customer customer)
+        public void AddCustomer(Customer customer)
         {
             //creates a new station in the data level
             IDAL.DO.Customer dCustomer = new IDAL.DO.Customer
@@ -30,13 +30,13 @@ namespace BL
             //    throw new ExistIdException(ex.Message, ex)
             // }
         }
-        void UpdateCustomer(int customerId, string name, string phone)//לשאול אנשים
+        public void UpdateCustomer(int customerId, string name, string phone)//לשאול אנשים
         {
             IDAL.DO.Customer dCustomer = dl.DisplayCustomer(customerId);
 
 
         }
-        Customer DisplayCustomer(int customerId)
+        public Customer DisplayCustomer(int customerId)
         {
             IDAL.DO.Customer dCustomer = dl.DisplayCustomer(customerId);
             Customer bCustomer = new Customer();
@@ -48,7 +48,7 @@ namespace BL
             bCustomer.parcelTo = getCustomerParcelTo(customerId);
             return bCustomer;
         }
-        IEnumerable<CustomerToList> DisplayListOfCustomers()
+        public IEnumerable<CustomerToList> DisplayListOfCustomers()
         {
             return null;
         }

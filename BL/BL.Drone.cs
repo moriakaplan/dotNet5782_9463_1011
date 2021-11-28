@@ -9,7 +9,7 @@ using IDAL;
 
 namespace IBL
 {
-    public partial class BL : Ibl
+    public partial class BL
     {
         public List<DroneToList> lstdrn;
         public IDal dl = new DalObject.DalObject();
@@ -76,7 +76,7 @@ namespace IBL
             //לשנות מצב רחפן לפנוי
             dl.ReleaseDroneFromeCharge(droneId); //מוחק את הישות טעינה ומוסיף 1 לעמדות טעינה של התחנה
         }
-        Drone DisplayDrone(int droneId)
+        public Drone DisplayDrone(int droneId)
         {
             DroneToList droneFromList = lstdrn.Find(item => item.Id == droneId);
             Parcel parcelFromFunc = DisplayParcel(droneFromList.ParcelId);
@@ -104,7 +104,7 @@ namespace IBL
                 ParcelInT = parcel
             };
         }
-        IEnumerable<DroneToList> DisplayListOfDrones(Predicate<DroneToList> pre)
+        public IEnumerable<DroneToList> DisplayListOfDrones(Predicate<DroneToList> pre)
         {
             //if (pre != null)
             //{
