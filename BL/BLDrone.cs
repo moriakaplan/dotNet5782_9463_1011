@@ -11,8 +11,8 @@ namespace IBL
 {
     public partial class BL
     {
-        public List<DroneToList> lstdrn;
-        public IDal dl = new DalObject.DalObject();
+        //public List<DroneToList> lstdrn;
+        //public IDal dl = new DalObject.DalObject();
 
         internal static Random rand = new Random();
         public void AddDrone(Drone drone)
@@ -31,7 +31,7 @@ namespace IBL
                 MaxWeight = drone.MaxWeight,
                 Model = drone.Model,
                 ParcelId = 0,
-                Status = DroneStatus.Maintenance
+                Status = DroneStatus.maintenance
             });
             //add the new station to the list in the data level
             // }
@@ -50,7 +50,7 @@ namespace IBL
         {
             DroneToList drone = lstdrn.Find(item => item.Id == droneId);
             double lo = drone.CurrentLocation.Longi, la = drone.CurrentLocation.Latti;
-            if (drone.Status != DroneStatus.Available) throw new DroneCantGoToChargeExeption
+            if (drone.Status != DroneStatus.available) throw new DroneCantGoToChargeExeption
             {
                 message = "the drone {droneId} is not available so it can't be sended to charging"
             };
@@ -63,7 +63,7 @@ namespace IBL
             //    distance = dl.DistanceForStation(lo, la, station.Id);
             //    if (distance < min) min = distance;
             //}
-            dl.SendDroneToCharge(droneId, closerStationWithAvailableChargeSlots().Id);
+            dl.SendDroneToCharge(droneId, closestStationWithAvailableChargeSlosts(drone.CurrentLocation).Id);
         }
         void ReleaseDroneFromeCharge(int droneId, DateTime timeInCharge)
         {
@@ -84,11 +84,10 @@ namespace IBL
             {
                 Id = parcelFromFunc.Id,
                 InTheWay = (parcelFromFunc.PickedUp != DateTime.MinValue && parcelFromFunc.Delivered == DateTime.MinValue),
-
                 Priority = parcelFromFunc.Priority,
                 Sender = parcelFromFunc.Sender,
                 Target = parcelFromFunc.Target,
-                PickingPlace = DisplayCustomer(parcelFromFunc.Sender.Id).location,
+                PickingPlace = DisplayCustomer(parcelFromFunc.Sender.Id).Location,
                 //PickingPlace= ,*/
                 TransportDistance = dl.Distance(PickingPlace.longitude, PickingPlace.lattitude, TargetPlace.longitude, TargetPlace.lattitude),
                 Weight = parcelFromFunc.Weight
