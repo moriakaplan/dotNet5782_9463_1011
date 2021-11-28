@@ -13,12 +13,18 @@ namespace BL
         private List<DroneToList> lstdrn;
         private IDal dl;
         private static Random random = new Random();
+        /// <summary>
+       /// קונסטרקטור
+       /// </summary>
         public BL()
         {
             dl = new DalObject.DalObject();
             lstdrn = (List<DroneToList>)dl.DisplayListOfDrones();
             initializeDrone();
         }
+        /// <summary>
+        /// הגדרת רשימת הרחפנים
+        /// </summary>
         private void initializeDrone()
         {
             foreach (IDAL.DO.Drone drone in dl.DisplayListOfDrones())
@@ -112,7 +118,11 @@ namespace BL
             }
             return minLocation;
         }
-        ///תחנה הכי קרובה עם עמדות הטענה פנויות
+        /// <summary>
+       /// מוצאת את התחנה עם הכי קרובה עם עמדות הטענה פנויות
+       /// </summary>
+       /// <param name="location"></param>
+       /// <returns></returns>
         private Station closestStationWithAvailableChargeSlosts(Location location)
         {
             List<Station> stations = new List<Station>();

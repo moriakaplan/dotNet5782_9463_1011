@@ -22,6 +22,7 @@ namespace IBL
                 Lattitude = station.Location.Latti,
                 Longitude = station.Location.Longi
             };
+
             dl.AddStationToTheList(dstation);//add the new station to the list in the data level
         }
         public void UpdateStation(int id, string name, int cargeSlots)//כתוב שהוא צריך לקבל פה אחד או יותר,איך עושים את זה?
