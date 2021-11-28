@@ -80,18 +80,18 @@ namespace IBL
         public IEnumerable<ParcelToList> DisplayListOfParcels()
         {
             List<ParcelToList> answer = new List<ParcelToList>();
-            IEnumerable<IDAL.DO.Parcel> listFromDal = dalObject.DisplayListOfParcels();
+            IEnumerable<IDAL.DO.Parcel> listFromDal = dl.DisplayListOfParcels();
             ParcelStatus st;
             foreach (IDAL.DO.Parcel parcel in listFromDal)
             {
-                if (parcel.Delivered != DateTime.MinValue) st = ParcelStatus.delivered;
+                if (parcel.Delivered != DateTime.MinValue) st = ParcelStatus.Delivered;
                 else
                 {
-                    if (parcel.PickedUp != DateTime.MinValue) st = ParcelStatus.pickedUp;
+                    if (parcel.PickedUp != DateTime.MinValue) st = ParcelStatus.PickedUp;
                     else
                     {
-                        if (parcel.Scheduled != DateTime.MinValue) st = ParcelStatus.associated;
-                        else st = ParcelStatus.created;
+                        if (parcel.Scheduled != DateTime.MinValue) st = ParcelStatus.Associated;
+                        else st = ParcelStatus.Created;
                     }
                 }
                 answer.Add(new ParcelToList
@@ -114,9 +114,9 @@ namespace IBL
             foreach (IDAL.DO.Parcel parcel in listFromDal)
             {
 
-                if (parcel.Scheduled == DateTime.MinValue) st = ParcelStatus.created;
-                else st = ParcelStatus.associated;
-                if (st == ParcelStatus.created)
+                if (parcel.Scheduled == DateTime.MinValue) st = ParcelStatus.Created;
+                else st = ParcelStatus.Associated;
+                if (st == ParcelStatus.Created)
                 {
                     answer.Add(new ParcelToList
                     {
