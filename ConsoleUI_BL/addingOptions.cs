@@ -7,7 +7,7 @@ namespace ConsoleUI_BL
 {
     public partial class ConsoleUI_BL
     {
-        public void add(Ibl blObject)
+        public static void add(Ibl blObject)
         {
             string input;
             AddingOptions addChoise;
@@ -142,7 +142,8 @@ longitude-");
                         Requested = DateTime.Now,
                         Scheduled = DateTime.MinValue,
                         PickedUp = DateTime.MinValue,
-                        Delivered = DateTime.MinValue
+                        Delivered = DateTime.MinValue, 
+                        Drone=null
                     };
                     blObject.AddParcelToDelivery(pa);//Add the parcel to the list
                     break;

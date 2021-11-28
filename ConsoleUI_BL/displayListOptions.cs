@@ -6,7 +6,7 @@ namespace ConsoleUI_BL
 {
     public partial class ConsoleUI_BL
     {
-        public void displayList(Ibl blObject)
+        public static void displayList(Ibl blObject)
         {
             string input;
             DisplayListOptions displayListChoise;
