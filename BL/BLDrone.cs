@@ -11,8 +11,8 @@ namespace IBL
 {
     public partial class BL
     {
-        public List<DroneToList> lstdrn;
-        public IDal dl = new DalObject.DalObject();
+        //public List<DroneToList> lstdrn;
+        //public IDal dl = new DalObject.DalObject();
 
         internal static Random rand = new Random();
         public void AddDrone(Drone drone)
@@ -63,7 +63,7 @@ namespace IBL
             //    distance = dl.DistanceForStation(lo, la, station.Id);
             //    if (distance < min) min = distance;
             //}
-            dl.SendDroneToCharge(droneId, closerStationWithAvailableChargeSlots().Id);
+            dl.SendDroneToCharge(droneId, closestStationWithAvailableChargeSlosts(drone.CurrentLocation).Id);
         }
         void ReleaseDroneFromeCharge(int droneId, DateTime timeInCharge)
         {
@@ -84,11 +84,10 @@ namespace IBL
             {
                 Id = parcelFromFunc.Id,
                 InTheWay = (parcelFromFunc.PickedUp != DateTime.MinValue && parcelFromFunc.Delivered == DateTime.MinValue),
-
                 Priority = parcelFromFunc.Priority,
                 Sender = parcelFromFunc.Sender,
                 Target = parcelFromFunc.Target,
-                PickingPlace = DisplayCustomer(parcelFromFunc.Sender.Id).location,
+                PickingPlace = DisplayCustomer(parcelFromFunc.Sender.Id).Location,
                 //PickingPlace= ,*/
                 TransportDistance = dl.Distance(PickingPlace.longitude, PickingPlace.lattitude, TargetPlace.longitude, TargetPlace.lattitude),
                 Weight = parcelFromFunc.Weight

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using IBL.BO;
 using IDAL;
 
-namespace BL
+namespace IBL
 {
     public partial class BL
     {
