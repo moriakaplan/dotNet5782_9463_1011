@@ -4,7 +4,7 @@ using IBL;
 
 namespace ConsoleUI_BL
 {
-    internal partial class ConsoleUI_BL
+    public partial class ConsoleUI_BL
     {
         public void displayList(Ibl blObject)
         {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ConsoleUI_BL
 {
-    internal partial class CsonsoleUI_BL
+    public partial class ConsoleUI_BL
     {
         public void add(Ibl blObject)
         {

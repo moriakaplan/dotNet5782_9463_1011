@@ -31,7 +31,7 @@ namespace IBL
                 MaxWeight = drone.MaxWeight,
                 Model = drone.Model,
                 ParcelId = 0,
-                Status = DroneStatus.maintenance
+                Status = DroneStatus.Maintenance
             });
             //add the new station to the list in the data level
             // }
@@ -50,7 +50,7 @@ namespace IBL
         {
             DroneToList drone = lstdrn.Find(item => item.Id == droneId);
             double lo = drone.CurrentLocation.Longi, la = drone.CurrentLocation.Latti;
-            if (drone.Status != DroneStatus.available) throw new DroneCantGoToChargeExeption
+            if (drone.Status != DroneStatus.Available) throw new DroneCantGoToChargeExeption
             {
                 message = "the drone {droneId} is not available so it can't be sended to charging"
             };
@@ -65,7 +65,7 @@ namespace IBL
             //}
             dl.SendDroneToCharge(droneId, closestStationWithAvailableChargeSlosts(drone.CurrentLocation).Id);
         }
-        void ReleaseDroneFromeCharge(int droneId, DateTime timeInCharge)
+        public void ReleaseDroneFromeCharge(int droneId, DateTime timeInCharge)
         {
             Drone drone = DisplayDrone(droneId);
             if (drone.Status != DroneStatus.Maintenance) throw new DroneCantReleaseFromChargeExeption
@@ -103,7 +103,7 @@ namespace IBL
                 ParcelInT = parcel
             };
         }
-        public IEnumerable<DroneToList> DisplayListOfDrones(Predicate<DroneToList> pre)
+        public IEnumerable<DroneToList> DisplayListOfDrones()
         {
             //if (pre != null)
             //{

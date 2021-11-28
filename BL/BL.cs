@@ -8,7 +8,7 @@ using IDAL;
 
 namespace IBL
 {
-    public partial class BL
+    public partial class BL: Ibl
     {
         private List<DroneToList> lstdrn;
         private IDal dl;
