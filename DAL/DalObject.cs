@@ -450,7 +450,7 @@ namespace DalObject
                 throw new StationException($"id: {stationId} does not exist");
             }
         }
-        public void DeleteParcel(int parcelId)S
+        public void DeleteParcel(int parcelId)
         {
             try
             {
