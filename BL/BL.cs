@@ -142,6 +142,5 @@ namespace IBL
             }
             return minLocation;
         }
-
     }
 }
