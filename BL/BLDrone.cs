@@ -69,6 +69,11 @@ namespace IBL
                 message = "the drone {droneId} is not in maintenance so it can't be released from charging"
             };
             //עדכון סוללה
+            double time;//צריך להמיר איכשהו את ה-dataTime
+            //IDAL.DO.Drone updateDrone = dl.DisplayDrone(droneId);
+            //dl.DeleteDrone(droneId);
+            //updateDrone.Battery=
+
             //לשנות מצב רחפן לפנוי
             dl.ReleaseDroneFromeCharge(droneId); //מוחק את הישות טעינה ומוסיף 1 לעמדות טעינה של התחנה
         }
