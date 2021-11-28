@@ -31,7 +31,7 @@ namespace IBL
                 MaxWeight = drone.MaxWeight,
                 Model = drone.Model,
                 ParcelId = 0,
-                Status = DroneStatus.Maintenance
+                Status = DroneStatus.maintenance
             });
             //add the new station to the list in the data level
             // }
@@ -50,7 +50,7 @@ namespace IBL
         {
             DroneToList drone = lstdrn.Find(item => item.Id == droneId);
             double lo = drone.CurrentLocation.Longi, la = drone.CurrentLocation.Latti;
-            if (drone.Status != DroneStatus.Available) throw new DroneCantGoToChargeExeption
+            if (drone.Status != DroneStatus.available) throw new DroneCantGoToChargeExeption
             {
                 message = "the drone {droneId} is not available so it can't be sended to charging"
             };
