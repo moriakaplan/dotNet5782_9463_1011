@@ -422,20 +422,44 @@ namespace DalObject
         }
         public void DeleteDrone(int droneId)
         {
-
-            DataSource.drones.Remove(DisplayDrone(droneId));
+            try { DataSource.drones.Remove(DisplayDrone(droneId)); }
+            catch (ArgumentNullException)
+            {
+                throw new DroneException($"id: {droneId} does not exist");
+            }
         }
         public void DeleteCustomer(int customerId)
         {
-            DataSource.customers.Remove(DisplayCustomer(customerId));
+            try
+            {
+                DataSource.customers.Remove(DisplayCustomer(customerId));
+            }
+            catch (ArgumentNullException)
+            {
+                throw new CustomerException($"id: {customerId} does not exist");
+            }
         }
         public void DeleteStation(int stationId)
         {
-            DataSource.stations.Remove(DisplayStation(stationId));
+            try
+            {
+                DataSource.stations.Remove(DisplayStation(stationId));
+            }
+            catch (ArgumentNullException)
+            {
+                throw new StationException($"id: {stationId} does not exist");
+            }
         }
-        public void DeleteParcel(int parcelId)
+        public void DeleteParcel(int parcelId)S
         {
-            DataSource.drones.Remove(DisplayDrone(parcelId));
+            try
+            {
+                DataSource.drones.Remove(DisplayDrone(parcelId));
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ParcelException($"id: {parcelId} does not exist");
+            }
         }
     }
 }
