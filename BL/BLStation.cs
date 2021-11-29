@@ -63,6 +63,7 @@ namespace IBL
                 Location = new Location { Latti = dstation.Lattitude, Longi = dstation.Longitude },
                 Name = dstation.Name
             };
+            dl.droneCharges.
             bstation.DronesInCharge=
             return null;
         }
