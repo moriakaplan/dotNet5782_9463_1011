@@ -142,5 +142,18 @@ namespace IBL
             }
             return minLocation;
         }
+
+        private bool hasEnoughBattery(Drone drone, Location loc)
+        {
+            double batteryForKil = 0;
+            double[] data = dl.AskBattery(dl.DisplayDrone(drone.Id));
+            if (drone.Status == DroneStatus.Available) batteryForKil = data[0];
+            WeightCategories weight = drone.ParcelInT.Weight;
+            if (weight == WeightCategories.Easy) batteryForKil = data[1];
+            if (weight == WeightCategories.Medium) batteryForKil = data[2];
+            if (weight == WeightCategories.Heavy) batteryForKil = data[3];
+            double kils = dl.Distance(drone.CurrentLocation.Longi, drone.CurrentLocation.Latti, loc.Longi, loc.Latti);
+            return drone.Battery>= (batteryForKil * kils);
+        }
     }
 }

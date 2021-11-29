@@ -418,7 +418,7 @@ namespace DalObject
                 DataSource.Config.easy,
                 DataSource.Config.medium,
                 DataSource.Config.heavy,
-                DataSource.Config.rate };
+                DataSource.Config.ratePerHour };
         }
         public void DeleteDrone(int droneId)
         {

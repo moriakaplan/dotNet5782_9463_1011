@@ -84,12 +84,15 @@ namespace IBL
             {
                 message = "the drone {droneId} is not in maintenance so it can't be released from charging"
             };
-            //עדכון סוללה
+            //עקרונית צריך לעדכן בדאל אבל אין שם בטריה ומצב סוללה
             double time;//צריך להמיר איכשהו את ה-dataTime
             //IDAL.DO.Drone updateDrone = dl.DisplayDrone(droneId);
             //dl.DeleteDrone(droneId);
             //updateDrone.Battery=
-            //לשנות מצב רחפן לפנוי
+            DroneToList droneFromList = lstdrn.Find(item => item.Id == droneId);
+            double rate = dl.AskBattery(dl.DisplayDrone(droneId))[4];
+            droneFromList.Battery += time * rate;
+            droneFromList.Status = DroneStatus.Available;
             dl.ReleaseDroneFromeCharge(droneId); //מוחק את הישות טעינה ומוסיף 1 לעמדות טעינה של התחנה
         }
         public Drone DisplayDrone(int droneId)
