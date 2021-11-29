@@ -76,7 +76,6 @@ namespace IBL
             //IDAL.DO.Drone updateDrone = dl.DisplayDrone(droneId);
             //dl.DeleteDrone(droneId);
             //updateDrone.Battery=
-
             //לשנות מצב רחפן לפנוי
             dl.ReleaseDroneFromeCharge(droneId); //מוחק את הישות טעינה ומוסיף 1 לעמדות טעינה של התחנה
         }

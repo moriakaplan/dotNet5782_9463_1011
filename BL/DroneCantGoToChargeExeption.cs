@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace IBL
 {
     [Serializable]
-    internal class DroneCantGoToChargeExeption : Exception
+    public class DroneCantGoToChargeExeption : Exception
     {
         public DroneCantGoToChargeExeption()
         {
