@@ -15,6 +15,10 @@ namespace IBL
         //public IDal dl = new DalObject.DalObject();
 
         internal static Random rand = new Random();
+        /// <summary>
+        /// adding drone
+        /// </summary>
+        /// <param name="drone"></param>
         public void AddDrone(Drone drone)
         {
             dl.AddDroneToTheList(new IDAL.DO.Drone
@@ -34,17 +38,26 @@ namespace IBL
                 Status = DroneStatus.Maintenance
             });//add drone to the list of the drone in the logical layer
         }
+        /// <summary>
+        /// update the drone model
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
         public void UpdateDroneModel(int id, string model)
         {
             //update the model in the logical layer
             DroneToList drone = lstdrn.Find(item => item.Id == id);
             drone.Model = model;
-            //לעדכן בדאל
+            //update the model in the data layer
             IDAL.DO.Drone ddrone = dl.DisplayDrone(id);
             dl.DeleteDrone(id);
             ddrone.Model = model;
             dl.AddDroneToTheList(ddrone);
         }
+        /// <summary>
+        /// send the drone to charge
+        /// </summary>
+        /// <param name="droneId"></param>
         public void SendDroneToCharge(int droneId)
         {
             DroneToList drone = lstdrn.Find(item => item.Id == droneId);
