@@ -26,12 +26,35 @@ namespace IBL
                 Weight = (IDAL.DO.WeightCategories)parcel.Weight
             });
         }
+        private IEnumerable<ParcelInTransfer> findHighesPrioritiy()
+        {
+            List<ParcelInTransfer> result = new List<ParcelInTransfer>(null);
+            Priorities temp = Priorities.Regular;
+            foreach (ParcelToList parcelList in DisplayListOfParcels())
+            {
+                if(parcelList.Priority>temp)
+                {
+                    temp = parcelList.Priority;
+                }
+            }
+            ParcelInTransfer parcel=new ParcelInTransfer();
+            foreach (ParcelToList parcelList in DisplayListOfParcels())
+            {
+                if (parcelList.Priority == temp)
+                {
+                    parcel.Id = parcelList.Id;
+                    parcel.Priority = parcelList.Priority;
+
+                    result.Add(parcelList);
+                }
+            }
+        }
         public void AssignParcelToDrone(int droneId)//איפה הוא צריך להיות
         {
             Drone bdrone = DisplayDrone(droneId);
             if(bdrone.Status==DroneStatus.Available)
             {
-
+                
             }
             
         }
