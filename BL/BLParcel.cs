@@ -10,20 +10,19 @@ namespace IBL
 {
     public partial class BL
     {
-        public void AddParcelToDelivery(Parcel parcel)
+        public void AddParcelToDelivery(int senderId, int targetId, WeightCategories weight, Priorities pri)
         {
             dl.AddParcelToTheList(new IDAL.DO.Parcel
             {
-                Id = parcel.Id,
-                Delivered = parcel.Delivered,
-                Droneld = parcel.Drone.Id,
-                PickedUp = parcel.PickedUp,
-                Priority = (IDAL.DO.Priorities)parcel.Priority,
-                Requested = parcel.Requested,
-                Scheduled = parcel.Scheduled,
-                Senderld = parcel.Sender.Id,
-                TargetId = parcel.Target.Id,
-                Weight = (IDAL.DO.WeightCategories)parcel.Weight
+                Droneld = 0,
+                Senderld = senderId,
+                TargetId = targetId,
+                Priority = (IDAL.DO.Priorities)pri,
+                Weight = (IDAL.DO.WeightCategories)weight,
+                Requested = DateTime.Now,
+                Scheduled = DateTime.MinValue,
+                PickedUp = DateTime.MinValue,
+                Delivered = DateTime.MinValue,
             });
         }
         public void AssignParcelToDrone(int parcelId)//איפה הוא צריך להיות
