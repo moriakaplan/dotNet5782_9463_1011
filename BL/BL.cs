@@ -10,6 +10,7 @@ namespace IBL
 {
     public partial class BL: Ibl
     {
+
         private List<DroneToList> lstdrn;
         private IDal dl;
         private static Random random = new Random();
