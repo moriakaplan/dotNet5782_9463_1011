@@ -9,16 +9,16 @@ namespace IBL
 {
     public partial class BL
     {
-        public void AddCustomer(int id, string name, string phone, Location loc)
+        public void AddCustomer(Customer customer)
         {
             //creates a new station in the data level
             IDAL.DO.Customer dCustomer = new IDAL.DO.Customer
             {
-                Id = id,
-                Name = name,
-                Lattitude = loc.Latti,
-                Longitude = loc.Longi,
-                Phone = phone
+                Id = customer.Id,
+                Name = customer.Name,
+                Lattitude = customer.Location.Latti,
+                Longitude = customer.Location.Longi,
+                Phone = customer.Phone
             };
             //try
             //{

@@ -11,27 +11,29 @@ namespace IBL
 {
     public partial class BL
     {
+        //public List<DroneToList> lstdrn;
+        //public IDal dl = new DalObject.DalObject();
+
         internal static Random rand = new Random();
         /// <summary>
         /// adding drone
         /// </summary>
         /// <param name="drone"></param>
-        public void AddDrone(int id, string model, WeightCategories weight, int stationId)
+        public void AddDrone(Drone drone)
         {
-            Location location = DisplayStation(stationId).Location;
             dl.AddDroneToTheList(new IDAL.DO.Drone
             {
-                Id = id,
-                MaxWeight = (IDAL.DO.WeightCategories)weight,
-                Model = model
+                Id = drone.Id,
+                MaxWeight = (IDAL.DO.WeightCategories)drone.MaxWeight,
+                Model = drone.Model
             });//add drone to the data layer
             lstdrn.Add(new DroneToList
             {
-                Id = id,
+                Id = drone.Id,
                 Battery = rand.Next(20, 39) + rand.NextDouble(),
-                CurrentLocation = location,
-                MaxWeight = weight,
-                Model = model,
+                CurrentLocation = drone.CurrentLocation,
+                MaxWeight = drone.MaxWeight,
+                Model = drone.Model,
                 ParcelId = 0,
                 Status = DroneStatus.Maintenance
             });//add drone to the list of the drone in the logical layer

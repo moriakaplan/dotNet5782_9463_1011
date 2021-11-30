@@ -15,16 +15,16 @@ namespace IBL
         /// add station
         /// </summary>
         /// <param name="station"></param>
-        public void AddStation(int id, string name, Location loc, int chargeSlots)
+        public void AddStation(Station station)
         {
             //creates a new station in the data level
             IDAL.DO.Station dstation = new IDAL.DO.Station
             {
-                Id = id,
-                Name = name,
-                ChargeSlots = chargeSlots,
-                Lattitude = loc.Latti,
-                Longitude = loc.Longi
+                Id = station.Id,
+                Name = station.Name,
+                ChargeSlots = station.AvailableChargeSlots,
+                Lattitude = station.Location.Latti,
+                Longitude = station.Location.Longi
             };
 
             dl.AddStationToTheList(dstation);//add the new station to the list in the data level

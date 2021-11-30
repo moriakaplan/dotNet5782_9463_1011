@@ -10,28 +10,30 @@ namespace IBL
 {
     public partial class BL
     {
-        public void AddParcelToDelivery(int senderId, int targetId, WeightCategories weight, Priorities pri)
+        public void AddParcelToDelivery(Parcel parcel)
         {
             dl.AddParcelToTheList(new IDAL.DO.Parcel
             {
-                Droneld = 0,
-                Senderld = senderId,
-                TargetId = targetId,
-                Priority = (IDAL.DO.Priorities)pri,
-                Weight = (IDAL.DO.WeightCategories)weight,
-                Requested = DateTime.Now,
-                Scheduled = DateTime.MinValue,
-                PickedUp = DateTime.MinValue,
-                Delivered = DateTime.MinValue,
+                Id = parcel.Id,
+                Delivered = parcel.Delivered,
+                Droneld = parcel.Drone.Id,
+                PickedUp = parcel.PickedUp,
+                Priority = (IDAL.DO.Priorities)parcel.Priority,
+                Requested = parcel.Requested,
+                Scheduled = parcel.Scheduled,
+                Senderld = parcel.Sender.Id,
+                TargetId = parcel.Target.Id,
+                Weight = (IDAL.DO.WeightCategories)parcel.Weight
             });
-        }
-        public void AssignParcelToDrone(int parcelId)//איפה הוא צריך להיות
-        {
-            IDAL.DO.Parcel dparcel = dl.DisplayParcel(parcelId);
         }
         public void AssignParcelToDrone(int droneId)//איפה הוא צריך להיות
         {
+            Drone bdrone = DisplayDrone(droneId);
+            if(bdrone.Status==DroneStatus.Available)
+            {
 
+            }
+            
         }
         public void PickParcelByDrone(int parcelId)//איפה הוא צריך להיות
         {

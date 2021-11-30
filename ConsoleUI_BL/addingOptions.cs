@@ -47,7 +47,14 @@ longitude-");
                     Console.WriteLine("Available charge slots-");
                     input = Console.ReadLine();
                     int.TryParse(input, out chargeSlots);
-                    blObject.AddStation(id, name, location, chargeSlots);//Add the station to the list
+                    Station station = new Station//Creates a new station
+                    {
+                        Id = id,
+                        Name = name,
+                        Location = location,
+                        AvailableChargeSlots = chargeSlots
+                    };
+                    blObject.AddStation(station);//Add the station to the list
                     break;
                 
                 case AddingOptions.Drone://if the user wants to add a drone
@@ -64,7 +71,15 @@ Drone ID (6 digits)-");
                     Console.WriteLine("Enter ID of station for first charging of the drone-");
                     input = Console.ReadLine();
                     int.TryParse(input, out stationId);
-                    blObject.AddDrone(id, model, weight, stationId);//Add the drone to the list
+                    location = blObject.DisplayStation(stationId).Location;
+                    Drone drone = new Drone//Creates a new drone
+                    {
+                        Id = id,
+                        Model = model,
+                        MaxWeight = weight, 
+                        CurrentLocation = location
+                    };
+                    blObject.AddDrone(drone);//Add the drone to the list
                     break;
                 
                 case AddingOptions.Customer://if the user wants to add a customer
@@ -85,7 +100,14 @@ longitude-");
                     input = Console.ReadLine();
                     double.TryParse(input, out lattitude);
                     location = new Location { Longi = longitude, Latti = lattitude };
-                    blObject.AddCustomer(id, name, phone, location);//Add the customer to the list
+                    Customer customer = new Customer// Creates a new customer
+                    {
+                        Id = id,
+                        Name = name,
+                        Phone = phone, 
+                        Location=location
+                    };
+                    blObject.AddCustomer(customer);//Add the customer to the list
                     break;
 
                 case AddingOptions.Parcel://if the user wants to add a parcel
@@ -103,7 +125,27 @@ longitude-");
                     Console.WriteLine("Parcel priority (Regular/Fast/Emergency)-");
                     input = Console.ReadLine();
                     Priorities.TryParse(input, out priority);
-                    blObject.AddParcelToDelivery(senderId, targetId, weight, priority);//Add the parcel to the list
+                    CustomerInParcel sender = new CustomerInParcel { 
+                        Id = senderId, 
+                        Name = blObject.DisplayCustomer(senderId).Name };
+                    CustomerInParcel target = new CustomerInParcel
+                    {
+                        Id = targetId,
+                        Name = blObject.DisplayCustomer(targetId).Name
+                    };
+                    Parcel pa = new Parcel//Creates a new customer
+                    {
+                        Sender = sender,
+                        Target = target,
+                        Weight = weight,
+                        Priority = priority,
+                        Requested = DateTime.Now,
+                        Scheduled = DateTime.MinValue,
+                        PickedUp = DateTime.MinValue,
+                        Delivered = DateTime.MinValue, 
+                        Drone=null
+                    };
+                    blObject.AddParcelToDelivery(pa);//Add the parcel to the list
                     break;
                 default:
                     Console.WriteLine("ERROR");
