@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DalObject
 {
-    public class DalObject : IDal
+    public partial class DalObject : IDal
     {
         //public static DataSource DataSource { get; private set; }
 
@@ -19,45 +19,6 @@ namespace DalObject
         public DalObject()
         {
             DataSource.Initialize();
-        }
-        /// <summary>
-        /// add the station that he gets to the list of the stations.
-        /// </summary>
-        /// <param name="station"></param>
-        public void AddStationToTheList(Station station)
-        {
-            if (DataSource.stations.Exists(item => item.Id == station.Id)) throw new StationException($"id: {station.Id} already exist"); //it suppose to be this type of exception????**** 
-            DataSource.stations.Add(station);
-        }
-        /// <summary>
-        /// add the drone that he gets to the list of the drones.
-        /// </summary>
-        /// <param name="drone"></param>
-        public void AddDroneToTheList(Drone drone)
-        {
-            if (DataSource.drones.Exists(item => item.Id == drone.Id)) throw new DroneException($"id: {drone.Id} already exist"); //it suppose to be this type of exception????**** 
-            DataSource.drones.Add(drone);
-        }
-        /// <summary>
-        /// add the customer that he gets to the list of the customers.
-        /// </summary>
-        /// <param name="customer"></param>
-        public void AddCustomerToTheList(Customer customer)
-        {
-            if (DataSource.customers.Exists(item => item.Id == customer.Id)) throw new CustomerException($"id: {customer.Id} already exist"); //it suppose to be this type of exception????**** 
-            DataSource.customers.Add(customer);
-        }
-        /// <summary>
-        /// add the parcel that he gets to the list of the parcels.
-        /// </summary>
-        /// <param name="parcel"></param>
-        /// <returns></returns>
-        public int AddParcelToTheList(Parcel parcel)
-        {
-            if (DataSource.parcels.Exists(item => item.Id == parcel.Id)) throw new ParcelException($"id: {parcel.Id} already exist"); //it suppose to be this type of exception????**** 
-            parcel.Id = ++DataSource.Config.parcelCode;
-            DataSource.parcels.Add(parcel);
-            return DataSource.Config.parcelCode;
         }
         /// <summary>
         /// assign the parcel to the drone.
@@ -145,225 +106,7 @@ namespace DalObject
             ////drone.Status = DroneStatuses.Vacant;//after the drone gives the parcel, he is vacant 
             //AddDroneToTheList(drone);
         }
-        /// <summary>
-        /// send the drone for charging
-        /// </summary>
-        /// <param name="droneId"></param>
-        /// <param name="stationId"></param>
-        public void SendDroneToCharge(int droneId, int stationId)
-        {
-            if (!DataSource.drones.Exists(item => item.Id == droneId))
-            {
-                throw new DroneException($"id: {droneId} does not exist");
-            }
-            DroneCharge droneCharge = new DroneCharge { DroneId = droneId, StationId = stationId }; //add drone charge to the list for charging the drone
-            DataSource.droneCharges.Add(droneCharge);
-
-            //Drone drone = DisplayDrone(droneId);
-            //DataSource.drones.Remove(drone);
-            ////drone.Status = DroneStatuses.Maintenance;
-            //AddDroneToTheList(drone);
-
-            //Station station = DisplayStation(stationId);
-            //DataSource.stations.Remove(station);
-            //station.ChargeSlots++;
-            //AddStationToTheList(station);
-            for (int i = 0; i < DataSource.stations.Count; i++) //find the station and update its details
-            {
-                if (DataSource.stations[i].Id == stationId)
-                {
-                    Station s = DataSource.stations[i];
-                    s.ChargeSlots--; //++?
-                    DataSource.stations[i] = s;
-                    return;
-                }
-            }
-            throw new StationException($"id: {stationId} does not exist");
-        }
-        /// <summary>
-        /// release the drone frome charging 
-        /// </summary>
-        /// <param name="droneId"></param>
-        public void ReleaseDroneFromeCharge(int droneId)
-        {
-            DroneCharge dCharge;
-            try { dCharge = DataSource.droneCharges.Find(x => x.DroneId == droneId); }
-            catch (ArgumentNullException)
-            {
-                throw new DroneChargeException($"drone chare with the drone ID {droneId} does not exist");
-            }
-            DataSource.droneCharges.Remove(dCharge);
-
-            //Drone drone = DisplayDrone(droneId);
-            //DataSource.drones.Remove(drone);
-            ////drone.Status = DroneStatuses.Vacant;
-            //AddDroneToTheList(drone);
-
-            //Station station = DisplayStation(dCharge.StationId);
-            //DataSource.stations.Remove(station);
-            //station.ChargeSlots--;
-            //AddStationToTheList(station);
-            for (int i = 0; i < DataSource.stations.Count; i++) //find the station and update its details
-            {
-                if (DataSource.stations[i].Id == dCharge.StationId)
-                {
-                    Station s = DataSource.stations[i];
-                    s.ChargeSlots++; //--?
-                    DataSource.stations[i] = s;
-                    return;
-                }
-            }
-            throw new StationException($"id: {dCharge.StationId} does not exist");
-        }
-        /// <summary>
-        /// display a station
-        /// </summary>
-        /// <param name="stationId"></param>
-        /// <returns></returns>
-        public Station DisplayStation(int stationId)
-        {
-            //Station temp = new Station();
-            //foreach (Station item in DataSource.stations)
-            //{
-            //    if (item.Id == stationId)
-            //        temp = item;
-            //}
-            //return temp;
-            try { return DataSource.stations.Find(item => item.Id == stationId); }
-            catch (ArgumentNullException)
-            {
-                throw new StationException($"id: {stationId} does not exist");
-            }
-        }
-        /// <summary>
-        /// display a drone
-        /// </summary>
-        /// <param name="droneId"></param>
-        /// <returns></returns>
-        public Drone DisplayDrone(int droneId)
-        {
-            //Drone temp = new Drone();
-            //foreach (Drone item in DataSource.drones)
-            //{
-            //    if (item.Id == droneId)
-            //        temp = item;
-            //}
-            //return temp;
-            try { return DataSource.drones.Find(item => item.Id == droneId); }
-            catch (ArgumentNullException)
-            {
-                throw new DroneException($"id: {droneId} does not exist");
-            }
-        }
-        /// <summary>
-        /// display a customer
-        /// </summary>
-        /// <param name="customerId"></param>
-        /// <returns></returns>
-        public Customer DisplayCustomer(int customerId)
-        {
-            //Customer temp = new Customer();
-            //foreach (Customer item in DataSource.customers)
-            //{
-            //    if (item.Id == customerId)
-            //        temp = item;
-            //}
-            //return temp;
-            try { return DataSource.customers.Find(item => item.Id == customerId); }
-            catch (ArgumentNullException)
-            {
-                throw new CustomerException($"id: {customerId} does not exist");
-            }
-        }
-        /// <summary>
-        /// display a parcel
-        /// </summary>
-        /// <param name="parcelId"></param>
-        /// <returns></returns>
-        public Parcel DisplayParcel(int parcelId)
-        {
-            //Parcel temp = new Parcel();
-            //foreach (Parcel item in DataSource.parcels)
-            //{
-            //    if (item.Id == parcelId)
-            //        temp = item;
-            //}
-            //return temp;
-            try { return DataSource.parcels.Find(item => item.Id == parcelId); }
-            catch (ArgumentNullException)
-            {
-                throw new ParcelException($"id: {parcelId} does not exist");
-            }
-        }
-        /// <summary>
-        /// display the list of the stations.
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Station> DisplayListOfStations()
-        {
-            List<Station> result = new List<Station>(DataSource.stations);
-            return result;
-        }
-        public IEnumerable<DroneCharge> DisplayListOfDroneCharge()
-        {
-            List<DroneCharge> result = new List<DroneCharge>(DataSource.droneCharges);
-            return result;
-        }
-        /// <summary>
-        /// display the list of the drones.
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Drone> DisplayListOfDrones()
-        {
-            List<Drone> result = new List<Drone>(DataSource.drones);
-            return result;
-        }
-        /// <summary>
-        /// display the list of thecustomers
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Customer> DisplayListOfCustomers()
-        {
-            List<Customer> result = new List<Customer>(DataSource.customers);
-            return result;
-        }
-        /// <summary>
-        /// display the list of the customers
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Parcel> DisplayListOfParcels()
-        {
-            List<Parcel> result = new List<Parcel>(DataSource.parcels);
-            return result;
-        }
-        /// <summary>
-        /// display the list of the unassign parcels
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Parcel> DisplayListOfUnassignedParcels()
-        {
-            List<Parcel> unassignedParcels = new List<Parcel>();
-            foreach (Parcel item in DataSource.parcels)
-            {
-                if (item.Scheduled == DateTime.MinValue)
-                    unassignedParcels.Add(item);
-            }
-            return unassignedParcels;
-        }
-        /// <summary>
-        /// display a list of all the station with empty charge slots
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Station> DisplayListOfStationsWithAvailableCargeSlots()
-        {
-            List<Station> StationsWithAvailableCargingSlots = new List<Station>();
-            foreach (Station item in DataSource.stations)
-            {
-                if (item.ChargeSlots > 0)
-                    StationsWithAvailableCargingSlots.Add(item);
-            }
-            return StationsWithAvailableCargingSlots;
-        }
+        
         /// <summary>
         /// bonus 2
         /// calculates the distance between a point and a station
@@ -379,6 +122,14 @@ namespace DalObject
             catch(StationException sExc) { throw sExc; } //to chex why it is a problem*****
             return Distance(longitudeA, lattitudeA, st.Longitude, st.Lattitude);
         }
+        /// <summary>
+        /// bonus 2
+        /// calculates the distance between a point and a Customer
+        /// </summary>
+        /// <param name="longitudeA"></param>
+        /// <param name="lattitudeA"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public double DistanceForCustomer(double longitudeA, double lattitudeA, int id)
         {
             Customer cu;
@@ -416,6 +167,7 @@ namespace DalObject
             // calculate the result
             return (c * r);
         }
+        
         public double[] AskBattery(Drone drone)
         {
             return new double[] {
@@ -425,6 +177,7 @@ namespace DalObject
                 DataSource.Config.heavy,
                 DataSource.Config.ratePerHour };
         }
+        
         public void DeleteDrone(int droneId)
         {
             try { DataSource.drones.Remove(DisplayDrone(droneId)); }
@@ -433,6 +186,7 @@ namespace DalObject
                 throw new DroneException($"id: {droneId} does not exist");
             }
         }
+        
         public void DeleteCustomer(int customerId)
         {
             try
