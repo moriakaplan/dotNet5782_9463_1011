@@ -26,9 +26,9 @@ namespace IBL
                 Weight = (IDAL.DO.WeightCategories)parcel.Weight
             });
         }
-        public void AssignParcelToDrone(int parcelId, int droneId)//איפה הוא צריך להיות
+        public void AssignParcelToDrone(int parcelId)//איפה הוא צריך להיות
         {
-
+            IDAL.DO.Parcel dparcel = dl.DisplayParcel(parcelId);
         }
         public void AssignParcelToDrone(int droneId)//איפה הוא צריך להיות
         {

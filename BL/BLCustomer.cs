@@ -7,7 +7,7 @@ using IBL.BO;
 
 namespace IBL
 {
-    public partial class BL 
+    public partial class BL
     {
         public void AddCustomer(Customer customer)
         {
@@ -22,7 +22,7 @@ namespace IBL
             };
             //try
             //{
-               dl.AddCustomerToTheList(dCustomer);
+            dl.AddCustomerToTheList(dCustomer);
             //add the new station to the list in the data level
             // }
             // catch(Exception ex)
@@ -57,17 +57,17 @@ namespace IBL
             bCustomer.parcelTo = getCustomerParcelTo(customerId);
             return bCustomer;
         }
-        private IEnumerable<ParcelInCustomer> getCustomerParcelFrom( int customerId)
+        private IEnumerable<ParcelInCustomer> getCustomerParcelFrom(int customerId)
         {
             List<ParcelInCustomer> result = new List<ParcelInCustomer>();
-            ParcelInCustomer parcel=new ParcelInCustomer();
+            ParcelInCustomer parcel = new ParcelInCustomer();
             foreach (ParcelToList tempparcel in DisplayListOfParcels())
             {
-                if(DisplayParcel(tempparcel.Id).Sender.Id==customerId)
+                if (DisplayParcel(tempparcel.Id).Sender.Id == customerId)
                 {
                     parcel.Id = tempparcel.Id;
                     parcel.Priority = tempparcel.Priority;
-                    parcel.SenderOrTarget=new CustomerInParcel{ Id= DisplayParcel(tempparcel.Id).Target.Id, Name= DisplayParcel(tempparcel.Id).Target.Name };
+                    parcel.SenderOrTarget = new CustomerInParcel { Id = DisplayParcel(tempparcel.Id).Target.Id, Name = DisplayParcel(tempparcel.Id).Target.Name };
                     parcel.Status = tempparcel.Status;
                     parcel.Weight = tempparcel.Weight;
                     result.Add(parcel);
@@ -102,7 +102,38 @@ namespace IBL
                 Name = dcustomer.Name,
                 phone = dcustomer.Phone
             };
-            //bCustomer.
+            bCustomer.numOfParcelsDelivered = 0;//מספר חבילות שהלקוח שלח וסופקו
+            foreach (ParcelToList parcel in DisplayListOfParcels())
+            {
+                if ((DisplayParcel(parcel.Id).Sender.Id == customerId) && (DisplayParcel(parcel.Id).Delivered != DateTime.MinValue))
+                {
+                    bCustomer.numOfParcelsDelivered++;
+                }
+            }
+            bCustomer.numOfParcelsSentAndNotDelivered = 0;//מספר חבילות ששלח אבל עוד לא סופקו
+            foreach (ParcelToList parcel in DisplayListOfParcels())
+            {
+                if ((DisplayParcel(parcel.Id).Sender.Id == customerId) && ((DisplayParcel(parcel.Id).Delivered == DateTime.MinValue)&&((DisplayParcel(parcel.Id).Requested!=DateTime.MinValue))))
+                {
+                    bCustomer.numOfParcelsSentAndNotDelivered++;
+                }
+            }
+            bCustomer.numOfParcelsInTheWay = 0;//מס' חבילות שבדרך אל הלקוח
+            foreach (ParcelToList parcel in DisplayListOfParcels())
+            {
+                if ((DisplayParcel(parcel.Id).Target.Id == customerId) && (DisplayParcel(parcel.Id).Delivered == DateTime.MinValue))
+                {
+                    bCustomer.numOfParcelsInTheWay++;
+                }
+            }
+            bCustomer.numOfParclRecived = 0;//מספר חבילות שהלקוח קיבל 
+            foreach (ParcelToList parcel in DisplayListOfParcels())
+            {
+                if ((DisplayParcel(parcel.Id).Target.Id == customerId) && (DisplayParcel(parcel.Id).Delivered != DateTime.MinValue))
+                {
+                    bCustomer.numOfParclRecived++;
+                }
+            }
             return bCustomer;
         }
         public IEnumerable<CustomerToList> DisplayListOfCustomers()

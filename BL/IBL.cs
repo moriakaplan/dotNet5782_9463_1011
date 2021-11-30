@@ -20,7 +20,7 @@ namespace IBL
        void UpdateCustomer(int id, string name, string phone);//לשאול אנשים
        void SendDroneToCharge(int droneId);
        void ReleaseDroneFromeCharge(int droneId, DateTime timeInCharge);
-       void AssignParcelToDrone(int parcelId, int droneId);//איפה הוא צריך להיות
+       void AssignParcelToDrone(int parcelId);//איפה הוא צריך להיות
        void AssignParcelToDrone(int droneId);//איפה הוא צריך להיות
        void PickParcelByDrone(int parcelId);//איפה הוא צריך להיות
        void DeliverParcelByDrone(int droneId);//איפה הוא צריך להיות
