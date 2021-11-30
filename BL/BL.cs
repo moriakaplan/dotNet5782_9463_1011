@@ -143,8 +143,9 @@ namespace IBL
             return minLocation;
         }
 
-        private bool hasEnoughBattery(Drone drone, Location loc)
+        private double batteryNeeded(int droneId, Location loc)
         {
+            Drone drone = DisplayDrone(droneId);
             double batteryForKil = 0;
             double[] data = dl.AskBattery(dl.DisplayDrone(drone.Id));
             if (drone.Status == DroneStatus.Available) batteryForKil = data[0];
@@ -153,7 +154,7 @@ namespace IBL
             if (weight == WeightCategories.Medium) batteryForKil = data[2];
             if (weight == WeightCategories.Heavy) batteryForKil = data[3];
             double kils = dl.Distance(drone.CurrentLocation.Longi, drone.CurrentLocation.Latti, loc.Longi, loc.Latti);
-            return drone.Battery>= (batteryForKil * kils);
+            return batteryForKil * kils
         }
     }
 }

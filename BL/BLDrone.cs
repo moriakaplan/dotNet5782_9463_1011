@@ -75,7 +75,29 @@ namespace IBL
             //    distance = dl.DistanceForStation(lo, la, station.Id);
             //    if (distance < min) min = distance;
             //}
-            dl.SendDroneToCharge(droneId, closestStationWithAvailableChargeSlosts(drone.CurrentLocation).Id);
+            //Parcel pa = DisplayParcel(drone.ParcelId);
+            //ParcelInTransfer parcel= new ParcelInTransfer { i }
+            //Drone DroneNotFromList = new Drone
+            //{
+            //    Id = drone.Id,
+            //    Battery = drone.Battery,
+            //    CurrentLocation = drone.CurrentLocation,
+            //    MaxWeight = drone.MaxWeight,
+            //    Model = drone.Model,
+            //    ParcelInT = parcel,
+            //    Status = drone.Status
+            //};
+            Station st = closestStationWithAvailableChargeSlosts(drone.CurrentLocation);
+            double batteryNeed = batteryNeeded(drone.Id, st.Location);
+            if (batteryNeed>drone.Battery) throw new DroneCantGoToChargeExeption
+            {
+                message = "the drone {droneId} is not available so it can't be sended to charging"
+            };
+            drone.Battery -= batteryNeed;
+            drone.CurrentLocation = st.Location;
+            //לעדכן בדאל את מה שצריך(מיקום?)
+            drone.Status = DroneStatus.Maintenance;
+            dl.SendDroneToCharge(droneId, st.Id); // מוסיף ישות טעינת רחפן ומוריד את כמות העמדות הפנויות בתחנה
         }
         public void ReleaseDroneFromeCharge(int droneId, DateTime timeInCharge)
         {
@@ -85,7 +107,7 @@ namespace IBL
                 message = "the drone {droneId} is not in maintenance so it can't be released from charging"
             };
             //עקרונית צריך לעדכן בדאל אבל אין שם בטריה ומצב סוללה
-            double time;//צריך להמיר איכשהו את ה-dataTime
+            double time = convertDateTimeToDoubleInHours(timeInCharge);//צריך להמיר איכשהו את ה-dataTime
             //IDAL.DO.Drone updateDrone = dl.DisplayDrone(droneId);
             //dl.DeleteDrone(droneId);
             //updateDrone.Battery=
@@ -138,6 +160,18 @@ namespace IBL
             //    return drones;
             //}
             return lstdrn;
+        }
+        private double convertDateTimeToDoubleInHours(DateTime dateTime)
+        {
+            double result = 0;
+            result += dateTime.Year * 365 * 24;
+            //result += dateTime.Month * 30/*that not good*/* 24;
+            //result += dateTime.Day * 24;
+            result += dateTime.DayOfYear * 24;
+            result += dateTime.Hour;
+            result += dateTime.Minute * (1 / 60);
+            result += dateTime.Minute * (1 / 360);
+            return result;
         }
     }
 }
