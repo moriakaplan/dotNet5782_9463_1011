@@ -32,5 +32,7 @@ namespace IDAL
         void DeleteCustomer(int customerId);
         void DeleteStation(int stationId);
         void DeleteParcel(int parcelId);
+        IEnumerable<DroneCharge> DisplayListOfDroneCharge();
+
     }
 }

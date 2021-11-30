@@ -304,6 +304,11 @@ namespace DalObject
             List<Station> result = new List<Station>(DataSource.stations);
             return result;
         }
+        public IEnumerable<DroneCharge> DisplayListOfDroneCharge()
+        {
+            List<DroneCharge> result = new List<DroneCharge>(DataSource.droneCharges);
+            return result;
+        }
         /// <summary>
         /// display the list of the drones.
         /// </summary>
