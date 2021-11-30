@@ -35,6 +35,5 @@ namespace IBL
        IEnumerable<ParcelToList> DisplayListOfParcels();
        IEnumerable<ParcelToList> DisplayListOfUnassignedParcels();
        IEnumerable<StationToList> DisplayListOfStationsWithAvailableCargeSlots();
-       double batteryNeeded(int drone, Location location);
     }
 }

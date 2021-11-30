@@ -8,7 +8,7 @@ using IDAL;
 
 namespace IBL
 {
-    public partial class BL
+    public partial class BL: Ibl
     {
         private List<DroneToList> lstdrn;
         private IDal dl;
@@ -154,7 +154,7 @@ namespace IBL
             if (weight == WeightCategories.Medium) batteryForKil = data[2];
             if (weight == WeightCategories.Heavy) batteryForKil = data[3];
             double kils = dl.Distance(drone.CurrentLocation.Longi, drone.CurrentLocation.Latti, loc.Longi, loc.Latti);
-            return batteryForKil * kils
+            return batteryForKil * kils;
         }
     }
 }
