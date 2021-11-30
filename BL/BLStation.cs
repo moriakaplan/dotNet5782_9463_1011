@@ -65,7 +65,7 @@ namespace IBL
             };
             int count = 0;
             List<IDAL.DO.DroneCharge> droneCharge = (List<IDAL.DO.DroneCharge>)dl.DisplayListOfDroneCharge();
-            DroneInCharge temp;// = new DroneInCharge(null);
+            DroneInCharge temp = new DroneInCharge();
             bstation.DronesInCharge = new List<DroneInCharge>(null);
             foreach (IDAL.DO.DroneCharge ddrone in droneCharge)
             {

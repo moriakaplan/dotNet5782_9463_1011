@@ -30,10 +30,19 @@ namespace IBL
             //    throw new ExistIdException(ex.Message, ex)
             // }
         }
-        public void UpdateCustomer(int customerId, string name, string phone)//לשאול אנשים
+        public void UpdateCustomer(int customerId, string name, string phone)
         {
             IDAL.DO.Customer dCustomer = dl.DisplayCustomer(customerId);
-
+            dl.DeleteCustomer(customerId);
+            if (name != null)//update the name
+            {
+                dCustomer.Name = name;
+            }
+            if (phone != null)//update the charge slots
+            {
+                dCustomer.Phone = phone;
+            }
+            dl.AddCustomerToTheList(dCustomer);
 
         }
         public Customer DisplayCustomer(int customerId)
@@ -48,9 +57,62 @@ namespace IBL
             bCustomer.parcelTo = getCustomerParcelTo(customerId);
             return bCustomer;
         }
+        private IEnumerable<ParcelInCustomer> getCustomerParcelFrom( int customerId)
+        {
+            List<ParcelInCustomer> result = new List<ParcelInCustomer>();
+            ParcelInCustomer parcel=new ParcelInCustomer();
+            foreach (ParcelToList tempparcel in DisplayListOfParcels())
+            {
+                if(DisplayParcel(tempparcel.Id).Sender.Id==customerId)
+                {
+                    parcel.Id = tempparcel.Id;
+                    parcel.Priority = tempparcel.Priority;
+                    parcel.SenderOrTarget=new CustomerInParcel{ Id= DisplayParcel(tempparcel.Id).Target.Id, Name= DisplayParcel(tempparcel.Id).Target.Name };
+                    parcel.Status = tempparcel.Status;
+                    parcel.Weight = tempparcel.Weight;
+                    result.Add(parcel);
+                }
+            }
+            return result;
+        }
+        private IEnumerable<ParcelInCustomer> getCustomerParcelTo(int customerId)
+        {
+            List<ParcelInCustomer> result = new List<ParcelInCustomer>();
+            ParcelInCustomer parcel = new ParcelInCustomer();
+            foreach (ParcelToList tempparcel in DisplayListOfParcels())
+            {
+                if (DisplayParcel(tempparcel.Id).Target.Id == customerId)
+                {
+                    parcel.Id = tempparcel.Id;
+                    parcel.Priority = tempparcel.Priority;
+                    parcel.SenderOrTarget = new CustomerInParcel { Id = DisplayParcel(tempparcel.Id).Sender.Id, Name = DisplayParcel(tempparcel.Id).Sender.Name };
+                    parcel.Status = tempparcel.Status;
+                    parcel.Weight = tempparcel.Weight;
+                    result.Add(parcel);
+                }
+            }
+            return result;
+        }
+        private CustomerToList DisplayCustomersToList(int customerId)
+        {
+            IDAL.DO.Customer dcustomer = dl.DisplayCustomer(customerId);
+            CustomerToList bCustomer = new CustomerToList
+            {
+                Id = dcustomer.Id,
+                Name = dcustomer.Name,
+                phone = dcustomer.Phone
+            };
+            //bCustomer.
+            return bCustomer;
+        }
         public IEnumerable<CustomerToList> DisplayListOfCustomers()
         {
-            return null;
+            List<CustomerToList> result = new List<CustomerToList>(null);
+            foreach (IDAL.DO.Customer dCustomer in dl.DisplayListOfCustomers())
+            {
+                result.Add(DisplayCustomersToList(dCustomer.Id));
+            }
+            return result;
         }
     }
 }
