@@ -192,7 +192,7 @@ namespace IBL
         }
         public IEnumerable<ParcelToList> DisplayListOfParcels()
         {
-            List<ParcelToList> answer = new List<ParcelToList>();
+            //List<ParcelToList> answer = new List<ParcelToList>();
             IEnumerable<IDAL.DO.Parcel> listFromDal = dl.DisplayListOfParcels();
             ParcelStatus st;
             foreach (IDAL.DO.Parcel parcel in listFromDal)
@@ -207,7 +207,7 @@ namespace IBL
                         else st = ParcelStatus.Created;
                     }
                 }
-                answer.Add(new ParcelToList
+                ParcelToList answer = new ParcelToList
                 {
                     Id = parcel.Id,
                     Priority = (Priorities)parcel.Priority,
@@ -215,13 +215,14 @@ namespace IBL
                     TargetName = DisplayCustomer(parcel.TargetId).Name,
                     Status = st,
                     Weight = (WeightCategories)parcel.Weight
-                });
+                };
+                yield return answer;
             }
-            return answer;
+            //return answer;
         }
         public IEnumerable<ParcelToList> DisplayListOfUnassignedParcels()
         {
-            List<ParcelToList> answer = new List<ParcelToList>();
+            //List<ParcelToList> answer = new List<ParcelToList>();
             IEnumerable<IDAL.DO.Parcel> listFromDal = dl.DisplayListOfParcels();
             ParcelStatus st;
             foreach (IDAL.DO.Parcel parcel in listFromDal)
@@ -231,7 +232,7 @@ namespace IBL
                 else st = ParcelStatus.Associated;
                 if (st == ParcelStatus.Created)
                 {
-                    answer.Add(new ParcelToList
+                    ParcelToList answer = new ParcelToList
                     {
                         Id = parcel.Id,
                         Priority = (Priorities)parcel.Priority,
@@ -239,10 +240,11 @@ namespace IBL
                         TargetName = DisplayCustomer(parcel.TargetId).Name,
                         Status = st,
                         Weight = (WeightCategories)parcel.Weight
-                    });
+                    };
+                    yield return answer;
                 }
             }
-            return answer;
+            //return answer;
         }
 
     }

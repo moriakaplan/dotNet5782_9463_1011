@@ -159,7 +159,11 @@ namespace IBL
             //{
             //    return drones;
             //}
-            return lstdrn;
+            foreach(DroneToList drone in lstdrn)
+            {
+                yield return drone;
+            }
+            //return lstdrn;
         }
         private double convertDateTimeToDoubleInHours(DateTime dateTime)
         {
