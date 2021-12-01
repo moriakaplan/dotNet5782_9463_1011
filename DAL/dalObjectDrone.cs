@@ -120,6 +120,14 @@ namespace DalObject
             List<Drone> result = new List<Drone>(DataSource.drones);
             return result;
         }
-
+        
+        public void DeleteDrone(int droneId)
+        {
+            try { DataSource.drones.Remove(DisplayDrone(droneId)); }
+            catch (ArgumentNullException)
+            {
+                throw new DroneException($"id: {droneId} does not exist");
+            }
+        }
     }
 }

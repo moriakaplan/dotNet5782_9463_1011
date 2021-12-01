@@ -58,6 +58,16 @@ namespace DalObject
             }
             return StationsWithAvailableCargingSlots;
         }
-
+        public void DeleteStation(int stationId)
+        {
+            try
+            {
+                DataSource.stations.Remove(DisplayStation(stationId));
+            }
+            catch (ArgumentNullException)
+            {
+                throw new StationException($"id: {stationId} does not exist");
+            }
+        }
     }
 }

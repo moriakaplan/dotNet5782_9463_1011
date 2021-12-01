@@ -20,19 +20,24 @@ namespace IBL
                 Longitude = customer.Location.Longi,
                 Phone = customer.Phone
             };
-            //try
-            //{
+            try
+            {
             dl.AddCustomerToTheList(dCustomer);
-            //add the new station to the list in the data level
-            // }
-            // catch(Exception ex)
-            //{
-            //    throw new ExistIdException(ex.Message, ex)
-            // }
+            //add the new customer to the list in the data level
+             }
+             catch(IDAL.DO.CustomerException ex)
+            {
+                throw new ExistIdException(ex.Message, "-customer");
+            }
         }
         public void UpdateCustomer(int customerId, string name, string phone)
         {
-            IDAL.DO.Customer dCustomer = dl.DisplayCustomer(customerId);
+            IDAL.DO.Customer dCustomer;
+            try { dCustomer = dl.DisplayCustomer(customerId); }
+            catch(IDAL.DO.CustomerException ex)
+            {
+                throw new NotExistIDExeption(ex.Message, "-customer");
+            }
             dl.DeleteCustomer(customerId);
             if (name != null)//update the name
             {
@@ -47,14 +52,19 @@ namespace IBL
         }
         public Customer DisplayCustomer(int customerId)
         {
-            IDAL.DO.Customer dCustomer = dl.DisplayCustomer(customerId);
+            IDAL.DO.Customer dCustomer;
+            try { dCustomer = dl.DisplayCustomer(customerId); }
+            catch (IDAL.DO.CustomerException ex)
+            {
+                throw new NotExistIDExeption(ex.Message, "-customer");
+            }
             Customer bCustomer = new Customer();
             bCustomer.Id = dCustomer.Id;
             bCustomer.Name = dCustomer.Name;
             bCustomer.Phone = dCustomer.Phone;
             bCustomer.Location = new Location() { Latti = dCustomer.Lattitude, Longi = dCustomer.Lattitude };
-            bCustomer.parcelFrom = getCustomerParcelFrom(customerId);
-            bCustomer.parcelTo = getCustomerParcelTo(customerId);
+            bCustomer.parcelFrom = getCustomerParcelFrom(customerId);//####
+            bCustomer.parcelTo = getCustomerParcelTo(customerId);//####
             return bCustomer;
         }
         private IEnumerable<ParcelInCustomer> getCustomerParcelFrom(int customerId)

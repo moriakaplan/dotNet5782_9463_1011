@@ -61,6 +61,16 @@ namespace DalObject
             }
             return unassignedParcels;
         }
-
+        public void DeleteParcel(int parcelId)
+        {
+            try
+            {
+                DataSource.drones.Remove(DisplayDrone(parcelId));
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ParcelException($"id: {parcelId} does not exist");
+            }
+        }
     }
 }

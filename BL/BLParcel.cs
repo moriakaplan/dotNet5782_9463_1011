@@ -12,7 +12,7 @@ namespace IBL
     {
         public void AddParcelToDelivery(Parcel parcel)
         {
-            dl.AddParcelToTheList(new IDAL.DO.Parcel
+            IDAL.DO.Parcel idalParcel = new IDAL.DO.Parcel
             {
                 Id = parcel.Id,
                 Delivered = parcel.Delivered,
@@ -24,9 +24,17 @@ namespace IBL
                 Senderld = parcel.Sender.Id,
                 TargetId = parcel.Target.Id,
                 Weight = (IDAL.DO.WeightCategories)parcel.Weight
-            });
+            };
+            try
+            {
+                dl.AddParcelToTheList(idalParcel);
+                //add the new Parcel to the list in the data level
+            }
+            catch (IDAL.DO.ParcelException ex)
+            {
+                throw new ExistIdException(ex.Message, "-parcel");
+            }
         }
-
         /// <summary>
         /// מחזיר את כל החבילות עם העדיפות הכי גבוהה
         /// </summary>
