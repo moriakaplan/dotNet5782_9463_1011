@@ -21,12 +21,21 @@ namespace IBL
         /// <param name="drone"></param>
         public void AddDrone(Drone drone)
         {
-            dl.AddDroneToTheList(new IDAL.DO.Drone
+            IDAL.DO.Drone idalDrone=new IDAL.DO.Drone
             {
                 Id = drone.Id,
                 MaxWeight = (IDAL.DO.WeightCategories)drone.MaxWeight,
                 Model = drone.Model
-            });//add drone to the data layer
+            };//create new drone for data layer
+            try
+            {
+                dl.AddDroneToTheList(idalDrone);
+                //add the new customer to the list in the data level
+            }
+            catch (IDAL.DO.DroneException ex)
+            {
+                throw new ExistIdException(ex.Message, "-drone");
+            }
             lstdrn.Add(new DroneToList
             {
                 Id = drone.Id,

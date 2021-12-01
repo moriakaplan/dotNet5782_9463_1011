@@ -26,8 +26,14 @@ namespace IBL
                 Lattitude = station.Location.Latti,
                 Longitude = station.Location.Longi
             };
-
-            dl.AddStationToTheList(dstation);//add the new station to the list in the data level
+            try
+            {
+                dl.AddStationToTheList(dstation);//add the new station to the list in the data level
+            }
+            catch(IDAL.DO.StationException ex)
+            {
+                throw new ExistIdException(ex.Message, "-station");
+            }
         }
         /// <summary>
         /// update the name or the number of charge slots' or both of them.

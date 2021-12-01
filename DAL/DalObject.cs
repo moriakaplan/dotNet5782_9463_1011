@@ -177,48 +177,5 @@ namespace DalObject
                 DataSource.Config.heavy,
                 DataSource.Config.ratePerHour };
         }
-        
-        public void DeleteDrone(int droneId)
-        {
-            try { DataSource.drones.Remove(DisplayDrone(droneId)); }
-            catch (ArgumentNullException)
-            {
-                throw new DroneException($"id: {droneId} does not exist");
-            }
-        }
-        
-        public void DeleteCustomer(int customerId)
-        {
-            try
-            {
-                DataSource.customers.Remove(DisplayCustomer(customerId));
-            }
-            catch (ArgumentNullException)
-            {
-                throw new CustomerException($"id: {customerId} does not exist");
-            }
-        }
-        public void DeleteStation(int stationId)
-        {
-            try
-            {
-                DataSource.stations.Remove(DisplayStation(stationId));
-            }
-            catch (ArgumentNullException)
-            {
-                throw new StationException($"id: {stationId} does not exist");
-            }
-        }
-        public void DeleteParcel(int parcelId)
-        {
-            try
-            {
-                DataSource.drones.Remove(DisplayDrone(parcelId));
-            }
-            catch (ArgumentNullException)
-            {
-                throw new ParcelException($"id: {parcelId} does not exist");
-            }
-        }
     }
 }

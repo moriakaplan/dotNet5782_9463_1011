@@ -12,7 +12,8 @@ namespace DalObject
         /// <param name="customer"></param>
         public void AddCustomerToTheList(Customer customer)
         {
-            if (DataSource.customers.Exists(item => item.Id == customer.Id)) throw new CustomerException($"id: {customer.Id} already exist"); //it suppose to be this type of exception????**** 
+            if (DataSource.customers.Exists(item => item.Id == customer.Id)) 
+                throw new CustomerException($"id: {customer.Id} already exist"); //it suppose to be this type of exception????**** 
             DataSource.customers.Add(customer);
         }
         /// <summary>
@@ -44,6 +45,16 @@ namespace DalObject
             List<Customer> result = new List<Customer>(DataSource.customers);
             return result;
         }
-
+        public void DeleteCustomer(int customerId)
+        {
+            try
+            {
+                DataSource.customers.Remove(DisplayCustomer(customerId));
+            }
+            catch (ArgumentNullException)
+            {
+                throw new CustomerException($"id: {customerId} does not exist");
+            }
+        }
     }
 }
