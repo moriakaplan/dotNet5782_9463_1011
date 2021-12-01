@@ -37,6 +37,7 @@ namespace IBL
                 foreach (IDAL.DO.Parcel parcel in dl.DisplayListOfParcels())
                 {
                     IDAL.DO.Customer tempCustomer = dl.DisplayCustomer(parcel.Senderld);//לבדוק אם הוא קיים
+                    Location locOfCus = new Location { Longi = tempCustomer.Longitude, Latti = tempCustomer.Lattitude };
                     if ((parcel.Droneld == drone.Id) && (parcel.Delivered == DateTime.MinValue))//אם יש חבילה שעוד לא סופקה אבל אבל הרחפן שוייך
                     {
                         drone.Status = DroneStatus.Delivery;
@@ -48,7 +49,8 @@ namespace IBL
                         {
                             drone.CurrentLocation = new Location() { Longi = tempCustomer.Longitude, Latti = tempCustomer.Lattitude };//מיקום הרחפן הוא במיקום השולח
                         }
-                        drone.Battery = random.Next((int)minBattery(drone.Id, closestStation(drone.CurrentLocation))+1, 100);//יוגרל בין טעינה מינימאלית שתאפשר לרחפן לבצע את המשלוח ולהגיע לתחנה הקרובה לבין טעינה מלאה. צריך לתקן, עכשיו זה כמו בקריאה השנייה
+                        double batteryNeeded = minBattery(drone.Id, drone.CurrentLocation, locOfCus)+ minBattery(drone.Id, locOfCus, closestStation(locOfCus));
+                        drone.Battery = random.Next((int)batteryNeeded+1, 100);//יוגרל בין טעינה מינימאלית שתאפשר לרחפן לבצע את המשלוח ולהגיע לתחנה הקרובה לבין טעינה מלאה. צריך לתקן, עכשיו זה כמו בקריאה השנייה
                     }
                     if (DroneNotInDelivery(drone))//אם הרחפן לא מבצע משלוח
                     {
@@ -62,7 +64,7 @@ namespace IBL
                     if (drone.Status == DroneStatus.Available)//הרחפן פנוי
                     {
                         //מיקום מוגרל בין לקוחות שיש חבילות שסופקו להם***********************************
-                        drone.Battery = random.Next((int)minBattery(drone.Id, closestStation(drone.CurrentLocation)) + 1, 100);//מצב סוללה מוגרל בין טעינה מינימאלית שמאפשרת לו להגיע לתחנה הקרובה לבין טעינה מלאה
+                        drone.Battery = random.Next((int)minBattery(drone.Id, drone.CurrentLocation, closestStation(drone.CurrentLocation)) + 1, 100);//מצב סוללה מוגרל בין טעינה מינימאלית שמאפשרת לו להגיע לתחנה הקרובה לבין טעינה מלאה
                     }
 
                 }
@@ -139,17 +141,19 @@ namespace IBL
         /// <param name="lattitude"></param>
         /// <param name="longitude"></param>
         /// <returns></returns>
-        private double minBattery(int droneId, Location loc)
+        private double minBattery(int droneId,Location from, Location to)
         {
-            Drone drone = DisplayDrone(droneId);
+            Drone drone;
+            try { drone = DisplayDrone(droneId); }
+            catch () { throw Exeption; }
             double batteryForKil = 0;
-            double[] data = dl.AskBattery(dl.DisplayDrone(drone.Id));
+            double[] data = dl.AskBattery(dl.DisplayDrone(droneId));
             if (drone.Status == DroneStatus.Available) batteryForKil = data[0];
             WeightCategories weight = drone.ParcelInT.Weight;
             if (weight == WeightCategories.Easy) batteryForKil = data[1];
             if (weight == WeightCategories.Medium) batteryForKil = data[2];
             if (weight == WeightCategories.Heavy) batteryForKil = data[3];
-            double kils = dl.Distance(drone.CurrentLocation.Longi, drone.CurrentLocation.Latti, loc.Longi, loc.Latti);
+            double kils = dl.Distance(from.Longi, from.Latti, to.Longi, to.Latti);
             return batteryForKil * kils;
         }
     }
