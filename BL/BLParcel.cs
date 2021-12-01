@@ -82,11 +82,11 @@ namespace IBL
         }
         private Parcel findClosestPacel(int droneId)
         {
-            List<Parcel> parcelLst = (List<Parcel>)findHighesWeight(DisplayDrone(droneId).MaxWeight);
-            Parcel result = parcelLst[0];
+            //List<Parcel> parcelLst = (List<Parcel>)findHighesWeight(DisplayDrone(droneId).MaxWeight);
+            Parcel result = findHighesWeight(DisplayDrone(droneId).MaxWeight).First();
             Location DroneLocation = new Location { Latti = DisplayDrone(droneId).CurrentLocation.Latti, Longi = DisplayDrone(droneId).CurrentLocation.Longi };
-            double minDistance = dl.Distance(DisplayCustomer(parcelLst[0].Sender.Id).Location.Latti, DisplayCustomer(parcelLst[0].Sender.Id).Location.Longi, DroneLocation.Latti, DroneLocation.Longi);
-            foreach (Parcel parcel in parcelLst)
+            double minDistance = dl.Distance(DisplayCustomer(result.Sender.Id).Location.Latti, DisplayCustomer(result.Sender.Id).Location.Longi, DroneLocation.Latti, DroneLocation.Longi);
+            foreach (Parcel parcel in findHighesWeight(DisplayDrone(droneId).MaxWeight))
             {
                 if (dl.Distance(DisplayCustomer(parcel.Sender.Id).Location.Latti, DisplayCustomer(parcel.Sender.Id).Location.Longi, DroneLocation.Latti, DroneLocation.Longi) < minDistance)
                 {
