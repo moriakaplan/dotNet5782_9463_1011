@@ -26,9 +26,14 @@ namespace IBL
                 Weight = (IDAL.DO.WeightCategories)parcel.Weight
             });
         }
-        private IEnumerable<ParcelInTransfer> findHighesPrioritiy()
+
+        /// <summary>
+        /// מחזיר את כל החבילות עם העדיפות הכי גבוהה
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerable<Parcel> findHighesPrioritiy()
         {
-            List<ParcelInTransfer> result = new List<ParcelInTransfer>(null);
+            //List<ParcelInTransfer> result = new List<ParcelInTransfer>(null);
             Priorities temp = Priorities.Regular;
             foreach (ParcelToList parcelList in DisplayListOfParcels())
             {
@@ -37,24 +42,64 @@ namespace IBL
                     temp = parcelList.Priority;
                 }
             }
-            ParcelInTransfer parcel=new ParcelInTransfer();
+            Parcel parcel=new Parcel();
             foreach (ParcelToList parcelList in DisplayListOfParcels())
             {
                 if (parcelList.Priority == temp)
                 {
-                    parcel.Id = parcelList.Id;
-                    parcel.Priority = parcelList.Priority;
+                    yield return DisplayParcel(parcelList.Id);
 
-                    result.Add(parcelList);
                 }
             }
         }
+        private IEnumerable<Parcel> findHighesWeight(WeightCategories weight)
+        {
+           
+                WeightCategories temp = WeightCategories.Easy;
+                foreach (Parcel parcel in findHighesPrioritiy())//מוצא את המשקל הכי גדול שהרחפן יכולה לקחת שיש חבילות במשקל הזה
+                {
+                    if ((parcel.Weight < weight)&&(parcel.Weight > temp))
+                    {
+                        temp = parcel.Weight;
+                    }
+                }
+                foreach (Parcel parcel in findHighesPrioritiy())
+                {
+                    if (parcel.Weight == temp)
+                    {
+                        yield return DisplayParcel(parcel.Id);
+
+                    }
+                }
+        }
+        private Parcel findClosestPacel(int droneId)
+        {
+            List<Parcel> parcelLst= (List<Parcel>)findHighesWeight(DisplayDrone(droneId).MaxWeight);
+            Parcel result = parcelLst[0];
+            Location DroneLocation = new Location { Latti = DisplayDrone(droneId).CurrentLocation.Latti, Longi = DisplayDrone(droneId).CurrentLocation.Longi };
+            double minDistance = dl.Distance(DisplayCustomer(parcelLst[0].Sender.Id).Location.Latti, DisplayCustomer(parcelLst[0].Sender.Id).Location.Longi, DroneLocation.Latti, DroneLocation.Longi);
+            foreach (Parcel parcel in parcelLst)
+            {
+                if(dl.Distance(DisplayCustomer(parcel.Sender.Id).Location.Latti, DisplayCustomer(parcel.Sender.Id).Location.Longi, DroneLocation.Latti, DroneLocation.Longi) < minDistance)
+                {
+                    minDistance = dl.Distance(DisplayCustomer(parcel.Sender.Id).Location.Latti, DisplayCustomer(parcel.Sender.Id).Location.Longi, DroneLocation.Latti, DroneLocation.Longi);
+                    result = parcel;
+                }
+            }
+            return result;
+        }
+
         public void AssignParcelToDrone(int droneId)//איפה הוא צריך להיות
         {
             Drone bdrone = DisplayDrone(droneId);
             if(bdrone.Status==DroneStatus.Available)
             {
-                
+                Parcel parcel = findClosestPacel(droneId);//מצאנו את הרחפן המתאים, צריך למצוא אם הסוללה מתאימה 
+                if(DisplayDrone(droneId).Battery<= (minBattery(droneId, DisplayCustomer(parcel.Sender.Id).Location)+/* הבטריה המינימאלית הנדרשת מהלקוח לתחנה*/)
+                {
+                    dl.DisplayDrone(droneId).
+                }
+
             }
             
         }
