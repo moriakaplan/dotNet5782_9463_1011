@@ -71,15 +71,15 @@ namespace IBL
         {
             List<ParcelInCustomer> result = new List<ParcelInCustomer>();
             ParcelInCustomer parcel = new ParcelInCustomer();
-            foreach (ParcelToList tempparcel in DisplayListOfParcels())
+            foreach (ParcelToList tempParcel in DisplayListOfParcels())
             {
-                if (DisplayParcel(tempparcel.Id).Sender.Id == customerId)
+                if (DisplayParcel(tempParcel.Id).Sender.Id == customerId)//####
                 {
-                    parcel.Id = tempparcel.Id;
-                    parcel.Priority = tempparcel.Priority;
-                    parcel.SenderOrTarget = new CustomerInParcel { Id = DisplayParcel(tempparcel.Id).Target.Id, Name = DisplayParcel(tempparcel.Id).Target.Name };
-                    parcel.Status = tempparcel.Status;
-                    parcel.Weight = tempparcel.Weight;
+                    parcel.Id = tempParcel.Id;
+                    parcel.Priority = tempParcel.Priority;
+                    parcel.SenderOrTarget = new CustomerInParcel { Id = DisplayParcel(tempParcel.Id).Target.Id, Name = DisplayParcel(tempparcel.Id).Target.Name };
+                    parcel.Status = tempParcel.Status;
+                    parcel.Weight = tempParcel.Weight;
                     result.Add(parcel);
                 }
             }
