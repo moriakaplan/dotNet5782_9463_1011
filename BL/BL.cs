@@ -47,7 +47,6 @@ namespace IBL
             {
                 foreach (IDAL.DO.Parcel parcel in dl.DisplayListOfParcels())
                 {
-                    //Customer tempCustomer = DisplayCustomer(parcel.Senderld);//####
                     Location locOfCus = DisplayCustomer(parcel.Senderld).Location;
                     if ((parcel.Droneld == drone.Id) && (parcel.DeliverTime == DateTime.MinValue)) //If there is a parcel that has not yet been delivered but the drone is associated
                     {

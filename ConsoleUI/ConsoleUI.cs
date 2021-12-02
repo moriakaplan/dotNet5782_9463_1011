@@ -161,10 +161,10 @@ Customer ID (9 digits)-");
                                     Droneld = 0, 
                                     Weight = weight,
                                     Priority = priority,
-                                    Requested = DateTime.Now,
-                                    Scheduled = DateTime.MinValue,
-                                    PickedUp = DateTime.MinValue,
-                                    Delivered = DateTime.MinValue
+                                    CreateTime = DateTime.Now,
+                                    AssociateTime = DateTime.MinValue,
+                                    PickUpTime = DateTime.MinValue,
+                                    DeliverTime = DateTime.MinValue
                                 };
                                 dalObject.AddParcelToTheList(pa);//Add the parcel to the list
                                 break;

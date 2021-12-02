@@ -102,9 +102,7 @@ namespace DalObject
         /// <returns></returns>
         public double DistanceForStation(double longitudeA, double lattitudeA, int id)
         {
-            Station st;
-            try { st = DisplayStation(id); }
-            catch(StationException sExc) { throw sExc; } //to chex why it is a problem*****
+            Station st = DisplayStation(id); 
             return Distance(longitudeA, lattitudeA, st.Longitude, st.Lattitude);
         }
         /// <summary>
@@ -117,9 +115,7 @@ namespace DalObject
         /// <returns></returns>
         public double DistanceForCustomer(double longitudeA, double lattitudeA, int id)
         {
-            Customer cu;
-            try { cu = DisplayCustomer(id); }
-            catch(CustomerException cExc) { throw cExc; } //to chex why it is a problem*****
+            Customer cu = DisplayCustomer(id); 
             return Distance(longitudeA, lattitudeA, cu.Longitude, cu.Lattitude);
         }
         /// <summary>
