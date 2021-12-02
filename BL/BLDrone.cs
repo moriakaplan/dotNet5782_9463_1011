@@ -72,28 +72,7 @@ namespace IBL
             {
                 message = "the drone {droneId} is not available so it can't be sended to charging"
             };
-            //IEnumerable<IDAL.DO.Station> stationsWithAvailable = dl.DisplayListOfStationsWithAvailableCargeSlots();
-            //double min = dl.DistanceForStation(lo, la, stationsWithAvailable..Id);
-            //double distance;
-            //IDAL.DO.Station closerStation;
-            //foreach (IDAL.DO.Station station in stationsWithAvailable)
-            //{
-            //    distance = dl.DistanceForStation(lo, la, station.Id);
-            //    if (distance < min) min = distance;
-            //}
-            //Parcel pa = DisplayParcel(drone.ParcelId);
-            //ParcelInTransfer parcel= new ParcelInTransfer { i }
-            //Drone DroneNotFromList = new Drone
-            //{
-            //    Id = drone.Id,
-            //    Battery = drone.Battery,
-            //    CurrentLocation = drone.CurrentLocation,
-            //    MaxWeight = drone.MaxWeight,
-            //    Model = drone.Model,
-            //    ParcelInT = parcel,
-            //    Status = drone.Status
-            //};
-            Station st = closestStationWithAvailableChargeSlosts(drone.CurrentLocation);
+            Station st = closestStationWithChargeSlots(drone.CurrentLocation);
             double batteryNeed = minBattery(drone.Id, drone.CurrentLocation, st.Location);
             if (batteryNeed>drone.Battery) throw new DroneCantGoToChargeExeption//if the drone dont have enough battery
             {
@@ -132,6 +111,8 @@ namespace IBL
         {
             DroneToList droneFromList = lstdrn.Find(item => item.Id == droneId);
             Parcel parcelFromFunc = DisplayParcel(droneFromList.ParcelId);
+            Location locOfSender = DisplayCustomer(parcelFromFunc.Sender.Id).Location;
+            Location locOfTarget = DisplayCustomer(parcelFromFunc.Target.Id).Location;
             ParcelInTransfer parcel = new ParcelInTransfer
             {
                 Id = parcelFromFunc.Id,
@@ -139,8 +120,9 @@ namespace IBL
                 Priority = parcelFromFunc.Priority,
                 Sender = parcelFromFunc.Sender,
                 Target = parcelFromFunc.Target,
-                PickingPlace = DisplayCustomer(parcelFromFunc.Sender.Id).Location,
-                TransportDistance= dl.Distance(DisplayCustomer(parcelFromFunc.Sender.Id).Location.Latti, DisplayCustomer(parcelFromFunc.Sender.Id).Location.Longi, DisplayCustomer(parcelFromFunc.Target.Id).Location.Latti, DisplayCustomer(parcelFromFunc.Target.Id).Location.Longi),
+                PickingPlace = locOfSender,
+                TargetPlace = locOfTarget,
+                TransportDistance = distance(locOfSender, locOfTarget),
                 Weight = parcelFromFunc.Weight
             };
             return new Drone

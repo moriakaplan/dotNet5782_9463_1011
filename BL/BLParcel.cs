@@ -38,11 +38,12 @@ namespace IBL
         /// מחזיר את כל החבילות עם העדיפות הכי גבוהה
         /// </summary>
         /// <returns></returns>
-        private IEnumerable<Parcel> findHighesPrioritiy()
+        private IEnumerable<Parcel> findHighestPrioritiy()
         {
             //List<ParcelInTransfer> result = new List<ParcelInTransfer>(null);
+            IEnumerable<ParcelToList> parcels = DisplayListOfParcels();
             Priorities temp = Priorities.Regular;
-            foreach (ParcelToList parcelList in DisplayListOfParcels())
+            foreach (ParcelToList parcelList in parcels) //find the highest priority
             {
                 if (parcelList.Priority > temp)
                 {
@@ -50,32 +51,30 @@ namespace IBL
                 }
             }
             Parcel parcel = new Parcel();
-            foreach (ParcelToList parcelList in DisplayListOfParcels())
+            foreach (ParcelToList parcelList in parcels) //return all the parcels with the highest priority
             {
                 if (parcelList.Priority == temp)
                 {
                     yield return DisplayParcel(parcelList.Id);
-
                 }
             }
         }
         private IEnumerable<Parcel> findHighesWeight(WeightCategories weight)
         {
-
+            IEnumerable<Parcel> parcels = findHighestPrioritiy();
             WeightCategories temp = WeightCategories.Easy;
-            foreach (Parcel parcel in findHighesPrioritiy())//מוצא את המשקל הכי גדול שהרחפן יכולה לקחת שיש חבילות במשקל הזה
+            foreach (Parcel parcel in parcels)//find the highest weight that the drone can take
             {
                 if ((parcel.Weight < weight) && (parcel.Weight > temp))
                 {
                     temp = parcel.Weight;
                 }
             }
-            foreach (Parcel parcel in findHighesPrioritiy())
+            foreach (Parcel parcel in parcels)//return all the parcels with this weight
             {
                 if (parcel.Weight == temp)
                 {
                     yield return DisplayParcel(parcel.Id);
-
                 }
             }
         }
@@ -84,12 +83,12 @@ namespace IBL
             //List<Parcel> parcelLst = (List<Parcel>)findHighesWeight(DisplayDrone(droneId).MaxWeight);
             Parcel result = findHighesWeight(DisplayDrone(droneId).MaxWeight).First();
             Location DroneLocation = new Location { Latti = DisplayDrone(droneId).CurrentLocation.Latti, Longi = DisplayDrone(droneId).CurrentLocation.Longi };
-            double minDistance = dl.Distance(DisplayCustomer(result.Sender.Id).Location.Latti, DisplayCustomer(result.Sender.Id).Location.Longi, DroneLocation.Latti, DroneLocation.Longi);
+            double minDistance = distance(DisplayCustomer(result.Sender.Id).Location, DroneLocation);
             foreach (Parcel parcel in findHighesWeight(DisplayDrone(droneId).MaxWeight))
             {
-                if (dl.Distance(DisplayCustomer(parcel.Sender.Id).Location.Latti, DisplayCustomer(parcel.Sender.Id).Location.Longi, DroneLocation.Latti, DroneLocation.Longi) < minDistance)
+                if (distance(DisplayCustomer(parcel.Sender.Id).Location, DroneLocation) < minDistance)
                 {
-                    minDistance = dl.Distance(DisplayCustomer(parcel.Sender.Id).Location.Latti, DisplayCustomer(parcel.Sender.Id).Location.Longi, DroneLocation.Latti, DroneLocation.Longi);
+                    minDistance = distance(DisplayCustomer(parcel.Sender.Id).Location, DroneLocation);
                     result = parcel;
                 }
             }
@@ -104,27 +103,34 @@ namespace IBL
             {
                 throw new DroneCantTakeParcelExeption($"drone {droneId} is not available so it cant take a new parcel");
             }
-            Parcel parcel = findClosestParcel(droneId);//####מצאנו את הרחפן המתאים, צריך למצוא אם הסוללה מתאימה 
-            Location locOfCus = DisplayCustomer(parcel.Sender.Id).Location;
-            if (bdrone.Battery <= (minBattery(droneId, bdrone.CurrentLocation, locOfCus) + minBattery(droneId, locOfCus, closestStation(locOfCus))))
+            Parcel parcel = findClosestParcel(droneId);//####מצאנו את החבילה המתאימה, צריך למצוא אם הסוללה מספיקה 
+            Location locOfSender = DisplayCustomer(parcel.Sender.Id).Location;
+            Location locOfTarget = DisplayCustomer(parcel.Target.Id).Location;
+            double batteryNeeded =
+                minBattery(droneId, bdrone.CurrentLocation, locOfSender) +
+                minBattery(droneId, locOfSender, locOfTarget) +
+                minBattery(droneId, locOfTarget, closestStationWithChargeSlots(locOfTarget).Location);//לבדוק אם צריך את התחנה הכי קרובה עם עמדות טעינה
+            if (batteryNeeded > bdrone.Battery)
             {
-                try { dl.AssignParcelToDrone(parcel.Id, droneId); }
-                catch (IDAL.DO.DroneException ex)
+                throw new ThereNotGoodParcelToTake($"didn't found a good parcel that the drone {droneId} can take");
+            }
+            try { dl.AssignParcelToDrone(parcel.Id, droneId); }
+            catch (IDAL.DO.DroneException ex)
+            {
+                throw new NotExistIDExeption(ex.Message, " - drone");
+            }
+            catch (IDAL.DO.ParcelException ex)
+            {
+                throw new NotExistIDExeption(ex.Message, " - parcel");
+            }
+            foreach (DroneToList drone in lstdrn)
+            {
+                if (drone.Id == droneId)
                 {
-                    throw new NotExistIDExeption(ex.Message, " - drone");
-                }
-                catch (IDAL.DO.ParcelException ex)
-                {
-                    throw new NotExistIDExeption(ex.Message, " - parcel");
-                }
-                foreach (DroneToList drone in lstdrn)
-                {
-                    if (drone.Id == droneId)
-                    {
-                        drone.Status = DroneStatus.Associated;
-                    }
+                    drone.Status = DroneStatus.Associated;
                 }
             }
+
         }
         public void PickParcelByDrone(int droneId)
         {
