@@ -139,7 +139,7 @@ namespace IBL
                 numOfParcelsDelivered=0, 
                 numOfParcelsInTheWay=0, 
                 numOfParcelsSentAndNotDelivered=0, 
-                numOfParclRecived=0
+                numOfParclReceived=0
             };
             foreach (ParcelToList parcelFromList in DisplayListOfParcels())
             {
@@ -158,7 +158,7 @@ namespace IBL
                 }
                 if ((parcel.Target.Id == customerId) && (parcel.DeliverTime != DateTime.MinValue))
                 {
-                    bCustomer.numOfParclRecived++;
+                    bCustomer.numOfParclReceived++;
                 }
             }
             return bCustomer;

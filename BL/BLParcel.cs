@@ -191,7 +191,7 @@ namespace IBL
             {
                 if (drone.Id == droneId)
                 {
-                    drone.Battery -= minBattery(droneId, DisplayCustomer(parcelToDeliver.Sender.Id).Location, DisplayCustomer(parcelToDeliver.Target.Id).Location);
+                    drone.Battery -= minBattery(droneId, drone.CurrentLocation, DisplayCustomer(parcelToDeliver.Target.Id).Location);
                     drone.CurrentLocation = DisplayCustomer(parcelToDeliver.Target.Id).Location;
                     drone.Status = DroneStatus.Available;
                     try
