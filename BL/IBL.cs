@@ -21,7 +21,6 @@ namespace IBL
        void SendDroneToCharge(int droneId);
        void ReleaseDroneFromeCharge(int droneId, DateTime timeInCharge);
        void AssignParcelToDrone(int droneId);//איפה הוא צריך להיות
-       //void AssignParcelToDrone(int droneId);//איפה הוא צריך להיות
        void PickParcelByDrone(int parcelId);//איפה הוא צריך להיות
        void DeliverParcelByDrone(int droneId);//איפה הוא צריך להיות
         //תצוגה
