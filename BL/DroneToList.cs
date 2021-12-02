@@ -10,11 +10,11 @@ namespace IBL.BO
     {
         public int Id { get; set; }
         public string Model { get; set; }
-        public WeightCategories MaxWeight { get; set; }
         public double Battery { get; set; }
+        public WeightCategories MaxWeight { get; set; }
         public DroneStatus Status { get; set; }
         public Location CurrentLocation { get; set; }
-        public int ParcelId { get; set; } //אם יעש חבילה מועברת
+        public int ParcelId { get; set; } //אם יש חבילה מועברת
         public override string ToString()
         {
             return @$"drone #{Id}:

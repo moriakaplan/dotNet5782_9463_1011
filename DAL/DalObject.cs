@@ -153,7 +153,7 @@ namespace DalObject
             return (c * r);
         }
         
-        public double[] AskBattery(Drone drone)
+        public double[] AskBattery()
         {
             return new double[] {
                 DataSource.Config.available,

@@ -27,7 +27,7 @@ namespace IDAL
         void PickParcelByDrone(int parcelId);
         void ReleaseDroneFromeCharge(int droneId);
         void SendDroneToCharge(int droneId, int stationId);
-        double[] AskBattery(Drone drone);
+        double[] AskBattery();
         void DeleteDrone(int droneId);
         void DeleteCustomer(int customerId);
         void DeleteStation(int stationId);

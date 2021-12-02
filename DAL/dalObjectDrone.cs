@@ -28,16 +28,6 @@ namespace DalObject
             }
             DroneCharge droneCharge = new DroneCharge { DroneId = droneId, StationId = stationId }; //add drone charge to the list for charging the drone
             DataSource.droneCharges.Add(droneCharge);
-
-            //Drone drone = DisplayDrone(droneId);
-            //DataSource.drones.Remove(drone);
-            ////drone.Status = DroneStatuses.Maintenance;
-            //AddDroneToTheList(drone);
-
-            //Station station = DisplayStation(stationId);
-            //DataSource.stations.Remove(station);
-            //station.ChargeSlots++;
-            //AddStationToTheList(station);
             for (int i = 0; i < DataSource.stations.Count; i++) //find the station and update its details
             {
                 if (DataSource.stations[i].Id == stationId)

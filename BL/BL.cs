@@ -13,6 +13,11 @@ namespace IBL
 
         private List<DroneToList> lstdrn;
         private IDal dl;
+        private double BatteryForAvailable;
+        private double BatteryForEasy; //per kill
+        private double BatteryForMedium; //per kill
+        private double BatteryForHeavy; //per kill
+        private double ChargeRatePerHour;
         private static Random random = new Random();
         /// <summary>
        /// constractor
@@ -22,6 +27,12 @@ namespace IBL
             dl = new DalObject.DalObject();
             lstdrn = (List<DroneToList>)dl.DisplayListOfDrones();
             initializeDrone();
+            double[] batteryData = dl.AskBattery();
+            BatteryForAvailable = batteryData[0];
+            BatteryForEasy = batteryData[1];
+            BatteryForMedium = batteryData[2];
+            BatteryForHeavy = batteryData[3];
+            ChargeRatePerHour = batteryData[4];
         }
         /// <summary>
         /// initialize the list of drones
@@ -36,18 +47,18 @@ namespace IBL
             {
                 foreach (IDAL.DO.Parcel parcel in dl.DisplayListOfParcels())
                 {
-                    IDAL.DO.Customer tempCustomer = dl.DisplayCustomer(parcel.Senderld);//####
-                    Location locOfCus = new Location { Longi = tempCustomer.Longitude, Latti = tempCustomer.Lattitude };
+                    //Customer tempCustomer = DisplayCustomer(parcel.Senderld);//####
+                    Location locOfCus = DisplayCustomer(parcel.Senderld).Location;
                     if ((parcel.Droneld == drone.Id) && (parcel.DeliverTime == DateTime.MinValue)) //If there is a parcel that has not yet been delivered but the drone is associated
                     {
                         drone.Status = DroneStatus.Delivery;
                         if ((parcel.AssociateTime != DateTime.MinValue) && (parcel.PickUpTime == DateTime.MinValue)) //If the parcel was associated but not picked up
                         {
-                            drone.CurrentLocation = closestStation(new Location { Latti = tempCustomer.Lattitude, Longi = tempCustomer.Longitude });
+                            drone.CurrentLocation = closestStation(locOfCus);
                         }
                         if ((parcel.PickUpTime != DateTime.MinValue) && (parcel.DeliverTime == DateTime.MinValue)) //If the parcel was picked up but not delivered
                         {
-                            drone.CurrentLocation = new Location() { Longi = tempCustomer.Longitude, Latti = tempCustomer.Lattitude };//The location of the drone is in the location of the sender
+                            drone.CurrentLocation = locOfCus;//The location of the drone is in the location of the sender
                         }
                         double batteryNeeded = minBattery(drone.Id, drone.CurrentLocation, locOfCus) + minBattery(drone.Id, locOfCus, closestStation(locOfCus));
                         drone.Battery = random.Next((int)batteryNeeded + 1, 100);
@@ -58,18 +69,22 @@ namespace IBL
                     }
                     if (drone.Status == DroneStatus.Maintenance)
                     {
-                        //המיקום מוגרל בין תחנות קיימות***********************************************
-                        drone.Battery = random.Next(0, 19)+ rand.NextDouble();//random battery mode between 0 and 20
+                        IEnumerable<IDAL.DO.Station> stations = dl.DisplayListOfStations();
+                        int index = random.Next(0, stations.Count());
+                        IDAL.DO.Station stationForLocation= stations.ElementAt(index);
+                        drone.CurrentLocation = new Location { Latti = stationForLocation.Lattitude, Longi = stationForLocation.Longitude };
+                        drone.Battery = random.Next(0, 19)+ random.NextDouble();//random battery mode between 0 and 20
                     }
                     if (drone.Status == DroneStatus.Available)//הרחפן פנוי
                     {
                         //מיקום מוגרל בין לקוחות שיש חבילות שסופקו להם***********************************
-                        drone.Battery = random.Next((int)minBattery(drone.Id, drone.CurrentLocation, closestStation(drone.CurrentLocation)) + 1,99)+ rand.NextDouble();//random  between a minimal charge that allows it to reach the nearest station and a full charge
+                        
+                        drone.Battery = random.Next((int)minBattery(drone.Id, drone.CurrentLocation, closestStation(drone.CurrentLocation)) + 1,99)+ random.NextDouble();//random  between a minimal charge that allows it to reach the nearest station and a full charge
                     }
 
                 }
             }
-        }
+  }
         /// <summary>
         /// Checks if the drone does not ship
         /// </summary>
@@ -141,12 +156,11 @@ namespace IBL
         {
             Drone drone = DisplayDrone(droneId); 
             double batteryForKil = 0;
-            double[] data = dl.AskBattery(dl.DisplayDrone(droneId));
-            if (drone.Status == DroneStatus.Available) batteryForKil = data[0];
+            if (drone.Status == DroneStatus.Available) batteryForKil = BatteryForAvailable;
             WeightCategories weight = drone.ParcelInT.Weight;
-            if (weight == WeightCategories.Easy) batteryForKil = data[1];
-            if (weight == WeightCategories.Medium) batteryForKil = data[2];
-            if (weight == WeightCategories.Heavy) batteryForKil = data[3];
+            if (weight == WeightCategories.Easy) batteryForKil = BatteryForEasy;
+            if (weight == WeightCategories.Medium) batteryForKil = BatteryForMedium;
+            if (weight == WeightCategories.Heavy) batteryForKil = BatteryForHeavy;
             double kils = distance(from, to);
             return batteryForKil * kils;
         }

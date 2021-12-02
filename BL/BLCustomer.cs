@@ -25,10 +25,9 @@ namespace IBL
                 Phone = customer.Phone
             };
             try
-            {
-            dl.AddCustomerToTheList(dCustomer);
-            //add the new customer to the list in the data level
-             }
+            { 
+                dl.AddCustomerToTheList(dCustomer); //add the new customer to the list in the data level
+            }
              catch(IDAL.DO.CustomerException ex)
             {
                 throw new ExistIdException(ex.Message, "-customer");

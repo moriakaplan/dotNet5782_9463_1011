@@ -11,19 +11,18 @@ namespace IBL
 {
     public partial class BL
     {
-        internal static Random rand = new Random();
         /// <summary>
         /// adding drone
         /// </summary>
         /// <param name="drone"></param>
         public void AddDrone(Drone drone)
         {
-            IDAL.DO.Drone idalDrone=new IDAL.DO.Drone
+            IDAL.DO.Drone idalDrone=new IDAL.DO.Drone //create new drone for data layer
             {
                 Id = drone.Id,
                 MaxWeight = (IDAL.DO.WeightCategories)drone.MaxWeight,
                 Model = drone.Model
-            };//create new drone for data layer
+            };
             try
             {
                 dl.AddDroneToTheList(idalDrone);
@@ -36,7 +35,7 @@ namespace IBL
             lstdrn.Add(new DroneToList
             {
                 Id = drone.Id,
-                Battery = rand.Next(20, 39) + rand.NextDouble(),
+                Battery = random.Next(20, 39) + random.NextDouble(),
                 CurrentLocation = drone.CurrentLocation,
                 MaxWeight = drone.MaxWeight,
                 Model = drone.Model,
@@ -52,11 +51,18 @@ namespace IBL
         public void UpdateDroneModel(int id, string model)
         {
             //update the model in the logical layer
-            DroneToList drone = lstdrn.Find(item => item.Id == id);
-            drone.Model = model;
-            //update the model in the data layer
-            IDAL.DO.Drone ddrone = dl.DisplayDrone(id);
-            dl.DeleteDrone(id);
+            DroneToList drone;
+            IDAL.DO.Drone ddrone;
+            try
+            {
+                drone = lstdrn.Find(item => item.Id == id);
+                drone.Model = model;
+                //update the model in the data layer
+                ddrone = dl.DisplayDrone(id);
+                dl.DeleteDrone(id);
+            }
+            catch (ArgumentNullException) { throw new NotExistIDExeption($"id: {id} does not exist - drone"); }
+            catch (IDAL.DO.DroneException ex) { throw new NotExistIDExeption(ex.Message, " - drone"); }
             ddrone.Model = model;
             dl.AddDroneToTheList(ddrone);
         }
@@ -97,8 +103,7 @@ namespace IBL
             };
             double time = convertDateTimeToDoubleInHours(timeInCharge);
             DroneToList droneFromList = lstdrn.Find(item => item.Id == droneId);
-            double rate = dl.AskBattery(dl.DisplayDrone(droneId))[4];
-            droneFromList.Battery += time * rate;
+            droneFromList.Battery += time * ChargeRatePerHour;
             droneFromList.Status = DroneStatus.Available;
             dl.ReleaseDroneFromeCharge(droneId); //Deletes the charging entity and adds 1 to the charging slots of the station
         }
