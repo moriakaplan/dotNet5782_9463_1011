@@ -9,6 +9,10 @@ namespace IBL
 {
     public partial class BL
     {
+        /// <summary>
+        /// Add Parcel To Delivery
+        /// </summary>
+        /// <param name="parcel"></param>
         public void AddParcelToDelivery(Parcel parcel)
         {
             IDAL.DO.Parcel idalParcel = new IDAL.DO.Parcel
@@ -35,12 +39,11 @@ namespace IBL
             }
         }
         /// <summary>
-        /// מחזיר את כל החבילות עם העדיפות הכי גבוהה
+        /// Returns all parcels with the highest priority
         /// </summary>
         /// <returns></returns>
         private IEnumerable<Parcel> findHighestPrioritiy()
         {
-            //List<ParcelInTransfer> result = new List<ParcelInTransfer>(null);
             IEnumerable<ParcelToList> parcels = DisplayListOfParcels();
             Priorities temp = Priorities.Regular;
             foreach (ParcelToList parcelList in parcels) //find the highest priority
@@ -59,6 +62,11 @@ namespace IBL
                 }
             }
         }
+        /// <summary>
+        /// Returns all parcels with the highest weight the drone can take
+        /// </summary>
+        /// <param name="weight"></param>
+        /// <returns></returns>
         private IEnumerable<Parcel> findHighesWeight(WeightCategories weight)
         {
             IEnumerable<Parcel> parcels = findHighestPrioritiy();
@@ -78,9 +86,13 @@ namespace IBL
                 }
             }
         }
-        private Parcel findClosestParcel(int droneId)
+        /// <summary>
+        /// find Closest Pacel
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <returns></returns>
+        private Parcel findClosestPacel(int droneId)
         {
-            //List<Parcel> parcelLst = (List<Parcel>)findHighesWeight(DisplayDrone(droneId).MaxWeight);
             Parcel result = findHighesWeight(DisplayDrone(droneId).MaxWeight).First();
             Location DroneLocation = new Location { Latti = DisplayDrone(droneId).CurrentLocation.Latti, Longi = DisplayDrone(droneId).CurrentLocation.Longi };
             double minDistance = distance(DisplayCustomer(result.Sender.Id).Location, DroneLocation);
@@ -94,7 +106,10 @@ namespace IBL
             }
             return result;
         }
-
+        /// <summary>
+        /// Assign Parcel To Drone
+        /// </summary>
+        /// <param name="droneId"></param>
         public void AssignParcelToDrone(int droneId)
         {
             Drone bdrone;
@@ -132,9 +147,13 @@ namespace IBL
             }
 
         }
+        /// <summary>
+        /// Pick Parcel By Drone
+        /// </summary>
+        /// <param name="droneId"></param>
         public void PickParcelByDrone(int droneId)
         {
-            if ((DisplayDrone(droneId).Status == DroneStatus.Associated) && (DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).PickedUp == DateTime.MinValue))
+            if ((DisplayDrone(droneId).Status == DroneStatus.Associated) && (DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).PickedUp == DateTime.MinValue))//####
             {
                 foreach (DroneToList drone in lstdrn)
                 {
@@ -143,7 +162,7 @@ namespace IBL
                         drone.Battery = drone.Battery - minBattery(droneId, DisplayCustomer(DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).Sender.Id).Location, DisplayCustomer(DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).Target.Id).Location);
                         drone.CurrentLocation = DisplayCustomer(DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).Target.Id).Location;
 
-                        dl.PickParcelByDrone(DisplayDrone(droneId).ParcelInT.Id);//מעדכן את הזמן של האיסוף בדאל
+                        dl.PickParcelByDrone(DisplayDrone(droneId).ParcelInT.Id);
                     }
                 }
             }
@@ -153,24 +172,24 @@ namespace IBL
                 //כתוב בהוראות
             }
         }
+        /// <summary>
+        /// Deliver Parcel By Drone
+        /// </summary>
+        /// <param name="droneId"></param>
         public void DeliverParcelByDrone(int droneId)
         {
-            if ((DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).PickedUp != DateTime.MinValue) && (DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).Delivered == DateTime.MinValue))
+            if((DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).PickedUp != DateTime.MinValue)&& (DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).Delivered == DateTime.MinValue))//#####
             {
                 foreach (DroneToList drone in lstdrn)
                 {
                     if (drone.Id == droneId)
                     {
-                        //drone.Battery = drone.Battery - minBattery(droneId, DisplayCustomer(DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).Sender.Id).Location, DisplayCustomer(DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).Target.Id).Location);
-                        //drone.CurrentLocation = DisplayCustomer(DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).Target.Id).Location;
                         //לעדכן את הסוללה שוב?
                         //לעדכן את המיקום שוב?
                         drone.Status = DroneStatus.Available;
                         dl.DeliverParcelToCustomer(DisplayDrone(droneId).ParcelInT.Id);//מעדכן את הזמן של האיסוף בדאל
                     }
                 }
-
-
             }
             else
             {
@@ -179,6 +198,11 @@ namespace IBL
                 //כתוב בהוראות
             }
         }
+        /// <summary>
+        /// Returns the parcel with the requested ID
+        /// </summary>
+        /// <param name="parcelId"></param>
+        /// <returns></returns>
         public Parcel DisplayParcel(int parcelId)
         {
             IDAL.DO.Parcel parcelFromDal;
@@ -227,6 +251,10 @@ namespace IBL
                 Weight = (WeightCategories)parcelFromDal.Weight
             };
         }
+        /// <summary>
+        /// Display List Of Parcels
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<ParcelToList> DisplayListOfParcels()
         {
             //List<ParcelToList> answer = new List<ParcelToList>();
@@ -257,6 +285,10 @@ namespace IBL
             }
             //return answer;
         }
+        /// <summary>
+        /// Display List Of Unassigned Parcels
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<ParcelToList> DisplayListOfUnassignedParcels()
         {
             //List<ParcelToList> answer = new List<ParcelToList>();
@@ -283,6 +315,5 @@ namespace IBL
             }
             //return answer;
         }
-
     }
 }
