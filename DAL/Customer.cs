@@ -17,7 +17,6 @@ namespace IDAL
             public override string ToString()
             {
                 Location coordinate = new Location { Longi = Longitude, Latti = Lattitude };
-                //Coordinate latti = new Coordinate { Value = Longitude, IsLongitude = false };
                 return @$"customer #{Id}:
 number- {Name},
 phone- {Phone},

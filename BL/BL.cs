@@ -68,6 +68,7 @@ namespace IBL
                     }
                     if (drone.Status == DroneStatus.Maintenance)
                     {
+                        //
                         IEnumerable<IDAL.DO.Station> stations = dl.DisplayListOfStations();
                         int index = random.Next(0, stations.Count());
                         IDAL.DO.Station stationForLocation= stations.ElementAt(index);
@@ -76,8 +77,15 @@ namespace IBL
                     }
                     if (drone.Status == DroneStatus.Available)//הרחפן פנוי
                     {
-                        //מיקום מוגרל בין לקוחות שיש חבילות שסופקו להם***********************************
-                        
+                        //
+                        List<CustomerToList> customersWhoGotParcels = new List<CustomerToList>();
+                        foreach (CustomerToList cus in DisplayListOfCustomers())
+                        {
+                            if (cus.numOfParclReceived > 0) { customersWhoGotParcels.Add(cus); }
+                        }
+                        int index = random.Next(0, customersWhoGotParcels.Count());
+                        CustomerToList customerForLocation = customersWhoGotParcels[index];
+                        drone.CurrentLocation = DisplayCustomer(customerForLocation.Id).Location;
                         drone.Battery = random.Next((int)minBattery(drone.Id, drone.CurrentLocation, closestStation(drone.CurrentLocation)) + 1,99)+ random.NextDouble();//random  between a minimal charge that allows it to reach the nearest station and a full charge
                     }
 
