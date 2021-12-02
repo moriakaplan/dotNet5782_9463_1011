@@ -39,6 +39,7 @@ namespace IBL
         /// </summary>
         private void initializeDrone()
         {
+            //add all the drones from the data layer to the list
             foreach (IDAL.DO.Drone drone in dl.DisplayListOfDrones())
             {
                 lstdrn.Add(new DroneToList { Id = drone.Id, MaxWeight = (WeightCategories)drone.MaxWeight, Model = drone.Model });
@@ -60,7 +61,7 @@ namespace IBL
                             drone.CurrentLocation = locOfCus;//The location of the drone is in the location of the sender
                         }
                         double batteryNeeded = minBattery(drone.Id, drone.CurrentLocation, locOfCus) + minBattery(drone.Id, locOfCus, closestStation(locOfCus));
-                        drone.Battery = random.Next((int)batteryNeeded + 1, 100);
+                        drone.Battery = random.Next((int)batteryNeeded /*+ 1*/, 99)+ random.NextDouble();
                     }
                     if (DroneNotInDelivery(drone))//If the drone does not ship
                     {
@@ -68,16 +69,16 @@ namespace IBL
                     }
                     if (drone.Status == DroneStatus.Maintenance)
                     {
-                        //
+                        //the location is in random station
                         IEnumerable<IDAL.DO.Station> stations = dl.DisplayListOfStations();
                         int index = random.Next(0, stations.Count());
                         IDAL.DO.Station stationForLocation= stations.ElementAt(index);
                         drone.CurrentLocation = new Location { Latti = stationForLocation.Lattitude, Longi = stationForLocation.Longitude };
                         drone.Battery = random.Next(0, 19)+ random.NextDouble();//random battery mode between 0 and 20
                     }
-                    if (drone.Status == DroneStatus.Available)//הרחפן פנוי
+                    if (drone.Status == DroneStatus.Available)//the drone is available
                     {
-                        //
+                        //the location is in random customer location that received parcels
                         List<CustomerToList> customersWhoGotParcels = new List<CustomerToList>();
                         foreach (CustomerToList cus in DisplayListOfCustomers())
                         {
@@ -123,7 +124,7 @@ namespace IBL
             foreach (StationToList dstation in stations)//find the station that is the closest to the location
             {
                 station = DisplayStation(dstation.Id);
-                if (distance(loc, station.Location) < minDistance)//update to be the closest
+                if (distance(loc, station.Location) < minDistance)
                 {
                     minDistance = distance(loc, station.Location);
                     minLocation = station.Location;
@@ -145,7 +146,7 @@ namespace IBL
             foreach (StationToList dstation in stations)//find the station that is the closest to the location
             {
                 station = DisplayStation(dstation.Id);
-                if (distance(loc, station.Location) < minDistance)//update to be the closest
+                if (distance(loc, station.Location) < minDistance)
                 {
                     minDistance = distance(loc, station.Location);
                     minStation = station;
@@ -171,6 +172,12 @@ namespace IBL
             double kils = distance(from, to);
             return batteryForKil * kils;
         }
+        /// <summary>
+        /// Finds the distance between two locations
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         private double distance(Location a, Location b)
         {
             return dl.Distance(a.Latti, a.Longi, b.Latti, b.Longi);
