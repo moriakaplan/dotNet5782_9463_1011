@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using DalObject;
 using IBL.BO;
-using IDAL;
 
 namespace IBL
 {
@@ -17,7 +16,7 @@ namespace IBL
         /// <param name="station"></param>
         public void AddStation(Station station)
         {
-            //creates a new station in the data level
+            //creates a new station in the data layer
             IDAL.DO.Station dstation = new IDAL.DO.Station
             {
                 Id = station.Id,
@@ -34,7 +33,7 @@ namespace IBL
             {
                 throw new ExistIdException(ex.Message, "-station");
             }
-        }
+        } 
         /// <summary>
         /// update the name or the number of charge slots' or both of them.
         /// </summary>
@@ -87,20 +86,16 @@ namespace IBL
                 Name = dstation.Name
             };
             int count = 0;
-            List<IDAL.DO.DroneCharge> droneCharge = (List<IDAL.DO.DroneCharge>)dl.DisplayListOfDroneCharge();
+            IEnumerable<IDAL.DO.DroneCharge> droneCharge = dl.DisplayListOfDroneCharge();
             DroneInCharge temp = new DroneInCharge();
             bstation.DronesInCharge = new List<DroneInCharge>(null);
-            foreach (IDAL.DO.DroneCharge ddrone in droneCharge)
+            foreach (IDAL.DO.DroneCharge dCharge in droneCharge)
             {
-                if (ddrone.StationId == stationId)
+                if (dCharge.StationId == stationId)
                 {
                     count++;
-                    temp.Id = ddrone.DroneId;
-                    try { temp.Battery = DisplayDrone(ddrone.DroneId).Battery; }
-                    catch (NotExistIDExeption ex)//####
-                    {
-                        throw ex;
-                    }
+                    temp.Id = dCharge.DroneId;
+                    temp.Battery = DisplayDrone(dCharge.DroneId).Battery; 
                     bstation.DronesInCharge.Add(temp);
                 }
             }
@@ -112,7 +107,7 @@ namespace IBL
         /// </summary>
         /// <param name="stationId"></param>
         /// <returns></returns>
-        private StationToList DisplatStationToList(int stationId)
+        private StationToList DisplayStationToList(int stationId)
         {
             IDAL.DO.Station dstation;
             try { dstation = dl.DisplayStation(stationId); }
@@ -144,7 +139,7 @@ namespace IBL
             //List < StationToList> result = new List<StationToList>(null);
             foreach (IDAL.DO.Station dstation in dl.DisplayListOfStations()) 
             {
-                yield return DisplatStationToList(dstation.Id);
+                yield return DisplayStationToList(dstation.Id);
             }
             //return result;
         }
@@ -154,7 +149,7 @@ namespace IBL
             StationToList tempStation;
             foreach (IDAL.DO.Station dstation in dl.DisplayListOfStations())
             {
-                tempStation = DisplatStationToList(dstation.Id);
+                tempStation = DisplayStationToList(dstation.Id);
                 if (tempStation.AvailableChargeSlots>0)
                 {
                     yield return tempStation ;
