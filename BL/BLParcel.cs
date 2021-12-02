@@ -119,7 +119,7 @@ namespace IBL
             {
                 throw new DroneCantTakeParcelExeption($"drone {droneId} is not available so it cant take a new parcel");
             }
-            Parcel parcel = findClosestParcel(droneId);//####מצאנו את הרחפן המתאים, צריך למצוא אם הסוללה מתאימה 
+            Parcel parcel = findClosestPacel(droneId);//#### 
             Location locOfCus = DisplayCustomer(parcel.Sender.Id).Location;
             if (bdrone.Battery <= (minBattery(droneId, bdrone.CurrentLocation, locOfCus) + minBattery(droneId, locOfCus, closestStation(locOfCus))))
             {
