@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IBL.BO;
-using IDAL;
 
 namespace IBL
 {
@@ -114,22 +113,32 @@ namespace IBL
         /// <param name="droneId"></param>
         public void AssignParcelToDrone(int droneId)
         {
-            Drone bdrone = DisplayDrone(droneId);//####
+            Drone bdrone;
+            bdrone = DisplayDrone(droneId);
             if (bdrone.Status == DroneStatus.Available)
             {
-                Parcel parcel = findClosestPacel(droneId); 
-                if (DisplayDrone(droneId).Battery <= (minBattery(droneId, DisplayDrone(droneId).CurrentLocation, DisplayCustomer(DisplayParcel(parcel.Id).Sender.Id).Location) + minBattery(droneId, DisplayCustomer(DisplayParcel(parcel.Id).Sender.Id).Location, closestStation(DisplayCustomer(DisplayParcel(parcel.Id).Sender.Id).Location))))
+                throw new DroneCantTakeParcelExeption($"drone {droneId} is not available so it cant take a new parcel");
+            }
+            Parcel parcel = findClosestParcel(droneId);//####מצאנו את הרחפן המתאים, צריך למצוא אם הסוללה מתאימה 
+            Location locOfCus = DisplayCustomer(parcel.Sender.Id).Location;
+            if (bdrone.Battery <= (minBattery(droneId, bdrone.CurrentLocation, locOfCus) + minBattery(droneId, locOfCus, closestStation(locOfCus))))
+            {
+                try { dl.AssignParcelToDrone(parcel.Id, droneId); }
+                catch (IDAL.DO.DroneException ex)
                 {
-                    dl.AssignParcelToDrone(parcel.Id, droneId);
-                    foreach (DroneToList drone in lstdrn)
+                    throw new NotExistIDExeption(ex.Message, " - drone");
+                }
+                catch (IDAL.DO.ParcelException ex)
+                {
+                    throw new NotExistIDExeption(ex.Message, " - parcel");
+                }
+                foreach (DroneToList drone in lstdrn)
+                {
+                    if (drone.Id == droneId)
                     {
-                        if (drone.Id == droneId)
-                        {
-                            drone.Status = DroneStatus.Associated;
-                        }
+                        drone.Status = DroneStatus.Associated;
                     }
                 }
-
             }
         }
         /// <summary>
@@ -190,8 +199,22 @@ namespace IBL
         /// <returns></returns>
         public Parcel DisplayParcel(int parcelId)
         {
-            IDAL.DO.Parcel parcelFromDal = dl.DisplayParcel(parcelId);//###
-            Drone droneFromFunc = DisplayDrone(parcelFromDal.Droneld);//###
+            IDAL.DO.Parcel parcelFromDal;
+            Drone droneFromFunc;
+            try
+            {
+                parcelFromDal = dl.DisplayParcel(parcelId);
+                droneFromFunc = DisplayDrone(parcelFromDal.Droneld);
+            }
+            catch (IDAL.DO.ParcelException ex)
+            {
+                throw new NotExistIDExeption(ex.Message, "- parcel");
+            }
+            catch (IDAL.DO.DroneException ex)
+            {
+                throw new NotExistIDExeption(ex.Message, "- drone");
+            }
+
             DroneInParcel drone = new DroneInParcel
             {
                 Id = droneFromFunc.Id,
