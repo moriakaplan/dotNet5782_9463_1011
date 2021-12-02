@@ -11,9 +11,6 @@ namespace IBL
 {
     public partial class BL
     {
-        //public List<DroneToList> lstdrn;
-        //public IDal dl = new DalObject.DalObject();
-
         internal static Random rand = new Random();
         /// <summary>
         /// adding drone
@@ -98,16 +95,20 @@ namespace IBL
             //};
             Station st = closestStationWithAvailableChargeSlosts(drone.CurrentLocation);
             double batteryNeed = minBattery(drone.Id, drone.CurrentLocation, st.Location);
-            if (batteryNeed>drone.Battery) throw new DroneCantGoToChargeExeption
+            if (batteryNeed>drone.Battery) throw new DroneCantGoToChargeExeption//if the drone dont have enough battery
             {
                 message = "the drone {droneId} is not available so it can't be sended to charging"
             };
             drone.Battery -= batteryNeed;
             drone.CurrentLocation = st.Location;
-            //לעדכן בדאל את מה שצריך(מיקום?)
             drone.Status = DroneStatus.Maintenance;
-            dl.SendDroneToCharge(droneId, st.Id); // מוסיף ישות טעינת רחפן ומוריד את כמות העמדות הפנויות בתחנה
+            dl.SendDroneToCharge(droneId, st.Id); // Adds a drone charging entity and lowers the amount of available charge slots at the station
         }
+        /// <summary>
+        /// Release the Drone Frome Charge
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <param name="timeInCharge"></param>
         public void ReleaseDroneFromeCharge(int droneId, DateTime timeInCharge)
         {
             Drone drone = DisplayDrone(droneId);
@@ -115,17 +116,18 @@ namespace IBL
             {
                 message = "the drone {droneId} is not in maintenance so it can't be released from charging"
             };
-            //עקרונית צריך לעדכן בדאל אבל אין שם בטריה ומצב סוללה
-            double time = convertDateTimeToDoubleInHours(timeInCharge);//צריך להמיר איכשהו את ה-dataTime
-            //IDAL.DO.Drone updateDrone = dl.DisplayDrone(droneId);
-            //dl.DeleteDrone(droneId);
-            //updateDrone.Battery=
+            double time = convertDateTimeToDoubleInHours(timeInCharge);
             DroneToList droneFromList = lstdrn.Find(item => item.Id == droneId);
             double rate = dl.AskBattery(dl.DisplayDrone(droneId))[4];
             droneFromList.Battery += time * rate;
             droneFromList.Status = DroneStatus.Available;
-            dl.ReleaseDroneFromeCharge(droneId); //מוחק את הישות טעינה ומוסיף 1 לעמדות טעינה של התחנה
+            dl.ReleaseDroneFromeCharge(droneId); //Deletes the charging entity and adds 1 to the charging slots of the station
         }
+        /// <summary>
+        ///  Returns the drone with the requested ID
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <returns></returns>
         public Drone DisplayDrone(int droneId)
         {
             DroneToList droneFromList = lstdrn.Find(item => item.Id == droneId);
@@ -138,8 +140,6 @@ namespace IBL
                 Sender = parcelFromFunc.Sender,
                 Target = parcelFromFunc.Target,
                 PickingPlace = DisplayCustomer(parcelFromFunc.Sender.Id).Location,
-                //PickingPlace= ,*/
-                //TransportDistance = dl.Distance(PickingPlace.longitude, PickingPlace.lattitude, TargetPlace.longitude, TargetPlace.lattitude),
                 TransportDistance= dl.Distance(DisplayCustomer(parcelFromFunc.Sender.Id).Location.Latti, DisplayCustomer(parcelFromFunc.Sender.Id).Location.Longi, DisplayCustomer(parcelFromFunc.Target.Id).Location.Latti, DisplayCustomer(parcelFromFunc.Target.Id).Location.Longi),
                 Weight = parcelFromFunc.Weight
             };
@@ -154,27 +154,22 @@ namespace IBL
                 ParcelInT = parcel
             };
         }
+        /// <summary>
+        ///  returns the list of the drones
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<DroneToList> DisplayListOfDrones()
         {
-            //if (pre != null)
-            //{
-            //    List<DroneToList> result = new List<DroneToList>();
-            //    foreach (DroneToList item in drones)
-            //    {
-            //        if (pre(item)) result.Add(item);
-            //    }
-            //    return result;
-            //}
-            //else
-            //{
-            //    return drones;
-            //}
             foreach(DroneToList drone in lstdrn)
             {
                 yield return drone;
             }
-            //return lstdrn;
         }
+        /// <summary>
+        /// convert Date Time To Double In Hours
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
         private double convertDateTimeToDoubleInHours(DateTime dateTime)
         {
             double result = 0;
