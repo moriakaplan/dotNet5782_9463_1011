@@ -41,39 +41,41 @@ namespace IBL
         private IEnumerable<Parcel> findHighesPrioritiy()
         {
             //List<ParcelInTransfer> result = new List<ParcelInTransfer>(null);
-            IEnumerable<ParcelToList> parcels = DisplayListOfParcels();
             Priorities temp = Priorities.Regular;
-            foreach (ParcelToList parcelList in parcels)
+            foreach (ParcelToList parcelList in DisplayListOfParcels())
             {
                 if (parcelList.Priority > temp)
                 {
                     temp = parcelList.Priority;
                 }
             }
-            foreach (ParcelToList parcelList in parcels)
+            Parcel parcel = new Parcel();
+            foreach (ParcelToList parcelList in DisplayListOfParcels())
             {
                 if (parcelList.Priority == temp)
                 {
                     yield return DisplayParcel(parcelList.Id);
+
                 }
             }
         }
         private IEnumerable<Parcel> findHighesWeight(WeightCategories weight)
         {
-            IEnumerable<Parcel> highesPrioritiy = findHighesPrioritiy();
+
             WeightCategories temp = WeightCategories.Easy;
-            foreach (Parcel parcel in highesPrioritiy)//מוצא את המשקל הכי גדול שהרחפן יכולה לקחת שיש חבילות במשקל הזה
+            foreach (Parcel parcel in findHighesPrioritiy())//מוצא את המשקל הכי גדול שהרחפן יכולה לקחת שיש חבילות במשקל הזה
             {
                 if ((parcel.Weight < weight) && (parcel.Weight > temp))
                 {
                     temp = parcel.Weight;
                 }
             }
-            foreach (Parcel parcel in highesPrioritiy)
+            foreach (Parcel parcel in findHighesPrioritiy())
             {
                 if (parcel.Weight == temp)
                 {
                     yield return DisplayParcel(parcel.Id);
+
                 }
             }
         }
@@ -94,7 +96,7 @@ namespace IBL
             return result;
         }
 
-        public void AssignParcelToDrone(int droneId)//איפה הוא צריך להיות
+        public void AssignParcelToDrone(int droneId)
         {
             Drone bdrone;
             bdrone = DisplayDrone(droneId);
@@ -124,7 +126,7 @@ namespace IBL
                 }
             }
         }
-        public void PickParcelByDrone(int droneId)//איפה הוא צריך להיות
+        public void PickParcelByDrone(int droneId)
         {
             if ((DisplayDrone(droneId).Status == DroneStatus.Associated) && (DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).PickedUp == DateTime.MinValue))
             {
@@ -145,7 +147,7 @@ namespace IBL
                 //כתוב בהוראות
             }
         }
-        public void DeliverParcelByDrone(int droneId)//איפה הוא צריך להיות
+        public void DeliverParcelByDrone(int droneId)
         {
             if ((DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).PickedUp != DateTime.MinValue) && (DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).Delivered == DateTime.MinValue))
             {
