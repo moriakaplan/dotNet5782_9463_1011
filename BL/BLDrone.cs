@@ -72,7 +72,28 @@ namespace IBL
             {
                 message = "the drone {droneId} is not available so it can't be sended to charging"
             };
-            Station st = closestStationWithChargeSlots(drone.CurrentLocation);
+            //IEnumerable<IDAL.DO.Station> stationsWithAvailable = dl.DisplayListOfStationsWithAvailableCargeSlots();
+            //double min = dl.DistanceForStation(lo, la, stationsWithAvailable..Id);
+            //double distance;
+            //IDAL.DO.Station closerStation;
+            //foreach (IDAL.DO.Station station in stationsWithAvailable)
+            //{
+            //    distance = dl.DistanceForStation(lo, la, station.Id);
+            //    if (distance < min) min = distance;
+            //}
+            //Parcel pa = DisplayParcel(drone.ParcelId);
+            //ParcelInTransfer parcel= new ParcelInTransfer { i }
+            //Drone DroneNotFromList = new Drone
+            //{
+            //    Id = drone.Id,
+            //    Battery = drone.Battery,
+            //    CurrentLocation = drone.CurrentLocation,
+            //    MaxWeight = drone.MaxWeight,
+            //    Model = drone.Model,
+            //    ParcelInT = parcel,
+            //    Status = drone.Status
+            //};
+            Station st = closestStationWithAvailableChargeSlosts(drone.CurrentLocation);
             double batteryNeed = minBattery(drone.Id, drone.CurrentLocation, st.Location);
             if (batteryNeed>drone.Battery) throw new DroneCantGoToChargeExeption//if the drone dont have enough battery
             {

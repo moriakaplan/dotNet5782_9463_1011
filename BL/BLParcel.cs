@@ -42,11 +42,10 @@ namespace IBL
         /// Returns all parcels with the highest priority
         /// </summary>
         /// <returns></returns>
-        private IEnumerable<Parcel> findHighestPrioritiy()
+        private IEnumerable<Parcel> findHighesPrioritiy()
         {
-            IEnumerable<ParcelToList> parcels = DisplayListOfParcels();
-            Priorities temp = Priorities.Regular;
-            foreach (ParcelToList parcelList in parcels) //find the highest priority
+            Priorities temp = Priorities.Regular;//gets the highest priority 
+            foreach (ParcelToList parcelList in DisplayListOfParcels())
             {
                 if (parcelList.Priority > temp)
                 {
@@ -54,11 +53,12 @@ namespace IBL
                 }
             }
             Parcel parcel = new Parcel();
-            foreach (ParcelToList parcelList in parcels) //return all the parcels with the highest priority
+            foreach (ParcelToList parcelList in DisplayListOfParcels())
             {
                 if (parcelList.Priority == temp)
                 {
                     yield return DisplayParcel(parcelList.Id);
+
                 }
             }
         }
@@ -69,20 +69,21 @@ namespace IBL
         /// <returns></returns>
         private IEnumerable<Parcel> findHighesWeight(WeightCategories weight)
         {
-            IEnumerable<Parcel> parcels = findHighestPrioritiy();
+
             WeightCategories temp = WeightCategories.Easy;
-            foreach (Parcel parcel in parcels)//find the highest weight that the drone can take
+            foreach (Parcel parcel in findHighesPrioritiy())
             {
                 if ((parcel.Weight < weight) && (parcel.Weight > temp))
                 {
                     temp = parcel.Weight;
                 }
             }
-            foreach (Parcel parcel in parcels)//return all the parcels with this weight
+            foreach (Parcel parcel in findHighesPrioritiy())
             {
                 if (parcel.Weight == temp)
                 {
                     yield return DisplayParcel(parcel.Id);
+
                 }
             }
         }
@@ -95,12 +96,12 @@ namespace IBL
         {
             Parcel result = findHighesWeight(DisplayDrone(droneId).MaxWeight).First();
             Location DroneLocation = new Location { Latti = DisplayDrone(droneId).CurrentLocation.Latti, Longi = DisplayDrone(droneId).CurrentLocation.Longi };
-            double minDistance = distance(DisplayCustomer(result.Sender.Id).Location, DroneLocation);
+            double minDistance = dl.Distance(DisplayCustomer(result.Sender.Id).Location.Latti, DisplayCustomer(result.Sender.Id).Location.Longi, DroneLocation.Latti, DroneLocation.Longi);
             foreach (Parcel parcel in findHighesWeight(DisplayDrone(droneId).MaxWeight))
             {
-                if (distance(DisplayCustomer(parcel.Sender.Id).Location, DroneLocation) < minDistance)
+                if (dl.Distance(DisplayCustomer(parcel.Sender.Id).Location.Latti, DisplayCustomer(parcel.Sender.Id).Location.Longi, DroneLocation.Latti, DroneLocation.Longi) < minDistance)
                 {
-                    minDistance = distance(DisplayCustomer(parcel.Sender.Id).Location, DroneLocation);
+                    minDistance = dl.Distance(DisplayCustomer(parcel.Sender.Id).Location.Latti, DisplayCustomer(parcel.Sender.Id).Location.Longi, DroneLocation.Latti, DroneLocation.Longi);
                     result = parcel;
                 }
             }
