@@ -43,16 +43,8 @@ namespace IBL
         /// <param name="cargeSlots"></param>
         public void UpdateStation(int id, string name, int cargeSlots)
         {
-            IDAL.DO.Station dstation;
-            try
-            {
-                dstation = dl.DisplayStation(id);
-                dl.DeleteStation(id);
-            }
-            catch (IDAL.DO.StationException ex)
-            {
-                throw new NotExistIDExeption(ex.Message, "- station");
-            }
+            IDAL.DO.Station dstation = dl.DisplayStation(id);
+            dl.DeleteStation(id);
             if (name != null)//update the name
             {
                 dstation.Name = name;
@@ -61,11 +53,7 @@ namespace IBL
             {
                 dstation.ChargeSlots = cargeSlots;
             }
-            try { dl.AddStationToTheList(dstation); }
-            catch (IDAL.DO.StationException ex)
-            {
-                throw new ExistIdException(ex.Message, "- station");
-            }
+            dl.AddStationToTheList(dstation);
         }
         /// <summary>
         /// return the station
@@ -74,12 +62,7 @@ namespace IBL
         /// <returns></returns>
         public Station DisplayStation(int stationId)
         {
-            IDAL.DO.Station dstation;
-            try { dstation = dl.DisplayStation(stationId); }
-            catch (IDAL.DO.StationException ex)
-            {
-                throw new NotExistIDExeption(ex.Message, "- station");
-            }
+            IDAL.DO.Station dstation = dl.DisplayStation(stationId);
             Station bstation = new Station
             {
                 Id = dstation.Id,
@@ -96,11 +79,7 @@ namespace IBL
                 {
                     count++;
                     temp.Id = ddrone.DroneId;
-                    try { temp.Battery = DisplayDrone(ddrone.DroneId).Battery; }
-                    catch (NotExistIDExeption ex)//####
-                    {
-                        throw ex;
-                    }
+                    temp.Battery = DisplayDrone(ddrone.DroneId).Battery;
                     bstation.DronesInCharge.Add(temp);
                 }
             }
@@ -114,18 +93,13 @@ namespace IBL
         /// <returns></returns>
         private StationToList DisplatStationToList(int stationId)
         {
-            IDAL.DO.Station dstation;
-            try { dstation = dl.DisplayStation(stationId); }
-            catch (IDAL.DO.StationException ex)
-            {
-                throw new NotExistIDExeption(ex.Message, "- station");
-            }
+            IDAL.DO.Station dstation = dl.DisplayStation(stationId);
             StationToList bstation = new StationToList
             {
                 Id = dstation.Id,
                 Name = dstation.Name,
             };
-            IEnumerable<IDAL.DO.DroneCharge> droneCharge = dl.DisplayListOfDroneCharge();
+            List<IDAL.DO.DroneCharge> droneCharge = (List<IDAL.DO.DroneCharge>)dl.DisplayListOfDroneCharge();
             int count = 0;
             foreach (IDAL.DO.DroneCharge ddrone in droneCharge)
             {
