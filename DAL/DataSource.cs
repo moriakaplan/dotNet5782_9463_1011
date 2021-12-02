@@ -168,10 +168,10 @@ namespace DalObject
                 Droneld = 0,
                 Weight = (WeightCategories)random.Next(0, 3),
                 Priority = (Priorities)random.Next(0, 3),
-                Requested = new DateTime(2021, 01, 01),
-                Scheduled = DateTime.MinValue,
-                PickedUp = DateTime.MinValue,
-                Delivered = DateTime.MinValue,
+                CreateTime = new DateTime(2021, 01, 01),
+                AssociateTime = DateTime.MinValue,
+                PickUpTime = DateTime.MinValue,
+                DeliverTime = DateTime.MinValue,
             });
             parcels.Add(new Parcel
             {
@@ -181,10 +181,10 @@ namespace DalObject
                 Droneld = 0,
                 Weight = (WeightCategories)random.Next(0, 3),
                 Priority = (Priorities)random.Next(0, 3),
-                Requested = new DateTime(2021, 01, 01),
-                Scheduled = DateTime.MinValue,
-                PickedUp = DateTime.MinValue,
-                Delivered = DateTime.MinValue,
+                CreateTime = new DateTime(2021, 01, 01),
+                AssociateTime = DateTime.MinValue,
+                PickUpTime = DateTime.MinValue,
+                DeliverTime = DateTime.MinValue,
             });
             parcels.Add(new Parcel
             {
@@ -194,10 +194,10 @@ namespace DalObject
                 Droneld = 0,
                 Weight = (WeightCategories)random.Next(0, 3),
                 Priority = (Priorities)random.Next(0, 3),
-                Requested = new DateTime(2021, 10, 19),
-                Scheduled = DateTime.MinValue,
-                PickedUp = DateTime.MinValue,
-                Delivered = DateTime.MinValue,
+                CreateTime =  new DateTime(2021, 10, 19),
+                AssociateTime = DateTime.MinValue,
+                PickUpTime = DateTime.MinValue,
+                DeliverTime = DateTime.MinValue,
             });
             parcels.Add(new Parcel
             {
@@ -207,10 +207,10 @@ namespace DalObject
                 Droneld = 0,
                 Weight = (WeightCategories)random.Next(0, 3),
                 Priority = (Priorities)random.Next(0, 3),
-                Requested = new DateTime(2021, 10, 01),
-                Scheduled = DateTime.MinValue,
-                PickedUp = DateTime.MinValue,
-                Delivered = DateTime.MinValue,
+                CreateTime =  new DateTime(2021, 10, 01),
+                AssociateTime = DateTime.MinValue,
+                PickUpTime = DateTime.MinValue,
+                DeliverTime = DateTime.MinValue,
             });
             parcels.Add(new Parcel
             {
@@ -220,10 +220,10 @@ namespace DalObject
                 Droneld = drones[0].Id,
                 Weight = (WeightCategories)random.Next(0, (int)drones[0].MaxWeight),
                 Priority = (Priorities)random.Next(0, 3),
-                Requested = new DateTime(2021, 01, 01),
-                Scheduled = new DateTime(2021, 01, 02),
-                PickedUp = DateTime.MinValue,
-                Delivered = DateTime.MinValue,
+                CreateTime =  new DateTime(2021, 01, 01),
+                AssociateTime= new DateTime(2021, 01, 02),
+                PickUpTime = DateTime.MinValue,
+                DeliverTime = DateTime.MinValue,
             });
             parcels.Add(new Parcel
             {
@@ -233,10 +233,10 @@ namespace DalObject
                 Droneld = drones[1].Id,
                 Weight = (WeightCategories)random.Next(0, (int)drones[1].MaxWeight),
                 Priority = (Priorities)random.Next(0, 3),
-                Requested = new DateTime(2021, 10, 18),
-                Scheduled = new DateTime(2021, 10, 19),
-                PickedUp = DateTime.MinValue,
-                Delivered = DateTime.MinValue,
+                CreateTime =  new DateTime(2021, 10, 18),
+                AssociateTime= new DateTime(2021, 10, 19),
+                PickUpTime = DateTime.MinValue,
+                DeliverTime = DateTime.MinValue,
             });
             parcels.Add(new Parcel
             {
@@ -246,10 +246,10 @@ namespace DalObject
                 Droneld = drones[2].Id,
                 Weight = (WeightCategories)random.Next(0, (int)drones[2].MaxWeight),
                 Priority = (Priorities)random.Next(0, 3),
-                Requested = new DateTime(2021, 01, 05),
-                Scheduled = new DateTime(2021, 01, 08),
-                PickedUp = new DateTime(2021, 01, 12),
-                Delivered = DateTime.MinValue,
+                CreateTime =  new DateTime(2021, 01, 05),
+                AssociateTime = new DateTime(2021, 01, 08),
+                PickUpTime = new DateTime(2021, 01, 12),
+                DeliverTime = DateTime.MinValue,
             });
             parcels.Add(new Parcel
             {
@@ -259,10 +259,10 @@ namespace DalObject
                 Droneld = drones[3].Id,
                 Weight = (WeightCategories)random.Next(0, (int)drones[3].MaxWeight),
                 Priority = (Priorities)random.Next(0, 3),
-                Requested = new DateTime(2021, 08, 20),
-                Scheduled = new DateTime(2021, 08, 21),
-                PickedUp = new DateTime(2021, 08, 24),
-                Delivered = DateTime.MinValue,
+                CreateTime =  new DateTime(2021, 08, 20),
+                AssociateTime = new DateTime(2021, 08, 21),
+                PickUpTime = new DateTime(2021, 08, 24),
+                DeliverTime = DateTime.MinValue,
             });
             parcels.Add(new Parcel
             {
@@ -272,10 +272,10 @@ namespace DalObject
                 Droneld = drones[2].Id,
                 Weight = (WeightCategories)random.Next(0, (int)drones[2].MaxWeight),
                 Priority = (Priorities)random.Next(0, 3),
-                Requested = new DateTime(2021, 01, 01),
-                Scheduled = new DateTime(2021, 01, 03),
-                PickedUp = new DateTime(2021, 01, 05),
-                Delivered = new DateTime(2021, 01, 06)
+                CreateTime =  new DateTime(2021, 01, 01),
+                AssociateTime = new DateTime(2021, 01, 03),
+                PickUpTime = new DateTime(2021, 01, 05),
+                DeliverTime = new DateTime(2021, 01, 06)
             });
             parcels.Add(new Parcel
             {
@@ -285,10 +285,10 @@ namespace DalObject
                 Droneld = drones[3].Id,
                 Weight = (WeightCategories)random.Next(0, (int)drones[3].MaxWeight),
                 Priority = (Priorities)random.Next(0, 3),
-                Requested = new DateTime(2021, 02, 15),
-                Scheduled = new DateTime(2021, 02, 17),
-                PickedUp = new DateTime(2021, 02, 23),
-                Delivered = new DateTime(2021, 03, 01),
+                CreateTime =  new DateTime(2021, 02, 15),
+                AssociateTime = new DateTime(2021, 02, 17),
+                PickUpTime = new DateTime(2021, 02, 23),
+                DeliverTime = new DateTime(2021, 03, 01),
             });
         }
     }

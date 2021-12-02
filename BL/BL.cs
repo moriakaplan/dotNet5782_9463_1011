@@ -94,19 +94,17 @@ namespace IBL
         /// <returns></returns>
         private Location closestStation(Location loc)
         {
-            List<Station> stations = new List<Station>();
-            foreach(IDAL.DO.Station dstation in dl.DisplayListOfStations())//Finds the location of all stations
+            IEnumerable<StationToList> stations = DisplayListOfStations();
+            Station station = DisplayStation(stations.First().Id); ;
+            Location minLocation = station.Location;
+            double minDistance = distance(loc, station.Location);
+            foreach (StationToList dstation in stations)//find the station that is the closest to the location
             {
-                stations.Add(new Station { Location = new Location { Latti = dstation.Lattitude, Longi = dstation.Lattitude } });
-            }
-            Location minLocation = stations[0].Location;
-            double minDistance =  dl.Distance(loc.Latti, loc.Longi, stations[0].Location.Latti, stations[0].Location.Longi);
-            foreach (Station station in stations)
-            {
-                if (dl.Distance(loc.Latti, loc.Longi, station.Location.Latti, station.Location.Longi)<minDistance)
+                station = DisplayStation(dstation.Id);
+                if (distance(loc, station.Location) < minDistance)//update to be the closest
                 {
-                    minDistance = dl.Distance(loc.Latti, loc.Longi, station.Location.Latti, station.Location.Longi);
-                    minLocation=station.Location;
+                    minDistance = distance(loc, station.Location);
+                    minLocation = station.Location;
                 }
             }
             return minLocation;
@@ -116,24 +114,22 @@ namespace IBL
         /// </summary>
         /// <param name="location"></param>
         /// <returns></returns>
-        private Station closestStationWithAvailableChargeSlosts(Location location)
+        private Station closestStationWithChargeSlots(Location loc)
         {
-            List<Station> stations = new List<Station>();
-            foreach (IDAL.DO.Station dstation in dl.DisplayListOfStationsWithAvailableCargeSlots())//Finds the location of all stations
+            IEnumerable<StationToList> stations = DisplayListOfStationsWithAvailableCargeSlots();
+            Station station = DisplayStation(stations.First().Id); ;
+            Station minStation = station;
+            double minDistance = distance(loc, station.Location);
+            foreach (StationToList dstation in stations)//find the station that is the closest to the location
             {
-                stations.Add(new Station { Location = new Location { Latti = dstation.Lattitude, Longi = dstation.Lattitude }});
-            }
-           Station minLocation = stations[0];
-            double minDistance = dl.Distance(location.Latti, location.Longi, stations[0].Location.Latti, stations[0].Location.Longi);
-            foreach (Station station in stations)
-            {
-                if (dl.Distance(location.Latti, location.Longi, station.Location.Latti, station.Location.Longi) < minDistance)
+                station = DisplayStation(dstation.Id);
+                if (distance(loc, station.Location) < minDistance)//update to be the closest
                 {
-                    minDistance = dl.Distance(location.Latti, location.Longi, station.Location.Latti, station.Location.Longi);
-                    minLocation = station;
+                    minDistance = distance(loc, station.Location);
+                    minStation = station;
                 }
             }
-            return minLocation;
+            return minStation;
         }
         /// <summary>
         /// Finds the minimum battery needed to get from the location to the nearest station
@@ -151,8 +147,12 @@ namespace IBL
             if (weight == WeightCategories.Easy) batteryForKil = data[1];
             if (weight == WeightCategories.Medium) batteryForKil = data[2];
             if (weight == WeightCategories.Heavy) batteryForKil = data[3];
-            double kils = dl.Distance(from.Longi, from.Latti, to.Longi, to.Latti);
+            double kils = distance(from, to);
             return batteryForKil * kils;
+        }
+        private double distance(Location a, Location b)
+        {
+            return dl.Distance(a.Latti, a.Longi, b.Latti, b.Longi);
         }
     }
 }
