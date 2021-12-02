@@ -18,12 +18,12 @@ namespace IBL
             IDAL.DO.Parcel idalParcel = new IDAL.DO.Parcel
             {
                 Id = parcel.Id,
-                Delivered = parcel.Delivered,
+                DeliverTime = parcel.DeliverTime,
                 Droneld = parcel.Drone.Id,
-                PickedUp = parcel.PickedUp,
+                PickUpTime = parcel.PickUpTime,
                 Priority = (IDAL.DO.Priorities)parcel.Priority,
-                Requested = parcel.Requested,
-                Scheduled = parcel.Scheduled,
+                CreateTime = parcel.CreateTime,
+                AssociateTime = parcel.AssociateTime,
                 Senderld = parcel.Sender.Id,
                 TargetId = parcel.Target.Id,
                 Weight = (IDAL.DO.WeightCategories)parcel.Weight
@@ -91,7 +91,7 @@ namespace IBL
         /// </summary>
         /// <param name="droneId"></param>
         /// <returns></returns>
-        private Parcel findClosestPacel(int droneId)
+        private Parcel findClosestParcel(int droneId)
         {
             Parcel result = findHighesWeight(DisplayDrone(droneId).MaxWeight).First();
             Location DroneLocation = new Location { Latti = DisplayDrone(droneId).CurrentLocation.Latti, Longi = DisplayDrone(droneId).CurrentLocation.Longi };
@@ -118,7 +118,7 @@ namespace IBL
             {
                 throw new DroneCantTakeParcelExeption($"drone {droneId} is not available so it cant take a new parcel");
             }
-            Parcel parcel = findClosestParcel(droneId);//####מצאנו את החבילה המתאימה, צריך למצוא אם הסוללה מספיקה 
+            Parcel parcel = findClosestParcel(droneId);//אולי צריך שזה יהיה תנאי ביצירת רשימת החבילות?
             Location locOfSender = DisplayCustomer(parcel.Sender.Id).Location;
             Location locOfTarget = DisplayCustomer(parcel.Target.Id).Location;
             double batteryNeeded =
@@ -127,9 +127,12 @@ namespace IBL
                 minBattery(droneId, locOfTarget, closestStationWithChargeSlots(locOfTarget).Location);//לבדוק אם צריך את התחנה הכי קרובה עם עמדות טעינה
             if (batteryNeeded > bdrone.Battery)
             {
-                throw new ThereNotGoodParcelToTake($"didn't found a good parcel that the drone {droneId} can take");
+                throw new ThereNotGoodParcelToTake($"did not found a good parcel that the drone {droneId} can take");
             }
-            try { dl.AssignParcelToDrone(parcel.Id, droneId); }
+            try
+            {
+                dl.AssignParcelToDrone(parcel.Id, droneId); //update drone and scheduled time in parcel
+            }
             catch (IDAL.DO.DroneException ex)
             {
                 throw new NotExistIDExeption(ex.Message, " - drone");
@@ -138,11 +141,12 @@ namespace IBL
             {
                 throw new NotExistIDExeption(ex.Message, " - parcel");
             }
+
             foreach (DroneToList drone in lstdrn)
             {
                 if (drone.Id == droneId)
                 {
-                    drone.Status = DroneStatus.Associated;
+                    drone.Status = DroneStatus.Associated; //update the drone status
                 }
             }
 
@@ -153,24 +157,23 @@ namespace IBL
         /// <param name="droneId"></param>
         public void PickParcelByDrone(int droneId)
         {
-            if ((DisplayDrone(droneId).Status == DroneStatus.Associated) && (DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).PickedUp == DateTime.MinValue))//####
+            Parcel parcelToPick = DisplayParcel(DisplayDrone(droneId).ParcelInT.Id);
+            if (!(parcelToPick.AssociateTime!= DateTime.MinValue && parcelToPick.Drone.Id==droneId && parcelToPick.PickUpTime == DateTime.MinValue))
             {
-                foreach (DroneToList drone in lstdrn)
+                throw new TransferExeption($"drone {droneId} can't pick up the parcel");
+            }
+            foreach (DroneToList drone in lstdrn)
+            {
+                if (drone.Id == droneId)
                 {
-                    if (drone.Id == droneId)
-                    {
-                        drone.Battery = drone.Battery - minBattery(droneId, DisplayCustomer(DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).Sender.Id).Location, DisplayCustomer(DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).Target.Id).Location);
-                        drone.CurrentLocation = DisplayCustomer(DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).Target.Id).Location;
-
-                        dl.PickParcelByDrone(DisplayDrone(droneId).ParcelInT.Id);
-                    }
+                    drone.Battery -= minBattery(droneId, drone.CurrentLocation, DisplayCustomer(parcelToPick.Sender.Id).Location);
+                    drone.CurrentLocation = DisplayCustomer(parcelToPick.Sender.Id).Location;
+                    try { dl.PickParcelByDrone(parcelToPick.Id); } //update pick up time in the parcel
+                    catch (IDAL.DO.ParcelException ex) { throw new NotExistIDExeption(ex.Message, " - parcel"); }
+                    return;
                 }
             }
-            else
-            {//######
-                //לזרוק חריגה!!!!!!!!
-                //כתוב בהוראות
-            }
+
         }
         /// <summary>
         /// Deliver Parcel By Drone
@@ -178,24 +181,24 @@ namespace IBL
         /// <param name="droneId"></param>
         public void DeliverParcelByDrone(int droneId)
         {
-            if((DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).PickedUp != DateTime.MinValue)&& (DisplayParcel(DisplayDrone(droneId).ParcelInT.Id).Delivered == DateTime.MinValue))//#####
+            Parcel parcelToDeliver = DisplayParcel(DisplayDrone(droneId).ParcelInT.Id);
+            if (!(parcelToDeliver.Drone.Id==droneId && parcelToDeliver.PickUpTime != DateTime.MinValue && parcelToDeliver.DeliverTime == DateTime.MinValue))
             {
-                foreach (DroneToList drone in lstdrn)
-                {
-                    if (drone.Id == droneId)
-                    {
-                        //לעדכן את הסוללה שוב?
-                        //לעדכן את המיקום שוב?
-                        drone.Status = DroneStatus.Available;
-                        dl.DeliverParcelToCustomer(DisplayDrone(droneId).ParcelInT.Id);//מעדכן את הזמן של האיסוף בדאל
-                    }
-                }
+                throw new TransferExeption($"drone {droneId} can't deliver the parcel");
             }
-            else
+            foreach (DroneToList drone in lstdrn)
             {
-                //######
-                //לזרוק חריגה!!!!!!!!
-                //כתוב בהוראות
+                if (drone.Id == droneId)
+                {
+                    drone.Battery -= minBattery(droneId, DisplayCustomer(parcelToDeliver.Sender.Id).Location, DisplayCustomer(parcelToDeliver.Target.Id).Location);
+                    drone.CurrentLocation = DisplayCustomer(parcelToDeliver.Target.Id).Location;
+                    drone.Status = DroneStatus.Available;
+                    try
+                    {
+                        dl.DeliverParcelToCustomer(DisplayDrone(droneId).ParcelInT.Id);//update the deliver time in the data layer
+                    }
+                    catch(IDAL.DO.ParcelException ex) { throw new NotExistIDExeption(ex.Message, " - parcel"); }
+                }
             }
         }
         /// <summary>
@@ -206,27 +209,26 @@ namespace IBL
         public Parcel DisplayParcel(int parcelId)
         {
             IDAL.DO.Parcel parcelFromDal;
-            Drone droneFromFunc;
+            Drone droneFromFunc=null;
+            DroneInParcel drone = null;
             try
             {
                 parcelFromDal = dl.DisplayParcel(parcelId);
-                droneFromFunc = DisplayDrone(parcelFromDal.Droneld);
             }
             catch (IDAL.DO.ParcelException ex)
             {
                 throw new NotExistIDExeption(ex.Message, "- parcel");
             }
-            catch (IDAL.DO.DroneException ex)
+            if(parcelFromDal.AssociateTime!= DateTime.MinValue)
             {
-                throw new NotExistIDExeption(ex.Message, "- drone");
+                droneFromFunc = DisplayDrone(parcelFromDal.Droneld);
+                drone = new DroneInParcel
+                {
+                    Id = droneFromFunc.Id,
+                    Battery = droneFromFunc.Battery,
+                    CurrentLocation = droneFromFunc.CurrentLocation
+                };
             }
-
-            DroneInParcel drone = new DroneInParcel
-            {
-                Id = droneFromFunc.Id,
-                Battery = droneFromFunc.Battery,
-                CurrentLocation = droneFromFunc.CurrentLocation
-            };
             CustomerInParcel sender = new CustomerInParcel
             {
                 Id = parcelFromDal.Senderld,
@@ -240,12 +242,12 @@ namespace IBL
             return new Parcel
             {
                 Id = parcelFromDal.Id,
-                Delivered = parcelFromDal.Delivered,
+                DeliverTime = parcelFromDal.DeliverTime,
                 Drone = drone,
-                PickedUp = parcelFromDal.PickedUp,
-                Priority = (Priorities)parcelFromDal.Priority,
-                Requested = parcelFromDal.Requested,
-                Scheduled = parcelFromDal.Scheduled,
+                PickUpTime = parcelFromDal.PickUpTime,
+                Priority = (Priorities)parcelFromDal.Priority, 
+                CreateTime = parcelFromDal.CreateTime,
+                AssociateTime = parcelFromDal.AssociateTime,
                 Sender = sender,
                 Target = target,
                 Weight = (WeightCategories)parcelFromDal.Weight
@@ -262,13 +264,13 @@ namespace IBL
             ParcelStatus st;
             foreach (IDAL.DO.Parcel parcel in listFromDal)
             {
-                if (parcel.Delivered != DateTime.MinValue) st = ParcelStatus.Delivered;
+                if (parcel.DeliverTime != DateTime.MinValue) st = ParcelStatus.Delivered;
                 else
                 {
-                    if (parcel.PickedUp != DateTime.MinValue) st = ParcelStatus.PickedUp;
+                    if (parcel.PickUpTime != DateTime.MinValue) st = ParcelStatus.PickedUp;
                     else
                     {
-                        if (parcel.Scheduled != DateTime.MinValue) st = ParcelStatus.Associated;
+                        if (parcel.AssociateTime != DateTime.MinValue) st = ParcelStatus.Associated;
                         else st = ParcelStatus.Created;
                     }
                 }
@@ -297,7 +299,7 @@ namespace IBL
             foreach (IDAL.DO.Parcel parcel in listFromDal)
             {
 
-                if (parcel.Scheduled == DateTime.MinValue) st = ParcelStatus.Created;
+                if (parcel.AssociateTime == DateTime.MinValue) st = ParcelStatus.Created;
                 else st = ParcelStatus.Associated;
                 if (st == ParcelStatus.Created)
                 {

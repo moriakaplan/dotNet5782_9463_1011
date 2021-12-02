@@ -139,10 +139,10 @@ longitude-");
                         Target = target,
                         Weight = weight,
                         Priority = priority,
-                        Requested = DateTime.Now,
-                        Scheduled = DateTime.MinValue,
-                        PickedUp = DateTime.MinValue,
-                        Delivered = DateTime.MinValue, 
+                        CreateTime = DateTime.Now,
+                        AssociateTime = DateTime.MinValue,
+                        PickUpTime = DateTime.MinValue,
+                        DeliverTime = DateTime.MinValue, 
                         Drone=null
                     };
                     blObject.AddParcelToDelivery(pa);//Add the parcel to the list

@@ -27,17 +27,6 @@ namespace DalObject
         /// <param name="droneId"></param>
         public void AssignParcelToDrone(int parcelId, int droneId)
         {
-            //Drone drone = DisplayDrone(droneId);
-            //DataSource.drones.Remove(drone);
-            ////drone.Status = DroneStatuses.Assigned;//update the status of the drone
-            //AddDroneToTheList(drone);
-
-            //Parcel parcel = DisplayParcel(parcelId);
-            //DataSource.parcels.Remove(parcel);
-            //DataSource.Config.parcelCode--;
-            //parcel.Droneld = droneId;//assign the pecel to the drone
-            //parcel.Scheduled = DateTime.Now;//update the time that the parcel was scheduled
-            //AddParcelToTheList(parcel);
             if(!DataSource.drones.Exists(item => item.Id == droneId))
             { 
                 throw new DroneException($"id: {droneId} does not exist"); 
@@ -47,8 +36,8 @@ namespace DalObject
                 if(DataSource.parcels[i].Id==parcelId)
                 {
                     Parcel p = DataSource.parcels[i];
-                    p.Droneld = droneId;//assign the pecel to the drone
-                    p.Scheduled = DateTime.Now;//update the time that the parcel was scheduled
+                    p.Droneld = droneId;//assign the parcel to the drone
+                    p.AssociateTime = DateTime.Now;//update the time that the parcel was scheduled
                     DataSource.parcels[i] = p;
                     return;
                 }
@@ -67,7 +56,7 @@ namespace DalObject
                 if (DataSource.parcels[i].Id == parcelId)
                 {
                     Parcel p = DataSource.parcels[i];
-                    p.PickedUp = DateTime.Now;//update the time that the drone pick up the parcel
+                    p.PickUpTime = DateTime.Now;//update the time that the drone pick up the parcel
                     DataSource.parcels[i] = p;
                     return;
                 }
@@ -85,16 +74,12 @@ namespace DalObject
         /// <param name="parcelId"></param>
         public void DeliverParcelToCustomer(int parcelId)
         {
-            //Parcel parcel = DisplayParcel(parcelId);
-            //DataSource.parcels.Remove(parcel);
-            //parcel.Delivered = DateTime.Now;//update the delivering time
-            //AddParcelToTheList(parcel);
             for (int i = 0; i < DataSource.parcels.Count; i++) //find the parcel and update its details
             {
                 if (DataSource.parcels[i].Id == parcelId)
                 {
                     Parcel p = DataSource.parcels[i];
-                    p.Delivered = DateTime.Now;//update the time that the drone pick up the parcel
+                    p.DeliverTime = DateTime.Now;//update the time that the drone pick up the parcel
                     DataSource.parcels[i] = p;
                     return;
                 }

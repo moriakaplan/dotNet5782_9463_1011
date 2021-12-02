@@ -110,21 +110,25 @@ namespace IBL
         public Drone DisplayDrone(int droneId)
         {
             DroneToList droneFromList = lstdrn.Find(item => item.Id == droneId);
-            Parcel parcelFromFunc = DisplayParcel(droneFromList.ParcelId);
-            Location locOfSender = DisplayCustomer(parcelFromFunc.Sender.Id).Location;
-            Location locOfTarget = DisplayCustomer(parcelFromFunc.Target.Id).Location;
-            ParcelInTransfer parcel = new ParcelInTransfer
+            ParcelInTransfer parcel = null;
+            if (droneFromList.Status == DroneStatus.Associated || droneFromList.Status == DroneStatus.Delivery)
             {
-                Id = parcelFromFunc.Id,
-                InTheWay = (parcelFromFunc.PickedUp != DateTime.MinValue && parcelFromFunc.Delivered == DateTime.MinValue),
-                Priority = parcelFromFunc.Priority,
-                Sender = parcelFromFunc.Sender,
-                Target = parcelFromFunc.Target,
-                PickingPlace = locOfSender,
-                TargetPlace = locOfTarget,
-                TransportDistance = distance(locOfSender, locOfTarget),
-                Weight = parcelFromFunc.Weight
-            };
+                Parcel parcelFromFunc = DisplayParcel(droneFromList.ParcelId);
+                Location locOfSender = DisplayCustomer(parcelFromFunc.Sender.Id).Location;
+                Location locOfTarget = DisplayCustomer(parcelFromFunc.Target.Id).Location;
+                parcel = new ParcelInTransfer
+                {
+                    Id = parcelFromFunc.Id,
+                    InTheWay = (parcelFromFunc.PickUpTime != DateTime.MinValue && parcelFromFunc.DeliverTime == DateTime.MinValue),
+                    Priority = parcelFromFunc.Priority,
+                    Sender = parcelFromFunc.Sender,
+                    Target = parcelFromFunc.Target,
+                    PickingPlace = locOfSender,
+                    TargetPlace = locOfTarget,
+                    TransportDistance = distance(locOfSender, locOfTarget),
+                    Weight = parcelFromFunc.Weight
+                };
+            }
             return new Drone
             {
                 Id = droneFromList.Id,

@@ -56,7 +56,7 @@ namespace DalObject
             List<Parcel> unassignedParcels = new List<Parcel>();
             foreach (Parcel item in DataSource.parcels)
             {
-                if (item.Scheduled == DateTime.MinValue)
+                if (item.AssociateTime == DateTime.MinValue)
                     unassignedParcels.Add(item);
             }
             return unassignedParcels;

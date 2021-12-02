@@ -15,10 +15,10 @@ namespace IDAL
             public int Droneld { get; set; }
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; } //רגיל, מהיר, חירום
-            public DateTime Requested { get; set; } //יצירת החבילה
-            public DateTime Scheduled { get; set; } //שיוך לרחפן
-            public DateTime PickedUp { get; set; }  //איסוף מהשולח
-            public DateTime Delivered { get; set; } //מסירה ליעד
+            public DateTime CreateTime { get; set; } //יצירת החבילה
+            public DateTime AssociateTime { get; set; } //שיוך לרחפן
+            public DateTime PickUpTime { get; set; }  //איסוף מהשולח
+            public DateTime DeliverTime { get; set; } //מסירה ליעד
             public override string ToString()
             {
                 return @$"parcel #{Id}: 
@@ -26,11 +26,12 @@ sender ID- {Senderld},
 target ID- {TargetId},
 weight- {Weight},
 priority- {Priority},
-requested- {Requested}
-,droneld- {Droneld}, 
-scheduled- {Scheduled}, 
-picked up- {PickedUp},
-delivered- {Delivered}
+requested- {CreateTime},
+droneld- {Droneld}, 
+created- {CreateTime},
+scheduled- {AssociateTime}, 
+picked up- {PickUpTime},
+delivered- {DeliverTime}
 ";
             }
         }

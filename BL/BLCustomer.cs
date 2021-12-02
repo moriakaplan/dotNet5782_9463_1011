@@ -78,8 +78,8 @@ namespace IBL
             bCustomer.Name = dCustomer.Name;
             bCustomer.Phone = dCustomer.Phone;
             bCustomer.Location = new Location() { Latti = dCustomer.Lattitude, Longi = dCustomer.Lattitude };
-            bCustomer.parcelFrom = getCustomerParcelFrom(customerId);//####
-            bCustomer.parcelTo = getCustomerParcelTo(customerId);//####
+            bCustomer.parcelFrom = getCustomerParcelFrom(customerId);
+            bCustomer.parcelTo = getCustomerParcelTo(customerId);
             return bCustomer;
         }
         /// <summary>
@@ -131,41 +131,33 @@ namespace IBL
         /// <returns></returns>
         private CustomerToList DisplayCustomersToList(int customerId)
         {
-            IDAL.DO.Customer dcustomer = dl.DisplayCustomer(customerId);//למרות שאין מצב כי הוא מקבל את המס זהות מהרשימה####
+            Customer dcustomer = DisplayCustomer(customerId);
             CustomerToList bCustomer = new CustomerToList
             {
                 Id = dcustomer.Id,
                 Name = dcustomer.Name,
-                phone = dcustomer.Phone
+                phone = dcustomer.Phone, 
+                numOfParcelsDelivered=0, 
+                numOfParcelsInTheWay=0, 
+                numOfParcelsSentAndNotDelivered=0, 
+                numOfParclRecived=0
             };
-            bCustomer.numOfParcelsDelivered = 0;//Number of parcels sent and delivered by the customer
-            foreach (ParcelToList parcel in DisplayListOfParcels())
+            foreach (ParcelToList parcelFromList in DisplayListOfParcels())
             {
-                if ((DisplayParcel(parcel.Id).Sender.Id == customerId) && (DisplayParcel(parcel.Id).Delivered != DateTime.MinValue))
+                Parcel parcel = DisplayParcel(parcelFromList.Id);
+                if ((parcel.Sender.Id == customerId) && (parcel.DeliverTime != DateTime.MinValue))
                 {
                     bCustomer.numOfParcelsDelivered++;
                 }
-            }
-            bCustomer.numOfParcelsSentAndNotDelivered = 0;//number of parcels sent by the customer but not delivered
-            foreach (ParcelToList parcel in DisplayListOfParcels())
-            {
-                if ((DisplayParcel(parcel.Id).Sender.Id == customerId) && ((DisplayParcel(parcel.Id).Delivered == DateTime.MinValue)&&((DisplayParcel(parcel.Id).Requested!=DateTime.MinValue))))
+                if ((parcel.Sender.Id == customerId) && ((parcel.DeliverTime == DateTime.MinValue) && ((parcel.CreateTime != DateTime.MinValue))))
                 {
                     bCustomer.numOfParcelsSentAndNotDelivered++;
                 }
-            }
-            bCustomer.numOfParcelsInTheWay = 0;//Number of parcels on the way to the customer
-            foreach (ParcelToList parcel in DisplayListOfParcels())
-            {
-                if ((DisplayParcel(parcel.Id).Target.Id == customerId) && (DisplayParcel(parcel.Id).Delivered == DateTime.MinValue))
+                if ((parcel.Target.Id == customerId) && (parcel.DeliverTime == DateTime.MinValue))
                 {
                     bCustomer.numOfParcelsInTheWay++;
                 }
-            }
-            bCustomer.numOfParclRecived = 0;//Number of parcels the customer received 
-            foreach (ParcelToList parcel in DisplayListOfParcels())
-            {
-                if ((DisplayParcel(parcel.Id).Target.Id == customerId) && (DisplayParcel(parcel.Id).Delivered != DateTime.MinValue))
+                if ((parcel.Target.Id == customerId) && (parcel.DeliverTime != DateTime.MinValue))
                 {
                     bCustomer.numOfParclRecived++;
                 }

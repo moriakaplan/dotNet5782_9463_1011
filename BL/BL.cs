@@ -38,14 +38,14 @@ namespace IBL
                 {
                     IDAL.DO.Customer tempCustomer = dl.DisplayCustomer(parcel.Senderld);//לבדוק אם הוא קיים
                     Location locOfCus = new Location { Longi = tempCustomer.Longitude, Latti = tempCustomer.Lattitude };
-                    if ((parcel.Droneld == drone.Id) && (parcel.Delivered == DateTime.MinValue))//אם יש חבילה שעוד לא סופקה אבל אבל הרחפן שוייך
+                    if ((parcel.Droneld == drone.Id) && (parcel.DeliverTime == DateTime.MinValue))//אם יש חבילה שעוד לא סופקה אבל אבל הרחפן שוייך
                     {
                         drone.Status = DroneStatus.Delivery;
-                        if ((parcel.Scheduled != DateTime.MinValue) && (parcel.PickedUp == DateTime.MinValue))//אם החבילה שויכה אבל לא נאספה
+                        if ((parcel.AssociateTime != DateTime.MinValue) && (parcel.PickUpTime == DateTime.MinValue))//אם החבילה שויכה אבל לא נאספה
                         {
                             drone.CurrentLocation=closestStation(new Location { Latti = tempCustomer.Lattitude, Longi = tempCustomer.Longitude });//המיקום צריך להיות בתחנה הקרובה לשולח
                         }
-                        if ((parcel.PickedUp != DateTime.MinValue) && (parcel.Delivered == DateTime.MinValue))//אם החבילה נאספה אבל לא סופקה
+                        if ((parcel.PickUpTime != DateTime.MinValue) && (parcel.DeliverTime == DateTime.MinValue))//אם החבילה נאספה אבל לא סופקה
                         {
                             drone.CurrentLocation = new Location() { Longi = tempCustomer.Longitude, Latti = tempCustomer.Lattitude };//מיקום הרחפן הוא במיקום השולח
                         }
@@ -79,7 +79,7 @@ namespace IBL
         {
             foreach (IDAL.DO.Parcel parcel in dl.DisplayListOfParcels())
             {
-                if ((parcel.Droneld == drone.Id) && (parcel.PickedUp != DateTime.MinValue) && (parcel.Delivered == DateTime.MinValue))//אם הרחפן במשלוח (כבר אסף את החבילה) 
+                if ((parcel.Droneld == drone.Id) && (parcel.PickUpTime != DateTime.MinValue) && (parcel.DeliverTime == DateTime.MinValue))//אם הרחפן במשלוח (כבר אסף את החבילה) 
                 {
                     return false;
                 }
@@ -139,9 +139,7 @@ namespace IBL
         /// <returns></returns>
         private double minBattery(int droneId,Location from, Location to)
         {
-            Drone drone;
-            try { drone = DisplayDrone(droneId); }
-            catch () { throw Exeption; }
+            Drone drone = DisplayDrone(droneId); 
             double batteryForKil = 0;
             double[] data = dl.AskBattery(dl.DisplayDrone(droneId));
             if (drone.Status == DroneStatus.Available) batteryForKil = data[0];
