@@ -36,7 +36,7 @@ namespace IBL
             try { dCustomer = dl.DisplayCustomer(customerId); }
             catch(IDAL.DO.CustomerException ex)
             {
-                throw new NotExistIDExeption(ex.Message, "-customer");
+                throw new NotExistIDExeption(ex.Message, "- customer");
             }
             dl.DeleteCustomer(customerId);
             if (name != null)//update the name

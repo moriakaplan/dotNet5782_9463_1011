@@ -11,9 +11,6 @@ namespace IBL
 {
     public partial class BL
     {
-        //public List<DroneToList> lstdrn;
-        //public IDal dl = new DalObject.DalObject();
-
         internal static Random rand = new Random();
         /// <summary>
         /// adding drone
@@ -54,8 +51,10 @@ namespace IBL
         /// <param name="model"></param>
         public void UpdateDroneModel(int id, string model)
         {
+            DroneToList drone;
             //update the model in the logical layer
-            DroneToList drone = lstdrn.Find(item => item.Id == id);
+            try { drone = lstdrn.Find(item => item.Id == id); }//####to check witch exeption find return
+            catch (ArgumentNullException) { throw new NotExistIDExeption($"id: {id} does not exist - drone"); }
             drone.Model = model;
             //update the model in the data layer
             IDAL.DO.Drone ddrone = dl.DisplayDrone(id);
@@ -128,7 +127,9 @@ namespace IBL
         }
         public Drone DisplayDrone(int droneId)
         {
-            DroneToList droneFromList = lstdrn.Find(item => item.Id == droneId);
+            DroneToList droneFromList;
+            try { droneFromList = lstdrn.Find(item => item.Id == droneId); }//####to check witch exeption find return
+            catch (ArgumentNullException) { throw new NotExistIDExeption($"id: {droneId} does not exist - drone"); }
             Parcel parcelFromFunc = DisplayParcel(droneFromList.ParcelId);
             ParcelInTransfer parcel = new ParcelInTransfer
             {
