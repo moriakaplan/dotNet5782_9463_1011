@@ -69,7 +69,7 @@ namespace IBL
         }
         private IEnumerable<ParcelInCustomer> getCustomerParcelFrom(int customerId)
         {
-            List<ParcelInCustomer> result = new List<ParcelInCustomer>();
+            //List<ParcelInCustomer> result = new List<ParcelInCustomer>();
             ParcelInCustomer parcel = new ParcelInCustomer();
             foreach (ParcelToList tempParcel in DisplayListOfParcels())
             {
@@ -77,17 +77,17 @@ namespace IBL
                 {
                     parcel.Id = tempParcel.Id;
                     parcel.Priority = tempParcel.Priority;
-                    parcel.SenderOrTarget = new CustomerInParcel { Id = DisplayParcel(tempParcel.Id).Target.Id, Name = DisplayParcel(tempparcel.Id).Target.Name };
+                    parcel.SenderOrTarget = new CustomerInParcel { Id = DisplayParcel(tempParcel.Id).Target.Id, Name = DisplayParcel(tempParcel.Id).Target.Name };
                     parcel.Status = tempParcel.Status;
                     parcel.Weight = tempParcel.Weight;
-                    result.Add(parcel);
+                    yield return parcel;
                 }
             }
-            return result;
+            //return result;
         }
         private IEnumerable<ParcelInCustomer> getCustomerParcelTo(int customerId)
         {
-            List<ParcelInCustomer> result = new List<ParcelInCustomer>();
+            //List<ParcelInCustomer> result = new List<ParcelInCustomer>();
             ParcelInCustomer parcel = new ParcelInCustomer();
             foreach (ParcelToList tempparcel in DisplayListOfParcels())
             {
@@ -98,10 +98,10 @@ namespace IBL
                     parcel.SenderOrTarget = new CustomerInParcel { Id = DisplayParcel(tempparcel.Id).Sender.Id, Name = DisplayParcel(tempparcel.Id).Sender.Name };
                     parcel.Status = tempparcel.Status;
                     parcel.Weight = tempparcel.Weight;
-                    result.Add(parcel);
+                    yield return parcel;
                 }
             }
-            return result;
+            //return result;
         }
         private CustomerToList DisplayCustomersToList(int customerId)
         {
@@ -148,12 +148,12 @@ namespace IBL
         }
         public IEnumerable<CustomerToList> DisplayListOfCustomers()
         {
-            List<CustomerToList> result = new List<CustomerToList>(null);
+            //List<CustomerToList> result = new List<CustomerToList>(null);
             foreach (IDAL.DO.Customer dCustomer in dl.DisplayListOfCustomers())
             {
-                result.Add(DisplayCustomersToList(dCustomer.Id));
+                yield return DisplayCustomersToList(dCustomer.Id);
             }
-            return result;
+            //return result;
         }
     }
 }
