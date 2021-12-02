@@ -140,7 +140,8 @@ namespace IBL
                 Target = parcelFromFunc.Target,
                 PickingPlace = DisplayCustomer(parcelFromFunc.Sender.Id).Location,
                 //PickingPlace= ,*/
-                TransportDistance = dl.Distance(PickingPlace.longitude, PickingPlace.lattitude, TargetPlace.longitude, TargetPlace.lattitude),
+                //TransportDistance = dl.Distance(PickingPlace.longitude, PickingPlace.lattitude, TargetPlace.longitude, TargetPlace.lattitude),
+                TransportDistance= dl.Distance(DisplayCustomer(parcelFromFunc.Sender.Id).Location.Latti, DisplayCustomer(parcelFromFunc.Sender.Id).Location.Longi, DisplayCustomer(parcelFromFunc.Target.Id).Location.Latti, DisplayCustomer(parcelFromFunc.Target.Id).Location.Longi),
                 Weight = parcelFromFunc.Weight
             };
             return new Drone
