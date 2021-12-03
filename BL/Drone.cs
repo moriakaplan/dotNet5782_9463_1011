@@ -17,14 +17,21 @@ namespace IBL.BO
         public Location CurrentLocation { get; set; }
         public override string ToString()
         {
-            return @$"drone #{Id}:
+            if (ParcelInT != null) { return @$"drone #{Id}:
 model- {Model},
 max weight- {MaxWeight},
 battery-{Battery},
 ststus-{Status},
 parsels in transfer-{ParcelInT},
 current locetion-{CurrentLocation}.
-";
+"; }
+            else { return @$"drone #{Id}:
+model- {Model},
+max weight- {MaxWeight},
+battery-{Battery},
+ststus-{Status},
+current locetion-{CurrentLocation}.
+"; }
 
         }
     }

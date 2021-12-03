@@ -25,8 +25,13 @@ namespace IBL
         public BL()
         {
             dl = new DalObject.DalObject();
-            lstdrn = (List<DroneToList>)dl.DisplayListOfDrones();
-            initializeDrone();
+            //lstdrn = (List<DroneToList>)dl.DisplayListOfDrones();
+            lstdrn = new List<DroneToList>();
+            try
+            {
+                initializeDrone();
+            }
+            catch (Exception) { }
             double[] batteryData = dl.AskBattery();
             BatteryForAvailable = batteryData[0];
             BatteryForEasy = batteryData[1];
@@ -61,8 +66,9 @@ namespace IBL
                             drone.CurrentLocation = locOfCus;//The location of the drone is in the location of the sender
                         }
                         double batteryNeeded = minBattery(drone.Id, drone.CurrentLocation, locOfCus) + minBattery(drone.Id, locOfCus, closestStation(locOfCus));
-                        drone.Battery = random.Next((int)batteryNeeded /*+ 1*/, 99)+ random.NextDouble();
+                        drone.Battery = random.Next((int)batteryNeeded /*+ 1*/, 99) + random.NextDouble();
                     }
+                }
                     if (DroneNotInDelivery(drone))//If the drone does not ship
                     {
                         drone.Status = (DroneStatus)random.Next(1, 2);//Maintenance or availability
@@ -89,8 +95,7 @@ namespace IBL
                         drone.CurrentLocation = DisplayCustomer(customerForLocation.Id).Location;
                         drone.Battery = random.Next((int)minBattery(drone.Id, drone.CurrentLocation, closestStation(drone.CurrentLocation)) + 1,99)+ random.NextDouble();//random  between a minimal charge that allows it to reach the nearest station and a full charge
                     }
-
-                }
+                
             }
   }
         /// <summary>
@@ -165,10 +170,13 @@ namespace IBL
             Drone drone = DisplayDrone(droneId); 
             double batteryForKil = 0;
             if (drone.Status == DroneStatus.Available) batteryForKil = BatteryForAvailable;
-            WeightCategories weight = drone.ParcelInT.Weight;
-            if (weight == WeightCategories.Easy) batteryForKil = BatteryForEasy;
-            if (weight == WeightCategories.Medium) batteryForKil = BatteryForMedium;
-            if (weight == WeightCategories.Heavy) batteryForKil = BatteryForHeavy;
+            else
+            {
+                WeightCategories weight = drone.ParcelInT.Weight;
+                if (weight == WeightCategories.Easy) batteryForKil = BatteryForEasy;
+                if (weight == WeightCategories.Medium) batteryForKil = BatteryForMedium;
+                if (weight == WeightCategories.Heavy) batteryForKil = BatteryForHeavy;
+            }
             double kils = distance(from, to);
             return batteryForKil * kils;
         }

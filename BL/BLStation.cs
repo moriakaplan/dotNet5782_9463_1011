@@ -69,10 +69,10 @@ namespace IBL
                 Name = dstation.Name
             };
             int count = 0;
-            IEnumerable<IDAL.DO.DroneCharge> droneCharge = dl.DisplayListOfDroneCharge();
+            //IEnumerable<IDAL.DO.DroneCharge> droneCharge = dl.DisplayListOfDroneCharge();
             DroneInCharge temp = new DroneInCharge();
-            bstation.DronesInCharge = new List<DroneInCharge>(null);
-            foreach (IDAL.DO.DroneCharge dCharge in droneCharge)
+            bstation.DronesInCharge = new List<DroneInCharge>();
+            foreach (IDAL.DO.DroneCharge dCharge in dl.DisplayListOfDroneCharge())
             {
                 if (dCharge.StationId == stationId)
                 {
