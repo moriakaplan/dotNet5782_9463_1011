@@ -165,10 +165,13 @@ namespace IBL
             Drone drone = DisplayDrone(droneId); 
             double batteryForKil = 0;
             if (drone.Status == DroneStatus.Available) batteryForKil = BatteryForAvailable;
-            WeightCategories weight = drone.ParcelInT.Weight;
-            if (weight == WeightCategories.Easy) batteryForKil = BatteryForEasy;
-            if (weight == WeightCategories.Medium) batteryForKil = BatteryForMedium;
-            if (weight == WeightCategories.Heavy) batteryForKil = BatteryForHeavy;
+            else
+            {
+                WeightCategories weight = drone.ParcelInT.Weight;
+                if (weight == WeightCategories.Easy) batteryForKil = BatteryForEasy;
+                if (weight == WeightCategories.Medium) batteryForKil = BatteryForMedium;
+                if (weight == WeightCategories.Heavy) batteryForKil = BatteryForHeavy;
+            }
             double kils = distance(from, to);
             return batteryForKil * kils;
         }
