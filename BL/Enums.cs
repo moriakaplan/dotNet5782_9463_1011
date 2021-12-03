@@ -9,5 +9,5 @@ namespace IBL.BO
     public enum WeightCategories { Easy, Medium, Heavy };
     public enum Priorities { Regular, Fast, Emergency };
     public enum ParcelStatus { Created, Associated, PickedUp, Delivered };
-    public enum DroneStatus { Available, Associated, Maintenance, Delivery };
+    public enum DroneStatus { Associated, Available, Maintenance, Delivery };
 }

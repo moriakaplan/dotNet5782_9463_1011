@@ -8,7 +8,7 @@ using IDAL;
 
 namespace IBL
 {
-    public partial class BL: Ibl
+    public partial class BL : Ibl
     {
 
         private List<DroneToList> lstdrn;
@@ -20,8 +20,8 @@ namespace IBL
         private double ChargeRatePerHour;
         private static Random random = new Random();
         /// <summary>
-       /// constractor
-       /// </summary>
+        /// constractor
+        /// </summary>
         public BL()
         {
             dl = new DalObject.DalObject();
@@ -67,20 +67,20 @@ namespace IBL
                         }
                         double batteryNeeded = minBattery(drone.Id, drone.CurrentLocation, locOfCus) + minBattery(drone.Id, locOfCus, closestStation(locOfCus));
                         drone.Battery = random.Next((int)batteryNeeded /*+ 1*/, 99) + random.NextDouble();
+                        drone.ParcelId = parcel.Id;
                     }
                 }
-                    if (DroneNotInDelivery(drone))//If the drone does not ship
-                    {
-                        drone.Status = (DroneStatus)random.Next(1, 2);//Maintenance or availability
-                    }
+                if (DroneNotInDelivery(drone)&& (drone.Status != DroneStatus.Delivery))//If the drone does not ship
+                {
+                    drone.Status = (DroneStatus)random.Next(1, 3);//Maintenance or availability
                     if (drone.Status == DroneStatus.Maintenance)
                     {
                         //the location is in random station
                         IEnumerable<IDAL.DO.Station> stations = dl.DisplayListOfStations();
                         int index = random.Next(0, stations.Count());
-                        IDAL.DO.Station stationForLocation= stations.ElementAt(index);
+                        IDAL.DO.Station stationForLocation = stations.ElementAt(index);
                         drone.CurrentLocation = new Location { Latti = stationForLocation.Lattitude, Longi = stationForLocation.Longitude };
-                        drone.Battery = random.Next(0, 19)+ random.NextDouble();//random battery mode between 0 and 20
+                        drone.Battery = random.Next(0, 19) + random.NextDouble();//random battery mode between 0 and 20
                     }
                     if (drone.Status == DroneStatus.Available)//the drone is available
                     {
@@ -93,11 +93,12 @@ namespace IBL
                         int index = random.Next(0, customersWhoGotParcels.Count());
                         CustomerToList customerForLocation = customersWhoGotParcels[index];
                         drone.CurrentLocation = DisplayCustomer(customerForLocation.Id).Location;
-                        drone.Battery = random.Next((int)minBattery(drone.Id, drone.CurrentLocation, closestStation(drone.CurrentLocation)) + 1,99)+ random.NextDouble();//random  between a minimal charge that allows it to reach the nearest station and a full charge
+                        drone.Battery = random.Next((int)minBattery(drone.Id, drone.CurrentLocation, closestStation(drone.CurrentLocation)) + 1, 99) + random.NextDouble();//random  between a minimal charge that allows it to reach the nearest station and a full charge
                     }
-                
+                }
             }
-  }
+        }
+
         /// <summary>
         /// Checks if the drone does not ship
         /// </summary>
@@ -165,9 +166,9 @@ namespace IBL
         /// <param name="lattitude"></param>
         /// <param name="longitude"></param>
         /// <returns></returns>
-        private double minBattery(int droneId,Location from, Location to)
+        private double minBattery(int droneId, Location from, Location to)
         {
-            Drone drone = DisplayDrone(droneId); 
+            Drone drone = DisplayDrone(droneId);
             double batteryForKil = 0;
             if (drone.Status == DroneStatus.Available) batteryForKil = BatteryForAvailable;
             else
