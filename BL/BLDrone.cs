@@ -104,6 +104,7 @@ namespace IBL
             double time = convertDateTimeToDoubleInHours(timeInCharge);
             DroneToList droneFromList = lstdrn.Find(item => item.Id == droneId);
             droneFromList.Battery += time * ChargeRatePerHour;
+            if (droneFromList.Battery > 100) droneFromList.Battery = 100;
             droneFromList.Status = DroneStatus.Available;
             dl.ReleaseDroneFromeCharge(droneId); //Deletes the charging entity and adds 1 to the charging slots of the station
         }

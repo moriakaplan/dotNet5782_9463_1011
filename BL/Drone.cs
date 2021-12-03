@@ -18,7 +18,7 @@ namespace IBL.BO
         public override string ToString()
         {
             string parcel = "";
-            if (ParcelInT != null) parcel = $"parcel in transfer-{ParcelInT},'\n'";
+            if (ParcelInT != null) parcel = $"parcel in transfer-{ParcelInT},\n";
             return @$"drone #{Id}:
 model- {Model},
 max weight- {MaxWeight},
