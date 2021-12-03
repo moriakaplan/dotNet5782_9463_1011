@@ -24,7 +24,8 @@ model- {Model},
 max weight- {MaxWeight},
 battery-{Battery},
 ststus-{Status},
-{parcel}current locetion-{CurrentLocation}.
+parsels in transfer-{ParcelInT},
+current locetion-{CurrentLocation}.
 ";
 
         }
