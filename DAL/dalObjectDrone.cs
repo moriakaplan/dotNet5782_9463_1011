@@ -47,11 +47,9 @@ namespace DalObject
         public void ReleaseDroneFromeCharge(int droneId)
         {
             DroneCharge dCharge;
-            try { dCharge = DataSource.droneCharges.Find(x => x.DroneId == droneId); }
-            catch (ArgumentNullException)
-            {
-                throw new DroneChargeException($"drone chare with the drone ID {droneId} does not exist");
-            }
+            if(!DataSource.droneCharges.Exists(x => x.DroneId == droneId)) 
+                throw new DroneChargeException($"drone charge with the drone ID {droneId} does not exist");
+            dCharge = DataSource.droneCharges.Find(x => x.DroneId == droneId);
             DataSource.droneCharges.Remove(dCharge);
             for (int i = 0; i < DataSource.stations.Count; i++) //find the station and update its details
             {

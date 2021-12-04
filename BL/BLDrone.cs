@@ -74,12 +74,13 @@ namespace IBL
         /// <returns></returns>
         public Drone DisplayDrone(int droneId)
         {
-            DroneToList droneFromList;
-            try { droneFromList = lstdrn.Find(item => item.Id == droneId); }
-            catch (ArgumentNullException)
+            DroneToList droneFromList=null;
+            foreach (DroneToList item in lstdrn)
             {
-                throw new NotExistIDException($"id: {droneId} does not exist - drone");
+                if (item.Id == droneId)
+                    droneFromList = item;
             }
+            if (droneFromList == null) throw new NotExistIDException($"id: {droneId} does not exist - drone");
             ParcelInTransfer parcel = null;
             if (droneFromList.Status == DroneStatus.Associated || droneFromList.Status == DroneStatus.Delivery)
             {
@@ -150,7 +151,11 @@ namespace IBL
             droneFromList.Battery += time * ChargeRatePerHour;
             if (droneFromList.Battery > 100) droneFromList.Battery = 100;
             droneFromList.Status = DroneStatus.Available;
-            dl.ReleaseDroneFromeCharge(droneId); //Deletes the charging entity and adds 1 to the charging slots of the station
+            try
+            {
+                dl.ReleaseDroneFromeCharge(droneId); //Deletes the charging entity and adds 1 to the charging slots of the station
+            }
+            catch (IDAL.DO.DroneChargeException ex) { throw new NotExistIDException(ex.Message); }
         }
         /// <summary>
         ///  returns the list of the drones
