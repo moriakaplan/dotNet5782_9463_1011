@@ -82,9 +82,10 @@ namespace ConsoleUI_BL
                         input = Console.ReadLine();
                         int.TryParse(input, out id);
                         try { blObject.SendDroneToCharge(id); }
-                        catch (IBL.NotExistIDException)
+                        catch (IBL.NotExistIDException ex)
                         {
-                            Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
+                            Console.WriteLine(ex.Message);
+                            //Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                         }
                         catch (IBL.DroneCantGoToChargeException ex) { Console.WriteLine(ex.Message); }
                         break;
