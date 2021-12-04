@@ -13,16 +13,16 @@ namespace IBL
         /// add customer to the kist of the customers
         /// </summary>
         /// <param name="customer"></param>
-        public void AddCustomer(Customer customer)
+        public void AddCustomer(int id, string name, string phone, Location loc)
         {
             //creates a new station in the data level
             IDAL.DO.Customer dCustomer = new IDAL.DO.Customer
             {
-                Id = customer.Id,
-                Name = customer.Name,
-                Lattitude = customer.Location.Latti,
-                Longitude = customer.Location.Longi,
-                Phone = customer.Phone
+                Id = id,
+                Name = name,
+                Lattitude = loc.Latti,
+                Longitude = loc.Longi,
+                Phone = phone
             };
             try
             { 
@@ -45,7 +45,7 @@ namespace IBL
             try { dCustomer = dl.DisplayCustomer(customerId); }
             catch(IDAL.DO.CustomerException ex)
             {
-                throw new NotExistIDExeption(ex.Message, "-customer");
+                throw new NotExistIDException(ex.Message, "-customer");
             }
             dl.DeleteCustomer(customerId);
             if (name != null)//update the name
@@ -70,7 +70,7 @@ namespace IBL
             try { dCustomer = dl.DisplayCustomer(customerId); }
             catch (IDAL.DO.CustomerException ex)
             {
-                throw new NotExistIDExeption(ex.Message, "-customer");
+                throw new NotExistIDException(ex.Message, "-customer");
             }
             Customer bCustomer = new Customer();
             bCustomer.Id = dCustomer.Id;

@@ -13,20 +13,19 @@ namespace IBL
         /// Add Parcel To Delivery
         /// </summary>
         /// <param name="parcel"></param>
-        public void AddParcelToDelivery(Parcel parcel)
+        public void AddParcelToDelivery(int senderId, int targetId, WeightCategories weight, Priorities pri)
         {
             IDAL.DO.Parcel idalParcel = new IDAL.DO.Parcel
             {
-                Id = parcel.Id,
-                DeliverTime = parcel.DeliverTime,
-                Droneld = parcel.Drone.Id,
-                PickUpTime = parcel.PickUpTime,
-                Priority = (IDAL.DO.Priorities)parcel.Priority,
-                CreateTime = parcel.CreateTime,
-                AssociateTime = parcel.AssociateTime,
-                Senderld = parcel.Sender.Id,
-                TargetId = parcel.Target.Id,
-                Weight = (IDAL.DO.WeightCategories)parcel.Weight
+                Droneld = 0,
+                Senderld = senderId,
+                TargetId = targetId,
+                Priority = (IDAL.DO.Priorities)pri,
+                Weight = (IDAL.DO.WeightCategories)weight,
+                CreateTime = DateTime.Now,
+                AssociateTime = DateTime.MinValue,
+                PickUpTime = DateTime.MinValue,
+                DeliverTime = DateTime.MinValue
             };
             try
             {
@@ -117,7 +116,7 @@ namespace IBL
             bdrone = DisplayDrone(droneId);
             if (bdrone.Status == DroneStatus.Available)
             {
-                throw new DroneCantTakeParcelExeption($"drone {droneId} is not available so it cant take a new parcel");
+                throw new DroneCantTakeParcelException($"drone {droneId} is not available so it cant take a new parcel");
             }
             Parcel parcel = findClosestParcel(droneId);//אולי צריך שזה יהיה תנאי ביצירת רשימת החבילות?
             Location locOfSender = DisplayCustomer(parcel.Sender.Id).Location;
@@ -136,11 +135,11 @@ namespace IBL
             }
             catch (IDAL.DO.DroneException ex)
             {
-                throw new NotExistIDExeption(ex.Message, " - drone");
+                throw new NotExistIDException(ex.Message, " - drone");
             }
             catch (IDAL.DO.ParcelException ex)
             {
-                throw new NotExistIDExeption(ex.Message, " - parcel");
+                throw new NotExistIDException(ex.Message, " - parcel");
             }
 
             foreach (DroneToList drone in lstdrn)
@@ -161,7 +160,7 @@ namespace IBL
             Parcel parcelToPick = DisplayParcel(DisplayDrone(droneId).ParcelInT.Id);
             if (!(parcelToPick.AssociateTime!= DateTime.MinValue && parcelToPick.Drone.Id==droneId && parcelToPick.PickUpTime == DateTime.MinValue))
             {
-                throw new TransferExeption($"drone {droneId} can't pick up the parcel");
+                throw new TransferException($"drone {droneId} can't pick up the parcel");
             }
             foreach (DroneToList drone in lstdrn)
             {
@@ -170,7 +169,7 @@ namespace IBL
                     drone.Battery -= minBattery(droneId, drone.CurrentLocation, DisplayCustomer(parcelToPick.Sender.Id).Location);
                     drone.CurrentLocation = DisplayCustomer(parcelToPick.Sender.Id).Location;
                     try { dl.PickParcelByDrone(parcelToPick.Id); } //update pick up time in the parcel
-                    catch (IDAL.DO.ParcelException ex) { throw new NotExistIDExeption(ex.Message, " - parcel"); }
+                    catch (IDAL.DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
                     return;
                 }
             }
@@ -185,7 +184,7 @@ namespace IBL
             Parcel parcelToDeliver = DisplayParcel(DisplayDrone(droneId).ParcelInT.Id);
             if (!(parcelToDeliver.Drone.Id==droneId && parcelToDeliver.PickUpTime != DateTime.MinValue && parcelToDeliver.DeliverTime == DateTime.MinValue))
             {
-                throw new TransferExeption($"drone {droneId} can't deliver the parcel");
+                throw new TransferException($"drone {droneId} can't deliver the parcel");
             }
             foreach (DroneToList drone in lstdrn)
             {
@@ -198,7 +197,7 @@ namespace IBL
                     {
                         dl.DeliverParcelToCustomer(DisplayDrone(droneId).ParcelInT.Id);//update the deliver time in the data layer
                     }
-                    catch(IDAL.DO.ParcelException ex) { throw new NotExistIDExeption(ex.Message, " - parcel"); }
+                    catch(IDAL.DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
                 }
             }
         }
@@ -218,7 +217,7 @@ namespace IBL
             }
             catch (IDAL.DO.ParcelException ex)
             {
-                throw new NotExistIDExeption(ex.Message, "- parcel");
+                throw new NotExistIDException(ex.Message, "- parcel");
             }
             if(parcelFromDal.AssociateTime!= DateTime.MinValue) //if the parcel is associated
             {

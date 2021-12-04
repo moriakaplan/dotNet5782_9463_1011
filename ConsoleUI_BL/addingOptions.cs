@@ -49,16 +49,9 @@ longitude-");
                         Console.WriteLine("Available charge slots-");
                         input = Console.ReadLine();
                         int.TryParse(input, out chargeSlots);
-                        Station station = new Station//Creates a new station
-                        {
-                            Id = id,
-                            Name = name,
-                            Location = location,
-                            AvailableChargeSlots = chargeSlots
-                        };
                         try
                         {
-                            blObject.AddStation(station);//Add the station to the list
+                            blObject.AddStation(id, name, location, chargeSlots);//Add the station to the list
                         }
                         catch (IBL.ExistIdException)
                         {
@@ -80,23 +73,15 @@ Drone ID (6 digits)-");
                         Console.WriteLine("Enter ID of station for first charging of the drone-");
                         input = Console.ReadLine();
                         int.TryParse(input, out stationId);
-                        location = blObject.DisplayStation(stationId).Location;
-                        Drone drone = new Drone//Creates a new drone
-                        {
-                            Id = id,
-                            Model = model,
-                            MaxWeight = weight,
-                            CurrentLocation = location
-                        };
                         try
                         {
-                            blObject.AddDrone(drone);//Add the drone to the list
+                            blObject.AddDrone(id, model, weight, stationId);//Add the drone to the list
                         }
                         catch (IBL.ExistIdException)
                         {
                             Console.WriteLine("this id already exist, please choose another one and try again\n");
                         }
-                        catch (IBL.NotExistIDExeption)
+                        catch (IBL.NotExistIDException)
                         {
                             Console.WriteLine("this station is not exist, please choose another station to put the drone and try again\n");
                         }
@@ -120,14 +105,7 @@ longitude-");
                         input = Console.ReadLine();
                         double.TryParse(input, out lattitude);
                         location = new Location { Longi = longitude, Latti = lattitude };
-                        Customer customer = new Customer// Creates a new customer
-                        {
-                            Id = id,
-                            Name = name,
-                            Phone = phone,
-                            Location = location
-                        };
-                        try { blObject.AddCustomer(customer); }//Add the customer to the list
+                        try { blObject.AddCustomer(id, name, phone, location); }//Add the customer to the list
                         catch (IBL.ExistIdException)
                         {
                             Console.WriteLine("this id already exist, please choose another one and try again\n");
@@ -149,47 +127,12 @@ longitude-");
                         Console.WriteLine("Parcel priority (Regular/Fast/Emergency)-");
                         input = Console.ReadLine();
                         Priorities.TryParse(input, out priority);
-                        CustomerInParcel sender, target;
-                        try
+                        try { blObject.AddParcelToDelivery(senderId, targetId, weight, priority); } //Add the parcel to the list
+                        catch (IBL.NotExistIDException ex)
                         {
-                            sender = new CustomerInParcel
-                            {
-                                Id = senderId,
-                                Name = blObject.DisplayCustomer(senderId).Name
-                            };
-                        }
-                        catch (IBL.ExistIdException)
-                        {
-                            Console.WriteLine("the id of the sender not exist, please check again who is the sender of the parcel and try again\n");
+                            Console.WriteLine(ex.Message+"\nthe id of the sender or the target not exist, please check again who are the sender and the target of the parcel and try again\n");
                             return;
                         }
-                        try
-                        {
-                            target = new CustomerInParcel
-                            {
-                                Id = targetId,
-                                Name = blObject.DisplayCustomer(targetId).Name
-                            };
-                        }
-                        catch (IBL.ExistIdException)
-                        {
-                            Console.WriteLine("the id of the sender not exist, please check again who is the sender of the parcel and try again\n");
-                            return;
-                        }
-                        Parcel pa = new Parcel//Creates a new customer
-                        {
-                            Sender = sender,
-                            Target = target,
-                            Weight = weight,
-                            Priority = priority,
-                            CreateTime = DateTime.Now,
-                            AssociateTime = DateTime.MinValue,
-                            PickUpTime = DateTime.MinValue,
-                            DeliverTime = DateTime.MinValue,
-                            Drone = null
-                        };
-                        try { blObject.AddParcelToDelivery(pa); } //Add the parcel to the list
-                        catch(Exception ex) { Console.WriteLine(ex.Message + ", please try again"); }
                         break;
                     default:
                         Console.WriteLine("ERROR");

@@ -29,28 +29,28 @@ namespace ConsoleUI_BL
                         input = Console.ReadLine();
                         int.TryParse(input, out id);
                         try { Console.WriteLine(blObject.DisplayStation(id)); }
-                        catch (NotExistIDExeption) { Console.WriteLine("this station not exist, try again"); }
+                        catch (NotExistIDException) { Console.WriteLine("this station not exist, try again"); }
                         break;
                     case DisplayOptions.Drone://display a drone
                         Console.WriteLine("Enter the drone ID (6 digits):");
                         input = Console.ReadLine();
                         int.TryParse(input, out id);
                         try { Console.WriteLine(blObject.DisplayDrone(id)); }
-                        catch (NotExistIDExeption) { Console.WriteLine("this drone not exist, try again"); }
+                        catch (NotExistIDException) { Console.WriteLine("this drone not exist, try again"); }
                         break;
                     case DisplayOptions.Customer://display a customer
                         Console.WriteLine("Enter the customer ID (9 digits):");
                         input = Console.ReadLine();
                         int.TryParse(input, out id);
                         try { Console.WriteLine(blObject.DisplayCustomer(id)); }
-                        catch (NotExistIDExeption) { Console.WriteLine("this customer not exist, try again"); }
+                        catch (NotExistIDException) { Console.WriteLine("this customer not exist, try again"); }
                         break;
                     case DisplayOptions.Parcel://display a paecel
                         Console.WriteLine("Enter the parcel ID (8 digits):");
                         input = Console.ReadLine();
                         int.TryParse(input, out id);
                         try { Console.WriteLine(blObject.DisplayParcel(id)); }
-                        catch (NotExistIDExeption) { Console.WriteLine("this parcel not exist, try again"); }
+                        catch (NotExistIDException) { Console.WriteLine("this parcel not exist, try again"); }
                         break;
                     default:
                         Console.WriteLine("ERROR");

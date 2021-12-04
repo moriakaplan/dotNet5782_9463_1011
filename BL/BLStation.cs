@@ -14,16 +14,16 @@ namespace IBL
         /// add station
         /// </summary>
         /// <param name="station"></param>
-        public void AddStation(Station station)
+        public void AddStation(int id, string name, Location loc, int chargeSlots)
         {
             //creates a new station in the data layer
             IDAL.DO.Station dstation = new IDAL.DO.Station
             {
-                Id = station.Id,
-                Name = station.Name,
-                ChargeSlots = station.AvailableChargeSlots,
-                Lattitude = station.Location.Latti,
-                Longitude = station.Location.Longi
+                Id = id,
+                Name = name,
+                ChargeSlots = chargeSlots,
+                Lattitude = loc.Latti,
+                Longitude = loc.Longi
             };
             try
             {
@@ -61,7 +61,9 @@ namespace IBL
         /// <returns></returns>
         public Station DisplayStation(int stationId)
         {
-            IDAL.DO.Station dstation = dl.DisplayStation(stationId);
+            IDAL.DO.Station dstation;
+            try { dstation = dl.DisplayStation(stationId); }
+            catch(IDAL.DO.StationException ex) { throw new NotExistIDException(ex.Message, " - station"); }
             Station bstation = new Station
             {
                 Id = dstation.Id,

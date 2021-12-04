@@ -53,16 +53,6 @@ namespace DalObject
                 throw new DroneChargeException($"drone chare with the drone ID {droneId} does not exist");
             }
             DataSource.droneCharges.Remove(dCharge);
-
-            //Drone drone = DisplayDrone(droneId);
-            //DataSource.drones.Remove(drone);
-            ////drone.Status = DroneStatuses.Vacant;
-            //AddDroneToTheList(drone);
-
-            //Station station = DisplayStation(dCharge.StationId);
-            //DataSource.stations.Remove(station);
-            //station.ChargeSlots--;
-            //AddStationToTheList(station);
             for (int i = 0; i < DataSource.stations.Count; i++) //find the station and update its details
             {
                 if (DataSource.stations[i].Id == dCharge.StationId)
