@@ -19,7 +19,7 @@ namespace IBL.BO
         {
             return @$"drone #{Id}:
 mode- {Model},
-maw weight- {MaxWeight},
+max weight- {MaxWeight},
 battery- {Battery},
 status- {Status},
 current location- {CurrentLocation},
