@@ -12,9 +12,9 @@ namespace IBL.BO
         public string Name { get; set; }
         public override string ToString()
         {
-            return $@"Id #{Id}:
-name- {Name}.
-";
+            return $@"
+    Id #{Id}:
+    name- {Name}";
         }
     }
 }

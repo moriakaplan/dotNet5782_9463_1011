@@ -13,10 +13,10 @@ namespace IBL.BO
         public Location CurrentLocation { get; set; }
         public override string ToString()
         {
-            return @$"drone #{Id}:
-battrey- {Battery},
-current locetion- {CurrentLocation}.
-";
+            return @$"
+    drone #{Id}:
+    battrey- {Battery},
+    current locetion- {CurrentLocation}";
 
         }
     }
