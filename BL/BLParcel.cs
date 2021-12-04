@@ -220,7 +220,7 @@ namespace IBL
             {
                 throw new NotExistIDExeption(ex.Message, "- parcel");
             }
-            if(parcelFromDal.AssociateTime!= DateTime.MinValue)
+            if(parcelFromDal.AssociateTime!= DateTime.MinValue) //if the parcel is associated
             {
                 droneFromFunc = DisplayDrone(parcelFromDal.Droneld);
                 drone = new DroneInParcel
