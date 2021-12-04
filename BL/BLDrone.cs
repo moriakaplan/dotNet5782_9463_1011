@@ -43,6 +43,7 @@ namespace IBL
                 ParcelId = 0,
                 Status = DroneStatus.Maintenance
             });//add drone to the list of the drone in the logical layer
+            dl.SendDroneToCharge(id, stationId);
         }
         /// <summary>
         /// update the drone model

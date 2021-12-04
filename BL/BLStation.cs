@@ -109,7 +109,7 @@ namespace IBL
                     count++;
                 }
             }
-            bstation.AvailableChargeSlots = dstation.ChargeSlots - count;
+            bstation.AvailableChargeSlots = dstation.ChargeSlots /*- count*/;
             bstation.NotAvailableChargeSlots = count;
             return bstation;
 
