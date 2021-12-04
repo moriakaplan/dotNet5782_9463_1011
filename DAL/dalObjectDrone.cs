@@ -32,6 +32,7 @@ namespace DalObject
             {
                 if (DataSource.stations[i].Id == stationId)
                 {
+                    if (DataSource.stations[i].ChargeSlots < 1) throw new StationException("");
                     Station s = DataSource.stations[i];
                     s.ChargeSlots--; //++?
                     DataSource.stations[i] = s;
