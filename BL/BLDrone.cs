@@ -84,7 +84,9 @@ namespace IBL
             ParcelInTransfer parcel = null;
             if (droneFromList.Status == DroneStatus.Associated || droneFromList.Status == DroneStatus.Delivery)
             {
-                IDAL.DO.Parcel parcelFromFunc = dl.DisplayParcel(droneFromList.ParcelId);
+                IDAL.DO.Parcel parcelFromFunc;
+                try { parcelFromFunc = dl.DisplayParcel(droneFromList.ParcelId); }
+                catch(IDAL.DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
                 Location locOfSender = DisplayCustomer(parcelFromFunc.Senderld/*SenderId*/).Location;
                 Location locOfTarget = DisplayCustomer(parcelFromFunc.TargetId).Location;
                 parcel = new ParcelInTransfer

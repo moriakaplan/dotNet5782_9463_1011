@@ -31,7 +31,7 @@ namespace IBL
             {
                 initializeDrone();
             }
-            catch (Exception) { }
+            catch (Exception) { Console.WriteLine("was a problem in the initialize"); }
             double[] batteryData = dl.AskBattery();
             BatteryForAvailable = batteryData[0];
             BatteryForEasy = batteryData[1];
