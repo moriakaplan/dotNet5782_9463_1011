@@ -65,9 +65,18 @@ namespace IBL
                         {
                             drone.CurrentLocation = locOfCus;//The location of the drone is in the location of the sender
                         }
-                        double batteryNeeded = 
-                            minBattery(drone.Id, drone.CurrentLocation, locOfCus) +
-                            minBattery(drone.Id, locOfCus, closestStation(locOfCus));
+
+                        double batteryForKil = 0;
+                        IDAL.DO.WeightCategories weight = parcel.Weight;
+                        if (weight == IDAL.DO.WeightCategories.Easy) batteryForKil = BatteryForEasy;
+                        if (weight == IDAL.DO.WeightCategories.Medium) batteryForKil = BatteryForMedium;
+                        if (weight == IDAL.DO.WeightCategories.Heavy) batteryForKil = BatteryForHeavy;
+
+                        double batteryNeeded = BatteryForAvailable * distance(drone.CurrentLocation, locOfCus) +
+                            batteryForKil * distance(locOfCus, closestStation(locOfCus));
+                        //double batteryNeeded = 
+                        //    minBattery(drone.Id, drone.CurrentLocation, locOfCus) +
+                        //    minBattery(drone.Id, locOfCus, closestStation(locOfCus));
                         if (batteryNeeded > 100) throw new DroneCantTakeParcelException("the drone has not enugh battery for take the parcel he suppose to take.");
                         drone.Battery = random.Next((int)batteryNeeded /*+ 1*/, 99) + random.NextDouble();
                         drone.ParcelId = parcel.Id;
@@ -127,6 +136,7 @@ namespace IBL
         private Location closestStation(Location loc)
         {
             IEnumerable<StationToList> stations = DisplayListOfStations();
+            if (stations.Count() == 0) throw new Exception("there not stations");
             Station station = DisplayStation(stations.First().Id); ;
             Location minLocation = station.Location;
             double minDistance = distance(loc, station.Location);
