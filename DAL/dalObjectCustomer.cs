@@ -23,18 +23,15 @@ namespace DalObject
         /// <returns></returns>
         public Customer DisplayCustomer(int customerId)
         {
-            //Customer temp = new Customer();
-            //foreach (Customer item in DataSource.customers)
-            //{
-            //    if (item.Id == customerId)
-            //        temp = item;
-            //}
-            //return temp;
-            try { return DataSource.customers.Find(item => item.Id == customerId); }
-            catch (ArgumentNullException)
+            foreach (Customer item in DataSource.customers)
             {
-                throw new CustomerException($"id: {customerId} does not exist");
+                if (item.Id == customerId)
+                    return item;
             }
+            throw new CustomerException($"id: {customerId} does not exist");
+            //Customer? cu= DataSource.customers.Find(item => item.Id == customerId);
+            //if(cu==null) throw new CustomerException($"id: {customerId} does not exist");
+            //return (Customer)cu;
         }
         /// <summary>
         /// display the list of thecustomers

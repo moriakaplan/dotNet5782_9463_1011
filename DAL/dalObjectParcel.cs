@@ -25,18 +25,16 @@ namespace DalObject
         /// <returns></returns>
         public Parcel DisplayParcel(int parcelId)
         {
-            //Parcel temp = new Parcel();
-            //foreach (Parcel item in DataSource.parcels)
-            //{
-            //    if (item.Id == parcelId)
-            //        temp = item;
-            //}
-            //return temp;
-            try { return DataSource.parcels.Find(item => item.Id == parcelId); }
-            catch (ArgumentNullException)
+            foreach (Parcel item in DataSource.parcels)
             {
-                throw new ParcelException($"id: {parcelId} does not exist");
+                if (item.Id == parcelId)
+                    return item;
             }
+            throw new ParcelException($"id: {parcelId} does not exist");
+
+            //Parcel? pa = DataSource.parcels.Find(item => item.Id == parcelId);
+            //if(pa==null) throw new ParcelException($"id: {parcelId} does not exist");
+            //return (Parcel)pa;
         }
         /// <summary>
         /// display the list of the customers

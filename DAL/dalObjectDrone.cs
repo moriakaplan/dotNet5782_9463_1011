@@ -72,18 +72,15 @@ namespace DalObject
         /// <returns></returns>
         public Drone DisplayDrone(int droneId)
         {
-            //Drone temp = new Drone();
-            //foreach (Drone item in DataSource.drones)
-            //{
-            //    if (item.Id == droneId)
-            //        temp = item;
-            //}
-            //return temp;
-            try { return DataSource.drones.Find(item => item.Id == droneId); }
-            catch (ArgumentNullException)
+            foreach (Drone item in DataSource.drones)
             {
-                throw new DroneException($"id: {droneId} does not exist");
+                if (item.Id == droneId)
+                    return item;
             }
+            throw new DroneException($"id: {droneId} does not exist");
+            //Drone? dr = DataSource.drones.Find(item => item.Id == droneId);
+            //if(dr==null) throw new DroneException($"id: {droneId} does not exist");
+            //return (Drone)dr;
         }
         
         public IEnumerable<DroneCharge> DisplayListOfDroneCharge()

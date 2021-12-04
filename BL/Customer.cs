@@ -17,12 +17,12 @@ namespace IBL.BO
         public override string ToString()
         {
             string result = "";
-            result += "Id - {Id}, \n";
-            result += "Name - { Name},\n";
-            result += "Phone - { Phone},\n";
-            result += "Location - { Location},\n";
-            result += "parcel In  customer - From The Customer- { parcelFrom},\n";
-            result += "parcel In  customer - To The Customer- { parcelTo}.\n";
+            result += $"Id - {Id}, \n";
+            result += $"Name - { Name},\n";
+            result += $"Phone - { Phone},\n";
+            result += $"Location - { Location},\n";
+            result += $"parcels From The Customer- { parcelFrom},\n";
+            result += $"parcels To The Customer- { parcelTo}.\n";
 
             return result;
           }

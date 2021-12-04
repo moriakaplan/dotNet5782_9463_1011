@@ -22,18 +22,15 @@ namespace DalObject
         /// <returns></returns>
         public Station DisplayStation(int stationId)
         {
-            //Station temp = new Station();
-            //foreach (Station item in DataSource.stations)
-            //{
-            //    if (item.Id == stationId)
-            //        temp = item;
-            //}
-            //return temp;
-            try { return DataSource.stations.Find(item => item.Id == stationId); }
-            catch (ArgumentNullException)
+            foreach (Station item in DataSource.stations)
             {
-                throw new StationException($"id: {stationId} does not exist");
+                if (item.Id == stationId)
+                    return item;
             }
+            throw new StationException($"id: {stationId} does not exist");
+            //Station? st = DataSource.stations.Find(item => item.Id == stationId);
+            //if (st == null) throw new StationException($"id: {stationId} does not exist");
+            //return (Station)st;
         }
         /// <summary>
         /// display the list of the stations.
