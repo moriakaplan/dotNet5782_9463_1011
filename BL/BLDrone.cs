@@ -119,20 +119,20 @@ namespace IBL
             ParcelInTransfer parcel = null;
             if (droneFromList.Status == DroneStatus.Associated || droneFromList.Status == DroneStatus.Delivery)
             {
-                Parcel parcelFromFunc = DisplayParcel(droneFromList.ParcelId);
-                Location locOfSender = DisplayCustomer(parcelFromFunc.Sender.Id).Location;
-                Location locOfTarget = DisplayCustomer(parcelFromFunc.Target.Id).Location;
+                IDAL.DO.Parcel parcelFromFunc = dl.DisplayParcel(droneFromList.ParcelId);
+                Location locOfSender = DisplayCustomer(parcelFromFunc.Senderld/*SenderId*/).Location;
+                Location locOfTarget = DisplayCustomer(parcelFromFunc.TargetId).Location;
                 parcel = new ParcelInTransfer
                 {
                     Id = parcelFromFunc.Id,
                     InTheWay = (parcelFromFunc.PickUpTime != DateTime.MinValue && parcelFromFunc.DeliverTime == DateTime.MinValue),
-                    Priority = parcelFromFunc.Priority,
-                    Sender = parcelFromFunc.Sender,
-                    Target = parcelFromFunc.Target,
+                    Priority = (Priorities)parcelFromFunc.Priority,
+                    Sender = new CustomerInParcel { Id = parcelFromFunc.Senderld, Name = DisplayCustomer(parcelFromFunc.Senderld/*SenderId*/).Name },/*DisplayCustomer(parcelFromFunc.Senderld/*SenderId*/
+                    Target = new CustomerInParcel { Id = parcelFromFunc.TargetId, Name = DisplayCustomer(parcelFromFunc.TargetId/*SenderId*/).Name },
                     PickingPlace = locOfSender,
                     TargetPlace = locOfTarget,
                     TransportDistance = distance(locOfSender, locOfTarget),
-                    Weight = parcelFromFunc.Weight
+                    Weight = (WeightCategories)parcelFromFunc.Weight
                 };
             }
             return new Drone
