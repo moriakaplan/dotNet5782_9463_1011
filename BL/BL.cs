@@ -78,7 +78,7 @@ namespace IBL
                         //    minBattery(drone.Id, drone.CurrentLocation, locOfCus) +
                         //    minBattery(drone.Id, locOfCus, closestStation(locOfCus));
                         if (batteryNeeded > 100) throw new DroneCantTakeParcelException("the drone has not enugh battery for take the parcel he suppose to take.");
-                        drone.Battery = random.Next((int)batteryNeeded /*+ 1*/, 99) + random.NextDouble();
+                        drone.Battery = random.Next((int)batteryNeeded /*+ 1*/, 100) + random.NextDouble();
                         drone.ParcelId = parcel.Id;
                     }
                 }
@@ -93,6 +93,7 @@ namespace IBL
                         IDAL.DO.Station stationForLocation = stations.ElementAt(index);
                         drone.CurrentLocation = new Location { Latti = stationForLocation.Lattitude, Longi = stationForLocation.Longitude };
                         drone.Battery = random.Next(0, 19) + random.NextDouble();//random battery mode between 0 and 20
+                        dl.SendDroneToCharge(drone.Id, stationForLocation.Id);
                     }
                     if (drone.Status == DroneStatus.Available)//the drone is available
                     {
