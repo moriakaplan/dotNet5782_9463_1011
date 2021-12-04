@@ -14,7 +14,7 @@ namespace ConsoleUI_BL
                 UpdatingOptions updateChoise;
                 int id, chargeSlots;
                 string name, phone, model;
-                DateTime timeInCharge;
+                TimeSpan timeInCharge;
 
                 Console.WriteLine(@"Wich option you want?
 1-update drone name
@@ -94,11 +94,12 @@ namespace ConsoleUI_BL
                         int.TryParse(input, out id);
                         Console.WriteLine("Enter the time that the drone was in charge:");
                         input = Console.ReadLine();
-                        DateTime.TryParse(input, out timeInCharge);
+                        TimeSpan.TryParse(input, out timeInCharge);
                         try { blObject.ReleaseDroneFromeCharge(id, timeInCharge); }
-                        catch (IBL.NotExistIDException)
+                        catch (IBL.NotExistIDException ex)
                         {
-                            Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
+                            //Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
+                            Console.WriteLine(ex.Message);
                         }
                         catch (IBL.DroneCantReleaseFromChargeException ex) { Console.WriteLine(ex.Message); }
                         break;

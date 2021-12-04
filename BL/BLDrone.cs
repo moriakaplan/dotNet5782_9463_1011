@@ -121,16 +121,13 @@ namespace IBL
         {
             DroneToList drone = lstdrn.Find(item => item.Id == droneId);
             double lo = drone.CurrentLocation.Longi, la = drone.CurrentLocation.Latti;
-            if (drone.Status != DroneStatus.Available) throw new DroneCantGoToChargeException
-            {
-                message = "the drone {droneId} is not available so it can't be sended to charging"
-            };
+            if (drone.Status != DroneStatus.Available) 
+                throw new DroneCantGoToChargeException($"the drone {droneId} is not available so it can't be sended to charging"); //if the drone is not available
             Station st = closestStationWithChargeSlots(drone.CurrentLocation);
             double batteryNeed = minBattery(drone.Id, drone.CurrentLocation, st.Location);
-            if (batteryNeed>drone.Battery) throw new DroneCantGoToChargeException//if the drone dont have enough battery
-            {
-                message = "the drone {droneId} is not available so it can't be sended to charging"
-            };
+            if (batteryNeed > drone.Battery) 
+                throw new DroneCantGoToChargeException($"the drone {droneId} is not available so it can't be sended to charging"); //if the drone dont have enough battery
+
             drone.Battery -= batteryNeed;
             drone.CurrentLocation = st.Location;
             drone.Status = DroneStatus.Maintenance;
@@ -141,16 +138,15 @@ namespace IBL
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="timeInCharge"></param>
-        public void ReleaseDroneFromeCharge(int droneId, DateTime timeInCharge)
+        public void ReleaseDroneFromeCharge(int droneId, TimeSpan timeInCharge)
         {
             Drone drone = DisplayDrone(droneId);
             if (drone.Status != DroneStatus.Maintenance) throw new DroneCantReleaseFromChargeException
             {
-                message = "the drone {droneId} is not in maintenance so it can't be released from charging"
+                message = $"the drone {droneId} is not in maintenance so it can't be released from charging"
             };
-            double time = convertDateTimeToDoubleInHours(timeInCharge);
             DroneToList droneFromList = lstdrn.Find(item => item.Id == droneId);
-            droneFromList.Battery += time * ChargeRatePerHour;
+            droneFromList.Battery += timeInCharge.TotalSeconds * ChargeRatePerHour * (1 / 60);
             if (droneFromList.Battery > 100) droneFromList.Battery = 100;
             droneFromList.Status = DroneStatus.Available;
             try
@@ -175,17 +171,17 @@ namespace IBL
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
-        private double convertDateTimeToDoubleInHours(DateTime dateTime)
-        {
-            double result = 0;
-            result += dateTime.Year * 365 * 24;
-            //result += dateTime.Month * 30/*that not good*/* 24;
-            //result += dateTime.Day * 24;
-            result += dateTime.DayOfYear * 24;
-            result += dateTime.Hour;
-            result += dateTime.Minute * (1 / 60);
-            result += dateTime.Minute * (1 / 360);
-            return result;
-        }
+        //private double convertTimeSpanToDoubleInHours(TimeSpan time)
+        //{
+        //    double result = 0;
+        //    result += dateTime.Year * 365 * 24;
+        //    //result += dateTime.Month * 30/*that not good*/* 24;
+        //    //result += dateTime.Day * 24;
+        //    result += dateTime.DayOfYear * 24;
+        //    result += dateTime.Hour;
+        //    result += dateTime.Minute * (1 / 60);
+        //    result += dateTime.Minute * (1 / 360);
+        //    return result;
+        //}
     }
 }
