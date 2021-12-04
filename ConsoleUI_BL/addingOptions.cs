@@ -188,7 +188,8 @@ longitude-");
                             DeliverTime = DateTime.MinValue,
                             Drone = null
                         };
-                        blObject.AddParcelToDelivery(pa); //Add the parcel to the list
+                        try { blObject.AddParcelToDelivery(pa); } //Add the parcel to the list
+                        catch(Exception ex) { Console.WriteLine(ex.Message + ", please try again"); }
                         break;
                     default:
                         Console.WriteLine("ERROR");
