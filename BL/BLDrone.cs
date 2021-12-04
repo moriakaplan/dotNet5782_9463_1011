@@ -126,7 +126,7 @@ namespace IBL
             Station st = closestStationWithChargeSlots(drone.CurrentLocation);
             double batteryNeed = minBattery(drone.Id, drone.CurrentLocation, st.Location);
             if (batteryNeed > drone.Battery) 
-                throw new DroneCantGoToChargeException($"the drone {droneId} is not available so it can't be sended to charging"); //if the drone dont have enough battery
+                throw new DroneCantGoToChargeException($"the battery of drone {droneId} is not enugh so it can't be sended to charging"); //if the drone dont have enough battery
 
             drone.Battery -= batteryNeed;
             drone.CurrentLocation = st.Location;
