@@ -120,7 +120,9 @@ namespace IBL
          /// <param name="droneId"></param>
         public void SendDroneToCharge(int droneId)
         {
-            DroneToList drone = lstdrn.Find(item => item.Id == droneId);
+            //if (!lstdrn.Exists(item => item.Id == droneId)) throw;
+            //DroneToList drone = lstdrn.Find(item => item.Id == droneId);
+            Drone drone = DisplayDrone(droneId);
             double lo = drone.CurrentLocation.Longi, la = drone.CurrentLocation.Latti;
             if (drone.Status != DroneStatus.Available) 
                 throw new DroneCantGoToChargeException($"the drone {droneId} is not available so it can't be sended to charging"); //if the drone is not available
@@ -132,7 +134,8 @@ namespace IBL
             drone.Battery -= batteryNeed;
             drone.CurrentLocation = st.Location;
             drone.Status = DroneStatus.Maintenance;
-            dl.SendDroneToCharge(droneId, st.Id); // Adds a drone charging entity and lowers the amount of available charge slots at the station
+            try { dl.SendDroneToCharge(droneId, st.Id); } // Adds a drone charging entity and lowers the amount of available charge slots at the station
+            catch (Exception) { throw new DroneCantGoToChargeException(); }
         }
         /// <summary>
         /// Release the Drone Frome Charge
