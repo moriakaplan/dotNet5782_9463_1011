@@ -156,7 +156,7 @@ namespace IBL
                 {
                     DroneToList dronetolist = lstdrn[i];
                     double b = timeInCharge.TotalSeconds * ChargeRatePerHour /*(1 / 3600)*/;
-                    dronetolist/*droneFromList*/.Battery = dronetolist/*droneFromList*/.Battery+b;
+                    dronetolist/*droneFromList*/.Battery = dronetolist/*droneFromList*/.Battery+(double)(b/3600);
                     if (dronetolist/*droneFromList*/.Battery > 100) dronetolist/*droneFromList*/.Battery = 100;
                     dronetolist/*droneFromList*/.Status = DroneStatus.Available;
                     lstdrn[i] = dronetolist;
