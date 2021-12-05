@@ -149,16 +149,15 @@ namespace IBL
             {
                 message = $"the drone {droneId} is not in maintenance so it can't be released from charging"
             };
-            //Drone/*ToList*/ droneFromList = DisplayDrone(droneId);//lstdrn.Find(item => item.Id == droneId);
             for(int i=0;i< lstdrn.Count;i++)
             {
                 if(lstdrn[i].Id== droneId)
                 {
                     DroneToList dronetolist = lstdrn[i];
-                    double b = timeInCharge.TotalSeconds * ChargeRatePerHour /*(1 / 3600)*/;
-                    dronetolist/*droneFromList*/.Battery = dronetolist/*droneFromList*/.Battery+(double)(b/3600);
-                    if (dronetolist/*droneFromList*/.Battery > 100) dronetolist/*droneFromList*/.Battery = 100;
-                    dronetolist/*droneFromList*/.Status = DroneStatus.Available;
+                    double b = timeInCharge.TotalSeconds * ChargeRatePerHour;
+                    dronetolist.Battery = dronetolist.Battery+(double)(b/3600);
+                    if (dronetolist.Battery > 100) dronetolist.Battery = 100;
+                    dronetolist.Status = DroneStatus.Available;
                     lstdrn[i] = dronetolist;
                 }
             }
@@ -179,22 +178,5 @@ namespace IBL
                 yield return drone;
             }
         }
-        /// <summary>
-        /// convert Date Time To Double In Hours
-        /// </summary>
-        /// <param name="dateTime"></param>
-        /// <returns></returns>
-        //private double convertTimeSpanToDoubleInHours(TimeSpan time)
-        //{
-        //    double result = 0;
-        //    result += dateTime.Year * 365 * 24;
-        //    //result += dateTime.Month * 30/*that not good*/* 24;
-        //    //result += dateTime.Day * 24;
-        //    result += dateTime.DayOfYear * 24;
-        //    result += dateTime.Hour;
-        //    result += dateTime.Minute * (1 / 60);
-        //    result += dateTime.Minute * (1 / 360);
-        //    return result;
-        //}
     }
 }
