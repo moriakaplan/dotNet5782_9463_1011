@@ -146,10 +146,19 @@ namespace IBL
             {
                 message = $"the drone {droneId} is not in maintenance so it can't be released from charging"
             };
-            DroneToList droneFromList = lstdrn.Find(item => item.Id == droneId);
-            droneFromList.Battery += timeInCharge.TotalSeconds * ChargeRatePerHour * (1 / 60);
-            if (droneFromList.Battery > 100) droneFromList.Battery = 100;
-            droneFromList.Status = DroneStatus.Available;
+            //Drone/*ToList*/ droneFromList = DisplayDrone(droneId);//lstdrn.Find(item => item.Id == droneId);
+            for(int i=0;i< lstdrn.Count;i++)
+            {
+                if(lstdrn[i].Id== droneId)
+                {
+                    DroneToList dronetolist = lstdrn[i];
+                    double b = timeInCharge.TotalSeconds * ChargeRatePerHour /*(1 / 3600)*/;
+                    dronetolist/*droneFromList*/.Battery = dronetolist/*droneFromList*/.Battery+b;
+                    if (dronetolist/*droneFromList*/.Battery > 100) dronetolist/*droneFromList*/.Battery = 100;
+                    dronetolist/*droneFromList*/.Status = DroneStatus.Available;
+                    lstdrn[i] = dronetolist;
+                }
+            }
             try
             {
                 dl.ReleaseDroneFromeCharge(droneId); //Deletes the charging entity and adds 1 to the charging slots of the station

@@ -114,7 +114,7 @@ namespace IBL
         {
             Drone bdrone;
             bdrone = DisplayDrone(droneId);
-            if (bdrone.Status == DroneStatus.Available)
+            if (bdrone.Status != DroneStatus.Available)
             {
                 throw new DroneCantTakeParcelException($"drone {droneId} is not available so it cant take a new parcel");
             }
@@ -147,6 +147,7 @@ namespace IBL
                 if (drone.Id == droneId)
                 {
                     drone.Status = DroneStatus.Associated; //update the drone status
+                    drone.ParcelId = parcel.Id;
                 }
             }
 
@@ -168,6 +169,7 @@ namespace IBL
                 {
                     drone.Battery -= minBattery(droneId, drone.CurrentLocation, DisplayCustomer(parcelToPick.Sender.Id).Location);
                     drone.CurrentLocation = DisplayCustomer(parcelToPick.Sender.Id).Location;
+                    drone.Status = DroneStatus.Delivery;
                     try { dl.PickParcelByDrone(parcelToPick.Id); } //update pick up time in the parcel
                     catch (IDAL.DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
                     return;
@@ -182,7 +184,7 @@ namespace IBL
         public void DeliverParcelByDrone(int droneId)
         {
             Parcel parcelToDeliver = DisplayParcel(DisplayDrone(droneId).ParcelInT.Id);
-            if (!(parcelToDeliver.Drone.Id==droneId && parcelToDeliver.PickUpTime != DateTime.MinValue && parcelToDeliver.DeliverTime == DateTime.MinValue))
+            if ((parcelToDeliver.Drone.Id!=droneId && parcelToDeliver.PickUpTime == DateTime.MinValue && parcelToDeliver.DeliverTime != DateTime.MinValue))
             {
                 throw new TransferException($"drone {droneId} can't deliver the parcel");
             }
@@ -192,12 +194,12 @@ namespace IBL
                 {
                     drone.Battery -= minBattery(droneId, drone.CurrentLocation, DisplayCustomer(parcelToDeliver.Target.Id).Location);
                     drone.CurrentLocation = DisplayCustomer(parcelToDeliver.Target.Id).Location;
-                    drone.Status = DroneStatus.Available;
                     try
                     {
                         dl.DeliverParcelToCustomer(DisplayDrone(droneId).ParcelInT.Id);//update the deliver time in the data layer
                     }
                     catch(IDAL.DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
+                    drone.Status = DroneStatus.Available;
                 }
             }
         }
