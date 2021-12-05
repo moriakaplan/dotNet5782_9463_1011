@@ -82,19 +82,21 @@ namespace DalObject
             //return (Drone)dr;
         }
         
-        public IEnumerable<DroneCharge> DisplayListOfDroneCharge()
+        public IEnumerable<DroneCharge> DisplayListOfDroneCharge(Predicate<DroneCharge> pre)
         {
             List<DroneCharge> result = new List<DroneCharge>(DataSource.droneCharges);
-            return result;
+            if (pre == null) return result;
+            return result.FindAll(pre);
         }
         /// <summary>
         /// display the list of the drones.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Drone> DisplayListOfDrones()
+        public IEnumerable<Drone> DisplayListOfDrones(Predicate<Drone> pre)
         {
             List<Drone> result = new List<Drone>(DataSource.drones);
-            return result;
+            if (pre == null) return result;
+            return result.FindAll(pre);
         }
         
         public void DeleteDrone(int droneId)

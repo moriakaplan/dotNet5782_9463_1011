@@ -93,7 +93,7 @@ namespace IBL
                 parcel = new ParcelInTransfer
                 {
                     Id = parcelFromFunc.Id,
-                    InTheWay = (parcelFromFunc.PickUpTime != DateTime.MinValue && parcelFromFunc.DeliverTime == DateTime.MinValue),
+                    InTheWay = (parcelFromFunc.PickUpTime != null && parcelFromFunc.DeliverTime == null),
                     Priority = (Priorities)parcelFromFunc.Priority,
                     Sender = new CustomerInParcel { Id = parcelFromFunc.Senderld, Name = DisplayCustomer(parcelFromFunc.Senderld/*SenderId*/).Name },/*DisplayCustomer(parcelFromFunc.Senderld/*SenderId*/
                     Target = new CustomerInParcel { Id = parcelFromFunc.TargetId, Name = DisplayCustomer(parcelFromFunc.TargetId/*SenderId*/).Name },

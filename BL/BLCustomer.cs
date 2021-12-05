@@ -144,19 +144,19 @@ namespace IBL
             foreach (ParcelToList parcelFromList in DisplayListOfParcels())
             {
                 Parcel parcel = DisplayParcel(parcelFromList.Id);
-                if ((parcel.Sender.Id == customerId) && (parcel.DeliverTime != DateTime.MinValue))
+                if ((parcel.Sender.Id == customerId) && (parcel.DeliverTime != null))
                 {
                     bCustomer.numOfParcelsDelivered++;
                 }
-                if ((parcel.Sender.Id == customerId) && ((parcel.DeliverTime == DateTime.MinValue) && ((parcel.CreateTime != DateTime.MinValue))))
+                if ((parcel.Sender.Id == customerId) && ((parcel.DeliverTime == null) && ((parcel.CreateTime != null))))
                 {
                     bCustomer.numOfParcelsSentAndNotDelivered++;
                 }
-                if ((parcel.Target.Id == customerId) && (parcel.DeliverTime == DateTime.MinValue))
+                if ((parcel.Target.Id == customerId) && (parcel.DeliverTime == null))
                 {
                     bCustomer.numOfParcelsInTheWay++;
                 }
-                if ((parcel.Target.Id == customerId) && (parcel.DeliverTime != DateTime.MinValue))
+                if ((parcel.Target.Id == customerId) && (parcel.DeliverTime != null))
                 {
                     bCustomer.numOfParclReceived++;
                 }

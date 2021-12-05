@@ -169,9 +169,9 @@ namespace DalObject
                 Weight = (WeightCategories)random.Next(0, 3),
                 Priority = (Priorities)random.Next(0, 3),
                 CreateTime = new DateTime(2021, 01, 01),
-                AssociateTime = DateTime.MinValue,
-                PickUpTime = DateTime.MinValue,
-                DeliverTime = DateTime.MinValue,
+                AssociateTime = null,
+                PickUpTime = null,
+                DeliverTime = null,
             });
             parcels.Add(new Parcel
             {
@@ -182,9 +182,9 @@ namespace DalObject
                 Weight = (WeightCategories)random.Next(0, 3),
                 Priority = (Priorities)random.Next(0, 3),
                 CreateTime = new DateTime(2021, 01, 01),
-                AssociateTime = DateTime.MinValue,
-                PickUpTime = DateTime.MinValue,
-                DeliverTime = DateTime.MinValue,
+                AssociateTime = null,
+                PickUpTime = null,
+                DeliverTime = null,
             });
             parcels.Add(new Parcel
             {
@@ -195,9 +195,9 @@ namespace DalObject
                 Weight = (WeightCategories)random.Next(0, 3),
                 Priority = (Priorities)random.Next(0, 3),
                 CreateTime =  new DateTime(2021, 10, 19),
-                AssociateTime = DateTime.MinValue,
-                PickUpTime = DateTime.MinValue,
-                DeliverTime = DateTime.MinValue,
+                AssociateTime = null,
+                PickUpTime = null,
+                DeliverTime = null,
             });
             parcels.Add(new Parcel
             {
@@ -208,9 +208,9 @@ namespace DalObject
                 Weight = (WeightCategories)random.Next(0, 3),
                 Priority = (Priorities)random.Next(0, 3),
                 CreateTime =  new DateTime(2021, 10, 01),
-                AssociateTime = DateTime.MinValue,
-                PickUpTime = DateTime.MinValue,
-                DeliverTime = DateTime.MinValue,
+                AssociateTime = null,
+                PickUpTime = null,
+                DeliverTime = null,
             });
             parcels.Add(new Parcel
             {
@@ -222,8 +222,8 @@ namespace DalObject
                 Priority = (Priorities)random.Next(0, 3),
                 CreateTime =  new DateTime(2021, 01, 01),
                 AssociateTime= new DateTime(2021, 01, 02),
-                PickUpTime = DateTime.MinValue,
-                DeliverTime = DateTime.MinValue,
+                PickUpTime = null,
+                DeliverTime = null,
             });
             parcels.Add(new Parcel
             {
@@ -235,8 +235,8 @@ namespace DalObject
                 Priority = (Priorities)random.Next(0, 3),
                 CreateTime =  new DateTime(2021, 10, 18),
                 AssociateTime= new DateTime(2021, 10, 19),
-                PickUpTime = DateTime.MinValue,
-                DeliverTime = DateTime.MinValue,
+                PickUpTime = null,
+                DeliverTime = null,
             });
             parcels.Add(new Parcel
             {
@@ -249,7 +249,7 @@ namespace DalObject
                 CreateTime =  new DateTime(2021, 01, 05),
                 AssociateTime = new DateTime(2021, 01, 08),
                 PickUpTime = new DateTime(2021, 01, 12),
-                DeliverTime = DateTime.MinValue,
+                DeliverTime = null,
             });
             parcels.Add(new Parcel
             {
@@ -262,7 +262,7 @@ namespace DalObject
                 CreateTime =  new DateTime(2021, 08, 20),
                 AssociateTime = new DateTime(2021, 08, 21),
                 PickUpTime = new DateTime(2021, 08, 24),
-                DeliverTime = DateTime.MinValue,
+                DeliverTime = null,
             });
             parcels.Add(new Parcel
             {

@@ -125,17 +125,10 @@ namespace IBL
         }
         public IEnumerable<StationToList> DisplayListOfStationsWithAvailableCargeSlots()
         {
-            //List<StationToList> result = new List<StationToList>(null);
-            StationToList tempStation;
-            foreach (IDAL.DO.Station dstation in dl.DisplayListOfStations())
+            foreach (IDAL.DO.Station dstation in dl.DisplayListOfStations(x=>x.ChargeSlots>0))
             {
-                tempStation = DisplayStationToList(dstation.Id);
-                if (tempStation.AvailableChargeSlots>0)
-                {
-                    yield return tempStation ;
-                }
+                yield return DisplayStationToList(dstation.Id);
             }
-            //return result;
         }
     }
 }

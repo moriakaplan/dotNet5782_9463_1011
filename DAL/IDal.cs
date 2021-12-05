@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using IDAL.DO;
 
 namespace IDAL
@@ -15,12 +16,13 @@ namespace IDAL
         Drone DisplayDrone(int droneId);
         Parcel DisplayParcel(int parcelId);
         Station DisplayStation(int stationId);
-        IEnumerable<Customer> DisplayListOfCustomers();
-        IEnumerable<Drone> DisplayListOfDrones();
-        IEnumerable<Parcel> DisplayListOfParcels();
-        IEnumerable<Station> DisplayListOfStations();
-        IEnumerable<Station> DisplayListOfStationsWithAvailableCargeSlots();
-        IEnumerable<Parcel> DisplayListOfUnassignedParcels();
+        IEnumerable<Customer> DisplayListOfCustomers(Predicate<Customer> pre = null);
+        IEnumerable<Drone> DisplayListOfDrones(Predicate<Drone> pre = null);
+        IEnumerable<Parcel> DisplayListOfParcels(Predicate<Parcel> pre = null);
+        IEnumerable<Station> DisplayListOfStations(Predicate<Station> pre = null);
+        IEnumerable<DroneCharge> DisplayListOfDroneCharge(Predicate<DroneCharge> pre = null);
+        //IEnumerable<Station> DisplayListOfStationsWithAvailableCargeSlots();
+        //IEnumerable<Parcel> DisplayListOfUnassignedParcels();
         double Distance(double lattitudeA, double longitudeA, double lattitudeB, double longitudeB);
         double DistanceForCustomer(double longitudeA, double lattitudeA, int id);
         double DistanceForStation(double longitudeA, double lattitudeA, int id);
@@ -32,7 +34,5 @@ namespace IDAL
         void DeleteCustomer(int customerId);
         void DeleteStation(int stationId);
         void DeleteParcel(int parcelId);
-        IEnumerable<DroneCharge> DisplayListOfDroneCharge();
-
     }
 }

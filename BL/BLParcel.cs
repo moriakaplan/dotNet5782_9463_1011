@@ -23,9 +23,9 @@ namespace IBL
                 Priority = (IDAL.DO.Priorities)pri,
                 Weight = (IDAL.DO.WeightCategories)weight,
                 CreateTime = DateTime.Now,
-                AssociateTime = DateTime.MinValue,
-                PickUpTime = DateTime.MinValue,
-                DeliverTime = DateTime.MinValue
+                AssociateTime = null,
+                PickUpTime = null,
+                DeliverTime = null
             };
             try
             {
@@ -159,7 +159,7 @@ namespace IBL
         public void PickParcelByDrone(int droneId)
         {
             Parcel parcelToPick = DisplayParcel(DisplayDrone(droneId).ParcelInT.Id);
-            if (!(parcelToPick.AssociateTime!= DateTime.MinValue && parcelToPick.Drone.Id==droneId && parcelToPick.PickUpTime == DateTime.MinValue))
+            if (!(parcelToPick.AssociateTime!= null && parcelToPick.Drone.Id==droneId && parcelToPick.PickUpTime == null))
             {
                 throw new TransferException($"drone {droneId} can't pick up the parcel");
             }
@@ -184,7 +184,7 @@ namespace IBL
         public void DeliverParcelByDrone(int droneId)
         {
             Parcel parcelToDeliver = DisplayParcel(DisplayDrone(droneId).ParcelInT.Id);
-            if ((parcelToDeliver.Drone.Id!=droneId && parcelToDeliver.PickUpTime == DateTime.MinValue && parcelToDeliver.DeliverTime != DateTime.MinValue))
+            if ((parcelToDeliver.Drone.Id!=droneId && parcelToDeliver.PickUpTime == null && parcelToDeliver.DeliverTime != null))
             {
                 throw new TransferException($"drone {droneId} can't deliver the parcel");
             }
@@ -221,7 +221,7 @@ namespace IBL
             {
                 throw new NotExistIDException(ex.Message, "- parcel");
             }
-            if(parcelFromDal.AssociateTime!= DateTime.MinValue) //if the parcel is associated
+            if(parcelFromDal.AssociateTime!= null) //if the parcel is associated
             {
                 droneFromFunc = DisplayDrone(parcelFromDal.Droneld);
                 drone = new DroneInParcel
@@ -266,13 +266,13 @@ namespace IBL
             ParcelStatus st;
             foreach (IDAL.DO.Parcel parcel in listFromDal)
             {
-                if (parcel.DeliverTime != DateTime.MinValue) st = ParcelStatus.Delivered;
+                if (parcel.DeliverTime != null) st = ParcelStatus.Delivered;
                 else
                 {
-                    if (parcel.PickUpTime != DateTime.MinValue) st = ParcelStatus.PickedUp;
+                    if (parcel.PickUpTime != null) st = ParcelStatus.PickedUp;
                     else
                     {
-                        if (parcel.AssociateTime != DateTime.MinValue) st = ParcelStatus.Associated;
+                        if (parcel.AssociateTime != null) st = ParcelStatus.Associated;
                         else st = ParcelStatus.Created;
                     }
                 }
@@ -296,26 +296,19 @@ namespace IBL
         public IEnumerable<ParcelToList> DisplayListOfUnassignedParcels()
         {
             //List<ParcelToList> answer = new List<ParcelToList>();
-            IEnumerable<IDAL.DO.Parcel> listFromDal = dl.DisplayListOfParcels();
-            ParcelStatus st;
+            IEnumerable<IDAL.DO.Parcel> listFromDal = dl.DisplayListOfParcels(x=> x.AssociateTime == null);
             foreach (IDAL.DO.Parcel parcel in listFromDal)
             {
-
-                if (parcel.AssociateTime == DateTime.MinValue) st = ParcelStatus.Created;
-                else st = ParcelStatus.Associated;
-                if (st == ParcelStatus.Created)
+                ParcelToList answer = new ParcelToList
                 {
-                    ParcelToList answer = new ParcelToList
-                    {
-                        Id = parcel.Id,
-                        Priority = (Priorities)parcel.Priority,
-                        SenderName = DisplayCustomer(parcel.Senderld).Name,
-                        TargetName = DisplayCustomer(parcel.TargetId).Name,
-                        Status = st,
-                        Weight = (WeightCategories)parcel.Weight
-                    };
-                    yield return answer;
-                }
+                    Id = parcel.Id,
+                    Priority = (Priorities)parcel.Priority,
+                    SenderName = DisplayCustomer(parcel.Senderld).Name,
+                    TargetName = DisplayCustomer(parcel.TargetId).Name,
+                    Status = ParcelStatus.Created,
+                    Weight = (WeightCategories)parcel.Weight
+                };
+                yield return answer;
             }
             //return answer;
         }

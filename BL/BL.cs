@@ -54,14 +54,14 @@ namespace IBL
                 foreach (IDAL.DO.Parcel parcel in dl.DisplayListOfParcels())
                 {
                     Location locOfCus = DisplayCustomer(parcel.Senderld).Location;
-                    if ((parcel.Droneld == drone.Id) && (parcel.DeliverTime == DateTime.MinValue)) //If there is a parcel that has not yet been delivered but the drone is associated
+                    if ((parcel.Droneld == drone.Id) && (parcel.DeliverTime == null)) //If there is a parcel that has not yet been delivered but the drone is associated
                     {
                         drone.Status = DroneStatus.Delivery;
-                        if ((parcel.AssociateTime != DateTime.MinValue) && (parcel.PickUpTime == DateTime.MinValue)) //If the parcel was associated but not picked up
+                        if ((parcel.AssociateTime != null) && (parcel.PickUpTime == null)) //If the parcel was associated but not picked up
                         {
                             drone.CurrentLocation = closestStation(locOfCus);
                         }
-                        if ((parcel.PickUpTime != DateTime.MinValue) && (parcel.DeliverTime == DateTime.MinValue)) //If the parcel was picked up but not delivered
+                        if ((parcel.PickUpTime != null) && (parcel.DeliverTime == null)) //If the parcel was picked up but not delivered
                         {
                             drone.CurrentLocation = locOfCus;//The location of the drone is in the location of the sender
                         }
@@ -121,7 +121,7 @@ namespace IBL
         {
             foreach (IDAL.DO.Parcel parcel in dl.DisplayListOfParcels())
             {
-                if ((parcel.Droneld == drone.Id) && (parcel.PickUpTime != DateTime.MinValue) && (parcel.DeliverTime == DateTime.MinValue)) //If the drone in shipment (already collected the parcel)) 
+                if ((parcel.Droneld == drone.Id) && (parcel.PickUpTime != null) && (parcel.DeliverTime == null)) //If the drone in shipment (already collected the parcel)) 
                 {
                     return false;
                 }

@@ -37,10 +37,11 @@ namespace DalObject
         /// display the list of thecustomers
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Customer> DisplayListOfCustomers()
+        public IEnumerable<Customer> DisplayListOfCustomers(Predicate<Customer> pre)
         {
             List<Customer> result = new List<Customer>(DataSource.customers);
-            return result;
+            if (pre == null) return result;
+            return result.FindAll(pre);
         }
         public void DeleteCustomer(int customerId)
         {

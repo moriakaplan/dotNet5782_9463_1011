@@ -36,25 +36,26 @@ namespace DalObject
         /// display the list of the stations.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Station> DisplayListOfStations()
+        public IEnumerable<Station> DisplayListOfStations(Predicate<Station> pre)
         {
             List<Station> result = new List<Station>(DataSource.stations);
-            return result;
+            if (pre == null) return result;
+            return result.FindAll(pre);
         }
         /// <summary>
         /// display a list of all the station with empty charge slots
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Station> DisplayListOfStationsWithAvailableCargeSlots()
-        {
-            List<Station> StationsWithAvailableCargingSlots = new List<Station>();
-            foreach (Station item in DataSource.stations)
-            {
-                if (item.ChargeSlots > 0)
-                    StationsWithAvailableCargingSlots.Add(item);
-            }
-            return StationsWithAvailableCargingSlots;
-        }
+        //public IEnumerable<Station> DisplayListOfStationsWithAvailableCargeSlots()
+        //{
+        //    List<Station> StationsWithAvailableCargingSlots = new List<Station>();
+        //    foreach (Station item in DataSource.stations)
+        //    {
+        //        if (item.ChargeSlots > 0)
+        //            StationsWithAvailableCargingSlots.Add(item);
+        //    }
+        //    return StationsWithAvailableCargingSlots;
+        //}
         public void DeleteStation(int stationId)
         {
             try

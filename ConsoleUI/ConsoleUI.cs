@@ -162,9 +162,9 @@ Customer ID (9 digits)-");
                                     Weight = weight,
                                     Priority = priority,
                                     CreateTime = DateTime.Now,
-                                    AssociateTime = DateTime.MinValue,
-                                    PickUpTime = DateTime.MinValue,
-                                    DeliverTime = DateTime.MinValue
+                                    AssociateTime = null,
+                                    PickUpTime = null,
+                                    DeliverTime = null
                                 };
                                 dalObject.AddParcelToTheList(pa);//Add the parcel to the list
                                 break;
@@ -310,14 +310,14 @@ Customer ID (9 digits)-");
                                 break;
                             case DisplayListOptions.UnassignedParcels://display the list of the parcels that not assign to a drone.
                                 Console.WriteLine("The parcels that not assigned to drone are:"); //לכתוב תיאור של מה מודפס
-                                foreach (Parcel item in dalObject.DisplayListOfUnassignedParcels())
+                                foreach (Parcel item in dalObject.DisplayListOfParcels(x=>x.AssociateTime==null))
                                 {
                                     Console.WriteLine(item);
                                 }
                                 break;
                             case DisplayListOptions.StationsWithAvailableCargingSlots://display the list of the stations that have available charge slots
                                 Console.WriteLine("The stations with available charge slots are:"); //לכתוב תיאור של מה מודפס
-                                foreach (Station item in dalObject.DisplayListOfStationsWithAvailableCargeSlots())
+                                foreach (Station item in dalObject.DisplayListOfStations(x=>x.ChargeSlots>0))
                                 {
                                     Console.WriteLine(item);
                                 }

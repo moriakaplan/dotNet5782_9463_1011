@@ -14,10 +14,10 @@ namespace IBL.BO
         public DroneInParcel Drone { get; set; }
         public WeightCategories Weight { get; set; }
         public Priorities Priority { get; set; } //רגיל, מהיר, חירום
-        public DateTime CreateTime { get; set; } //יצירת החבילה
-        public DateTime AssociateTime { get; set; } //שיוך לרחפן
-        public DateTime PickUpTime { get; set; }  //איסוף מהשולח
-        public DateTime DeliverTime { get; set; } //מסירה ליעד
+        public DateTime? CreateTime { get; set; } //יצירת החבילה
+        public DateTime? AssociateTime { get; set; } //שיוך לרחפן
+        public DateTime? PickUpTime { get; set; }  //איסוף מהשולח
+        public DateTime? DeliverTime { get; set; } //מסירה ליעד
         public override string ToString()
         {
             return @$"Id: #{Id}:

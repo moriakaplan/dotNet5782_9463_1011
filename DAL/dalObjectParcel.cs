@@ -40,25 +40,26 @@ namespace DalObject
         /// display the list of the customers
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Parcel> DisplayListOfParcels()
+        public IEnumerable<Parcel> DisplayListOfParcels(Predicate<Parcel> pre)
         {
             List<Parcel> result = new List<Parcel>(DataSource.parcels);
-            return result;
+            if (pre == null) return result;
+            return result.FindAll(pre);
         }
-        /// <summary>
-        /// display the list of the unassign parcels
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Parcel> DisplayListOfUnassignedParcels()
-        {
-            List<Parcel> unassignedParcels = new List<Parcel>();
-            foreach (Parcel item in DataSource.parcels)
-            {
-                if (item.AssociateTime == DateTime.MinValue)
-                    unassignedParcels.Add(item);
-            }
-            return unassignedParcels;
-        }
+        ///// <summary>
+        ///// display the list of the unassign parcels
+        ///// </summary>
+        ///// <returns></returns>
+        //public IEnumerable<Parcel> DisplayListOfUnassignedParcels()
+        //{
+        //    List<Parcel> unassignedParcels = new List<Parcel>();
+        //    foreach (Parcel item in DataSource.parcels)
+        //    {
+        //        if (item.AssociateTime == null)
+        //            unassignedParcels.Add(item);
+        //    }
+        //    return unassignedParcels;
+        //}
         public void DeleteParcel(int parcelId)
         {
             try
