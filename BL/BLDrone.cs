@@ -171,11 +171,12 @@ namespace IBL
         ///  returns the list of the drones
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<DroneToList> DisplayListOfDrones()
+        public IEnumerable<DroneToList> DisplayListOfDrones(Predicate<DroneToList> pre)
         {
             foreach(DroneToList drone in lstdrn)
             {
-                yield return drone;
+                if (pre == null || pre(drone))
+                    yield return drone;
             }
         }
     }

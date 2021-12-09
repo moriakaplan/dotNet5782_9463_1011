@@ -11,17 +11,24 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using IBL;
+using IBL.BO;
 
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for DroneList.xaml
+    /// Interaction logic for AddDrone.xaml
     /// </summary>
-    public partial class DroneList : Window
+    public partial class DroneWindow : Window
     {
-        public DroneList()
+        private Ibl blObject;
+        public DroneWindow(Ibl obj)
         {
             InitializeComponent();
+            AddDroneOption.Visibility = Visibility.Visible;
+            blObject = obj;
+            txtStatus.ItemsSource = Enum.GetValues(typeof(DroneStatus));
+            txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
     }
 }

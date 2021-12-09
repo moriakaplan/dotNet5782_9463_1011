@@ -29,7 +29,7 @@ namespace IBL
         Parcel DisplayParcel(int parcelId);
         Station DisplayStation(int stationId);
         IEnumerable<StationToList> DisplayListOfStations();
-        IEnumerable<DroneToList> DisplayListOfDrones();
+        IEnumerable<DroneToList> DisplayListOfDrones(Predicate<DroneToList> pre = null);
         IEnumerable<CustomerToList> DisplayListOfCustomers();
         IEnumerable<ParcelToList> DisplayListOfParcels();
         IEnumerable<ParcelToList> DisplayListOfUnassignedParcels();
