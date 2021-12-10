@@ -33,24 +33,14 @@ namespace PL
 
         private void StatusFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (WeightFilter.SelectedItem != null) StatusAndWeightFilter();
             DroneStatus status = (DroneStatus)StatusFilter.SelectedItem;
             DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.Status == status);
         }
 
         private void WeightFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (StatusFilter.SelectedItem != null) StatusAndWeightFilter();
             WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
             DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.MaxWeight == weight);
-        }
-
-        private void StatusAndWeightFilter()
-        {
-            DroneStatus status = (DroneStatus)StatusFilter.SelectedItem;
-            WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
-            DroneListView.ItemsSource = blObject.DisplayListOfDrones(
-                x => (x.Status == status && x.MaxWeight == weight));
         }
 
         private void AddDrone_Click(object sender, RoutedEventArgs e)
@@ -58,11 +48,14 @@ namespace PL
             new DroneWindow(blObject).Show();
         }
 
-        private void Restart_Click(object sender, RoutedEventArgs e)
+        private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            StatusFilter.SelectedItem = -1;
-            WeightFilter.SelectedItem = -1;
-            DroneListView.ItemsSource = blObject.DisplayListOfDrones();
+
+        }
+
+        private void veiwDrone(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }
