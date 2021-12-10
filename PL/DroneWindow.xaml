@@ -8,10 +8,11 @@
         Title="AddDrone" Height="450" Width="400">
     <Grid x:Name="AddDroneOption">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200*"/>
-            <ColumnDefinition Width="500*"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -26,21 +27,29 @@
         <Label Content="Status:" Grid.Row="3" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
         <Label Content="Max Weight:" Grid.Row="4" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
         <Label Content="Delivery:" Grid.Row="5" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label Content="Location:" Grid.Row="6" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-        
+        <Label Content="Location:" Grid.Row="7" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label Content="Station For First Location:" Grid.Row="6" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+
         <TextBox x:Name="txtId" Grid.Row="0" Grid.Column="1" Margin="10"/>
         <TextBox x:Name="txtModel" Grid.Row="1" Grid.Column="1" Margin="10"/>
         <TextBox x:Name="txtBattery" Grid.Row="2" Grid.Column="1" Margin="10"/>
         <ComboBox x:Name="txtStatus" Grid.Row="3" Grid.Column="1" Margin="10"/>
         <ComboBox x:Name="txtWeight" Grid.Row="4" Grid.Column="1" Margin="10"/>
         <TextBox x:Name="txtDelivery" Grid.Row="5" Grid.Column="1" Margin="10"/>
-        <Grid Grid.Column="1" Grid.Row="6">
+        <ComboBox x:Name="txtStationId" Grid.Row="6" Grid.Column="1" Margin="10" SelectionChanged="txtStationId_SelectionChanged"/>
+        <Grid Grid.Column="1" Grid.Row="7">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBox x:Name="txtLatti" Text="lattitude" Grid.Row="0" Margin="10"/>
-            <TextBox x:Name="txtLongi" Text="lattitude" Grid.Row="1" Margin="10"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Lattitude-" Grid.Column="0" Grid.Row="0" Margin="10"/>
+            <Label Content="Longitude-" Grid.Column="0" Grid.Row="1" Margin="10"/>
+            <TextBox x:Name="txtLatti" Grid.Column="1" Grid.Row="0" Margin="10" IsReadOnly="True"/>
+            <TextBox x:Name="txtLongi" Grid.Column="1" Grid.Row="1" Margin="10" IsReadOnly="True"/>
         </Grid>
     </Grid>
 </Window>

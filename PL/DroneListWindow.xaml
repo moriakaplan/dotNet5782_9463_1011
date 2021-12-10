@@ -19,11 +19,13 @@ VerticalAlignment="Stretch" Width="auto">
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <Label Content="Filter By Status" HorizontalAlignment="Left" Margin="60,0,0,0" VerticalAlignment="Center"/>
-            <Label Content="Filter By Max Weight" Grid.Column="2" HorizontalAlignment="Left" Margin="59,0,0,0" VerticalAlignment="Center"/>
-            <ComboBox x:Name="StatusFilter" Grid.Column="1" HorizontalAlignment="Left" Margin="67,22,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="StatusFilter_SelectionChanged"/>
-            <ComboBox x:Name="WeightFilter" Grid.Column="3" HorizontalAlignment="Center" Margin="0,19,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="WeightFilter_SelectionChanged"/>
+            <Label Content="Filter By Status" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            <Label Content="Filter By Max Weight" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            <ComboBox x:Name="StatusFilter" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" SelectionChanged="StatusFilter_SelectionChanged"/>
+            <ComboBox x:Name="WeightFilter" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" SelectionChanged="WeightFilter_SelectionChanged"/>
+            <Button x:Name="Restart" Content="Restart selections" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Stretch" Click="Restart_Click"/>
         </Grid>
         <ListView x:Name="DroneListView" Margin="0,4,0,0" Grid.Row="1">
             <ListView.View>
