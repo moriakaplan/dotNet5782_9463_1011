@@ -32,6 +32,35 @@ namespace PL
             txtStatus.Text = "Maintence";
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
+        public DroneWindow(Ibl obj, int droneId)
+        {
+            InitializeComponent();
+            AddDroneOption.Visibility = Visibility.Visible;
+            blObject = obj;
+            Drone drone = blObject.DisplayDrone(droneId);
+            //לאתחל את כל הפקדים ולעשות את רובם readonly
+            //להסתיר את כל הפקדים שלא צריך
+            txtId.Text = drone.Id.ToString();
+            txtLatti.Text= drone.CurrentLocation.Latti.ToString();
+            txtLongi.Text= drone.CurrentLocation.Longi.ToString();
+            txtModel.Text= drone.Model.ToString();
+            txtBattery.Text= drone.Battery.ToString();
+            txtStatus.Text= drone.Status.ToString();
+            txtWeight.Text= drone.MaxWeight.ToString();
+
+            txtId.IsReadOnly = true;
+            txtLatti.IsReadOnly = true;
+            txtModel.IsReadOnly = true;
+            txtLongi.IsReadOnly = true;
+            txtBattery.IsReadOnly = true;
+            txtStatus.IsReadOnly = true;
+            txtWeight.IsReadOnly = true;
+
+            txtStationId.Visibility = Visibility.Hidden;
+            StationLabel.Visibility = Visibility.Hidden;
+            txtStatus.Text = "Maintence";
+            txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+        }
 
         private void txtStationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

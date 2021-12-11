@@ -25,7 +25,7 @@ VerticalAlignment="Stretch" Width="auto">
             <ComboBox x:Name="StatusFilter" Grid.Column="1" HorizontalAlignment="Left" Margin="67,22,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="StatusFilter_SelectionChanged"/>
             <ComboBox x:Name="WeightFilter" Grid.Column="3" HorizontalAlignment="Center" Margin="0,19,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="WeightFilter_SelectionChanged"/>
         </Grid>
-        <ListView x:Name="DroneListView" Margin="0,4,0,0" Grid.Row="1" SelectionChanged="DroneListView_SelectionChanged">
+        <ListView x:Name="DroneListView" Margin="0,4,0,0" Grid.Row="1" SelectionChanged="DroneListView_SelectionChanged" MouseDoubleClick="ViewDrone">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

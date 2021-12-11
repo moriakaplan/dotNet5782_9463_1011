@@ -63,14 +63,15 @@ namespace PL
 
         }
 
-        private void veiwDrone(object sender, MouseButtonEventArgs e)
-        {
-
-        }
 
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
             new DroneWindow(blObject).Show();
+        }
+
+        private void ViewDrone(object sender, MouseButtonEventArgs e)
+        {
+            new DroneWindow(blObject, e./*idשל הרחפן*/);
         }
     }
 }
