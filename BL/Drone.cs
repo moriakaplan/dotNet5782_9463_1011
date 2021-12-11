@@ -23,8 +23,8 @@ namespace IBL.BO
 model- {Model},
 max weight- {MaxWeight},
 battery-{Battery},
-ststus-{Status},
-parsels in transfer-{ParcelInT},
+status-{Status},
+parcel in transfer-{ParcelInT},
 current locetion-{CurrentLocation}.
 ";
 
