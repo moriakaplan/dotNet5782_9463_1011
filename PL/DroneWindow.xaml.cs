@@ -27,8 +27,19 @@ namespace PL
             InitializeComponent();
             AddDroneOption.Visibility = Visibility.Visible;
             blObject = obj;
-            txtStatus.ItemsSource = Enum.GetValues(typeof(DroneStatus));
+            //txtStatus.ItemsSource = Enum.GetValues(typeof(DroneStatus));
+            //txtStatus.SelectedItem = DroneStatus.Maintenance;
+            txtStatus.Text = "Maintence";
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+        }
+
+        private void AddDrone_Click(object sender, RoutedEventArgs e)//להוסיף בדיקות תקינות וכו
+        {
+            int id;
+            int.TryParse(txtId.Text, out id);
+            int stationId;
+            int.TryParse((string)txtStationId.SelectedItem, out stationId);
+            blObject.AddDrone(id, txtModel.Text, (WeightCategories)txtWeight.SelectedItem, stationId);
         }
     }
 }
