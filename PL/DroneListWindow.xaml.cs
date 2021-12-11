@@ -33,19 +33,25 @@ namespace PL
 
         private void StatusFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (WeightFilter.SelectedItem != null) StatusAndWeightFilter();
-            DroneStatus status = (DroneStatus)StatusFilter.SelectedItem;
-            DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.Status == status);
+            if (WeightFilter.SelectedItem != null) StatusAndWeightFilter(sender, e);
+            else
+            {
+                DroneStatus status = (DroneStatus)StatusFilter.SelectedItem;
+                DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.Status == status);
+            }
         }
 
         private void WeightFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (StatusFilter.SelectedItem != null) StatusAndWeightFilter();
-            WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
-            DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.MaxWeight == weight);
+            if (StatusFilter.SelectedItem != null) StatusAndWeightFilter(sender, e);
+            else
+            {
+                WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
+                DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.MaxWeight == weight);
+            }
         }
 
-        private void StatusAndWeightFilter()
+        private void StatusAndWeightFilter(object sender, SelectionChangedEventArgs e)
         {
             DroneStatus status = (DroneStatus)StatusFilter.SelectedItem;
             WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
