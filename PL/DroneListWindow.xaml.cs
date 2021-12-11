@@ -53,9 +53,6 @@ namespace PL
 
         }
 
-        private void veiwDrone(object sender, MouseButtonEventArgs e)
-        {
-
-        }
+       
     }
 }
