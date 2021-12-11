@@ -53,7 +53,9 @@ namespace PL
 
         private void StatusAndWeightFilter(object sender, SelectionChangedEventArgs e)
         {
-            new DroneWindow(blObject).Show();
+            DroneStatus status = (DroneStatus)StatusFilter.SelectedItem;
+            WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
+            DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.Status == status && x.MaxWeight == weight);
         }
 
         private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -64,6 +66,11 @@ namespace PL
         private void veiwDrone(object sender, MouseButtonEventArgs e)
         {
 
+        }
+
+        private void AddDrone_Click(object sender, RoutedEventArgs e)
+        {
+            new DroneWindow(blObject).Show();
         }
     }
 }

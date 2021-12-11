@@ -33,6 +33,13 @@ namespace PL
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
 
+        private void txtStationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Location loc = blObject.DisplayStation((int)txtStationId.SelectedItem).Location;
+            txtLatti.Text = loc.Latti.ToString();
+            txtLongi.Text = loc.Longi.ToString();
+        }
+
         private void AddDrone_Click(object sender, RoutedEventArgs e)//להוסיף בדיקות תקינות וכו
         {
             int id;
