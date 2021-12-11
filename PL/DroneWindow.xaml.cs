@@ -24,25 +24,13 @@ namespace PL
         private Ibl blObject;
         public DroneWindow(Ibl obj)
         {
-
             InitializeComponent();
             AddDroneOption.Visibility = Visibility.Visible;
-            //ActionsDroneOption.Visibility = Visibility.Hidden;
             blObject = obj;
             //txtStatus.ItemsSource = Enum.GetValues(typeof(DroneStatus));
             //txtStatus.SelectedItem = DroneStatus.Maintenance;
             txtStatus.Text = "Maintence";
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            IEnumerable<int> stationsId = blObject.DisplayListOfStations().Select(x => x.Id);
-            txtStationId.ItemsSource = stationsId;
-            
-        }
-
-        private void txtStationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Location loc = blObject.DisplayStation((int)txtStationId.SelectedItem).Location;
-            txtLatti.Text = loc.Latti.ToString();
-            txtLongi.Text = loc.Longi.ToString();
         }
 
         private void AddDrone_Click(object sender, RoutedEventArgs e)//להוסיף בדיקות תקינות וכו

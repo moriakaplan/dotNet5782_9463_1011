@@ -8,8 +8,8 @@
         Title="AddDrone" Height="450" Width="400">
     <Grid x:Name="AddDroneOption">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="500*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -40,14 +40,8 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="90"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="Lattitude-" Grid.Column="0" Grid.Row="0" Margin="10"/>
-            <Label Content="Longitude-" Grid.Column="0" Grid.Row="1" Margin="10"/>
-            <TextBox x:Name="txtLatti" Grid.Column="1" Grid.Row="0" Margin="10" IsReadOnly="True"/>
-            <TextBox x:Name="txtLongi" Grid.Column="1" Grid.Row="1" Margin="10" IsReadOnly="True"/>
+            <TextBox x:Name="txtLatti" Text="lattitude" Grid.Row="0" Margin="10"/>
+            <TextBox x:Name="txtLongi" Text="lattitude" Grid.Row="1" Margin="10"/>
         </Grid>
         <Button Content="Add The Drone" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" Margin="156,0,0,0" VerticalAlignment="Center" Click="AddDrone_Click"/>
     </Grid>
