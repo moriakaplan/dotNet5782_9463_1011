@@ -100,7 +100,7 @@ namespace PL
             {
                 MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again");
             }
-            MessageBox.Show("the model had updated!:)");
+            MessageBox.Show("the model updated!:)");
         }
 
         private void SendDroneToCharge(object sender, RoutedEventArgs e)
@@ -126,13 +126,13 @@ namespace PL
                     MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                     //Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                 }
-                catch (IBL.DroneCantGoToChargeException ex) 
+                catch (IBL.DroneCantGoToChargeException) 
                 {
                     MessageBox.Show("Drone can't go to charge, apperantly there is not station that the drone can arrive to it");
                 }
 
             }
-
+            MessageBox.Show("drone sent");//#צריך לשלוח את זה רק אם הוא לא זרק כלום
         }
 
         private void ReleaseDroneFromCharge(object sender, RoutedEventArgs e)
@@ -150,8 +150,9 @@ namespace PL
                 int id;
                 int.TryParse(txtId.Text, out id);
                 TimeSpan time;
-                if (TimeSpan.TryParse(txtWeight.SelectedItem.ToString(), out time) == false)
+                if (TimeSpan.TryParse(txtTimeInCharge.Text.ToString(), out time) == false)
                 {
+                    
                     MessageBox.Show("the time is not good, change it");
                     return;
                 }
@@ -165,8 +166,10 @@ namespace PL
                     MessageBox.Show(ex.Message);
                 }
                 catch (IBL.DroneCantReleaseFromChargeException ex) { MessageBox.Show(ex.Message); }
-            }
+                catch(Exception ex) { MessageBox.Show(ex.Message); }
 
+            }
+            MessageBox.Show("the drone realesed");//#לזרוק רק אם הוא לא זרק כלום
         }
     }
 }
