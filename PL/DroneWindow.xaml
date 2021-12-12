@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="AddDrone" Height="450" Width="400">
-    <Grid x:Name="AddDroneOption">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200*"/>
             <ColumnDefinition Width="500*"/>
@@ -44,7 +44,8 @@
             <TextBox x:Name="txtLatti" Text="lattitude" Grid.Row="0" Margin="10"/>
             <TextBox x:Name="txtLongi" Text="lattitude" Grid.Row="1" Margin="10"/>
         </Grid>
-        <Button Content="Add The Drone" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Left" Margin="143,13,0,0" VerticalAlignment="Top" Click="AddDrone_Click"/>
+        <Button Content="Add The Drone" Grid.Column="0" Grid.Row="8" HorizontalAlignment="Center" VerticalAlignment="Center" Click="AddDrone_Click"/>
         <Label Content="Parcel In Transfer" HorizontalAlignment="Center"  Grid.Row="7" VerticalAlignment="Center"/>
+        <Button Content="Close The Window" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Close_Click" Grid.Column="1" Grid.Row="8"/>
     </Grid>
 </Window>

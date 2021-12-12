@@ -7,13 +7,16 @@
         mc:Ignorable="d"
         Title="DroneList" Height="640" Width="800">
     <Grid Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="397*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
             <RowDefinition Height="400*"/>
             <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-VerticalAlignment="Stretch" Width="auto">
+        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -25,14 +28,15 @@ VerticalAlignment="Stretch" Width="auto">
             <ComboBox x:Name="StatusFilter" Grid.Column="1" HorizontalAlignment="Left" Margin="67,22,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="StatusFilter_SelectionChanged"/>
             <ComboBox x:Name="WeightFilter" Grid.Column="3" HorizontalAlignment="Center" Margin="0,19,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="WeightFilter_SelectionChanged"/>
         </Grid>
-        <ListView x:Name="DroneListView" Margin="0,4,0,0" Grid.Row="1" SelectionChanged="DroneListView_SelectionChanged" MouseDoubleClick="ViewDrone">
+        <ListView x:Name="DroneListView" Margin="0,4,0,62" Grid.Row="1" SelectionChanged="DroneListView_SelectionChanged" MouseDoubleClick="ViewDrone" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add new Dronw" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" 
-                Click="AddDrone_Click"/>
+        <Button Content="Add new Dronw" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" 
+                Click="AddDrone_Click" Margin="355,0,0,0"/>
+        <Button Content="Close The Window" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Close_Click" Grid.Row="2" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

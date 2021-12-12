@@ -71,7 +71,12 @@ namespace PL
 
         private void ViewDrone(object sender, MouseButtonEventArgs e)
         {
-            new DroneWindow(blObject, e./*idשל הרחפן*/);
+            new DroneWindow(blObject, ((IBL.BO.DroneToList)DroneListView.SelectedItem).Id).Show();
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

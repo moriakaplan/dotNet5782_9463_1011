@@ -25,7 +25,6 @@ namespace PL
         public DroneWindow(Ibl obj)
         {
             InitializeComponent();
-            AddDroneOption.Visibility = Visibility.Visible;
             blObject = obj;
             //txtStatus.ItemsSource = Enum.GetValues(typeof(DroneStatus));
             //txtStatus.SelectedItem = DroneStatus.Maintenance;
@@ -35,7 +34,6 @@ namespace PL
         public DroneWindow(Ibl obj, int droneId)
         {
             InitializeComponent();
-            AddDroneOption.Visibility = Visibility.Visible;
             blObject = obj;
             Drone drone = blObject.DisplayDrone(droneId);
             //לאתחל את כל הפקדים ולעשות את רובם readonly
@@ -76,6 +74,12 @@ namespace PL
             int stationId;
             int.TryParse((string)txtStationId.SelectedItem, out stationId);
             blObject.AddDrone(id, txtModel.Text, (WeightCategories)txtWeight.SelectedItem, stationId);
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("do you want to close the window? \n the drone will not be added");
+            this.Close();
         }
     }
 }
