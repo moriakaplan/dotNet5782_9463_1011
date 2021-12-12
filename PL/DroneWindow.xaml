@@ -58,5 +58,6 @@
         <Button Content="release drone from charge" Click="ReleaseDroneFromCharge" HorizontalAlignment="Left" Margin="94,18,0,0" Grid.Row="8" VerticalAlignment="Top"/>
         <Label x:Name="timeInChargeLabel" Content="Time in charge-"  HorizontalAlignment="Left" Margin="92,38,0,0" Grid.Row="8" VerticalAlignment="Top" Height="26"/>
         <TextBox x:Name="txtTimeInCharge" HorizontalAlignment="Left" Margin="94,59,0,0" Grid.Row="8" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="106"/>
+        <Button Content="send drone to delivery" Click="SendDroneToDelivery" Grid.Column="1" HorizontalAlignment="Left" Margin="10,12,0,0" Grid.Row="8" VerticalAlignment="Top"/>
     </Grid>
 </Window>

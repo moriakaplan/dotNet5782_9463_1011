@@ -43,12 +43,12 @@ namespace PL
             //לאתחל את כל הפקדים ולעשות את רובם readonly
             //להסתיר את כל הפקדים שלא צריך
             txtId.Text = drone.Id.ToString();
-            txtLatti.Text= drone.CurrentLocation.Latti.ToString();
-            txtLongi.Text= drone.CurrentLocation.Longi.ToString();
-            txtModel.Text= drone.Model.ToString();
+            txtLatti.Text = drone.CurrentLocation.Latti.ToString();
+            txtLongi.Text = drone.CurrentLocation.Longi.ToString();
+            txtModel.Text = drone.Model.ToString();
             txtBattery.Text = string.Format($"{drone.Battery:0.000}");
-            txtStatus.Text= drone.Status.ToString();
-            txtWeight.Text= drone.MaxWeight.ToString();
+            txtStatus.Text = drone.Status.ToString();
+            txtWeight.Text = drone.MaxWeight.ToString();
 
             txtId.IsReadOnly = true;
             txtLatti.IsReadOnly = true;
@@ -100,7 +100,7 @@ namespace PL
             {
                 MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again");
             }
-            MessageBox.Show("the model updated!:)");
+            MessageBox.Show("the model updated successfully");
         }
 
         private void SendDroneToCharge(object sender, RoutedEventArgs e)
@@ -126,13 +126,13 @@ namespace PL
                     MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                     //Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                 }
-                catch (IBL.DroneCantGoToChargeException) 
+                catch (IBL.DroneCantGoToChargeException)
                 {
                     MessageBox.Show("Drone can't go to charge, apperantly there is not station that the drone can arrive to it");
                 }
 
             }
-            MessageBox.Show("drone sent");//#צריך לשלוח את זה רק אם הוא לא זרק כלום
+            MessageBox.Show("drone sent successfully");//#צריך לשלוח את זה רק אם הוא לא זרק כלום
         }
 
         private void ReleaseDroneFromCharge(object sender, RoutedEventArgs e)
@@ -152,7 +152,7 @@ namespace PL
                 TimeSpan time;
                 if (TimeSpan.TryParse(txtTimeInCharge.Text.ToString(), out time) == false)
                 {
-                    
+
                     MessageBox.Show("the time is not good, change it");
                     return;
                 }
@@ -166,10 +166,34 @@ namespace PL
                     MessageBox.Show(ex.Message);
                 }
                 catch (IBL.DroneCantReleaseFromChargeException ex) { MessageBox.Show(ex.Message); }
-                catch(Exception ex) { MessageBox.Show(ex.Message); }
+                catch (Exception ex) { MessageBox.Show(ex.Message); }
 
             }
-            MessageBox.Show("the drone realesed");//#לזרוק רק אם הוא לא זרק כלום
+            MessageBox.Show("the drone realesed successfully");//#לזרוק רק אם הוא לא זרק כלום
+        }
+
+        private void SendDroneToDelivery(object sender, RoutedEventArgs e)
+        {
+            DroneStatus status;
+            DroneStatus.TryParse(txtStatus.Text, out status);
+            if (txtStatus.Text != DroneStatus.Available.ToString())
+            {
+                MessageBox.Show("the drone is not in available");
+            }
+            else
+            {
+                int id;
+                int.TryParse(txtId.Text, out id);
+                try
+                {
+                    blObject.SendDroneToCharge(id);
+                }
+                catch (IBL.NotExistIDException)
+                {
+                    MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
+                }
+                catch (IBL.DroneCantTakeParcelException) { MessageBox.Show("drone cant be accociated"); }
+            }
         }
     }
 }
