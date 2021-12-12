@@ -19,9 +19,10 @@ namespace IBL.BO
         public double TransportDistance { get; set; }
         public override string ToString()
         {
+            string mode = InTheWay ? "in the way to the destination" : "wait for picking";
             return @$"Id: #{Id}:
 sender- {Sender},
-parcel mode- {InTheWay},
+parcel mode- {mode},
 sender- {Sender},
 reciver- {Target},
 weight- {Weight},

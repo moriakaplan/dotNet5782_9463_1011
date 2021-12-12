@@ -32,6 +32,9 @@ namespace PL
             rowBattery.Height = new GridLength(0);
             lblBattery.Visibility = Visibility.Hidden;
             txtBattery.Visibility = Visibility.Hidden;
+            rowParcel.Height = new GridLength(0);
+            lblParcel.Visibility = Visibility.Hidden;
+            txtParcel.Visibility = Visibility.Hidden;
             close.Visibility = Visibility.Hidden;
             update.Visibility = Visibility.Hidden;
             charge.Visibility = Visibility.Hidden;
@@ -83,7 +86,8 @@ namespace PL
         private void AddDrone_Click(object sender, RoutedEventArgs e)//להוסיף בדיקות תקינות וכו
         {
             int id;
-            int.TryParse(txtId.Text, out id);
+            if(int.TryParse(txtId.Text, out id)==false) MessageBox.Show("the id is not correct, please try again\n");
+            if(id<=0) MessageBox.Show("the id suppose to be possible, please try again\n");
             int stationId;
             int.TryParse((string)txtStationId.SelectedItem, out stationId);
             try
