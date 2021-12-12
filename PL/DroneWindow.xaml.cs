@@ -42,13 +42,13 @@ namespace PL
             txtLatti.Text= drone.CurrentLocation.Latti.ToString();
             txtLongi.Text= drone.CurrentLocation.Longi.ToString();
             txtModel.Text= drone.Model.ToString();
-            txtBattery.Text= drone.Battery.ToString();
+            txtBattery.Text = string.Format($"{drone.Battery:0.000}");
             txtStatus.Text= drone.Status.ToString();
             txtWeight.Text= drone.MaxWeight.ToString();
 
             txtId.IsReadOnly = true;
             txtLatti.IsReadOnly = true;
-            txtModel.IsReadOnly = true;
+            txtModel.IsReadOnly = false;
             txtLongi.IsReadOnly = true;
             txtBattery.IsReadOnly = true;
             txtStatus.IsReadOnly = true;
