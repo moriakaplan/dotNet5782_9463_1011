@@ -198,7 +198,8 @@ namespace PL
             DroneStatus.TryParse(txtStatus.Text, out status);
             if (txtStatus.Text != DroneStatus.Available.ToString())
             {
-                MessageBox.Show("the drone is not in available");
+                MessageBox.Show("the drone is not available");
+                return;
             }
             else
             {
@@ -211,9 +212,67 @@ namespace PL
                 catch (IBL.NotExistIDException)
                 {
                     MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
+                    return;
                 }
-                catch (IBL.DroneCantTakeParcelException) { MessageBox.Show("drone cant be accociated"); }
+                catch (IBL.DroneCantTakeParcelException) { MessageBox.Show("drone cant be accociated");
+                    return;
+                }
+                MessageBox.Show("the drone has send to delivary");
             }
+        }
+
+        private void PickUpParcel(object sender, RoutedEventArgs e)
+        {
+            DroneStatus status;
+            DroneStatus.TryParse(txtStatus.Text, out status);
+            if (txtStatus.Text != DroneStatus.Associated.ToString())//#צריך איכשהו לבדוק אם החבילה לאנאספה
+            {
+                MessageBox.Show("the drone is not Associated");
+                return;
+            }
+            else
+            {
+                int id;
+                int.TryParse(txtId.Text, out id);
+                try
+                {
+                    blObject.PickParcelByDrone(id);
+                }
+                catch (IBL.NotExistIDException)
+                {
+                    MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
+                    return;
+                }
+                catch (IBL.DroneCantTakeParcelException) { MessageBox.Show("Drone cant pick up the parcel"); return; }
+
+            }
+            MessageBox.Show("the drone piked up the parcel");
+        }
+
+        private void DeliverParcel(object sender, RoutedEventArgs e)
+        {
+            DroneStatus status;
+            DroneStatus.TryParse(txtStatus.Text, out status);
+            if (txtStatus.Text != DroneStatus.Delivery.ToString())//#צריך איכשהו לבדוק אם החבילה לאנאספה
+            {
+                MessageBox.Show("the drone is not in delivery");
+                return;
+            }
+            else
+            {
+                int id;
+                int.TryParse(txtId.Text, out id);
+                try
+                {
+                    blObject.DeliverParcelByDrone(id);
+                }
+                catch (IBL.NotExistIDException)
+                {
+                    MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
+                }
+                catch (IBL.DroneCantTakeParcelException) { MessageBox.Show("drone cant deliver the parcel"); return; }
+            }
+            MessageBox.Show("drone deliver the parcel successfully");
         }
     }
 }
