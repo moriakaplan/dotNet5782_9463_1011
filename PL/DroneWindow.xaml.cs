@@ -31,7 +31,7 @@ namespace PL
             //txtStatus.ItemsSource = Enum.GetValues(typeof(DroneStatus));
             //txtStatus.SelectedItem = DroneStatus.Maintenance;
             txtStationId.ItemsSource = blObject.DisplayListOfStations().Select(x => x.Id);
-            txtStatus.Text = "Maintence";
+            txtStatus.Text = DroneStatus.Maintenance.ToString();
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
         public DroneWindow(Ibl obj, int droneId) //actions
@@ -46,13 +46,13 @@ namespace PL
             txtLatti.Text= drone.CurrentLocation.Latti.ToString();
             txtLongi.Text= drone.CurrentLocation.Longi.ToString();
             txtModel.Text= drone.Model.ToString();
-            txtBattery.Text= drone.Battery.ToString();
+            txtBattery.Text = string.Format($"{drone.Battery:0.000}");
             txtStatus.Text= drone.Status.ToString();
             txtWeight.Text= drone.MaxWeight.ToString();
 
             txtId.IsReadOnly = true;
             txtLatti.IsReadOnly = true;
-            txtModel.IsReadOnly = true;
+            txtModel.IsReadOnly = false;
             txtLongi.IsReadOnly = true;
             txtBattery.IsReadOnly = true;
             txtStatus.IsReadOnly = true;
@@ -86,6 +86,87 @@ namespace PL
                 if (mb == MessageBoxResult.Yes)
                     this.Close();
             }
+        }
+
+        private void UpdateDroneModel(object sender, RoutedEventArgs e)
+        {
+            int id;
+            int.TryParse(txtId.Text, out id);
+            try
+            {
+                blObject.UpdateDroneModel(id, txtModel.Text);
+            }
+            catch (IBL.NotExistIDException)
+            {
+                MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again");
+            }
+            MessageBox.Show("the model had updated!:)");
+        }
+
+        private void SendDroneToCharge(object sender, RoutedEventArgs e)
+        {
+            DroneStatus status;
+            DroneStatus.TryParse(txtStatus.Text, out status);
+
+            if (status != DroneStatus.Available)
+            {
+                MessageBox.Show("the drone is not available, it cant go to charge");
+            }
+            else
+            {
+                int id;
+                int.TryParse(txtId.Text, out id);
+                try
+                {
+                    blObject.SendDroneToCharge(id);
+                }
+                catch (IBL.NotExistIDException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
+                    //Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
+                }
+                catch (IBL.DroneCantGoToChargeException ex) 
+                {
+                    MessageBox.Show("Drone can't go to charge, apperantly there is not station that the drone can arrive to it");
+                }
+
+            }
+
+        }
+
+        private void ReleaseDroneFromCharge(object sender, RoutedEventArgs e)
+        {
+            DroneStatus status;
+            DroneStatus.TryParse(txtStatus.Text, out status);
+            if (txtStatus.Text != DroneStatus.Maintenance.ToString())
+            {
+                MessageBox.Show("the drone is not in maintenance, it cant realese from charge");
+            }
+            else
+            {
+                //timeInChargeLabel.Visibility = Visibility.Visible;
+                //txtTimeInCharge.Visibility = Visibility.Visible;
+                int id;
+                int.TryParse(txtId.Text, out id);
+                TimeSpan time;
+                if (TimeSpan.TryParse(txtWeight.SelectedItem.ToString(), out time) == false)
+                {
+                    MessageBox.Show("the time is not good, change it");
+                    return;
+                }
+                try
+                {
+                    blObject.ReleaseDroneFromeCharge(id, time);
+                }
+                catch (IBL.NotExistIDException ex)
+                {
+                    //Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
+                    MessageBox.Show(ex.Message);
+                }
+                catch (IBL.DroneCantReleaseFromChargeException ex) { MessageBox.Show(ex.Message); }
+            }
+
         }
     }
 }

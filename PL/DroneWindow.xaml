@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="AddDrone" Height="450" Width="400">
+        Title="AddDrone" Height="650" Width="400">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
@@ -20,7 +20,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Label Content="Id:" Grid.Row="0" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
         <Label Content="Model:" Grid.Row="1" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
@@ -50,8 +50,13 @@
             <TextBox x:Name="txtLatti" Grid.Row="0" Grid.Column="1" Margin="10"/>
             <TextBox x:Name="txtLongi" Grid.Row="1" Grid.Column="1" Margin="10"/>
         </Grid>
-        <Button Content="Add The Drone" Grid.Column="0" Grid.Row="8" HorizontalAlignment="Center" VerticalAlignment="Center" Click="AddDrone_Click"/>
+        <Button Content="Add The Drone" Grid.Column="0" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Top" Click="AddDrone_Click" Margin="0,18,0,0"/>
         <Label Content="Parcel In Transfer" HorizontalAlignment="Center"  Grid.Row="7" VerticalAlignment="Center"/>
         <Button Content="Close The Window" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Close_Click" Grid.Column="1" Grid.Row="8"/>
+        <Button Content="update the model" Click="UpdateDroneModel" HorizontalAlignment="Left" Margin="101,32,0,0" Grid.Row="8" VerticalAlignment="Top" Grid.Column="1"/>
+        <Button Content="send drone to charge" Grid.Column="1" HorizontalAlignment="Left" Margin="83,67,0,0" Grid.Row="8" VerticalAlignment="Top" Click="SendDroneToCharge"/>
+        <Button Content="release drone from charge" Click="ReleaseDroneFromCharge" HorizontalAlignment="Left" Margin="94,18,0,0" Grid.Row="8" VerticalAlignment="Top"/>
+        <Label x:Name="timeInChargeLabel" Content="Time in charge-"  HorizontalAlignment="Left" Margin="92,38,0,0" Grid.Row="8" VerticalAlignment="Top" Height="26"/>
+        <TextBox x:Name="txtTimeInCharge" HorizontalAlignment="Left" Margin="94,59,0,0" Grid.Row="8" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="106"/>
     </Grid>
 </Window>
