@@ -68,5 +68,7 @@
                  HorizontalAlignment="Left" Margin="22,123,0,0" VerticalAlignment="Top" Width="106" Grid.Column="1"/>
         <Button Content="send drone&#xD;&#xA;to delivery" Click="SendDroneToDelivery" Grid.Column="1" Grid.Row="8" 
                 HorizontalAlignment="Left" Margin="138,18,0,0" VerticalAlignment="Top" Width="78"/>
+        <Button Content="pick up parcel" Click="PickUpParcel" HorizontalAlignment="Left" Margin="52,51,0,0" Grid.Row="8" VerticalAlignment="Top"/>
+        <Button Content="deliver parcel" Click="DeliverParcel" HorizontalAlignment="Left" Margin="100,94,0,0" Grid.Row="8" VerticalAlignment="Top"/>
     </Grid>
 </Window>
