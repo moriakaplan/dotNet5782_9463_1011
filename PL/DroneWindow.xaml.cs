@@ -240,15 +240,16 @@ namespace PL
         private void PickUpParcel(object sender, RoutedEventArgs e)
         {
             DroneStatus status;
+            int id;
             DroneStatus.TryParse(txtStatus.Text, out status);
-            if (txtStatus.Text != DroneStatus.Associated.ToString())//#צריך איכשהו לבדוק אם החבילה לאנאספה
+            int.TryParse(txtPacel.Text, out id);
+            if (txtStatus.Text != DroneStatus.Associated.ToString()&&blObject.DisplayParcel(id).PickUpTime==null)//#צריך איכשהו לבדוק אם החבילה לאנאספה
             {
                 MessageBox.Show("the drone is not Associated");
                 return;
             }
             else
             {
-                int id;
                 int.TryParse(txtId.Text, out id);
                 try
                 {
