@@ -69,7 +69,12 @@ namespace PL
             txtBattery.IsReadOnly = true;
             txtStatus.IsReadOnly = true;
             txtWeight.IsReadOnly = true;
-
+            txtId.SelectionTextBrush = Brushes.Red;
+            txtLatti.SelectionTextBrush = Brushes.Gray;
+            txtLongi.SelectionTextBrush = Brushes.Gray;
+            txtBattery.SelectionTextBrush = Brushes.Gray;
+            txtParcel.SelectionTextBrush = Brushes.Gray;
+            
             rowStation.Height = new GridLength(0);
             txtStationId.Visibility = Visibility.Hidden;
             lblStation.Visibility = Visibility.Hidden;
@@ -86,19 +91,26 @@ namespace PL
         private void AddDrone_Click(object sender, RoutedEventArgs e)//להוסיף בדיקות תקינות וכו
         {
             int id;
-            if(int.TryParse(txtId.Text, out id)==false) MessageBox.Show("the id is not correct, please try again\n");
+            //if (!checkId()) MessageBox.Show("the id is not correct, please try again\n");
+            if (txtModel.Text == null) MessageBox.Show("please enter an id\n");
+            if (int.TryParse(txtId.Text, out id)==false) MessageBox.Show("the id is not correct, please try again\n");
             if(id<=0) MessageBox.Show("the id suppose to be possible, please try again\n");
-            int stationId;
-            int.TryParse((string)txtStationId.SelectedItem, out stationId);
-            try
+            if (txtModel.Text == null) MessageBox.Show("please enter a model\n");
+            if (txtWeight == null) MessageBox.Show("please enter maximum weight\n");
+            else
             {
-                blObject.AddDrone(id, txtModel.Text, (WeightCategories)txtWeight.SelectedItem, stationId);
-                MessageBox.Show("The drone added successfully");
-                //עדכון רשימת הרחפנים
-            }
-            catch (IBL.ExistIdException)
-            {
-                MessageBox.Show("this id already exist, please choose another one and try again\n");
+                int stationId;
+                int.TryParse((string)txtStationId.SelectedItem, out stationId);
+                try
+                {
+                    blObject.AddDrone(id, txtModel.Text, (WeightCategories)txtWeight.SelectedItem, stationId);
+                    MessageBox.Show("The drone added successfully");
+                    //עדכון רשימת הרחפנים
+                }
+                catch (IBL.ExistIdException)
+                {
+                    MessageBox.Show("this id already exist, please choose another one and try again\n");
+                }
             }
         }
 
@@ -278,5 +290,27 @@ namespace PL
             }
             MessageBox.Show("drone deliver the parcel successfully");
         }
+
+        private void IdColor(object sender, TextChangedEventArgs e)
+        {
+            int id;
+            if(int.TryParse(txtId.Text, out id)==false||id<=0)
+            {
+                txtId.BorderBrush = Brushes.Red;
+                txtId.Background = Brushes.Red;
+            }
+            else
+            {
+                txtId.BorderBrush = Brushes.White;
+                txtId.Background = Brushes.White;
+            }
+        }
+        //private bool checkId()
+        //{
+        //    int id;
+        //    if (txtId.Text == null) return false;
+        //    if (int.TryParse(txtId.Text, out id)==false) return false;
+        //    return id > 0;
+        //}
     }
 }

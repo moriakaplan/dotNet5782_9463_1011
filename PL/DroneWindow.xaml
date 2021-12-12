@@ -31,13 +31,13 @@
         <Label Content="Location:" Grid.Row="7" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
         <Label x:Name="lblStation" Content="Station For First Location:" Grid.Row="5" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
 
-        <TextBox x:Name="txtId" Grid.Row="0" Grid.Column="1" Margin="10"/>
+        <TextBox x:Name="txtId" Grid.Row="0" Grid.Column="1" Margin="10" TextChanged="IdColor"/>
         <TextBox x:Name="txtModel" Grid.Row="1" Grid.Column="1" Margin="10"/>
-        <TextBox x:Name="txtBattery" Grid.Row="2" Grid.Column="1" Margin="10" IsReadOnly="True" TextChanged=""/>
-        <TextBox x:Name="txtStatus" Grid.Row="3" Grid.Column="1" Margin="10" IsReadOnly="True"/>
+        <TextBox x:Name="txtBattery" Grid.Row="2" Grid.Column="1" Margin="10" IsReadOnly="True" SelectionTextBrush="Gray"/>
+        <TextBox x:Name="txtStatus" Grid.Row="3" Grid.Column="1" Margin="10" IsReadOnly="True" SelectionTextBrush="Gray"/>
         <ComboBox x:Name="txtWeight" Grid.Row="4" Grid.Column="1" Margin="10"/>
         <ComboBox x:Name="txtStationId" Grid.Row="5" Grid.Column="1" Margin="10" SelectionChanged="txtStationId_SelectionChanged"/>
-        <TextBox x:Name="txtParcel" Grid.Row="6" Grid.Column="1" Margin="10" SelectionChanged="txtStationId_SelectionChanged"/>
+        <TextBox x:Name="txtParcel" Grid.Row="6" Grid.Column="1" Margin="10"/>
         <Grid Grid.Column="1" Grid.Row="7">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -56,19 +56,19 @@
                 HorizontalAlignment="Left" VerticalAlignment="Top" Margin="26,97,0,0" Width="78"/>
         <Button x:Name="close" Content="Close The Window" Grid.Column="1" Grid.Row="8" Click="Close_Click"
                 HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-        <Button x:Name="update" Content="update the&#xD;&#xA;model" Click="UpdateDroneModel" Grid.Row="8" Grid.Column="1"
-                HorizontalAlignment="Left" Margin="22,18,0,0" VerticalAlignment="Top" Width="78"/>
+        <Button x:Name="update" Content="update the&#xD;&#xA;model" Click="UpdateDroneModel" Grid.Row="8"
+                HorizontalAlignment="Left" Margin="53,18,0,0" VerticalAlignment="Top" Width="78"/>
         <Button x:Name="charge" Content="send drone&#xD;&#xA;to charge" Click="SendDroneToCharge" Grid.Column="1" Grid.Row="8" 
-                HorizontalAlignment="Left" Margin="138,68,0,0" VerticalAlignment="Top" Width="78"/>
+                HorizontalAlignment="Left" Margin="22,19,0,0" VerticalAlignment="Top" Width="78"/>
         <Button x:Name="releaseFromCharge" Content="release drone&#xD;&#xA;from charge" Click="ReleaseDroneFromCharge" Grid.Row="8" 
-                HorizontalAlignment="Left" Margin="22,68,0,0" VerticalAlignment="Top" Grid.Column="1" Width="78"/>
+                HorizontalAlignment="Left" Margin="136,9,0,0" VerticalAlignment="Top" Grid.Column="1" Width="78"/>
         <Label x:Name="lblTimeInCharge" Content="Time in charge-" Grid.Row="8" 
-               HorizontalAlignment="Left" Margin="21,101,0,0" VerticalAlignment="Top" Height="26" Grid.Column="1"/>
+               HorizontalAlignment="Left" Margin="135,39,0,0" VerticalAlignment="Top" Height="26" Grid.Column="1"/>
         <TextBox x:Name="txtTimeInCharge" Grid.Row="8"
-                 HorizontalAlignment="Left" Margin="22,123,0,0" VerticalAlignment="Top" Width="106" Grid.Column="1"/>
-        <Button Content="send drone&#xD;&#xA;to delivery" Click="SendDroneToDelivery" Grid.Column="1" Grid.Row="8" 
-                HorizontalAlignment="Left" Margin="138,18,0,0" VerticalAlignment="Top" Width="78"/>
-        <Button Content="pick up parcel" Click="PickUpParcel" HorizontalAlignment="Left" Margin="52,51,0,0" Grid.Row="8" VerticalAlignment="Top"/>
-        <Button Content="deliver parcel" Click="DeliverParcel" HorizontalAlignment="Left" Margin="100,94,0,0" Grid.Row="8" VerticalAlignment="Top"/>
+                 HorizontalAlignment="Left" Margin="136,61,0,0" VerticalAlignment="Top" Width="106" Grid.Column="1"/>
+        <Button Content="send drone&#xD;&#xA;to delivery" Click="SendDroneToDelivery" Grid.Row="8" 
+                HorizontalAlignment="Left" Margin="53,85,0,0" VerticalAlignment="Top" Width="78"/>
+        <Button Content="pick up &#xD;&#xA;parcel" Click="PickUpParcel" HorizontalAlignment="Left" Margin="22,84,0,0" Grid.Row="8" VerticalAlignment="Top" Width="78" Grid.Column="1"/>
+        <Button Content="deliver&#xD;&#xA;parcel" Click="DeliverParcel" HorizontalAlignment="Left" Margin="136,84,0,0" Grid.Row="8" VerticalAlignment="Top" Width="78" Grid.Column="1"/>
     </Grid>
 </Window>
