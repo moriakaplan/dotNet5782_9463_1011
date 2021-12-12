@@ -22,16 +22,17 @@ namespace PL
     public partial class DroneWindow : Window
     {
         private Ibl blObject;
-        public DroneWindow(Ibl obj)
+        public DroneWindow(Ibl obj) //add
         {
             InitializeComponent();
             blObject = obj;
             //txtStatus.ItemsSource = Enum.GetValues(typeof(DroneStatus));
             //txtStatus.SelectedItem = DroneStatus.Maintenance;
+            txtStationId.ItemsSource = blObject.DisplayListOfStations().Select(x => x.Id);
             txtStatus.Text = "Maintence";
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
-        public DroneWindow(Ibl obj, int droneId)
+        public DroneWindow(Ibl obj, int droneId) //actions
         {
             InitializeComponent();
             blObject = obj;
@@ -78,8 +79,9 @@ namespace PL
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("do you want to close the window? \n the drone will not be added");
-            this.Close();
+            MessageBoxResult mb = MessageBox.Show("do you want to close the window? \n the drone will not be added", "cancel adding of drone" , MessageBoxButton.YesNo);
+            if (mb == MessageBoxResult.Yes)
+                this.Close();
         }
     }
 }
