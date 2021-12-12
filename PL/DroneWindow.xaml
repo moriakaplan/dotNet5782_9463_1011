@@ -54,7 +54,7 @@
         <Label Content="Parcel In Transfer" HorizontalAlignment="Center"  Grid.Row="7" VerticalAlignment="Center"/>
         <Button Content="Close The Window" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Close_Click" Grid.Column="1" Grid.Row="8"/>
         <Button Content="update the model" Click="UpdateDroneModel" HorizontalAlignment="Left" Margin="101,32,0,0" Grid.Row="8" VerticalAlignment="Top" Grid.Column="1"/>
-        <Button Content="send drone to charge" Grid.Column="1" HorizontalAlignment="Left" Margin="83,67,0,0" Grid.Row="8" VerticalAlignment="Top" Click="SendDroneToCharge"/>
+        <Button Content="send drone to charge" Click="SendDroneToCharge" Grid.Column="1" HorizontalAlignment="Left" Margin="83,67,0,0" Grid.Row="8" VerticalAlignment="Top"/>
         <Button Content="release drone from charge" Click="ReleaseDroneFromCharge" HorizontalAlignment="Left" Margin="94,18,0,0" Grid.Row="8" VerticalAlignment="Top"/>
         <Label x:Name="timeInChargeLabel" Content="Time in charge-"  HorizontalAlignment="Left" Margin="92,38,0,0" Grid.Row="8" VerticalAlignment="Top" Height="26"/>
         <TextBox x:Name="txtTimeInCharge" HorizontalAlignment="Left" Margin="94,59,0,0" Grid.Row="8" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="106"/>
