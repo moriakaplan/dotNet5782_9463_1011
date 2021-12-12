@@ -38,6 +38,9 @@ namespace PL
             close.Visibility = Visibility.Hidden;
             update.Visibility = Visibility.Hidden;
             charge.Visibility = Visibility.Hidden;
+            sendDeliver.Visibility = Visibility.Hidden;
+            pickParcel.Visibility = Visibility.Hidden;
+            deliver.Visibility = Visibility.Hidden;
             releaseFromCharge.Visibility = Visibility.Hidden;
             lblTimeInCharge.Visibility = Visibility.Hidden;
             txtTimeInCharge.Visibility = Visibility.Hidden;
@@ -61,6 +64,7 @@ namespace PL
             txtBattery.Text = string.Format($"{drone.Battery:0.000}");
             txtStatus.Text = drone.Status.ToString();
             txtWeight.Text = drone.MaxWeight.ToString();
+            txtParcel.Text = drone.ParcelInT.Id.ToString();
 
             txtId.IsReadOnly = true;
             txtLatti.IsReadOnly = true;
@@ -295,15 +299,15 @@ namespace PL
         private void IdColor(object sender, TextChangedEventArgs e)
         {
             int id;
-            if(int.TryParse(txtId.Text, out id)==false||id<=0)
-            {
-                txtId.BorderBrush = Brushes.Red;
-                txtId.Background = Brushes.Red;
-            }
-            else
+            if (txtId.Text==null || (int.TryParse(txtId.Text, out id) && id > 0))
             {
                 txtId.BorderBrush = Brushes.White;
                 txtId.Background = Brushes.White;
+            }
+            else
+            {
+                txtId.BorderBrush = Brushes.Red;
+                txtId.Background = Brushes.Red;
             }
         }
         //private bool checkId()
