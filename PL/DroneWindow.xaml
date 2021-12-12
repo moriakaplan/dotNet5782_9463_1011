@@ -8,7 +8,7 @@
         Title="AddDrone" Height="450" Width="400">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="500*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -42,11 +42,13 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="80"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="txtLatti" Text="lattitude" Grid.Row="0" Grid.Column="1" Margin="10"/>
-            <TextBox x:Name="txtLongi" Text="lattitude" Grid.Row="1" Grid.Column="1" Margin="10"/>
+            <Label Content="Lattitude::" Grid.Row="0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+            <Label Content="longitude:" Grid.Row="1" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+            <TextBox x:Name="txtLatti" Grid.Row="0" Grid.Column="1" Margin="10"/>
+            <TextBox x:Name="txtLongi" Grid.Row="1" Grid.Column="1" Margin="10"/>
         </Grid>
         <Button Content="Add The Drone" Grid.Column="0" Grid.Row="8" HorizontalAlignment="Center" VerticalAlignment="Center" Click="AddDrone_Click"/>
         <Label Content="Parcel In Transfer" HorizontalAlignment="Center"  Grid.Row="7" VerticalAlignment="Center"/>

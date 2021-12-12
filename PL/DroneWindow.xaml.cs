@@ -22,9 +22,11 @@ namespace PL
     public partial class DroneWindow : Window
     {
         private Ibl blObject;
+        bool isInActionsState;
         public DroneWindow(Ibl obj) //add
         {
             InitializeComponent();
+            isInActionsState = false;
             blObject = obj;
             //txtStatus.ItemsSource = Enum.GetValues(typeof(DroneStatus));
             //txtStatus.SelectedItem = DroneStatus.Maintenance;
@@ -35,6 +37,7 @@ namespace PL
         public DroneWindow(Ibl obj, int droneId) //actions
         {
             InitializeComponent();
+            isInActionsState = true;
             blObject = obj;
             Drone drone = blObject.DisplayDrone(droneId);
             //לאתחל את כל הפקדים ולעשות את רובם readonly
@@ -57,8 +60,6 @@ namespace PL
 
             txtStationId.Visibility = Visibility.Hidden;
             StationLabel.Visibility = Visibility.Hidden;
-            txtStatus.Text = "Maintence";
-            txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
 
         private void txtStationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -79,9 +80,12 @@ namespace PL
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult mb = MessageBox.Show("do you want to close the window? \n the drone will not be added", "cancel adding of drone" , MessageBoxButton.YesNo);
-            if (mb == MessageBoxResult.Yes)
-                this.Close();
+            if (isInActionsState == false)
+            {
+                MessageBoxResult mb = MessageBox.Show("do you want to close the window? \n the drone will not be added", "cancel adding of drone", MessageBoxButton.YesNo);
+                if (mb == MessageBoxResult.Yes)
+                    this.Close();
+            }
         }
     }
 }
