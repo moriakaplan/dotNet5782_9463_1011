@@ -28,8 +28,17 @@ namespace PL
             InitializeComponent();
             isInActionsState = false;
             blObject = obj;
-            //txtStatus.ItemsSource = Enum.GetValues(typeof(DroneStatus));
-            //txtStatus.SelectedItem = DroneStatus.Maintenance;
+
+            rowBattery.Height = new GridLength(0);
+            lblBattery.Visibility = Visibility.Hidden;
+            txtBattery.Visibility = Visibility.Hidden;
+            close.Visibility = Visibility.Hidden;
+            update.Visibility = Visibility.Hidden;
+            charge.Visibility = Visibility.Hidden;
+            releaseFromCharge.Visibility = Visibility.Hidden;
+            lblTimeInCharge.Visibility = Visibility.Hidden;
+            txtTimeInCharge.Visibility = Visibility.Hidden;
+            
             txtStationId.ItemsSource = blObject.DisplayListOfStations().Select(x => x.Id);
             txtStatus.Text = DroneStatus.Maintenance.ToString();
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
@@ -58,8 +67,10 @@ namespace PL
             txtStatus.IsReadOnly = true;
             txtWeight.IsReadOnly = true;
 
+            rowStation.Height = new GridLength(0);
             txtStationId.Visibility = Visibility.Hidden;
-            StationLabel.Visibility = Visibility.Hidden;
+            lblStation.Visibility = Visibility.Hidden;
+            add.Visibility = Visibility.Hidden;
         }
 
         private void txtStationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -75,7 +86,16 @@ namespace PL
             int.TryParse(txtId.Text, out id);
             int stationId;
             int.TryParse((string)txtStationId.SelectedItem, out stationId);
-            blObject.AddDrone(id, txtModel.Text, (WeightCategories)txtWeight.SelectedItem, stationId);
+            try
+            {
+                blObject.AddDrone(id, txtModel.Text, (WeightCategories)txtWeight.SelectedItem, stationId);
+                MessageBox.Show("The drone added successfully");
+                //עדכון רשימת הרחפנים
+            }
+            catch (IBL.ExistIdException)
+            {
+                MessageBox.Show("this id already exist, please choose another one and try again\n");
+            }
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
