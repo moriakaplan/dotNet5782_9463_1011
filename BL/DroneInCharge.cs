@@ -13,7 +13,7 @@ namespace IBL.BO
         public override string ToString()
         {
             return @$"drone #{Id}:
-battery- {Battery}.
+battery- {string.Format($"{Battery:0.000}")}.
 ";
         }
     }

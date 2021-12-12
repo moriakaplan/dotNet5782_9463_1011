@@ -22,7 +22,7 @@ namespace IBL.BO
             return @$"drone #{Id}:
 model- {Model},
 max weight- {MaxWeight},
-battery-{Battery},
+battery-{string.Format($"{Battery:0.000}")},
 status-{Status},
 parcel in transfer-{ParcelInT},
 current locetion-{CurrentLocation}.

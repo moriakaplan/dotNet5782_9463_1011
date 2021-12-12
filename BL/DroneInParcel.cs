@@ -15,7 +15,7 @@ namespace IBL.BO
         {
             return @$"
     drone #{Id}:
-    battrey- {Battery},
+    battrey- {string.Format($"{Battery:0.000}")},
     current locetion- {CurrentLocation}";
 
         }
