@@ -239,7 +239,8 @@ namespace PL
                 int.TryParse(txtId.Text, out id);
                 try
                 {
-                    blObject.SendDroneToCharge(id);
+                    // blObject.SendDroneToCharge(id);
+                    blObject.AssignParcelToDrone(id);
                 }
                 catch (IBL.NotExistIDException)
                 {
