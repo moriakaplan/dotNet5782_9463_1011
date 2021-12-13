@@ -34,6 +34,10 @@ namespace PL
         private Ibl blObject;
         bool isInActionsState;
         bool canClose = false;
+        /// <summary>
+        /// constructor for making window for add drone
+        /// </summary>
+        /// <param name="obj"></param>
         public DroneWindow(Ibl obj) //add
         {
             InitializeComponent();
@@ -65,6 +69,11 @@ namespace PL
             txtStatus.Text = DroneStatus.Maintenance.ToString();
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
+        /// <summary>
+        /// constructor for making window for actions with specific drone
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="droneId"></param>
         public DroneWindow(Ibl obj, int droneId) //actions
         {
             InitializeComponent();
@@ -109,32 +118,47 @@ namespace PL
             OKrelease.Visibility = Visibility.Hidden;
         }
         /// <summary>
-        /// add drone
+        /// add new drone to the data source
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
             int id;
-            //if (!checkId()) MessageBox.Show("the id is not correct, please try again\n");
-            if (int.TryParse(txtId.Text, out id) == false) { MessageBox.Show("the id is not a correct number, please try again\n"); return; }
-            if (id < 100000 || id > 999999) { MessageBox.Show("the id suppose to be a number with 6 digits, please choose another id and try again\n"); return; }
-            if (txtModel.Text == null) { MessageBox.Show("please enter a model\n"); return; }
-            if (txtWeight == null) { MessageBox.Show("please enter maximum weight\n"); return; }
+            if (int.TryParse(txtId.Text, out id) == false) 
+            { 
+                MessageBox.Show("the id is not a valid number, please try again\n"); 
+                return; 
+            }
+            if (id < 100000 || id > 999999) 
+            { 
+                MessageBox.Show("the id suppose to be a number with 6 digits, please choose another id and try again\n"); 
+                return; 
+            }
+            if (txtModel.Text == null) 
+            { 
+                MessageBox.Show("please enter a model\n"); 
+                return; 
+            }
+            if (txtWeight == null) 
+            { 
+                MessageBox.Show("please enter maximum weight\n"); 
+                return; 
+            }
             int stationId = int.Parse(txtStationId.SelectedItem.ToString());
             try
             {
                 blObject.AddDrone(id, txtModel.Text, (WeightCategories)txtWeight.SelectedItem, stationId);
                 MessageBox.Show("The drone added successfully");
-                //עדכון רשימת הרחפנים
             }
             catch (IBL.ExistIdException)
             {
                 MessageBox.Show("this id already exist, please choose another one and try again\n");
+                txtId.Foreground = Brushes.Red;
             }
         }
         /// <summary>
-        /// ####
+        /// show the user the location of the station he choosed, where the drone will be for first charge.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -145,27 +169,6 @@ namespace PL
             txtLongi.Text = loc.Longi.ToString();
         }
         /// <summary>
-        /// ####
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            canClose = true;
-            if (isInActionsState == false)
-            {
-                MessageBoxResult mb = MessageBox.Show("do you want to close the window? \n the drone will not be added", "cancel adding of drone", MessageBoxButton.YesNo);
-                if (mb == MessageBoxResult.Yes)
-                    this.Close();
-            }
-            else
-            {
-                MessageBoxResult mb = MessageBox.Show("do you want to close the window?", "close", MessageBoxButton.YesNo);
-                if (mb == MessageBoxResult.Yes)
-                    this.Close();
-            }
-        }
-        /// <summary>
         /// update the model of the drone
         /// </summary>
         /// <param name="sender"></param>
@@ -174,6 +177,11 @@ namespace PL
         {
             int id;
             int.TryParse(txtId.Text, out id);
+            if(txtModel.Text == blObject.DisplayDrone(id).Model)
+            {
+                MessageBox.Show("there nothing to update"); 
+                return;
+            }
             try
             {
                 blObject.UpdateDroneModel(id, txtModel.Text);
@@ -186,7 +194,7 @@ namespace PL
             MessageBox.Show("the model updated successfully");
         }
         /// <summary>
-        /// send the drone to charge
+        /// send the drone to charge in the closest station
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -225,7 +233,7 @@ namespace PL
             MessageBox.Show("drone sent successfully");
         }
         /// <summary>
-        /// realese the drone from charge
+        /// ask the user how long the drone has been charging, realese it from charge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -247,10 +255,10 @@ namespace PL
             }
         }
         /// <summary>
-       /// ####
-       /// </summary>
-       /// <param name="sender"></param>
-       /// <param name="e"></param>
+        /// after the user entered time- release the drone from charge
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ReleaseAfterGetTime(object sender, RoutedEventArgs e)
         {
             TimeSpan time;
@@ -389,7 +397,7 @@ namespace PL
             MessageBox.Show("drone deliver the parcel successfully");
         }
         /// <summary>
-        /// #####
+        /// determinate the color of the id text box, according to wich is valid or not
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -407,7 +415,7 @@ namespace PL
             }
         }
         /// <summary>
-        /// ####
+        /// go to the fuction that do what the user choosed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -437,7 +445,7 @@ namespace PL
             }
         }
         /// <summary>
-        /// #####
+        /// in actions window- paint the model green when the user change it
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -448,6 +456,28 @@ namespace PL
             else
                 txtModel.Foreground = Brushes.Green;
         }
+        /// <summary>
+        /// close the window after clicking the close button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            canClose = true;
+            MessageBoxResult mb;
+            if (isInActionsState == false)
+                mb = MessageBox.Show("do you want to close the window? \n the drone will not be added", "cancel adding of drone", MessageBoxButton.YesNo);
+            else
+                mb = MessageBox.Show("do you want to close the window?", "close", MessageBoxButton.YesNo);
+
+            if (mb == MessageBoxResult.Yes)
+                this.Close();
+        }
+        /// <summary>
+        /// prevenet closing the window with the X button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
             if (canClose == false)
