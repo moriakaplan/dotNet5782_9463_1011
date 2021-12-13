@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="AddDrone" Height="650" Width="400">
+        Title="AddDrone" Height="650" Width="400"
+        Closing="DataWindow_Closing">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>

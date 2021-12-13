@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using IBL;
 using IBL.BO;
+using System.ComponentModel;
 
 namespace PL
 {
@@ -32,6 +33,7 @@ namespace PL
         }
         private Ibl blObject;
         bool isInActionsState;
+        bool canClose=false;
         public DroneWindow(Ibl obj) //add
         {
             InitializeComponent();
@@ -153,6 +155,7 @@ namespace PL
         /// <param name="e"></param>
         private void Close_Click(object sender, RoutedEventArgs e)
         {
+            canClose = true;
             if (isInActionsState == false)
             {
                 MessageBoxResult mb = MessageBox.Show("do you want to close the window? \n the drone will not be added", "cancel adding of drone", MessageBoxButton.YesNo);
@@ -447,5 +450,21 @@ namespace PL
             else
                 txtModel.Foreground = Brushes.Green;
         }
+        void DataWindow_Closing(object sender, CancelEventArgs e)
+        {
+            if (canClose == false)
+            {
+                MessageBox.Show("don't close with the x button, close with the close window button");
+                e.Cancel = true;
+            }
+        }
+
+        //private bool checkId()
+        //{
+        //    int id;
+        //    if (txtId.Text == null) return false;
+        //    if (int.TryParse(txtId.Text, out id)==false) return false;
+        //    return id > 0;
+        //}
     }
 }
