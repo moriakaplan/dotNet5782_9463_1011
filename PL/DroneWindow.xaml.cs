@@ -57,7 +57,8 @@ namespace PL
             options.Visibility = Visibility.Hidden;
             lblTimeInCharge.Visibility = Visibility.Hidden;
             txtTimeInCharge.Visibility = Visibility.Hidden;
-            
+            OKrelease.Visibility = Visibility.Hidden;
+
             txtStationId.ItemsSource = blObject.DisplayListOfStations().Select(x => x.Id);
             txtStatus.Text = DroneStatus.Maintenance.ToString();
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
@@ -101,6 +102,9 @@ namespace PL
             txtStationId.Visibility = Visibility.Hidden;
             lblStation.Visibility = Visibility.Hidden;
             add.Visibility = Visibility.Hidden;
+            lblTimeInCharge.Visibility = Visibility.Hidden;
+            txtTimeInCharge.Visibility = Visibility.Hidden;
+            OKrelease.Visibility = Visibility.Hidden;
         }
 
         private void AddDrone_Click(object sender, RoutedEventArgs e)//להוסיף בדיקות תקינות וכו
@@ -352,7 +356,8 @@ namespace PL
             }
             else
             {
-                txtId.Foreground = Brushes.Red;
+                if (txtId.Text == "6 digits") txtId.Foreground = Brushes.Black;
+                else txtId.Foreground = Brushes.Red;
             }
         }
 

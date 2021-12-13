@@ -63,17 +63,17 @@
         <Button x:Name="releaseFromCharge" Content="release drone&#xD;&#xA;from charge" Click="ReleaseDroneFromCharge" Grid.Row="8" 
                 HorizontalAlignment="Left" Margin="136,9,0,0" VerticalAlignment="Top" Grid.Column="1" Width="78" Visibility="Hidden"/>
         <Label x:Name="lblTimeInCharge" Content="Time in charge-" Grid.Row="8" Grid.Column="1"
-               HorizontalAlignment="Left" Margin="135,39,0,0" VerticalAlignment="Top" Height="26" Visibility="Hidden"/>
+               HorizontalAlignment="Left" Margin="11,69,0,0" VerticalAlignment="Top" Height="26"/>
         <TextBox x:Name="txtTimeInCharge" Grid.Row="8" Grid.Column="1"
-                 HorizontalAlignment="Left" Margin="136,61,0,0" VerticalAlignment="Top" Width="106" Visibility="Hidden"/>
+                 HorizontalAlignment="Left" Margin="16,91,0,0" VerticalAlignment="Top" Width="84"/>
         <Button x:Name="sendDeliver" Content="send drone&#xD;&#xA;to delivery" Click="SendDroneToDelivery" Grid.Row="8" 
                 HorizontalAlignment="Left" Margin="53,85,0,0" VerticalAlignment="Top" Width="78" Visibility="Hidden"/>
         <Button x:Name="pickParcel" Content="pick up &#xD;&#xA;parcel" Click="PickUpParcel" Grid.Row="8" Grid.Column="1" 
                 HorizontalAlignment="Left" Margin="22,84,0,0" VerticalAlignment="Top" Width="78" Visibility="Hidden"/>
         <Button x:Name="deliver" Content="deliver&#xD;&#xA;parcel" Click="DeliverParcel" Grid.Row="8" Grid.Column="1"
                 HorizontalAlignment="Left" Margin="136,84,0,0" VerticalAlignment="Top" Width="78" Visibility="Hidden"/>
-        <ComboBox x:Name="options" HorizontalAlignment="Left" Margin="11,49,0,0" Grid.Row="8" VerticalAlignment="Top" Width="120" Grid.Column="1" SelectionChanged="selectOption"/>
-        <Label x:Name="lblOptions" Content="Choose the option you want:" Grid.Column="1" HorizontalAlignment="Left" Margin="0,24,0,0" Grid.Row="8" VerticalAlignment="Top"/>
-        <Button x:Name="OKrelease" Content="release" Grid.Column="1" HorizontalAlignment="Left" Margin="169,97,0,0" Grid.Row="8" VerticalAlignment="Top" Click="ReleaseAfterGetTime"/>
+        <ComboBox x:Name="options" HorizontalAlignment="Left" Margin="0,43,0,0" Grid.Row="8" VerticalAlignment="Top" Width="120" Grid.Column="1" SelectionChanged="selectOption"/>
+        <Label x:Name="lblOptions" Content="Choose the option you want:" HorizontalAlignment="Left" Margin="139,18,0,0" Grid.Row="8" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Button x:Name="OKrelease" Content="release" Grid.Column="1" HorizontalAlignment="Left" Margin="37,113,0,0" Grid.Row="8" VerticalAlignment="Top" Click="ReleaseAfterGetTime"/>
     </Grid>
 </Window>
