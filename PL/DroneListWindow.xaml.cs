@@ -35,6 +35,7 @@ namespace PL
 
         private void StatusFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (StatusFilter.SelectedIndex == -1) return;
             if (WeightFilter.SelectedItem != null) StatusAndWeightFilter(sender, e);
             else
             {
@@ -45,6 +46,7 @@ namespace PL
 
         private void WeightFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (WeightFilter.SelectedIndex == -1) return;
             if (StatusFilter.SelectedItem != null) StatusAndWeightFilter(sender, e);
             else
             {
@@ -60,11 +62,12 @@ namespace PL
             DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.Status == status && x.MaxWeight == weight);
         }
 
-        private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Restart_Click(object sender, RoutedEventArgs e)
         {
-
+            StatusFilter.SelectedIndex = -1;
+            WeightFilter.SelectedIndex = -1;
+            DroneListView.ItemsSource = blObject.DisplayListOfDrones();
         }
-
 
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
