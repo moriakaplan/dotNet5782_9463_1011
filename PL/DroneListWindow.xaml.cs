@@ -73,14 +73,22 @@ namespace PL
             WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
             DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.Status == status && x.MaxWeight == weight);
         }
-
+        /// <summary>
+        /// delete the filtering by status and weight and show the whole drones list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Restart_Click(object sender, RoutedEventArgs e)
         {
             StatusFilter.SelectedIndex = -1;
             WeightFilter.SelectedIndex = -1;
             DroneListView.ItemsSource = blObject.DisplayListOfDrones();
         }
-
+        /// <summary>
+        /// open the drone window in adding state
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
             new DroneWindow(blObject).ShowDialog();
@@ -108,13 +116,21 @@ namespace PL
                 else DroneListView.ItemsSource = blObject.DisplayListOfDrones();
             }
         }
-
+        /// <summary>
+        /// close the window after clicking the close button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             canClose = true;
             this.Close();
         }
-
+        /// <summary>
+        /// prevenet closing the window with the X button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
             if (canClose == false)
