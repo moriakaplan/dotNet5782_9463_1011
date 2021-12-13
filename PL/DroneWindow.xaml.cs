@@ -108,8 +108,12 @@ namespace PL
             txtTimeInCharge.Visibility = Visibility.Hidden;
             OKrelease.Visibility = Visibility.Hidden;
         }
-
-        private void AddDrone_Click(object sender, RoutedEventArgs e)//להוסיף בדיקות תקינות וכו
+        /// <summary>
+        /// add drone
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
             int id;
             //if (!checkId()) MessageBox.Show("the id is not correct, please try again\n");
@@ -129,14 +133,22 @@ namespace PL
                 MessageBox.Show("this id already exist, please choose another one and try again\n");
             }
         }
-
+        /// <summary>
+        /// ####
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtStationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Location loc = blObject.DisplayStation((int)txtStationId.SelectedItem).Location;
             txtLatti.Text = loc.Latti.ToString();
             txtLongi.Text = loc.Longi.ToString();
         }
-
+        /// <summary>
+        /// ####
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             canClose = true;
@@ -153,7 +165,11 @@ namespace PL
                     this.Close();
             }
         }
-
+        /// <summary>
+        /// update the model of the drone
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateDroneModel(object sender, RoutedEventArgs e)
         {
             int id;
@@ -169,7 +185,11 @@ namespace PL
             catch (Exception ex) { MessageBox.Show(ex.Message); return; }
             MessageBox.Show("the model updated successfully");
         }
-
+        /// <summary>
+        /// send the drone to charge
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SendDroneToCharge(object sender, RoutedEventArgs e)
         {
             DroneStatus status;
@@ -204,7 +224,11 @@ namespace PL
             }
             MessageBox.Show("drone sent successfully");
         }
-
+        /// <summary>
+        /// realese the drone from charge
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ReleaseDroneFromCharge(object sender, RoutedEventArgs e)
         {
             DroneStatus status;
@@ -222,6 +246,11 @@ namespace PL
                 OKrelease.Visibility = Visibility.Visible;
             }
         }
+        /// <summary>
+       /// ####
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private void ReleaseAfterGetTime(object sender, RoutedEventArgs e)
         {
             TimeSpan time;
@@ -248,7 +277,11 @@ namespace PL
             txtTimeInCharge.Visibility = Visibility.Hidden;
             OKrelease.Visibility = Visibility.Hidden;
         }
-
+        /// <summary>
+        /// Send Drone To Delivery- Assign Parcel To the Drone
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SendDroneToDelivery(object sender, RoutedEventArgs e)
         {
             DroneStatus status;
@@ -286,7 +319,11 @@ namespace PL
                 MessageBox.Show("the drone has send to delivary");
             }
         }
-
+        /// <summary>
+        /// Pick Up Parcel by the drone
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PickUpParcel(object sender, RoutedEventArgs e)
         {
             DroneStatus status;
@@ -316,7 +353,11 @@ namespace PL
             }
             MessageBox.Show("the drone piked up the parcel");
         }
-
+        /// <summary>
+        /// deliver the parcel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeliverParcel(object sender, RoutedEventArgs e)
         {
             int id, parcelId;
@@ -347,7 +388,11 @@ namespace PL
             }
             MessageBox.Show("drone deliver the parcel successfully");
         }
-
+        /// <summary>
+        /// #####
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void IdColor(object sender, TextChangedEventArgs e)
         {
             int id;
@@ -361,7 +406,11 @@ namespace PL
                 else txtId.Foreground = Brushes.Red;
             }
         }
-
+        /// <summary>
+        /// ####
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void selectOption(object sender, SelectionChangedEventArgs e)
         {
             switch (updateOptions.SelectedItem)
@@ -387,7 +436,11 @@ namespace PL
 
             }
         }
-
+        /// <summary>
+        /// #####
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtModel_TextChanged(object sender, TextChangedEventArgs e) //color for model
         {
             if (isInActionsState && txtModel.Text == blObject.DisplayDrone(int.Parse(txtId.Text)).Model)
