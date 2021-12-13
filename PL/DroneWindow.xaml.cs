@@ -203,7 +203,7 @@ namespace PL
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); return; }
             }
-            MessageBox.Show("drone sent successfully");//#צריך לשלוח את זה רק אם הוא לא זרק כלום
+            MessageBox.Show("drone sent successfully");
         }
 
         private void ReleaseDroneFromCharge(object sender, RoutedEventArgs e)

@@ -66,12 +66,26 @@ namespace PL
 
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(blObject).Show();
+            new DroneWindow(blObject).ShowDialog();
+            //update the drones list
+            if (StatusFilter.SelectedItem != null) StatusFilter_SelectionChanged(StatusFilter, null);
+            else
+            {
+                if (WeightFilter.SelectedItem != null) WeightFilter_SelectionChanged(WeightFilter, null);
+                else DroneListView.ItemsSource = blObject.DisplayListOfDrones();
+            }
         }
 
         private void ViewDrone(object sender, MouseButtonEventArgs e)
         {
-            new DroneWindow(blObject, ((IBL.BO.DroneToList)DroneListView.SelectedItem).Id).Show();
+            new DroneWindow(blObject, ((IBL.BO.DroneToList)DroneListView.SelectedItem).Id).ShowDialog();
+            //update the drones list
+            if (StatusFilter.SelectedItem != null) StatusFilter_SelectionChanged(StatusFilter, null);
+            else
+            {
+                if (WeightFilter.SelectedItem != null) WeightFilter_SelectionChanged(WeightFilter, null);
+                else DroneListView.ItemsSource = blObject.DisplayListOfDrones();
+            }
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)

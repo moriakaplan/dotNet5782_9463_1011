@@ -122,7 +122,19 @@ namespace IBL
         {
             //if (!lstdrn.Exists(item => item.Id == droneId)) throw;
             //DroneToList drone = lstdrn.Find(item => item.Id == droneId);
-            Drone drone = DisplayDrone(droneId);
+            //Drone drone = DisplayDrone(droneId);
+            //DroneToList drone = lstdrn.Find(x => x.Id == droneId);
+            DroneToList drone= new DroneToList();
+            int i;
+            for (i = 0; i < lstdrn.Count; i++)
+            {
+                if (lstdrn[i].Id == droneId)
+                {
+                    drone = lstdrn[i];
+                    break;
+                }
+            }
+            if (i == lstdrn.Count) throw new NotExistIDException($"id: {droneId} does not exist - drone");
             double lo = drone.CurrentLocation.Longi, la = drone.CurrentLocation.Latti;
             if (drone.Status != DroneStatus.Available) 
                 throw new DroneCantGoToChargeException($"the drone {droneId} is not available so it can't be sended to charging"); //if the drone is not available
@@ -130,12 +142,12 @@ namespace IBL
             double batteryNeed = minBattery(drone.Id, drone.CurrentLocation, st.Location);
             if (batteryNeed > drone.Battery) 
                 throw new DroneCantGoToChargeException($"the battery of drone {droneId} is not enugh so it can't be sended to charging"); //if the drone dont have enough battery
-
+            try { dl.SendDroneToCharge(droneId, st.Id); } // Adds a drone charging entity and lowers the amount of available charge slots at the station
+            catch (Exception) { throw new DroneCantGoToChargeException(); }
             drone.Battery -= batteryNeed;
             drone.CurrentLocation = st.Location;
             drone.Status = DroneStatus.Maintenance;
-            try { dl.SendDroneToCharge(droneId, st.Id); } // Adds a drone charging entity and lowers the amount of available charge slots at the station
-            catch (Exception) { throw new DroneCantGoToChargeException(); }
+            lstdrn[i] = drone;
         }
         /// <summary>
         /// Release the Drone Frome Charge
