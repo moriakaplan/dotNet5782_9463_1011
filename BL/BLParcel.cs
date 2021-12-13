@@ -167,7 +167,8 @@ namespace IBL
             {
                 if (drone.Id == droneId)
                 {
-                    drone.Battery -= minBattery(droneId, drone.CurrentLocation, DisplayCustomer(parcelToPick.Sender.Id).Location);
+                    double batteryNeeded = minBattery(droneId, drone.CurrentLocation, DisplayCustomer(parcelToPick.Sender.Id).Location);
+                    if (batteryNeeded > drone.Battery) throw new DroneCantTakeParcelException("the battery of the drone is not enugh for pick the parcel");
                     drone.CurrentLocation = DisplayCustomer(parcelToPick.Sender.Id).Location;
                     drone.Status = DroneStatus.Delivery;
                     try { dl.PickParcelByDrone(parcelToPick.Id); } //update pick up time in the parcel

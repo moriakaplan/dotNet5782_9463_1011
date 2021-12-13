@@ -16,10 +16,10 @@ namespace DalObject
         internal static class Config
         {
             internal static int parcelCode = 10000000;
-            public static double available=1; //per kills
-            public static double easy=1.2;      //per kills
-            public static double medium=1.3;    //per kills
-            public static double heavy=1.4;     //per kills
+            public static double available=0.01; //per kill
+            public static double easy=0.012;      //per kill
+            public static double medium=0.013;    //per kill
+            public static double heavy=0.014;     //per kill
             public static double ratePerHour=30; 
         }
         public static void Initialize()//Initializes 2 stations, 5 drones, 10 customers and 10 parcels.

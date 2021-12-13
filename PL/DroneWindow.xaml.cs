@@ -281,11 +281,13 @@ namespace PL
 
         private void DeliverParcel(object sender, RoutedEventArgs e)
         {
-            int id;
-            int.TryParse(txtParcel.Text, out id);
+            int id, parcelId;
+            int.TryParse(txtParcel.Text, out parcelId);
             DroneStatus status;
             DroneStatus.TryParse(txtStatus.Text, out status);
-            if (txtStatus.Text != DroneStatus.Delivery.ToString()&& blObject.DisplayParcel(id).PickUpTime != null&& blObject.DisplayParcel(id).DeliverTime == null)//#צריך איכשהו לבדוק אם החבילה לאנאספה
+            if (txtStatus.Text != DroneStatus.Delivery.ToString()
+                && blObject.DisplayParcel(parcelId).PickUpTime != null
+                && blObject.DisplayParcel(parcelId).DeliverTime == null)//#צריך איכשהו לבדוק אם החבילה לאנאספה
             {
                 MessageBox.Show("the drone is not in delivery");
                 return;

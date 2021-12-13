@@ -172,7 +172,7 @@ namespace IBL
         /// </summary>
         /// <returns></returns>
         public IEnumerable<DroneToList> DisplayListOfDrones(Predicate<DroneToList> pre)
-        {
+       {
             foreach(DroneToList drone in lstdrn)
             {
                 if (pre == null || pre(drone))
