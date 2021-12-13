@@ -185,7 +185,7 @@ namespace IBL
         public void DeliverParcelByDrone(int droneId)
         {
             Parcel parcelToDeliver = DisplayParcel(DisplayDrone(droneId).ParcelInT.Id);
-            if ((parcelToDeliver.Drone.Id!=droneId && parcelToDeliver.PickUpTime == null && parcelToDeliver.DeliverTime != null))
+            if ((parcelToDeliver.Drone.Id!=droneId || parcelToDeliver.PickUpTime == null || parcelToDeliver.DeliverTime != null))
             {
                 throw new TransferException($"drone {droneId} can't deliver the parcel");
             }
@@ -193,7 +193,8 @@ namespace IBL
             {
                 if (drone.Id == droneId)
                 {
-                    drone.Battery -= minBattery(droneId, drone.CurrentLocation, DisplayCustomer(parcelToDeliver.Target.Id).Location);
+                    double batteryNeeded = minBattery(droneId, drone.CurrentLocation, DisplayCustomer(parcelToDeliver.Target.Id).Location);
+                    if(batteryNeeded>drone.Battery) throw new DroneCantTakeParcelException("the battery of the drone is not enugh for deliver the parcel");
                     drone.CurrentLocation = DisplayCustomer(parcelToDeliver.Target.Id).Location;
                     try
                     {
