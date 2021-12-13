@@ -64,7 +64,10 @@ namespace PL
             txtBattery.Text = string.Format($"{drone.Battery:0.000}");
             txtStatus.Text = drone.Status.ToString();
             txtWeight.Text = drone.MaxWeight.ToString();
-            txtParcel.Text = drone.ParcelInT.Id.ToString();
+            if (drone.ParcelInT == null)
+                txtParcel.Text = " -";
+            else
+                txtParcel.Text = drone.ParcelInT.Id.ToString();
 
             txtId.IsReadOnly = true;
             txtLatti.IsReadOnly = true;
@@ -73,7 +76,7 @@ namespace PL
             txtBattery.IsReadOnly = true;
             txtStatus.IsReadOnly = true;
             txtWeight.IsReadOnly = true;
-            //txtId.text = Brushes.Red;
+            txtId.SelectionTextBrush = Brushes.Red;
             txtLatti.SelectionTextBrush = Brushes.Gray;
             txtLongi.SelectionTextBrush = Brushes.Gray;
             txtBattery.SelectionTextBrush = Brushes.Gray;
@@ -123,6 +126,12 @@ namespace PL
             if (isInActionsState == false)
             {
                 MessageBoxResult mb = MessageBox.Show("do you want to close the window? \n the drone will not be added", "cancel adding of drone", MessageBoxButton.YesNo);
+                if (mb == MessageBoxResult.Yes)
+                    this.Close();
+            }
+            else
+            {
+                MessageBoxResult mb = MessageBox.Show("do you want to close the window?","close", MessageBoxButton.YesNo);
                 if (mb == MessageBoxResult.Yes)
                     this.Close();
             }
@@ -283,7 +292,6 @@ namespace PL
             }
             else
             {
-                int id;
                 int.TryParse(txtId.Text, out id);
                 try
                 {
