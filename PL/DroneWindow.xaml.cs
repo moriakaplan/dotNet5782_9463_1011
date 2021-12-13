@@ -22,6 +22,15 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
+        enum Options
+        {
+            UpdateTheModel,
+            SendDroneToCharge,
+            ReleaseDroneFromCharge,
+            SendDroneToDelivery, 
+            PickUpParcel,
+            DeliverParcel,
+        }
         private Ibl blObject;
         bool isInActionsState;
         bool canClose=false;
@@ -37,16 +46,21 @@ namespace PL
             rowParcel.Height = new GridLength(0);
             lblParcel.Visibility = Visibility.Hidden;
             txtParcel.Visibility = Visibility.Hidden;
-            close.Visibility = Visibility.Hidden;
+
+            txtId.Foreground = Brushes.Black;
+            txtId.Text = "6 digits";
             update.Visibility = Visibility.Hidden;
             charge.Visibility = Visibility.Hidden;
             sendDeliver.Visibility = Visibility.Hidden;
             pickParcel.Visibility = Visibility.Hidden;
             deliver.Visibility = Visibility.Hidden;
             releaseFromCharge.Visibility = Visibility.Hidden;
+            lblOptions.Visibility = Visibility.Hidden;
+            options.Visibility = Visibility.Hidden;
             lblTimeInCharge.Visibility = Visibility.Hidden;
             txtTimeInCharge.Visibility = Visibility.Hidden;
-            
+            OKrelease.Visibility = Visibility.Hidden;
+
             txtStationId.ItemsSource = blObject.DisplayListOfStations().Select(x => x.Id);
             txtStatus.Text = DroneStatus.Maintenance.ToString();
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
@@ -65,45 +79,42 @@ namespace PL
             txtModel.Text = drone.Model.ToString();
             txtBattery.Text = string.Format($"{drone.Battery:0.000}");
             txtStatus.Text = drone.Status.ToString();
+            txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             txtWeight.Text = drone.MaxWeight.ToString();
             if (drone.ParcelInT == null)
                 txtParcel.Text = " -";
             else
                 txtParcel.Text = drone.ParcelInT.Id.ToString();
+            //Array optionsNames=new Array[6];
+            //optionsNames.SetValue("update the model", 0);
+            //optionsNames.SetValue("send drone to charge", 1);
+            //optionsNames.SetValue("release drone from charge", 2);
+            //optionsNames.SetValue("send drone to delivery", 3);
+            //optionsNames.SetValue("pick up parcel", 4);
+            //optionsNames.SetValue("deliver parcel", 5);
+            //options.ItemsSource = optionsNames;
+            options.ItemsSource = Enum.GetValues(typeof(Options));
 
             txtId.IsReadOnly = true;
-            txtLatti.IsReadOnly = true;
-            txtModel.IsReadOnly = false;
-            txtLongi.IsReadOnly = true;
-            txtBattery.IsReadOnly = true;
-            txtStatus.IsReadOnly = true;
             txtWeight.IsReadOnly = true;
             txtId.Foreground = Brushes.Gray;
-            txtLatti.Foreground = Brushes.Gray;
-            txtLongi.Foreground = Brushes.Gray;
-            txtBattery.Foreground = Brushes.Gray;
-            txtParcel.Foreground = Brushes.Gray;
+            txtWeight.Foreground = Brushes.Gray;
             
             rowStation.Height = new GridLength(0);
             txtStationId.Visibility = Visibility.Hidden;
             lblStation.Visibility = Visibility.Hidden;
             add.Visibility = Visibility.Hidden;
-        }
-
-        private void txtStationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Location loc = blObject.DisplayStation((int)txtStationId.SelectedItem).Location;
-            txtLatti.Text = loc.Latti.ToString();
-            txtLongi.Text = loc.Longi.ToString();
+            lblTimeInCharge.Visibility = Visibility.Hidden;
+            txtTimeInCharge.Visibility = Visibility.Hidden;
+            OKrelease.Visibility = Visibility.Hidden;
         }
 
         private void AddDrone_Click(object sender, RoutedEventArgs e)//להוסיף בדיקות תקינות וכו
         {
             int id;
             //if (!checkId()) MessageBox.Show("the id is not correct, please try again\n");
-            if (txtModel.Text == null) MessageBox.Show("please enter an id\n");
-            if (int.TryParse(txtId.Text, out id)==false) MessageBox.Show("the id is not correct, please try again\n");
-            if(id<=0) MessageBox.Show("the id suppose to be possible, please try again\n");
+            if (int.TryParse(txtId.Text, out id) == false) MessageBox.Show("the id is not a correct number, please try again\n");
+            if (id < 100000 || id > 999999) MessageBox.Show("the id suppose to be a number with 6 digits, please choose another id and try again\n");
             if (txtModel.Text == null) MessageBox.Show("please enter a model\n");
             if (txtWeight == null) MessageBox.Show("please enter maximum weight\n");
             else
@@ -121,6 +132,13 @@ namespace PL
                     MessageBox.Show("this id already exist, please choose another one and try again\n");
                 }
             }
+        }
+
+        private void txtStationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Location loc = blObject.DisplayStation((int)txtStationId.SelectedItem).Location;
+            txtLatti.Text = loc.Latti.ToString();
+            txtLongi.Text = loc.Longi.ToString();
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
@@ -152,6 +170,7 @@ namespace PL
             {
                 MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again");
             }
+            catch (Exception ex) { MessageBox.Show(ex.Message); return; }
             MessageBox.Show("the model updated successfully");
         }
 
@@ -185,9 +204,9 @@ namespace PL
                     MessageBox.Show("Drone can't go to charge, apperantly there is not station that the drone can arrive to it");
                     return;
                 }
-
+                catch (Exception ex) { MessageBox.Show(ex.Message); return; }
             }
-            MessageBox.Show("drone sent successfully");//#צריך לשלוח את זה רק אם הוא לא זרק כלום
+            MessageBox.Show("drone sent successfully");
         }
 
         private void ReleaseDroneFromCharge(object sender, RoutedEventArgs e)
@@ -202,29 +221,36 @@ namespace PL
             {
                 //timeInChargeLabel.Visibility = Visibility.Visible;
                 //txtTimeInCharge.Visibility = Visibility.Visible;
-                int id;
-                int.TryParse(txtId.Text, out id);
-                TimeSpan time;
-                if (TimeSpan.TryParse(txtTimeInCharge.Text.ToString(), out time) == false)
-                {
-
-                    MessageBox.Show("the time is not good, change it");
-                    return;
-                }
-                try
-                {
-                    blObject.ReleaseDroneFromeCharge(id, time);
-                }
-                catch (IBL.NotExistIDException ex)
-                {
-                    //Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
-                    MessageBox.Show(ex.Message);
-                }
-                catch (IBL.DroneCantReleaseFromChargeException ex) { MessageBox.Show(ex.Message); }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
-
+                lblTimeInCharge.Visibility = Visibility.Visible;
+                txtTimeInCharge.Visibility = Visibility.Visible;
+                OKrelease.Visibility = Visibility.Visible;
             }
-            MessageBox.Show("the drone realesed successfully");//#לזרוק רק אם הוא לא זרק כלום
+        }
+        private void ReleaseAfterGetTime(object sender, RoutedEventArgs e)
+        {
+            TimeSpan time;
+            if (TimeSpan.TryParse(txtTimeInCharge.Text.ToString(), out time) == false)
+            {
+
+                MessageBox.Show("the time is not good, change it");
+                return;
+            }
+            try
+            {
+                blObject.ReleaseDroneFromeCharge(int.Parse(txtId.Text), time);
+            }
+            catch (IBL.NotExistIDException ex)
+            {
+                //Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            catch (IBL.DroneCantReleaseFromChargeException ex) { MessageBox.Show(ex.Message); return; }
+            catch (Exception ex) { MessageBox.Show(ex.Message); return; }
+            MessageBox.Show("the drone released successfully");
+            lblTimeInCharge.Visibility = Visibility.Hidden;
+            txtTimeInCharge.Visibility = Visibility.Hidden;
+            OKrelease.Visibility = Visibility.Hidden;
         }
 
         private void SendDroneToDelivery(object sender, RoutedEventArgs e)
@@ -242,7 +268,8 @@ namespace PL
                 int.TryParse(txtId.Text, out id);
                 try
                 {
-                    blObject.SendDroneToCharge(id);
+                    // blObject.SendDroneToCharge(id);
+                    blObject.AssignParcelToDrone(id);
                 }
                 catch (IBL.NotExistIDException)
                 {
@@ -287,6 +314,7 @@ namespace PL
                 }
                 catch (IBL.DroneCantTakeParcelException) { MessageBox.Show("drone cant deliver the parcel because its battery is not enugh. try to send the drone to charge"); return; }
                 catch (IBL.TransferException) { MessageBox.Show("there is a problem with the statuses of the parcel or the drone. please check the data and try again"); return; }
+                catch (Exception ex) { MessageBox.Show(ex.Message); return; }
             }
             MessageBox.Show("the drone piked up the parcel");
         }
@@ -317,6 +345,7 @@ namespace PL
                 }
                 catch (IBL.DroneCantTakeParcelException) { MessageBox.Show("drone cant deliver the parcel because its battery is not enugh. try to send the drone to charge"); return; }
                 catch (IBL.TransferException) { MessageBox.Show("there is a problem with the statuses of the parcel or the drone. please check the data and try again"); return; }
+                catch (Exception ex) { MessageBox.Show(ex.Message); return; }
             }
             MessageBox.Show("drone deliver the parcel successfully");
         }
@@ -324,14 +353,49 @@ namespace PL
         private void IdColor(object sender, TextChangedEventArgs e)
         {
             int id;
-            if (txtId.Text==null || (int.TryParse(txtId.Text, out id) && id > 0))
+            if (int.TryParse(txtId.Text, out id) && id >= 100000 && id <= 999999)
             {
-                txtId.Foreground = Brushes.Black;
+                txtId.Foreground = Brushes.Green;
             }
             else
             {
-                txtId.Foreground = Brushes.Red;
+                if (txtId.Text == "6 digits") txtId.Foreground = Brushes.Black;
+                else txtId.Foreground = Brushes.Red;
             }
+        }
+
+        private void selectOption(object sender, SelectionChangedEventArgs e)
+        {
+            switch (options.SelectedItem)
+            {
+                case (Options.DeliverParcel):
+                    DeliverParcel(sender, e);
+                    break;
+                case (Options.PickUpParcel):
+                    PickUpParcel(sender, e);
+                    break;
+                case (Options.ReleaseDroneFromCharge):
+                    ReleaseDroneFromCharge(sender, e);
+                    break;
+                case (Options.SendDroneToCharge):
+                    SendDroneToCharge(sender, e);
+                    break;
+                case (Options.SendDroneToDelivery):
+                    SendDroneToDelivery(sender, e);
+                    break;
+                case (Options.UpdateTheModel):
+                    UpdateDroneModel(sender, e);
+                    break;
+                
+            }
+        }
+
+        private void txtModel_TextChanged(object sender, TextChangedEventArgs e) //color for model
+        {
+            if (isInActionsState && txtModel.Text == blObject.DisplayDrone(int.Parse(txtId.Text)).Model)
+                txtModel.Foreground = Brushes.Black;
+            else
+                txtModel.Foreground = Brushes.Green;
         }
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
