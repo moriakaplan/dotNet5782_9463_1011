@@ -27,13 +27,13 @@ namespace PL
             UpdateTheModel,
             SendDroneToCharge,
             ReleaseDroneFromCharge,
-            SendDroneToDelivery, 
+            SendDroneToDelivery,
             PickUpParcel,
             DeliverParcel,
         }
         private Ibl blObject;
         bool isInActionsState;
-        bool canClose=false;
+        bool canClose = false;
         public DroneWindow(Ibl obj) //add
         {
             InitializeComponent();
@@ -56,7 +56,7 @@ namespace PL
             deliver.Visibility = Visibility.Hidden;
             releaseFromCharge.Visibility = Visibility.Hidden;
             lblOptions.Visibility = Visibility.Hidden;
-            options.Visibility = Visibility.Hidden;
+            updateOptions.Visibility = Visibility.Hidden;
             lblTimeInCharge.Visibility = Visibility.Hidden;
             txtTimeInCharge.Visibility = Visibility.Hidden;
             OKrelease.Visibility = Visibility.Hidden;
@@ -93,13 +93,13 @@ namespace PL
             //optionsNames.SetValue("pick up parcel", 4);
             //optionsNames.SetValue("deliver parcel", 5);
             //options.ItemsSource = optionsNames;
-            options.ItemsSource = Enum.GetValues(typeof(Options));
+            updateOptions.ItemsSource = Enum.GetValues(typeof(Options));
 
             txtId.IsReadOnly = true;
             txtWeight.IsReadOnly = true;
             txtId.Foreground = Brushes.Gray;
             txtWeight.Foreground = Brushes.Gray;
-            
+
             rowStation.Height = new GridLength(0);
             txtStationId.Visibility = Visibility.Hidden;
             lblStation.Visibility = Visibility.Hidden;
@@ -117,24 +117,20 @@ namespace PL
         {
             int id;
             //if (!checkId()) MessageBox.Show("the id is not correct, please try again\n");
-            if (int.TryParse(txtId.Text, out id) == false) MessageBox.Show("the id is not a correct number, please try again\n");
-            if (id < 100000 || id > 999999) MessageBox.Show("the id suppose to be a number with 6 digits, please choose another id and try again\n");
-            if (txtModel.Text == null) MessageBox.Show("please enter a model\n");
-            if (txtWeight == null) MessageBox.Show("please enter maximum weight\n");
-            else
+            if (int.TryParse(txtId.Text, out id) == false) { MessageBox.Show("the id is not a correct number, please try again\n"); return; }
+            if (id < 100000 || id > 999999) { MessageBox.Show("the id suppose to be a number with 6 digits, please choose another id and try again\n"); return; }
+            if (txtModel.Text == null) { MessageBox.Show("please enter a model\n"); return; }
+            if (txtWeight == null) { MessageBox.Show("please enter maximum weight\n"); return; }
+            int stationId = int.Parse(txtStationId.SelectedItem.ToString());
+            try
             {
-                int stationId;
-                int.TryParse((string)txtStationId.SelectedItem, out stationId);
-                try
-                {
-                    blObject.AddDrone(id, txtModel.Text, (WeightCategories)txtWeight.SelectedItem, stationId);
-                    MessageBox.Show("The drone added successfully");
-                    //עדכון רשימת הרחפנים
-                }
-                catch (IBL.ExistIdException)
-                {
-                    MessageBox.Show("this id already exist, please choose another one and try again\n");
-                }
+                blObject.AddDrone(id, txtModel.Text, (WeightCategories)txtWeight.SelectedItem, stationId);
+                MessageBox.Show("The drone added successfully");
+                //עדכון רשימת הרחפנים
+            }
+            catch (IBL.ExistIdException)
+            {
+                MessageBox.Show("this id already exist, please choose another one and try again\n");
             }
         }
         /// <summary>
@@ -164,7 +160,7 @@ namespace PL
             }
             else
             {
-                MessageBoxResult mb = MessageBox.Show("do you want to close the window?","close", MessageBoxButton.YesNo);
+                MessageBoxResult mb = MessageBox.Show("do you want to close the window?", "close", MessageBoxButton.YesNo);
                 if (mb == MessageBoxResult.Yes)
                     this.Close();
             }
@@ -309,7 +305,9 @@ namespace PL
                     MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                     return;
                 }
-                catch (IBL.DroneCantTakeParcelException) { MessageBox.Show("drone cant be accociated");
+                catch (IBL.DroneCantTakeParcelException)
+                {
+                    MessageBox.Show("drone cant be accociated");
                     return;
                 }
                 catch (IBL.ThereNotGoodParcelToTake)
@@ -317,7 +315,7 @@ namespace PL
                     MessageBox.Show("drone cant take a parcel because its battery not enugh. \nTry to send the drone to charge");
                     return;
                 }
-                catch(Exception ex) { MessageBox.Show(ex.Message); return; }
+                catch (Exception ex) { MessageBox.Show(ex.Message); return; }
                 MessageBox.Show("the drone has send to delivary");
             }
         }
@@ -332,7 +330,7 @@ namespace PL
             int id;
             DroneStatus.TryParse(txtStatus.Text, out status);
             int.TryParse(txtParcel.Text, out id);
-            if (txtStatus.Text != DroneStatus.Associated.ToString()&&blObject.DisplayParcel(id).PickUpTime==null)//#צריך איכשהו לבדוק אם החבילה לאנאספה
+            if (txtStatus.Text != DroneStatus.Associated.ToString() && blObject.DisplayParcel(id).PickUpTime == null)//#צריך איכשהו לבדוק אם החבילה לאנאספה
             {
                 MessageBox.Show("the drone is not Associated");
                 return;
@@ -415,7 +413,7 @@ namespace PL
         /// <param name="e"></param>
         private void selectOption(object sender, SelectionChangedEventArgs e)
         {
-            switch (options.SelectedItem)
+            switch (updateOptions.SelectedItem)
             {
                 case (Options.DeliverParcel):
                     DeliverParcel(sender, e);
@@ -435,7 +433,7 @@ namespace PL
                 case (Options.UpdateTheModel):
                     UpdateDroneModel(sender, e);
                     break;
-                
+
             }
         }
         /// <summary>
@@ -458,13 +456,5 @@ namespace PL
                 e.Cancel = true;
             }
         }
-
-        //private bool checkId()
-        //{
-        //    int id;
-        //    if (txtId.Text == null) return false;
-        //    if (int.TryParse(txtId.Text, out id)==false) return false;
-        //    return id > 0;
-        //}
     }
 }
