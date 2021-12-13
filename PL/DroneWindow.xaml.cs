@@ -160,6 +160,7 @@ namespace PL
             if (status != DroneStatus.Available)
             {
                 MessageBox.Show("the drone is not available, it cant go to charge");
+                return;
             }
             else
             {
@@ -173,11 +174,13 @@ namespace PL
                 {
                     Console.WriteLine(ex.Message);
                     MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
+                    return;
                     //Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                 }
                 catch (IBL.DroneCantGoToChargeException)
                 {
                     MessageBox.Show("Drone can't go to charge, apperantly there is not station that the drone can arrive to it");
+                    return;
                 }
 
             }
