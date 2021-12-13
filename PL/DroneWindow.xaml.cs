@@ -249,6 +249,12 @@ namespace PL
                 catch (IBL.DroneCantTakeParcelException) { MessageBox.Show("drone cant be accociated");
                     return;
                 }
+                catch (IBL.ThereNotGoodParcelToTake)
+                {
+                    MessageBox.Show("drone cant take a parcel because its battery not enugh. \nTry to send the drone to charge");
+                    return;
+                }
+                catch(Exception ex) { MessageBox.Show(ex.Message); return; }
                 MessageBox.Show("the drone has send to delivary");
             }
         }
@@ -276,8 +282,8 @@ namespace PL
                     MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                     return;
                 }
-                catch (IBL.DroneCantTakeParcelException) { MessageBox.Show("Drone cant pick up the parcel"); return; }
-
+                catch (IBL.DroneCantTakeParcelException) { MessageBox.Show("drone cant deliver the parcel because its battery is not enugh. try to send the drone to charge"); return; }
+                catch (IBL.TransferException) { MessageBox.Show("there is a problem with the statuses of the parcel or the drone. please check the data and try again"); return; }
             }
             MessageBox.Show("the drone piked up the parcel");
         }
@@ -306,7 +312,8 @@ namespace PL
                 {
                     MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                 }
-                catch (IBL.DroneCantTakeParcelException) { MessageBox.Show("drone cant deliver the parcel"); return; }
+                catch (IBL.DroneCantTakeParcelException) { MessageBox.Show("drone cant deliver the parcel because its battery is not enugh. try to send the drone to charge"); return; }
+                catch (IBL.TransferException) { MessageBox.Show("there is a problem with the statuses of the parcel or the drone. please check the data and try again"); return; }
             }
             MessageBox.Show("drone deliver the parcel successfully");
         }
