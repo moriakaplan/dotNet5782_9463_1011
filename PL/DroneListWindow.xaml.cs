@@ -32,7 +32,11 @@ namespace PL
             StatusFilter.ItemsSource = Enum.GetValues(typeof(DroneStatus));
             WeightFilter.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
-
+        /// <summary>
+        /// filter by status
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StatusFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (StatusFilter.SelectedIndex == -1) return;
@@ -43,7 +47,11 @@ namespace PL
                 DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.Status == status);
             }
         }
-
+        /// <summary>
+        /// filter by weight
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void WeightFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (WeightFilter.SelectedIndex == -1) return;
@@ -54,7 +62,11 @@ namespace PL
                 DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.MaxWeight == weight);
             }
         }
-
+        /// <summary>
+        /// filter by status and weight
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StatusAndWeightFilter(object sender, SelectionChangedEventArgs e)
         {
             DroneStatus status = (DroneStatus)StatusFilter.SelectedItem;
@@ -80,7 +92,11 @@ namespace PL
                 else DroneListView.ItemsSource = blObject.DisplayListOfDrones();
             }
         }
-
+        /// <summary>
+        /// open drone window for action mode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ViewDrone(object sender, MouseButtonEventArgs e)
         {
             new DroneWindow(blObject, ((IBL.BO.DroneToList)DroneListView.SelectedItem).Id).ShowDialog();
