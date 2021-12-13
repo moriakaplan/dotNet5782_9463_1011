@@ -32,7 +32,11 @@ namespace PL
             StatusFilter.ItemsSource = Enum.GetValues(typeof(DroneStatus));
             WeightFilter.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
-
+        /// <summary>
+        /// filter by status
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StatusFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (WeightFilter.SelectedItem != null) StatusAndWeightFilter(sender, e);
@@ -42,7 +46,11 @@ namespace PL
                 DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.Status == status);
             }
         }
-
+        /// <summary>
+        /// filter by weight
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void WeightFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (StatusFilter.SelectedItem != null) StatusAndWeightFilter(sender, e);
@@ -52,20 +60,26 @@ namespace PL
                 DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.MaxWeight == weight);
             }
         }
-
+        /// <summary>
+        /// filter by status and weight
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StatusAndWeightFilter(object sender, SelectionChangedEventArgs e)
         {
             DroneStatus status = (DroneStatus)StatusFilter.SelectedItem;
             WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
             DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.Status == status && x.MaxWeight == weight);
         }
-
         private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
-
-
+        /// <summary>
+        /// open drone window for adding new drone
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
             new DroneWindow(blObject).ShowDialog();
@@ -77,7 +91,11 @@ namespace PL
                 else DroneListView.ItemsSource = blObject.DisplayListOfDrones();
             }
         }
-
+        /// <summary>
+        /// open drone window for action mode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ViewDrone(object sender, MouseButtonEventArgs e)
         {
             new DroneWindow(blObject, ((IBL.BO.DroneToList)DroneListView.SelectedItem).Id).ShowDialog();
