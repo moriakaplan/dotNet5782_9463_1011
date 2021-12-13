@@ -76,11 +76,11 @@ namespace PL
             txtBattery.IsReadOnly = true;
             txtStatus.IsReadOnly = true;
             txtWeight.IsReadOnly = true;
-            txtId.SelectionTextBrush = Brushes.Red;
-            txtLatti.SelectionTextBrush = Brushes.Gray;
-            txtLongi.SelectionTextBrush = Brushes.Gray;
-            txtBattery.SelectionTextBrush = Brushes.Gray;
-            txtParcel.SelectionTextBrush = Brushes.Gray;
+            txtId.Foreground = Brushes.Gray;
+            txtLatti.Foreground = Brushes.Gray;
+            txtLongi.Foreground = Brushes.Gray;
+            txtBattery.Foreground = Brushes.Gray;
+            txtParcel.Foreground = Brushes.Gray;
             
             rowStation.Height = new GridLength(0);
             txtStationId.Visibility = Visibility.Hidden;
@@ -313,13 +313,11 @@ namespace PL
             int id;
             if (txtId.Text==null || (int.TryParse(txtId.Text, out id) && id > 0))
             {
-                txtId.BorderBrush = Brushes.White;
-                txtId.Background = Brushes.White;
+                txtId.Foreground = Brushes.Black;
             }
             else
             {
-                txtId.BorderBrush = Brushes.Red;
-                txtId.Background = Brushes.Red;
+                txtId.Foreground = Brushes.Red;
             }
         }
         //private bool checkId()
