@@ -28,7 +28,8 @@ namespace PL
         {
             InitializeComponent();
             blObject = obj;
-            DroneListView.ItemsSource = blObject.DisplayListOfDrones();
+            //IEnumerable<DroneToList> drones = blObject.DisplayListOfDrones().OrderBy(x => x.Id);
+            DroneListView.ItemsSource = blObject.DisplayListOfDrones().OrderBy(x => x.Id).OrderBy(x=>x.Status);
             StatusFilter.ItemsSource = Enum.GetValues(typeof(DroneStatus));
             WeightFilter.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }

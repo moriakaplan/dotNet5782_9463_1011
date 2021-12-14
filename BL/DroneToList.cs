@@ -17,7 +17,7 @@ namespace IBL.BO
         public int ParcelId { get; set; } //אם יש חבילה מועברת
         public override string ToString()
         {
-            return $"drone #{Id}: " +
+            return $"   drone #{Id}: \n" +
                 $"mode- {Model}, " +
                 $"max weight- {MaxWeight}, " +
                 $"battery- {string.Format($"{Battery:0.000}")}, " +
