@@ -28,7 +28,10 @@ namespace PL
         {
             InitializeComponent();
             blObject = obj;
-            DroneListView.ItemsSource = blObject.DisplayListOfDrones();
+            //IEnumerable<DroneToList> drones = blObject.DisplayListOfDrones().OrderBy(x => x.Id);
+            DroneListView.ItemsSource = blObject.DisplayListOfDrones()
+                    .OrderBy(x => x.Id)
+                    .OrderBy(x => x.Status);
             StatusFilter.ItemsSource = Enum.GetValues(typeof(DroneStatus));
             WeightFilter.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
@@ -44,7 +47,9 @@ namespace PL
             else
             {
                 DroneStatus status = (DroneStatus)StatusFilter.SelectedItem;
-                DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.Status == status);
+                DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.Status == status)
+                    .OrderBy(x => x.Id)
+                    .OrderBy(x => x.Status);
             }
         }
         /// <summary>
@@ -59,7 +64,9 @@ namespace PL
             else
             {
                 WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
-                DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.MaxWeight == weight);
+                DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.MaxWeight == weight)
+                    .OrderBy(x => x.Id)
+                    .OrderBy(x => x.Status);
             }
         }
         /// <summary>
@@ -71,7 +78,9 @@ namespace PL
         {
             DroneStatus status = (DroneStatus)StatusFilter.SelectedItem;
             WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
-            DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.Status == status && x.MaxWeight == weight);
+            DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.Status == status && x.MaxWeight == weight)
+                    .OrderBy(x => x.Id)
+                    .OrderBy(x => x.Status);
         }
         /// <summary>
         /// delete the filtering by status and weight and show the whole drones list.
