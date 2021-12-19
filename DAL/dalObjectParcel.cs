@@ -1,5 +1,5 @@
-﻿using IDAL.DO;
-using IDAL;
+﻿using DO;
+using DalApi;
 using System;
 using System.Collections.Generic;
 namespace DalObject
