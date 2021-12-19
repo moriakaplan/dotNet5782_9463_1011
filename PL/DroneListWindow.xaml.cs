@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using IBL;
-using IBL.BO;
+using BO;
 using System.ComponentModel;
 
 namespace PL
@@ -116,7 +116,7 @@ namespace PL
         /// <param name="e"></param>
         private void ViewDrone(object sender, MouseButtonEventArgs e)
         {
-            new DroneWindow(blObject, ((IBL.BO.DroneToList)DroneListView.SelectedItem).Id).ShowDialog();
+            new DroneWindow(blObject, ((BO.DroneToList)DroneListView.SelectedItem).Id).ShowDialog();
             //update the drones list
             if (StatusFilter.SelectedItem != null) StatusFilter_SelectionChanged(StatusFilter, null);
             else

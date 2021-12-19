@@ -1,5 +1,5 @@
 ﻿using System;
-using IBL.BO;
+using BO;
 using IBL;
 //using System.Collections.Generic;
 
