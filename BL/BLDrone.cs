@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
-using IBL;
-using IDAL;
+using BLApi;
+using DalApi;
 
 namespace BLApi
 {
