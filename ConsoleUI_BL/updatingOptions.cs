@@ -1,6 +1,6 @@
 ﻿using System;
 using BO;
-using IBL;
+using BLApi;
 
 namespace ConsoleUI_BL
 {
@@ -37,7 +37,7 @@ namespace ConsoleUI_BL
                         Console.WriteLine("Enter the new model of the drone:");
                         model = Console.ReadLine();
                         try { blObject.UpdateDroneModel(id, model); }
-                        catch (IBL.NotExistIDException)
+                        catch (NotExistIDException)
                         {
                             Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                         }
@@ -53,7 +53,7 @@ namespace ConsoleUI_BL
                         input = Console.ReadLine();
                         if (!int.TryParse(input, out chargeSlots)) chargeSlots = -1;
                         try { blObject.UpdateStation(id, name, chargeSlots); }
-                        catch (IBL.NotExistIDException)
+                        catch (NotExistIDException)
                         {
                             Console.WriteLine("this id not exist, please check again what is the id of the station that you want to change and try again\n");
                         }
@@ -71,7 +71,7 @@ namespace ConsoleUI_BL
                         if (name != null || phone != null)
                         {
                             try { blObject.UpdateCustomer(id, name, phone); }
-                            catch (IBL.NotExistIDException)
+                            catch (NotExistIDException)
                             {
                                 Console.WriteLine("this id not exist, please check again what is the id of the customer that you want to change and try again\n");
                             }
@@ -82,12 +82,12 @@ namespace ConsoleUI_BL
                         input = Console.ReadLine();
                         int.TryParse(input, out id);
                         try { blObject.SendDroneToCharge(id); }
-                        catch (IBL.NotExistIDException ex)
+                        catch (NotExistIDException ex)
                         {
                             Console.WriteLine(ex.Message);
                             //Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                         }
-                        catch (IBL.DroneCantGoToChargeException ex) { Console.WriteLine(ex.Message); }
+                        catch (DroneCantGoToChargeException ex) { Console.WriteLine(ex.Message); }
                         break;
                     case UpdatingOptions.ReleaseDroneFromCharge://if the user wants to rrlrase the drone from charge
                         Console.WriteLine("Enter the drone ID (6 digits):");
@@ -97,12 +97,12 @@ namespace ConsoleUI_BL
                         input = Console.ReadLine();
                         TimeSpan.TryParse(input, out timeInCharge);
                         try { blObject.ReleaseDroneFromeCharge(id, timeInCharge); }
-                        catch (IBL.NotExistIDException ex)
+                        catch (NotExistIDException ex)
                         {
                             //Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                             Console.WriteLine(ex.Message);
                         }
-                        catch (IBL.DroneCantReleaseFromChargeException ex) { Console.WriteLine(ex.Message); }
+                        catch (DroneCantReleaseFromChargeException ex) { Console.WriteLine(ex.Message); }
                         break;
                     case UpdatingOptions.AssignParcelToDrone://if the user wants to Assign a parcel to a drone
                                                              //Receives the details of the parcel and the drone frome the user
@@ -110,33 +110,33 @@ namespace ConsoleUI_BL
                         input = Console.ReadLine();
                         int.TryParse(input, out id);
                         try { blObject.AssignParcelToDrone(id); }//assign the parcel to the drone
-                        catch (IBL.NotExistIDException)
+                        catch (NotExistIDException)
                         {
                             Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                         }
-                        catch (IBL.DroneCantTakeParcelException ex) { Console.WriteLine(ex.Message); }
+                        catch (DroneCantTakeParcelException ex) { Console.WriteLine(ex.Message); }
                         break;
                     case UpdatingOptions.PickParcelByDrone:// if the user wants to pick up parcel by a drone
                         Console.WriteLine("Enter the drone ID (6 digits):");
                         input = Console.ReadLine();
                         int.TryParse(input, out id);
                         try { blObject.PickParcelByDrone(id); }
-                        catch (IBL.NotExistIDException)
+                        catch (NotExistIDException)
                         {
                             Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                         }
-                        catch (IBL.DroneCantTakeParcelException ex) { Console.WriteLine(ex.Message); }
+                        catch (DroneCantTakeParcelException ex) { Console.WriteLine(ex.Message); }
                         break;
                     case UpdatingOptions.DeliverParcelByDrone://if the user wants to deliver the parcel to the customer
                         Console.WriteLine("Enter the drone ID (6 digits):");
                         input = Console.ReadLine();
                         int.TryParse(input, out id);
                         try { blObject.DeliverParcelByDrone(id); }
-                        catch (IBL.NotExistIDException)
+                        catch (NotExistIDException)
                         {
                             Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                         }
-                        catch (IBL.DroneCantTakeParcelException ex) { Console.WriteLine(ex.Message); }
+                        catch (DroneCantTakeParcelException ex) { Console.WriteLine(ex.Message); }
                         break;
                     default:
                         Console.WriteLine("ERROR");

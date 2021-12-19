@@ -1,6 +1,6 @@
 ﻿using System;
 using BO;
-using IBL;
+using BLApi;
 //using System.Collections.Generic;
 
 namespace ConsoleUI_BL
@@ -53,7 +53,7 @@ longitude-");
                         {
                             blObject.AddStation(id, name, location, chargeSlots);//Add the station to the list
                         }
-                        catch (IBL.ExistIdException)
+                        catch (ExistIdException)
                         {
                             Console.WriteLine("this id already exist, please choose another one and try again\n");
                         }
@@ -77,11 +77,11 @@ Drone ID (6 digits)-");
                         {
                             blObject.AddDrone(id, model, weight, stationId);//Add the drone to the list
                         }
-                        catch (IBL.ExistIdException)
+                        catch (ExistIdException)
                         {
                             Console.WriteLine("this id already exist, please choose another one and try again\n");
                         }
-                        catch (IBL.NotExistIDException)
+                        catch (NotExistIDException)
                         {
                             Console.WriteLine("this station is not exist, please choose another station to put the drone and try again\n");
                         }
@@ -106,7 +106,7 @@ longitude-");
                         double.TryParse(input, out lattitude);
                         location = new Location { Longi = longitude, Latti = lattitude };
                         try { blObject.AddCustomer(id, name, phone, location); }//Add the customer to the list
-                        catch (IBL.ExistIdException)
+                        catch (ExistIdException)
                         {
                             Console.WriteLine("this id already exist, please choose another one and try again\n");
                         }
@@ -128,7 +128,7 @@ longitude-");
                         input = Console.ReadLine();
                         Priorities.TryParse(input, out priority);
                         try { blObject.AddParcelToDelivery(senderId, targetId, weight, priority); } //Add the parcel to the list
-                        catch (IBL.NotExistIDException ex)
+                        catch (NotExistIDException ex)
                         {
                             Console.WriteLine(ex.Message+"\nthe id of the sender or the target not exist, please check again who are the sender and the target of the parcel and try again\n");
                             return;

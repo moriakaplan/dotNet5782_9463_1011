@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using IBL;
+using BLApi;
 using BO;
 using System.ComponentModel;
 
@@ -178,7 +178,7 @@ namespace PL
                 canClose = true;
                 this.Close();
             }
-            catch (IBL.ExistIdException)
+            catch (ExistIdException)
             {
                 MessageBox.Show("this id already exist, please choose another one and try again\n");
                 txtId.Foreground = Brushes.Red;
@@ -213,7 +213,7 @@ namespace PL
             {
                 blObject.UpdateDroneModel(id, txtModel.Text);
             }
-            catch (IBL.NotExistIDException)
+            catch (NotExistIDException)
             {
                 MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again");
             }
@@ -240,14 +240,14 @@ namespace PL
                 {
                     blObject.SendDroneToCharge(id);
                 }
-                catch (IBL.NotExistIDException ex)
+                catch (NotExistIDException ex)
                 {
                     Console.WriteLine(ex.Message);
                     MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                     return;
                     //Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                 }
-                catch (IBL.DroneCantGoToChargeException)
+                catch (DroneCantGoToChargeException)
                 {
                     MessageBox.Show("Drone can't go to charge, apperantly there is not station that the drone can arrive to it");
                     return;
@@ -299,13 +299,13 @@ namespace PL
             {
                 blObject.ReleaseDroneFromeCharge(id, time);
             }
-            catch (IBL.NotExistIDException ex)
+            catch (NotExistIDException ex)
             {
                 //Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                 MessageBox.Show(ex.Message);
                 return;
             }
-            catch (IBL.DroneCantReleaseFromChargeException ex) { MessageBox.Show(ex.Message); return; }
+            catch (DroneCantReleaseFromChargeException ex) { MessageBox.Show(ex.Message); return; }
             catch (Exception ex) { MessageBox.Show(ex.Message); return; }
             MessageBox.Show("the drone released successfully");
             lblTimeInCharge.Visibility = Visibility.Hidden;
@@ -337,17 +337,17 @@ namespace PL
                     // blObject.SendDroneToCharge(id);
                     blObject.AssignParcelToDrone(id);
                 }
-                catch (IBL.NotExistIDException)
+                catch (NotExistIDException)
                 {
                     MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                     return;
                 }
-                catch (IBL.DroneCantTakeParcelException)
+                catch (DroneCantTakeParcelException)
                 {
                     MessageBox.Show("drone cant be accociated");
                     return;
                 }
-                catch (IBL.ThereNotGoodParcelToTake)
+                catch (ThereNotGoodParcelToTake)
                 {
                     MessageBox.Show("drone cant take a parcel because its battery not enugh. \nTry to send the drone to charge");
                     return;
@@ -380,13 +380,13 @@ namespace PL
                 {
                     blObject.PickParcelByDrone(id);
                 }
-                catch (IBL.NotExistIDException)
+                catch (NotExistIDException)
                 {
                     MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                     return;
                 }
-                catch (IBL.DroneCantTakeParcelException) { MessageBox.Show("drone cant deliver the parcel because its battery is not enugh. try to send the drone to charge"); return; }
-                catch (IBL.TransferException) { MessageBox.Show("there is a problem with the statuses of the parcel or the drone. please check the data and try again"); return; }
+                catch (DroneCantTakeParcelException) { MessageBox.Show("drone cant deliver the parcel because its battery is not enugh. try to send the drone to charge"); return; }
+                catch (TransferException) { MessageBox.Show("there is a problem with the statuses of the parcel or the drone. please check the data and try again"); return; }
                 catch (Exception ex) { MessageBox.Show(ex.Message); return; }
             }
             MessageBox.Show("the drone piked up the parcel");
@@ -415,16 +415,16 @@ namespace PL
                 {
                     blObject.DeliverParcelByDrone(id);
                 }
-                catch (IBL.NotExistIDException)
+                catch (NotExistIDException)
                 {
                     MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
                 }
-                catch (IBL.DroneCantTakeParcelException)
+                catch (DroneCantTakeParcelException)
                 {
                     MessageBox.Show("drone cant deliver the parcel because its battery is not enugh. try to send the drone to charge");
                     return;
                 }
-                catch (IBL.TransferException)
+                catch (TransferException)
                 {
                     MessageBox.Show("there is a problem with the statuses of the parcel or the drone. please check the data and try again");
                     return;
