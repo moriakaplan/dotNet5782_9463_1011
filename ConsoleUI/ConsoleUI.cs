@@ -1,4 +1,4 @@
-﻿using IDAL.DO;
+﻿using DO;
 using IDAL;
 using DalObject;
 using System;

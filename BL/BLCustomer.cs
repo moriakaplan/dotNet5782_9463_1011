@@ -16,7 +16,7 @@ namespace IBL
         public void AddCustomer(int id, string name, string phone, Location loc)
         {
             //creates a new station in the data level
-            IDAL.DO.Customer dCustomer = new IDAL.DO.Customer
+            DO.Customer dCustomer = new DO.Customer
             {
                 Id = id,
                 Name = name,
@@ -28,7 +28,7 @@ namespace IBL
             { 
                 dl.AddCustomerToTheList(dCustomer); //add the new customer to the list in the data level
             }
-             catch(IDAL.DO.CustomerException ex)
+             catch(DO.CustomerException ex)
             {
                 throw new ExistIdException(ex.Message, "-customer");
             }
@@ -41,9 +41,9 @@ namespace IBL
         /// <param name="phone"></param>
         public void UpdateCustomer(int customerId, string name, string phone)
         {
-            IDAL.DO.Customer dCustomer;
+            DO.Customer dCustomer;
             try { dCustomer = dl.DisplayCustomer(customerId); }
-            catch(IDAL.DO.CustomerException ex)
+            catch(DO.CustomerException ex)
             {
                 throw new NotExistIDException(ex.Message, "-customer");
             }
@@ -66,9 +66,9 @@ namespace IBL
         /// <returns></returns>
         public Customer DisplayCustomer(int customerId)
         {
-            IDAL.DO.Customer dCustomer;
+            DO.Customer dCustomer;
             try { dCustomer = dl.DisplayCustomer(customerId); }
-            catch (IDAL.DO.CustomerException ex)
+            catch (DO.CustomerException ex)
             {
                 throw new NotExistIDException(ex.Message, "-customer");
             }
@@ -169,7 +169,7 @@ namespace IBL
         /// <returns></returns>
         public IEnumerable<CustomerToList> DisplayListOfCustomers()
         {
-            foreach (IDAL.DO.Customer dCustomer in dl.DisplayListOfCustomers())
+            foreach (DO.Customer dCustomer in dl.DisplayListOfCustomers())
             {
                 yield return DisplayCustomersToList(dCustomer.Id);
             }

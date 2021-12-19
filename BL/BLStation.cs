@@ -17,7 +17,7 @@ namespace IBL
         public void AddStation(int id, string name, Location loc, int chargeSlots)
         {
             //creates a new station in the data layer
-            IDAL.DO.Station dstation = new IDAL.DO.Station
+            DO.Station dstation = new DO.Station
             {
                 Id = id,
                 Name = name,
@@ -29,7 +29,7 @@ namespace IBL
             {
                 dl.AddStationToTheList(dstation);//add the new station to the list in the data level
             }
-            catch(IDAL.DO.StationException ex)
+            catch(DO.StationException ex)
             {
                 throw new ExistIdException(ex.Message, "-station");
             }
@@ -42,7 +42,7 @@ namespace IBL
         /// <param name="cargeSlots"></param>
         public void UpdateStation(int id, string name, int cargeSlots)
         {
-            IDAL.DO.Station dstation = dl.DisplayStation(id);
+            DO.Station dstation = dl.DisplayStation(id);
             dl.DeleteStation(id);
             if (name != null)//update the name
             {
@@ -61,9 +61,9 @@ namespace IBL
         /// <returns></returns>
         public Station DisplayStation(int stationId)
         {
-            IDAL.DO.Station dstation;
+            DO.Station dstation;
             try { dstation = dl.DisplayStation(stationId); }
-            catch(IDAL.DO.StationException ex) { throw new NotExistIDException(ex.Message, " - station"); }
+            catch(DO.StationException ex) { throw new NotExistIDException(ex.Message, " - station"); }
             Station bstation = new Station
             {
                 Id = dstation.Id,
@@ -71,10 +71,10 @@ namespace IBL
                 Name = dstation.Name
             };
             int count = 0;
-            //IEnumerable<IDAL.DO.DroneCharge> droneCharge = dl.DisplayListOfDroneCharge();
+            //IEnumerable<DO.DroneCharge> droneCharge = dl.DisplayListOfDroneCharge();
             DroneInCharge temp = new DroneInCharge();
             bstation.DronesInCharge = new List<DroneInCharge>();
-            foreach (IDAL.DO.DroneCharge dCharge in dl.DisplayListOfDroneCharge())
+            foreach (DO.DroneCharge dCharge in dl.DisplayListOfDroneCharge())
             {
                 if (dCharge.StationId == stationId)
                 {
@@ -94,15 +94,15 @@ namespace IBL
         /// <returns></returns>
         private StationToList DisplayStationToList(int stationId)
         {
-            IDAL.DO.Station dstation = dl.DisplayStation(stationId);
+            DO.Station dstation = dl.DisplayStation(stationId);
             StationToList bstation = new StationToList
             {
                 Id = dstation.Id,
                 Name = dstation.Name,
             };
-            List<IDAL.DO.DroneCharge> droneCharge = (List<IDAL.DO.DroneCharge>)dl.DisplayListOfDroneCharge();
+            List<DO.DroneCharge> droneCharge = (List<DO.DroneCharge>)dl.DisplayListOfDroneCharge();
             int count = 0;
-            foreach (IDAL.DO.DroneCharge ddrone in droneCharge)
+            foreach (DO.DroneCharge ddrone in droneCharge)
             {
                 if (ddrone.StationId == stationId)
                 {
@@ -117,7 +117,7 @@ namespace IBL
         public IEnumerable<StationToList> DisplayListOfStations()
         {
             //List < StationToList> result = new List<StationToList>(null);
-            foreach (IDAL.DO.Station dstation in dl.DisplayListOfStations()) 
+            foreach (DO.Station dstation in dl.DisplayListOfStations()) 
             {
                 yield return DisplayStationToList(dstation.Id);
             }
@@ -125,7 +125,7 @@ namespace IBL
         }
         public IEnumerable<StationToList> DisplayListOfStationsWithAvailableCargeSlots()
         {
-            foreach (IDAL.DO.Station dstation in dl.DisplayListOfStations(x=>x.ChargeSlots>0))
+            foreach (DO.Station dstation in dl.DisplayListOfStations(x=>x.ChargeSlots>0))
             {
                 yield return DisplayStationToList(dstation.Id);
             }

@@ -15,13 +15,13 @@ namespace IBL
         /// <param name="parcel"></param>
         public void AddParcelToDelivery(int senderId, int targetId, WeightCategories weight, Priorities pri)
         {
-            IDAL.DO.Parcel idalParcel = new IDAL.DO.Parcel
+            DO.Parcel idalParcel = new DO.Parcel
             {
                 Droneld = 0,
                 Senderld = senderId,
                 TargetId = targetId,
-                Priority = (IDAL.DO.Priorities)pri,
-                Weight = (IDAL.DO.WeightCategories)weight,
+                Priority = (DO.Priorities)pri,
+                Weight = (DO.WeightCategories)weight,
                 CreateTime = DateTime.Now,
                 AssociateTime = null,
                 PickUpTime = null,
@@ -32,7 +32,7 @@ namespace IBL
                 dl.AddParcelToTheList(idalParcel);
                 //add the new Parcel to the list in the data level
             }
-            catch (IDAL.DO.ParcelException ex)
+            catch (DO.ParcelException ex)
             {
                 throw new ExistIdException(ex.Message, "-parcel");
             }
@@ -133,11 +133,11 @@ namespace IBL
             {
                 dl.AssignParcelToDrone(parcel.Id, droneId); //update drone and scheduled time in parcel
             }
-            catch (IDAL.DO.DroneException ex)
+            catch (DO.DroneException ex)
             {
                 throw new NotExistIDException(ex.Message, " - drone");
             }
-            catch (IDAL.DO.ParcelException ex)
+            catch (DO.ParcelException ex)
             {
                 throw new NotExistIDException(ex.Message, " - parcel");
             }
@@ -172,7 +172,7 @@ namespace IBL
                     drone.CurrentLocation = DisplayCustomer(parcelToPick.Sender.Id).Location;
                     drone.Status = DroneStatus.Delivery;
                     try { dl.PickParcelByDrone(parcelToPick.Id); } //update pick up time in the parcel
-                    catch (IDAL.DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
+                    catch (DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
                     return;
                 }
             }
@@ -200,7 +200,7 @@ namespace IBL
                     {
                         dl.DeliverParcelToCustomer(DisplayDrone(droneId).ParcelInT.Id);//update the deliver time in the data layer
                     }
-                    catch(IDAL.DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
+                    catch(DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
                     drone.Status = DroneStatus.Available;
                 }
             }
@@ -212,14 +212,14 @@ namespace IBL
         /// <returns></returns>
         public Parcel DisplayParcel(int parcelId)
         {
-            IDAL.DO.Parcel parcelFromDal;
+            DO.Parcel parcelFromDal;
             Drone droneFromFunc=null;
             DroneInParcel drone = null;
             try
             {
                 parcelFromDal = dl.DisplayParcel(parcelId);
             }
-            catch (IDAL.DO.ParcelException ex)
+            catch (DO.ParcelException ex)
             {
                 throw new NotExistIDException(ex.Message, "- parcel");
             }
@@ -264,9 +264,9 @@ namespace IBL
         public IEnumerable<ParcelToList> DisplayListOfParcels()
         {
             //List<ParcelToList> answer = new List<ParcelToList>();
-            IEnumerable<IDAL.DO.Parcel> listFromDal = dl.DisplayListOfParcels();
+            IEnumerable<DO.Parcel> listFromDal = dl.DisplayListOfParcels();
             ParcelStatus st;
-            foreach (IDAL.DO.Parcel parcel in listFromDal)
+            foreach (DO.Parcel parcel in listFromDal)
             {
                 if (parcel.DeliverTime != null) st = ParcelStatus.Delivered;
                 else
@@ -298,8 +298,8 @@ namespace IBL
         public IEnumerable<ParcelToList> DisplayListOfUnassignedParcels()
         {
             //List<ParcelToList> answer = new List<ParcelToList>();
-            IEnumerable<IDAL.DO.Parcel> listFromDal = dl.DisplayListOfParcels(x=> x.AssociateTime == null);
-            foreach (IDAL.DO.Parcel parcel in listFromDal)
+            IEnumerable<DO.Parcel> listFromDal = dl.DisplayListOfParcels(x=> x.AssociateTime == null);
+            foreach (DO.Parcel parcel in listFromDal)
             {
                 ParcelToList answer = new ParcelToList
                 {

@@ -18,10 +18,10 @@ namespace IBL
         public void AddDrone(int id, string model, WeightCategories weight, int stationId)
         {
             Location location = DisplayStation(stationId).Location;
-            IDAL.DO.Drone idalDrone=new IDAL.DO.Drone
+            DO.Drone idalDrone=new DO.Drone
             {
                 Id = id,
-                MaxWeight = (IDAL.DO.WeightCategories)weight,
+                MaxWeight = (DO.WeightCategories)weight,
                 Model = model
             };
             try
@@ -29,7 +29,7 @@ namespace IBL
                 dl.AddDroneToTheList(idalDrone);
                 //add the new customer to the list in the data level
             }
-            catch (IDAL.DO.DroneException ex)
+            catch (DO.DroneException ex)
             {
                 throw new ExistIdException(ex.Message, "-drone");
             }
@@ -54,7 +54,7 @@ namespace IBL
         {
             //update the model in the logical layer
             DroneToList drone;
-            IDAL.DO.Drone ddrone;
+            DO.Drone ddrone;
             try
             {
                 drone = lstdrn.Find(item => item.Id == id);
@@ -64,7 +64,7 @@ namespace IBL
                 dl.DeleteDrone(id);
             }
             catch (ArgumentNullException) { throw new NotExistIDException($"id: {id} does not exist - drone"); }
-            catch (IDAL.DO.DroneException ex) { throw new NotExistIDException(ex.Message, " - drone"); }
+            catch (DO.DroneException ex) { throw new NotExistIDException(ex.Message, " - drone"); }
             ddrone.Model = model;
             dl.AddDroneToTheList(ddrone);
         }
@@ -85,9 +85,9 @@ namespace IBL
             ParcelInTransfer parcel = null;
             if (droneFromList.Status == DroneStatus.Associated || droneFromList.Status == DroneStatus.Delivery)
             {
-                IDAL.DO.Parcel parcelFromFunc;
+                DO.Parcel parcelFromFunc;
                 try { parcelFromFunc = dl.DisplayParcel(droneFromList.ParcelId); }
-                catch(IDAL.DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
+                catch(DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
                 Location locOfSender = DisplayCustomer(parcelFromFunc.Senderld/*SenderId*/).Location;
                 Location locOfTarget = DisplayCustomer(parcelFromFunc.TargetId).Location;
                 parcel = new ParcelInTransfer
@@ -177,7 +177,7 @@ namespace IBL
             {
                 dl.ReleaseDroneFromeCharge(droneId); //Deletes the charging entity and adds 1 to the charging slots of the station
             }
-            catch (IDAL.DO.DroneChargeException ex) { throw new NotExistIDException(ex.Message); }
+            catch (DO.DroneChargeException ex) { throw new NotExistIDException(ex.Message); }
         }
         /// <summary>
         ///  returns the list of the drones

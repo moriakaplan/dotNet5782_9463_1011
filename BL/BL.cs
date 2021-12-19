@@ -45,13 +45,13 @@ namespace IBL
         private void initializeDrone()
         {
             //add all the drones from the data layer to the list
-            foreach (IDAL.DO.Drone drone in dl.DisplayListOfDrones())
+            foreach (DO.Drone drone in dl.DisplayListOfDrones())
             {
                 lstdrn.Add(new DroneToList { Id = drone.Id, MaxWeight = (WeightCategories)drone.MaxWeight, Model = drone.Model });
             }
             foreach (DroneToList drone in lstdrn)
             {
-                foreach (IDAL.DO.Parcel parcel in dl.DisplayListOfParcels())
+                foreach (DO.Parcel parcel in dl.DisplayListOfParcels())
                 {
                     Location locOfCus = DisplayCustomer(parcel.Senderld).Location;
                     if ((parcel.Droneld == drone.Id) && (parcel.AssociateTime!=null) && (parcel.DeliverTime == null)) //If there is a parcel that has not yet been delivered but the drone is associated
@@ -68,10 +68,10 @@ namespace IBL
                         }
 
                         double batteryForKil = 0;
-                        IDAL.DO.WeightCategories weight = parcel.Weight;
-                        if (weight == IDAL.DO.WeightCategories.Easy) batteryForKil = BatteryForEasy;
-                        if (weight == IDAL.DO.WeightCategories.Medium) batteryForKil = BatteryForMedium;
-                        if (weight == IDAL.DO.WeightCategories.Heavy) batteryForKil = BatteryForHeavy;
+                        DO.WeightCategories weight = parcel.Weight;
+                        if (weight == DO.WeightCategories.Easy) batteryForKil = BatteryForEasy;
+                        if (weight == DO.WeightCategories.Medium) batteryForKil = BatteryForMedium;
+                        if (weight == DO.WeightCategories.Heavy) batteryForKil = BatteryForHeavy;
 
                         double batteryNeeded = BatteryForAvailable * distance(drone.CurrentLocation, locOfCus) + //=0 if the drone already took the parcel
                             batteryForKil * distance(locOfCus, closestStation(locOfCus));
@@ -90,9 +90,9 @@ namespace IBL
                     if (drone.Status == DroneStatus.Maintenance)
                     {
                         //the location is in random station
-                        IEnumerable<IDAL.DO.Station> stations = dl.DisplayListOfStations();
+                        IEnumerable<DO.Station> stations = dl.DisplayListOfStations();
                         int index = random.Next(0, stations.Count());
-                        IDAL.DO.Station stationForLocation = stations.ElementAt(index);
+                        DO.Station stationForLocation = stations.ElementAt(index);
                         drone.CurrentLocation = new Location { Latti = stationForLocation.Lattitude, Longi = stationForLocation.Longitude };
                         drone.Battery = random.Next(0, 19) + random.NextDouble();//random battery mode between 0 and 20
                         dl.SendDroneToCharge(drone.Id, stationForLocation.Id);
@@ -121,7 +121,7 @@ namespace IBL
         /// <returns></returns>
         private bool DroneNotInDelivery(DroneToList drone)
         {
-            foreach (IDAL.DO.Parcel parcel in dl.DisplayListOfParcels())
+            foreach (DO.Parcel parcel in dl.DisplayListOfParcels())
             {
                 if ((parcel.Droneld == drone.Id) && (parcel.DeliverTime == null)) //If the drone in shipment (already collected the parcel)) 
                 {
