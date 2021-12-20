@@ -12,7 +12,7 @@ namespace BL
     public partial class BL : IBL
     {
         private List<DroneToList> lstdrn;
-        private IDal dl; //internal?
+        public readonly IDal dl = DalFactory.GetDal(); //internal?
         private double BatteryForAvailable;
         private double BatteryForEasy; //per kill
         private double BatteryForMedium; //per kill

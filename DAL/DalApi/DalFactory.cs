@@ -28,16 +28,16 @@ namespace DalApi
             //{
             //    Assembly.Load(dalPackage.Name);
             //}
-            //catch(Exception ex)
+            //catch (Exception ex)
             //{
             //    throw new DalConfigException($"failed loading {dalPackage.Name}.dll", ex);
             //}
             //Type t = Type.GetType($"dal.{dalPackage.Name}, {dalPackage.Name}");
-            //if(t==null) throw new DalConfigException($"class name is not the same as assembly name '{dalPackage.Name}'");
+            //if (t == null) throw new DalConfigException($"class name is not the same as assembly name '{dalPackage.Name}'");
             //try
             //{
             //    IDal dal = t.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static) //we dont understand from here
-            //        .GetValue(null) as IDal; 
+            //        .GetValue(null) as IDal;
             //    // If the instance property is not initialized (i.e. it does not hold a real instance reference)...
             //    if (dal == null)
             //        throw new DalConfigException($"Class {dalPackage} instance is not initialized");
@@ -64,6 +64,8 @@ namespace DalApi
             if (dal == null) throw new DalConfigException($"Class {dalPkg} is not a singleton or wrong propertry name for Instance");
 
             return dal;
+
+
         }
     }
 }
