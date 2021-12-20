@@ -12,6 +12,7 @@ namespace Dal
     internal partial class DalObject : IDal
     {
         private static DalObject instance;
+        //private static readonly DalObject instance= new DalObject();
         //public static DalObject Instance { get => instance; }
         /// <summary>
         /// constructor.call the static function initialize.
