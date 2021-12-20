@@ -9,17 +9,32 @@ using System.Threading.Tasks;
 
 namespace DalObject
 {
-    public partial class DalObject : IDal
+    internal partial class DalObject : IDal
     {
-        //public static DataSource DataSource { get; private set; }
-
+        private static DalObject instance;
         /// <summary>
         /// constructor.call the static function initialize.
         /// </summary>
-        public DalObject()
+        private DalObject()
         {
             DataSource.Initialize();
         }
+        /// <summary>
+        /// The public Instance property to use
+        /// </summary>
+        internal static DalObject Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new DalObject();
+
+                return instance;
+            }
+        }
+
+
+
         /// <summary>
         /// assign the parcel to the drone.
         /// </summary>
@@ -27,13 +42,13 @@ namespace DalObject
         /// <param name="droneId"></param>
         public void AssignParcelToDrone(int parcelId, int droneId)
         {
-            if(!DataSource.drones.Exists(item => item.Id == droneId))
-            { 
-                throw new DroneException($"id: {droneId} does not exist"); 
-            }
-            for (int i=0;i<DataSource.parcels.Count;i++) //find the parcel and update its details
+            if (!DataSource.drones.Exists(item => item.Id == droneId))
             {
-                if(DataSource.parcels[i].Id==parcelId)
+                throw new DroneException($"id: {droneId} does not exist");
+            }
+            for (int i = 0; i < DataSource.parcels.Count; i++) //find the parcel and update its details
+            {
+                if (DataSource.parcels[i].Id == parcelId)
                 {
                     Parcel p = DataSource.parcels[i];
                     p.Droneld = droneId;//assign the parcel to the drone
@@ -44,7 +59,7 @@ namespace DalObject
             }
             throw new ParcelException($"id: {parcelId} does not exist");
         }
-     
+
         public void PickParcelByDrone(int parcelId)
         {
             //Parcel parcel = DisplayParcel(parcelId);
@@ -91,7 +106,7 @@ namespace DalObject
             ////drone.Status = DroneStatuses.Vacant;//after the drone gives the parcel, he is vacant 
             //AddDroneToTheList(drone);
         }
-        
+
         /// <summary>
         /// bonus 2
         /// calculates the distance between a point and a station
@@ -102,7 +117,7 @@ namespace DalObject
         /// <returns></returns>
         public double DistanceForStation(double longitudeA, double lattitudeA, int id)
         {
-            Station st = DisplayStation(id); 
+            Station st = DisplayStation(id);
             return Distance(longitudeA, lattitudeA, st.Longitude, st.Lattitude);
         }
         /// <summary>
@@ -115,7 +130,7 @@ namespace DalObject
         /// <returns></returns>
         public double DistanceForCustomer(double longitudeA, double lattitudeA, int id)
         {
-            Customer cu = DisplayCustomer(id); 
+            Customer cu = DisplayCustomer(id);
             return Distance(longitudeA, lattitudeA, cu.Longitude, cu.Lattitude);
         }
         /// <summary>
@@ -148,7 +163,7 @@ namespace DalObject
             // calculate the result
             return (c * r);
         }
-        
+
         public double[] AskBattery()
         {
             return new double[] {

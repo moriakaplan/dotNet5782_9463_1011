@@ -24,7 +24,7 @@ namespace BLApi
         /// </summary>
         public BL()
         {
-            dl = new DalObject.DalObject();
+            dl = new DalApi.DalObject();
             //lstdrn = (List<DroneToList>)dl.DisplayListOfDrones();
             lstdrn = new List<DroneToList>();
             double[] batteryData = dl.AskBattery();

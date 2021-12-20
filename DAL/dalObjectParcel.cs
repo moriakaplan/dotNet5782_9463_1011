@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 namespace DalObject
 {
-    public partial class DalObject
+    internal public partial class DalObject
     {
         /// <summary>
         /// add the parcel that he gets to the list of the parcels.

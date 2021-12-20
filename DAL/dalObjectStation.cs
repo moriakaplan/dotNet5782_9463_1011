@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 namespace DalObject
 {
-    public partial class DalObject
+    internal public partial class DalObject
     {
         /// <summary>
         /// add the station that he gets to the list of the stations.
@@ -16,7 +16,7 @@ namespace DalObject
             DataSource.stations.Add(station);
         }
         /// <summary>
-        /// display a station
+        /// return a station
         /// </summary>
         /// <param name="stationId"></param>
         /// <returns></returns>
