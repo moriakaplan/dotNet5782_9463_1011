@@ -123,7 +123,7 @@ namespace DalApi
             }
             try
             {
-                IDal dal = type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static).GetValue(null) as IDal;
+                IDal dal = type.GetProperty("Instance", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as IDal;
                 // If the instance property is not initialized (i.e. it does not hold a real instance reference)...
                 if (dal == null)
                     throw new DalConfigException($"Class {dlNameSpace}.{dlClass} instance is not initialized");
