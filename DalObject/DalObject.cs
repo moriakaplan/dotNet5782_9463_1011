@@ -11,27 +11,27 @@ namespace DalObject
 {
     internal partial class DalObject : IDal
     {
-        private static DalObject instance;
-        /// <summary>
-        /// constructor.call the static function initialize.
-        /// </summary>
-        private DalObject()
-        {
-            DataSource.Initialize();
-        }
-        /// <summary>
-        /// The public Instance property to use
-        /// </summary>
-        internal static DalObject Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new DalObject();
+        //private static DalObject instance;
+        ///// <summary>
+        ///// constructor.call the static function initialize.
+        ///// </summary>
+        //private DalObject()
+        //{
+        //    DataSource.Initialize();
+        //}
+        ///// <summary>
+        ///// The public Instance property to use
+        ///// </summary>
+        //internal static DalObject Instance
+        //{
+        //    get
+        //    {
+        //        if (instance == null)
+        //            instance = new DalObject();
 
-                return instance;
-            }
-        }
+        //        return instance;
+        //    }
+        //}
 
 
 

@@ -4,4 +4,15 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DalObject\DalObject.csproj" />
+    <ProjectReference Include="..\DalXml\DalXml.csproj" />
+    <ProjectReference Include="..\DAL\DalFacade.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="BLApi\" />
+    <Folder Include="BL\" />
+  </ItemGroup>
+
 </Project>
