@@ -30,7 +30,6 @@ namespace Dal
             {
                 if (instance == null)
                     instance = new DalObject();
-
                 return instance;
             }
         }
