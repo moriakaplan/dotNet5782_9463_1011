@@ -13,26 +13,23 @@ namespace BL
     {
         private static BL instance;
         private static object syncRoot = new object();
-
-        //private static readonly DalObject instance= new DalObject();
-        //public static DalObject Instance { get => instance; }
         /// <summary>
         /// The public Instance property to use
         /// </summary>
         internal static BL Instance
         {
-            //singelton thread safe and lazy initializion
+            //singelton thread safe and lazy initializion(?)
             get
             {
                 lock (syncRoot)
                 {
-
                     if (instance == null)
                         instance = new BL();
                 }
                 return instance;
             }
         }
+
         private List<DroneToList> lstdrn;
         public readonly IDal dl; //internal?
         private double BatteryForAvailable;

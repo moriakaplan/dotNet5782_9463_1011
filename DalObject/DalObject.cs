@@ -13,8 +13,6 @@ namespace Dal
     {
         private static DalObject instance;
         private static object syncRoot = new object();
-        //private static readonly DalObject instance= new DalObject();
-        //public static DalObject Instance { get => instance; }
         /// <summary>
         /// constructor.call the static function initialize.
         /// </summary>
@@ -32,20 +30,15 @@ namespace Dal
             {
                 if (instance == null)
                 {
-                    lock(syncRoot)
+                    lock (syncRoot)
                     {
-
                         if (instance == null)
                             instance = new DalObject();
                     }
-
                 }
-
                 return instance;
             }
         }
-
-
 
         /// <summary>
         /// assign the parcel to the drone.
