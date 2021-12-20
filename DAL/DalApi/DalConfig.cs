@@ -7,6 +7,7 @@ using System.Xml.Linq;
 
 namespace DalApi
 {
+
     static class DalConfig
     {
         public class DalPackage
