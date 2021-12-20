@@ -12,6 +12,8 @@ namespace BL
     public partial class BL : IBL
     {
         private static BL instance;
+        private static object syncRoot = new object();
+
         //private static readonly DalObject instance= new DalObject();
         //public static DalObject Instance { get => instance; }
         /// <summary>
@@ -19,10 +21,15 @@ namespace BL
         /// </summary>
         internal static BL Instance
         {
+            //singelton thread safe and lazy initializion
             get
             {
-                if (instance == null)
-                    instance = new BL();
+                lock (syncRoot)
+                {
+
+                    if (instance == null)
+                        instance = new BL();
+                }
                 return instance;
             }
         }
