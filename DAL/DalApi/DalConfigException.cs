@@ -1,25 +1,25 @@
-﻿//using System;
-//using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
-//namespace DalApi
-//{
-//    [Serializable]
-//    public class DalConfigException : Exception
-//    {
-//        public DalConfigException()
-//        {
-//        }
+namespace DalApi
+{
+    [Serializable]
+    public class DalConfigException : Exception
+    {
+        public DalConfigException()
+        {
+        }
 
-//        public DalConfigException(string message) : base(message)
-//        {
-//        }
+        public DalConfigException(string message) : base(message)
+        {
+        }
 
-//        public DalConfigException(string message, Exception innerException) : base(message, innerException)
-//        {
-//        }
+        public DalConfigException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
 
-//        protected DalConfigException(SerializationInfo info, StreamingContext context) : base(info, context)
-//        {
-//        }
-//    }
-//}
+        protected DalConfigException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+    }
+}
