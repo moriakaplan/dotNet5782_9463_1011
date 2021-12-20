@@ -12,6 +12,7 @@ namespace Dal
     internal partial class DalObject : IDal
     {
         private static DalObject instance;
+        private static object syncRoot = new object();
         //private static readonly DalObject instance= new DalObject();
         //public static DalObject Instance { get => instance; }
         /// <summary>
@@ -26,10 +27,19 @@ namespace Dal
         /// </summary>
         internal static DalObject Instance
         {
+            //singelton thread safe and lazy initializion(?)
             get
             {
                 if (instance == null)
-                    instance = new DalObject();
+                {
+                    lock(syncRoot)
+                    {
+
+                        if (instance == null)
+                            instance = new DalObject();
+                    }
+
+                }
 
                 return instance;
             }
