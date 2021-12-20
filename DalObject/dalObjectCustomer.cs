@@ -2,7 +2,7 @@
 using DalApi;
 using System;
 using System.Collections.Generic;
-namespace DalObject
+namespace Dal
 {
     internal partial class DalObject
     {

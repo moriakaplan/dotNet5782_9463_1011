@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 //using System.Device.Location;
 
-namespace DalObject
+namespace Dal
 {
     internal partial class DalObject : IDal
     {
