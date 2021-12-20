@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using DalObject;
 using BO;
+using BLApi;
 
-namespace BLApi
+namespace BL
 {
     public partial class BL
     {

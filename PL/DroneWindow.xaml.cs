@@ -31,14 +31,14 @@ namespace PL
             PickUpParcel,
             DeliverParcel,
         }
-        private Ibl blObject;
+        private IBL blObject;
         bool isInActionsState;
         bool canClose = false;
         /// <summary>
         /// constructor for making window for add drone
         /// </summary>
         /// <param name="obj"></param>
-        public DroneWindow(Ibl obj) //add
+        public DroneWindow(IBL obj) //add
         {
             InitializeComponent();
             isInActionsState = false;
@@ -74,7 +74,7 @@ namespace PL
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="droneId"></param>
-        public DroneWindow(Ibl obj, int droneId) //actions
+        public DroneWindow(IBL obj, int droneId) //actions
         {
             InitializeComponent();
             isInActionsState = true;
@@ -347,7 +347,7 @@ namespace PL
                     MessageBox.Show("drone cant be accociated");
                     return;
                 }
-                catch (ThereNotGoodParcelToTake)
+                catch (ThereNotGoodParcelToTakeException)
                 {
                     MessageBox.Show("drone cant take a parcel because its battery not enugh. \nTry to send the drone to charge");
                     return;

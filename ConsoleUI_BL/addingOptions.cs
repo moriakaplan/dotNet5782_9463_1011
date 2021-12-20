@@ -7,7 +7,7 @@ namespace ConsoleUI_BL
 {
     public partial class ConsoleUI_BL
     {
-        public static void add(Ibl blObject)
+        public static void add(IBL blObject)
         {
             try
             {

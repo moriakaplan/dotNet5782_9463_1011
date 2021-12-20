@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
+using BLApi;
 using DalApi;
 
-namespace BLApi
+namespace BL
 {
-    public partial class BL : Ibl
+    public partial class BL : IBL
     {
-
         private List<DroneToList> lstdrn;
-        private IDal dl;
+        private IDal dl; //internal?
         private double BatteryForAvailable;
         private double BatteryForEasy; //per kill
         private double BatteryForMedium; //per kill
@@ -24,7 +24,8 @@ namespace BLApi
         /// </summary>
         public BL()
         {
-            dl = new DalObject.DalObject();
+            //dl = new DalObject.DalObject();
+            dl = DalFactory.GetDal();
             //lstdrn = (List<DroneToList>)dl.DisplayListOfDrones();
             lstdrn = new List<DroneToList>();
             double[] batteryData = dl.AskBattery();

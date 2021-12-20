@@ -21,7 +21,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Ibl blObject = new BL(); //צריך לדאוג שיהיה שדה של המחלקה
+        private IBL blObject = new BL.BL(); //צריך לדאוג שיהיה שדה של המחלקה
         public MainWindow()
         {
             InitializeComponent();

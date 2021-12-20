@@ -7,7 +7,7 @@ using BO;
 
 namespace BLApi
 {
-    public interface Ibl
+    public interface IBL
     {
         //הוספה
         void AddStation(int id, string name, Location loc, int chargeSlots);

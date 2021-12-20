@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
+using BLApi;
 
-namespace BLApi
+namespace BL
 {
     public partial class BL
     {
@@ -127,7 +128,7 @@ namespace BLApi
                 minBattery(droneId, locOfTarget, closestStationWithChargeSlots(locOfTarget).Location);//לבדוק אם צריך את התחנה הכי קרובה עם עמדות טעינה
             if (batteryNeeded > bdrone.Battery)
             {
-                throw new ThereNotGoodParcelToTake($"did not found a good parcel that the drone {droneId} can take");
+                throw new ThereNotGoodParcelToTakeException($"did not found a good parcel that the drone {droneId} can take");
             }
             try
             {

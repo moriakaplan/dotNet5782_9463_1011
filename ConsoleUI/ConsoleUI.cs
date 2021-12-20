@@ -1,6 +1,5 @@
 ﻿using DO;
 using DalApi;
-using DalObject;
 using System;
 
 namespace ConsoleUI
@@ -16,7 +15,7 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             //DalObject.DalObject dalObject = new DalObject.DalObject();
-            IDal dalObject = new DalObject.DalObject();
+            IDal dalObject = DalFactory.GetDal();
             string input;
             Options options;
             AddingOptions addChoise;

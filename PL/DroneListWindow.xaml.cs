@@ -22,9 +22,9 @@ namespace PL
     /// </summary>
     public partial class DroneListWindow : Window
     {
-        private Ibl blObject;
+        private IBL blObject;
         bool canClose = false;
-        public DroneListWindow(Ibl obj)
+        public DroneListWindow(IBL obj)
         {
             InitializeComponent();
             blObject = obj;

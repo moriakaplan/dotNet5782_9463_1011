@@ -1,12 +1,12 @@
 ﻿using System;
 using BO;
-using IBL;
+using BLApi;
 
 namespace ConsoleUI_BL
 {
     public partial class ConsoleUI_BL
     {
-        public static void displayList(Ibl blObject)
+        public static void displayList(IBL blObject)
         {
             try
             {

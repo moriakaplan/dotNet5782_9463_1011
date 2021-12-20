@@ -6,7 +6,7 @@ namespace ConsoleUI_BL
 {
     public partial class ConsoleUI_BL
     {
-        public static void update(Ibl blObject)
+        public static void update(IBL blObject)
         {
             try
             {
