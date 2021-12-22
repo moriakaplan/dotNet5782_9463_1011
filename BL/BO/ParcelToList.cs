@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace BO
 {
+    /// <summary>
+    /// parcek to the list
+    /// </summary>
     public class ParcelToList
     {
         public int Id { get; set; }
         public string SenderName { get; set; }
         public string TargetName { get; set; }
         public WeightCategories Weight { get; set; }
-        public Priorities Priority { get; set; } //רגיל, מהיר, חירום
-        public ParcelStatus Status { get; set; } //הוגדרה(נוצרה), שויכה, נאספקה על ידי הרחפן, סופקה ללקוח
+        public Priorities Priority { get; set; } //Regular, Fast, Emergency
+        public ParcelStatus Status { get; set; } 
         public override string ToString()
         {
             return @$"Id: #{Id}:

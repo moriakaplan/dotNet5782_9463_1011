@@ -10,10 +10,7 @@ namespace BL
 {
     public partial class BL
     {
-        /// <summary>
-        /// adding drone
-        /// </summary>
-        /// <param name="drone"></param>
+        
         public void AddDrone(int id, string model, WeightCategories weight, int stationId)
         {
             Location location = DisplayStation(stationId).Location;
@@ -44,11 +41,7 @@ namespace BL
             });//add drone to the list of the drone in the logical layer
             dl.SendDroneToCharge(id, stationId);
         }
-        /// <summary>
-        /// update the drone model
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="model"></param>
+      
         public void UpdateDroneModel(int id, string model)
         {
             //update the model in the logical layer
@@ -67,11 +60,7 @@ namespace BL
             ddrone.Model = model;
             dl.AddDroneToTheList(ddrone);
         }
-        /// <summary>
-        ///  Returns the drone with the requested ID
-        /// </summary>
-        /// <param name="droneId"></param>
-        /// <returns></returns>
+       
         public Drone DisplayDrone(int droneId)
         {
             DroneToList droneFromList=null;
@@ -113,16 +102,9 @@ namespace BL
                 ParcelInT = parcel
             };
         }
-        /// <summary>
-         /// send the drone to charge
-         /// </summary>
-         /// <param name="droneId"></param>
+       
         public void SendDroneToCharge(int droneId)
         {
-            //if (!lstdrn.Exists(item => item.Id == droneId)) throw;
-            //DroneToList drone = lstdrn.Find(item => item.Id == droneId);
-            //Drone drone = DisplayDrone(droneId);
-            //DroneToList drone = lstdrn.Find(x => x.Id == droneId);
             DroneToList drone= new DroneToList();
             int i;
             for (i = 0; i < lstdrn.Count; i++)
@@ -148,11 +130,7 @@ namespace BL
             drone.Status = DroneStatus.Maintenance;
             lstdrn[i] = drone;
         }
-        /// <summary>
-        /// Release the Drone Frome Charge
-        /// </summary>
-        /// <param name="droneId"></param>
-        /// <param name="timeInCharge"></param>
+      
         public void ReleaseDroneFromeCharge(int droneId, TimeSpan timeInCharge)
         {
             Drone drone = DisplayDrone(droneId);
@@ -178,10 +156,7 @@ namespace BL
             }
             catch (DO.DroneChargeException ex) { throw new NotExistIDException(ex.Message); }
         }
-        /// <summary>
-        ///  returns the list of the drones
-        /// </summary>
-        /// <returns></returns>
+        
         public IEnumerable<DroneToList> DisplayListOfDrones(Predicate<DroneToList> pre)
        {
             foreach(DroneToList drone in lstdrn)

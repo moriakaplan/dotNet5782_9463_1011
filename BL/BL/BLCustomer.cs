@@ -10,10 +10,7 @@ namespace BL
 {
     public partial class BL
     {
-        /// <summary>
-        /// add customer to the kist of the customers
-        /// </summary>
-        /// <param name="customer"></param>
+       
         public void AddCustomer(int id, string name, string phone, Location loc)
         {
             //creates a new station in the data level
@@ -34,12 +31,7 @@ namespace BL
                 throw new ExistIdException(ex.Message, "-customer");
             }
         }
-        /// <summary>
-        /// Updates customer details(name, phone)
-        /// </summary>
-        /// <param name="customerId"></param>
-        /// <param name="name"></param>
-        /// <param name="phone"></param>
+       
         public void UpdateCustomer(int customerId, string name, string phone)
         {
             DO.Customer dCustomer;
@@ -60,11 +52,7 @@ namespace BL
             dl.AddCustomerToTheList(dCustomer);
 
         }
-        /// <summary>
-        /// Returns the customer with the requested ID
-        /// </summary>
-        /// <param name="customerId"></param>
-        /// <returns></returns>
+       
         public Customer DisplayCustomer(int customerId)
         {
             DO.Customer dCustomer;
@@ -164,10 +152,7 @@ namespace BL
             }
             return bCustomer;
         }
-        /// <summary>
-        /// returns the list of the customers
-        /// </summary>
-        /// <returns></returns>
+        
         public IEnumerable<CustomerToList> DisplayListOfCustomers()
         {
             foreach (DO.Customer dCustomer in dl.DisplayListOfCustomers())

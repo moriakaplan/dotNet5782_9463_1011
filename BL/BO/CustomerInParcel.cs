@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BO
 {
+    /// <summary>
+    /// customer in parcel
+    /// </summary>
     public class CustomerInParcel
     {
         public int Id { get; set; }

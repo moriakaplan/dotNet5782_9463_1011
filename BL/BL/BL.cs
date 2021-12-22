@@ -31,19 +31,19 @@ namespace BL
         }
 
         private List<DroneToList> lstdrn;
-        public readonly IDal dl; //internal?
+        public readonly IDal dl; 
         private double BatteryForAvailable;
         private double BatteryForEasy; //per kill
         private double BatteryForMedium; //per kill
         private double BatteryForHeavy; //per kill
         private double ChargeRatePerHour;
         private static Random random = new Random();
+
         /// <summary>
         /// constractor
         /// </summary>
         public BL()
         {
-            //dl = new DalObject.DalObject();
             dl = DalFactory.GetDal();
 
             //lstdrn = (List<DroneToList>)dl.DisplayListOfDrones();
@@ -134,7 +134,6 @@ namespace BL
                 }
             }
         }
-
         /// <summary>
         /// Checks if the drone does not ship
         /// </summary>

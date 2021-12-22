@@ -10,10 +10,7 @@ namespace BL
 {
     public partial class BL
     {
-        /// <summary>
-        /// add station
-        /// </summary>
-        /// <param name="station"></param>
+       
         public void AddStation(int id, string name, Location loc, int chargeSlots)
         {
             //creates a new station in the data layer
@@ -34,12 +31,7 @@ namespace BL
                 throw new ExistIdException(ex.Message, "-station");
             }
         } 
-        /// <summary>
-        /// update the name or the number of charge slots' or both of them.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="cargeSlots"></param>
+       
         public void UpdateStation(int id, string name, int cargeSlots)
         {
             DO.Station dstation = dl.DisplayStation(id);
@@ -54,11 +46,7 @@ namespace BL
             }
             dl.AddStationToTheList(dstation);
         }
-        /// <summary>
-        /// return the station
-        /// </summary>
-        /// <param name="stationId"></param>
-        /// <returns></returns>
+       
         public Station DisplayStation(int stationId)
         {
             DO.Station dstation;
@@ -88,7 +76,7 @@ namespace BL
             return bstation;
         }
         /// <summary>
-        /// פונקצית עזר-תצוגת תחנה לרשימה
+        /// display parcel to list
         /// </summary>
         /// <param name="stationId"></param>
         /// <returns></returns>
@@ -114,14 +102,13 @@ namespace BL
             return bstation;
 
         }
+       
         public IEnumerable<StationToList> DisplayListOfStations()
         {
-            //List < StationToList> result = new List<StationToList>(null);
             foreach (DO.Station dstation in dl.DisplayListOfStations()) 
             {
                 yield return DisplayStationToList(dstation.Id);
             }
-            //return result;
         }
         public IEnumerable<StationToList> DisplayListOfStationsWithAvailableCargeSlots()
         {

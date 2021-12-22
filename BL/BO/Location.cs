@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BO
 {
+    /// <summary>
+    /// locations
+    /// </summary>
     public class Location
     {
         public double Longi { get; init; }
