@@ -8,7 +8,7 @@ using BLApi;
 
 namespace BL
 {
-    public partial class BL
+    internal partial class BL
     {
        
         public void AddStation(int id, string name, Location loc, int chargeSlots)

@@ -8,7 +8,7 @@ using BLApi;
 
 namespace BL
 {
-    public partial class BL
+    internal partial class BL
     {
         public void AddParcelToDelivery(int senderId, int targetId, WeightCategories weight, Priorities pri)
         {

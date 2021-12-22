@@ -8,7 +8,7 @@ using BLApi;
 
 namespace BL
 {
-    public partial class BL
+    internal partial class BL
     {
         
         public void AddDrone(int id, string model, WeightCategories weight, int stationId)

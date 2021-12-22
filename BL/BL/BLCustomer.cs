@@ -8,7 +8,7 @@ using BLApi;
 
 namespace BL
 {
-    public partial class BL
+    internal partial class BL
     {
        
         public void AddCustomer(int id, string name, string phone, Location loc)
@@ -30,8 +30,7 @@ namespace BL
             {
                 throw new ExistIdException(ex.Message, "-customer");
             }
-        }
-       
+        } 
         public void UpdateCustomer(int customerId, string name, string phone)
         {
             DO.Customer dCustomer;
@@ -51,8 +50,7 @@ namespace BL
             }
             dl.AddCustomerToTheList(dCustomer);
 
-        }
-       
+        } 
         public Customer DisplayCustomer(int customerId)
         {
             DO.Customer dCustomer;
@@ -70,6 +68,15 @@ namespace BL
             bCustomer.parcelTo = getCustomerParcelTo(customerId);
             return bCustomer;
         }
+        public IEnumerable<CustomerToList> DisplayListOfCustomers()
+        {
+            foreach (DO.Customer dCustomer in dl.DisplayListOfCustomers())
+            {
+                yield return DisplayCustomersToList(dCustomer.Id);
+            }
+        }
+
+
         /// <summary>
         /// Returns a list of parcels in the customer - from the customer
         /// </summary>
@@ -153,12 +160,5 @@ namespace BL
             return bCustomer;
         }
         
-        public IEnumerable<CustomerToList> DisplayListOfCustomers()
-        {
-            foreach (DO.Customer dCustomer in dl.DisplayListOfCustomers())
-            {
-                yield return DisplayCustomersToList(dCustomer.Id);
-            }
-        }
     }
 }

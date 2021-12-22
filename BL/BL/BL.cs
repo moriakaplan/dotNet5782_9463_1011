@@ -9,7 +9,7 @@ using DalApi;
 
 namespace BL
 {
-    public partial class BL : IBL
+    internal partial class BL : IBL
     {
         private static BL instance;
         private static object syncRoot = new object();
@@ -30,14 +30,14 @@ namespace BL
             }
         }
 
-        private List<DroneToList> lstdrn;
-        public readonly IDal dl; 
-        private double BatteryForAvailable;
-        private double BatteryForEasy; //per kill
-        private double BatteryForMedium; //per kill
-        private double BatteryForHeavy; //per kill
-        private double ChargeRatePerHour;
-        private static Random random = new Random();
+        private /*private*/ List<DroneToList> lstdrn;
+        private /*public */readonly IDal dl;
+        private /*private*/ double BatteryForAvailable;
+        private /*private*/ double BatteryForEasy; //per kill
+        private /*private*/ double BatteryForMedium; //per kill
+        private /*private*/ double BatteryForHeavy; //per kill
+        private /*private*/ double ChargeRatePerHour;
+        private /*private*/ static Random random = new Random();
 
         /// <summary>
         /// constractor
@@ -75,7 +75,7 @@ namespace BL
                 foreach (DO.Parcel parcel in dl.DisplayListOfParcels())
                 {
                     Location locOfCus = DisplayCustomer(parcel.Senderld).Location;
-                    if ((parcel.Droneld == drone.Id) && (parcel.AssociateTime!=null) && (parcel.DeliverTime == null)) //If there is a parcel that has not yet been delivered but the drone is associated
+                    if ((parcel.Droneld == drone.Id) && (parcel.AssociateTime != null) && (parcel.DeliverTime == null)) //If there is a parcel that has not yet been delivered but the drone is associated
                     {
                         if (parcel.PickUpTime == null) //If the parcel was associated but not picked up
                         {
