@@ -7,20 +7,13 @@ namespace Dal
 {
     internal partial class DalObject
     {
-        /// <summary>
-        /// add the drone that he gets to the list of the drones.
-        /// </summary>
-        /// <param name="drone"></param>
+       
         public void AddDroneToTheList(Drone drone)
         {
             if (DataSource.drones.Exists(item => item.Id == drone.Id)) throw new DroneException($"id: {drone.Id} already exist"); //it suppose to be this type of exception????**** 
             DataSource.drones.Add(drone);
         }
-        /// <summary>
-        /// send the drone for charging
-        /// </summary>
-        /// <param name="droneId"></param>
-        /// <param name="stationId"></param>
+      
         public void SendDroneToCharge(int droneId, int stationId)
         {
             if (!DataSource.drones.Exists(item => item.Id == droneId))
@@ -42,10 +35,7 @@ namespace Dal
             }
             throw new StationException($"id: {stationId} does not exist");
         }
-        /// <summary>
-        /// release the drone frome charging 
-        /// </summary>
-        /// <param name="droneId"></param>
+
         public void ReleaseDroneFromeCharge(int droneId)
         {
             DroneCharge dCharge;
@@ -65,11 +55,7 @@ namespace Dal
             }
             throw new StationException($"id: {dCharge.StationId} does not exist");
         }
-        /// <summary>
-        /// display a drone
-        /// </summary>
-        /// <param name="droneId"></param>
-        /// <returns></returns>
+       
         public Drone DisplayDrone(int droneId)
         {
             foreach (Drone item in DataSource.drones)
@@ -81,18 +67,15 @@ namespace Dal
             //Drone? dr = DataSource.drones.Find(item => item.Id == droneId);
             //if(dr==null) throw new DroneException($"id: {droneId} does not exist");
             //return (Drone)dr;
-        }
-        
+        }     
+
         public IEnumerable<DroneCharge> DisplayListOfDroneCharge(Predicate<DroneCharge> pre)
         {
             List<DroneCharge> result = new List<DroneCharge>(DataSource.droneCharges);
             if (pre == null) return result;
             return result.FindAll(pre);
         }
-        /// <summary>
-        /// display the list of the drones.
-        /// </summary>
-        /// <returns></returns>
+      
         public IEnumerable<Drone> DisplayListOfDrones(Predicate<Drone> pre)
         {
             List<Drone> result = new List<Drone>(DataSource.drones);

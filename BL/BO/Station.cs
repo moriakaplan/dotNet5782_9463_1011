@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BO
 {
+    /// <summary>
+    /// station
+    /// </summary>
     public class Station
     {
         public int Id { get; set; }

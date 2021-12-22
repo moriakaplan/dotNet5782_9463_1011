@@ -10,10 +10,6 @@ namespace BL
 {
     public partial class BL
     {
-        /// <summary>
-        /// Add Parcel To Delivery
-        /// </summary>
-        /// <param name="parcel"></param>
         public void AddParcelToDelivery(int senderId, int targetId, WeightCategories weight, Priorities pri)
         {
             DO.Parcel idalParcel = new DO.Parcel
@@ -107,10 +103,7 @@ namespace BL
             }
             return result;
         }
-        /// <summary>
-        /// Assign Parcel To Drone
-        /// </summary>
-        /// <param name="droneId"></param>
+        
         public void AssignParcelToDrone(int droneId)
         {
             Drone bdrone;
@@ -153,10 +146,7 @@ namespace BL
             }
 
         }
-        /// <summary>
-        /// Pick Parcel By Drone
-        /// </summary>
-        /// <param name="droneId"></param>
+       
         public void PickParcelByDrone(int droneId)
         {
             Parcel parcelToPick = DisplayParcel(DisplayDrone(droneId).ParcelInT.Id);
@@ -179,10 +169,7 @@ namespace BL
             }
 
         }
-        /// <summary>
-        /// Deliver Parcel By Drone
-        /// </summary>
-        /// <param name="droneId"></param>
+       
         public void DeliverParcelByDrone(int droneId)
         {
             Parcel parcelToDeliver = DisplayParcel(DisplayDrone(droneId).ParcelInT.Id);
@@ -206,11 +193,7 @@ namespace BL
                 }
             }
         }
-        /// <summary>
-        /// Returns the parcel with the requested ID
-        /// </summary>
-        /// <param name="parcelId"></param>
-        /// <returns></returns>
+       
         public Parcel DisplayParcel(int parcelId)
         {
             DO.Parcel parcelFromDal;
@@ -258,13 +241,9 @@ namespace BL
                 Weight = (WeightCategories)parcelFromDal.Weight
             };
         }
-        /// <summary>
-        /// Display List Of Parcels
-        /// </summary>
-        /// <returns></returns>
+        
         public IEnumerable<ParcelToList> DisplayListOfParcels()
         {
-            //List<ParcelToList> answer = new List<ParcelToList>();
             IEnumerable<DO.Parcel> listFromDal = dl.DisplayListOfParcels();
             ParcelStatus st;
             foreach (DO.Parcel parcel in listFromDal)
@@ -290,15 +269,10 @@ namespace BL
                 };
                 yield return answer;
             }
-            //return answer;
         }
-        /// <summary>
-        /// Display List Of Unassigned Parcels
-        /// </summary>
-        /// <returns></returns>
+       
         public IEnumerable<ParcelToList> DisplayListOfUnassignedParcels()
         {
-            //List<ParcelToList> answer = new List<ParcelToList>();
             IEnumerable<DO.Parcel> listFromDal = dl.DisplayListOfParcels(x=> x.AssociateTime == null);
             foreach (DO.Parcel parcel in listFromDal)
             {
@@ -313,7 +287,6 @@ namespace BL
                 };
                 yield return answer;
             }
-            //return answer;
         }
     }
 }

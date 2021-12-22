@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BO
 {
+    /// <summary>
+    /// station for the list
+    /// </summary>
     public class StationToList
     {
         public int Id { get; set; }
