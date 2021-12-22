@@ -41,7 +41,6 @@ namespace BL
             });//add drone to the list of the drone in the logical layer
             dl.SendDroneToCharge(id, stationId);
         }
-      
         public void UpdateDroneModel(int id, string model)
         {
             //update the model in the logical layer
@@ -60,7 +59,6 @@ namespace BL
             ddrone.Model = model;
             dl.AddDroneToTheList(ddrone);
         }
-       
         public Drone DisplayDrone(int droneId)
         {
             DroneToList droneFromList=null;
@@ -102,7 +100,6 @@ namespace BL
                 ParcelInT = parcel
             };
         }
-       
         public void SendDroneToCharge(int droneId)
         {
             DroneToList drone= new DroneToList();
@@ -129,8 +126,7 @@ namespace BL
             drone.CurrentLocation = st.Location;
             drone.Status = DroneStatus.Maintenance;
             lstdrn[i] = drone;
-        }
-      
+        }     
         public void ReleaseDroneFromeCharge(int droneId, TimeSpan timeInCharge)
         {
             Drone drone = DisplayDrone(droneId);
@@ -155,8 +151,7 @@ namespace BL
                 dl.ReleaseDroneFromeCharge(droneId); //Deletes the charging entity and adds 1 to the charging slots of the station
             }
             catch (DO.DroneChargeException ex) { throw new NotExistIDException(ex.Message); }
-        }
-        
+        }        
         public IEnumerable<DroneToList> DisplayListOfDrones(Predicate<DroneToList> pre)
        {
             foreach(DroneToList drone in lstdrn)

@@ -33,7 +33,187 @@ namespace BL
             {
                 throw new ExistIdException(ex.Message, "-parcel");
             }
+        }     
+        public void AssignParcelToDrone(int droneId)
+        {
+            Drone bdrone;
+            bdrone = DisplayDrone(droneId);
+            if (bdrone.Status != DroneStatus.Available)
+            {
+                throw new DroneCantTakeParcelException($"drone {droneId} is not available so it cant take a new parcel");
+            }
+            Parcel parcel = findClosestParcel(droneId);//אולי צריך שזה יהיה תנאי ביצירת רשימת החבילות?
+            Location locOfSender = DisplayCustomer(parcel.Sender.Id).Location;
+            Location locOfTarget = DisplayCustomer(parcel.Target.Id).Location;
+            double batteryNeeded =
+                minBattery(droneId, bdrone.CurrentLocation, locOfSender) +
+                minBattery(droneId, locOfSender, locOfTarget) +
+                minBattery(droneId, locOfTarget, closestStationWithChargeSlots(locOfTarget).Location);//לבדוק אם צריך את התחנה הכי קרובה עם עמדות טעינה
+            if (batteryNeeded > bdrone.Battery)
+            {
+                throw new ThereNotGoodParcelToTakeException($"did not found a good parcel that the drone {droneId} can take");
+            }
+            try
+            {
+                dl.AssignParcelToDrone(parcel.Id, droneId); //update drone and scheduled time in parcel
+            }
+            catch (DO.DroneException ex)
+            {
+                throw new NotExistIDException(ex.Message, " - drone");
+            }
+            catch (DO.ParcelException ex)
+            {
+                throw new NotExistIDException(ex.Message, " - parcel");
+            }
+
+            foreach (DroneToList drone in lstdrn)
+            {
+                if (drone.Id == droneId)
+                {
+                    drone.Status = DroneStatus.Associated; //update the drone status
+                    drone.ParcelId = parcel.Id;
+                }
+            }
+
+        }     
+        public void PickParcelByDrone(int droneId)
+        {
+            Parcel parcelToPick = DisplayParcel(DisplayDrone(droneId).ParcelInT.Id);
+            if (!(parcelToPick.AssociateTime!= null && parcelToPick.Drone.Id==droneId && parcelToPick.PickUpTime == null))
+            {
+                throw new TransferException($"drone {droneId} can't pick up the parcel");
+            }
+            foreach (DroneToList drone in lstdrn)
+            {
+                if (drone.Id == droneId)
+                {
+                    double batteryNeeded = minBattery(droneId, drone.CurrentLocation, DisplayCustomer(parcelToPick.Sender.Id).Location);
+                    if (batteryNeeded > drone.Battery) throw new DroneCantTakeParcelException("the battery of the drone is not enugh for pick the parcel");
+                    drone.CurrentLocation = DisplayCustomer(parcelToPick.Sender.Id).Location;
+                    drone.Status = DroneStatus.Delivery;
+                    try { dl.PickParcelByDrone(parcelToPick.Id); } //update pick up time in the parcel
+                    catch (DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
+                    return;
+                }
+            }
+
+        }       
+        public void DeliverParcelByDrone(int droneId)
+        {
+            Parcel parcelToDeliver = DisplayParcel(DisplayDrone(droneId).ParcelInT.Id);
+            if ((parcelToDeliver.Drone.Id!=droneId || parcelToDeliver.PickUpTime == null || parcelToDeliver.DeliverTime != null))
+            {
+                throw new TransferException($"drone {droneId} can't deliver the parcel");
+            }
+            foreach (DroneToList drone in lstdrn)
+            {
+                if (drone.Id == droneId)
+                {
+                    double batteryNeeded = minBattery(droneId, drone.CurrentLocation, DisplayCustomer(parcelToDeliver.Target.Id).Location);
+                    if(batteryNeeded>drone.Battery) throw new DroneCantTakeParcelException("the battery of the drone is not enugh for deliver the parcel");
+                    drone.CurrentLocation = DisplayCustomer(parcelToDeliver.Target.Id).Location;
+                    try
+                    {
+                        dl.DeliverParcelToCustomer(DisplayDrone(droneId).ParcelInT.Id);//update the deliver time in the data layer
+                    }
+                    catch(DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
+                    drone.Status = DroneStatus.Available;
+                }
+            }
+        }     
+        public Parcel DisplayParcel(int parcelId)
+        {
+            DO.Parcel parcelFromDal;
+            Drone droneFromFunc=null;
+            DroneInParcel drone = null;
+            try
+            {
+                parcelFromDal = dl.DisplayParcel(parcelId);
+            }
+            catch (DO.ParcelException ex)
+            {
+                throw new NotExistIDException(ex.Message, "- parcel");
+            }
+            if(parcelFromDal.AssociateTime!= null) //if the parcel is associated
+            {
+                droneFromFunc = DisplayDrone(parcelFromDal.Droneld);
+                drone = new DroneInParcel
+                {
+                    Id = droneFromFunc.Id,
+                    Battery = droneFromFunc.Battery,
+                    CurrentLocation = droneFromFunc.CurrentLocation
+                };
+            }
+            CustomerInParcel sender = new CustomerInParcel
+            {
+                Id = parcelFromDal.Senderld,
+                Name = DisplayCustomer(parcelFromDal.Senderld).Name
+            };
+            CustomerInParcel target = new CustomerInParcel
+            {
+                Id = parcelFromDal.TargetId,
+                Name = DisplayCustomer(parcelFromDal.TargetId).Name
+            };
+            return new Parcel
+            {
+                Id = parcelFromDal.Id,
+                DeliverTime = parcelFromDal.DeliverTime,
+                Drone = drone,
+                PickUpTime = parcelFromDal.PickUpTime,
+                Priority = (Priorities)parcelFromDal.Priority, 
+                CreateTime = parcelFromDal.CreateTime,
+                AssociateTime = parcelFromDal.AssociateTime,
+                Sender = sender,
+                Target = target,
+                Weight = (WeightCategories)parcelFromDal.Weight
+            };
         }
+        public IEnumerable<ParcelToList> DisplayListOfParcels()
+        {
+            IEnumerable<DO.Parcel> listFromDal = dl.DisplayListOfParcels();
+            ParcelStatus st;
+            foreach (DO.Parcel parcel in listFromDal)
+            {
+                if (parcel.DeliverTime != null) st = ParcelStatus.Delivered;
+                else
+                {
+                    if (parcel.PickUpTime != null) st = ParcelStatus.PickedUp;
+                    else
+                    {
+                        if (parcel.AssociateTime != null) st = ParcelStatus.Associated;
+                        else st = ParcelStatus.Created;
+                    }
+                }
+                ParcelToList answer = new ParcelToList
+                {
+                    Id = parcel.Id,
+                    Priority = (Priorities)parcel.Priority,
+                    SenderName = DisplayCustomer(parcel.Senderld).Name,
+                    TargetName = DisplayCustomer(parcel.TargetId).Name,
+                    Status = st,
+                    Weight = (WeightCategories)parcel.Weight
+                };
+                yield return answer;
+            }
+        }
+        public IEnumerable<ParcelToList> DisplayListOfUnassignedParcels()
+        {
+            IEnumerable<DO.Parcel> listFromDal = dl.DisplayListOfParcels(x=> x.AssociateTime == null);
+            foreach (DO.Parcel parcel in listFromDal)
+            {
+                ParcelToList answer = new ParcelToList
+                {
+                    Id = parcel.Id,
+                    Priority = (Priorities)parcel.Priority,
+                    SenderName = DisplayCustomer(parcel.Senderld).Name,
+                    TargetName = DisplayCustomer(parcel.TargetId).Name,
+                    Status = ParcelStatus.Created,
+                    Weight = (WeightCategories)parcel.Weight
+                };
+                yield return answer;
+            }
+        }
+
         /// <summary>
         /// Returns all parcels with the highest priority
         /// </summary>
@@ -103,190 +283,6 @@ namespace BL
             }
             return result;
         }
-        
-        public void AssignParcelToDrone(int droneId)
-        {
-            Drone bdrone;
-            bdrone = DisplayDrone(droneId);
-            if (bdrone.Status != DroneStatus.Available)
-            {
-                throw new DroneCantTakeParcelException($"drone {droneId} is not available so it cant take a new parcel");
-            }
-            Parcel parcel = findClosestParcel(droneId);//אולי צריך שזה יהיה תנאי ביצירת רשימת החבילות?
-            Location locOfSender = DisplayCustomer(parcel.Sender.Id).Location;
-            Location locOfTarget = DisplayCustomer(parcel.Target.Id).Location;
-            double batteryNeeded =
-                minBattery(droneId, bdrone.CurrentLocation, locOfSender) +
-                minBattery(droneId, locOfSender, locOfTarget) +
-                minBattery(droneId, locOfTarget, closestStationWithChargeSlots(locOfTarget).Location);//לבדוק אם צריך את התחנה הכי קרובה עם עמדות טעינה
-            if (batteryNeeded > bdrone.Battery)
-            {
-                throw new ThereNotGoodParcelToTakeException($"did not found a good parcel that the drone {droneId} can take");
-            }
-            try
-            {
-                dl.AssignParcelToDrone(parcel.Id, droneId); //update drone and scheduled time in parcel
-            }
-            catch (DO.DroneException ex)
-            {
-                throw new NotExistIDException(ex.Message, " - drone");
-            }
-            catch (DO.ParcelException ex)
-            {
-                throw new NotExistIDException(ex.Message, " - parcel");
-            }
 
-            foreach (DroneToList drone in lstdrn)
-            {
-                if (drone.Id == droneId)
-                {
-                    drone.Status = DroneStatus.Associated; //update the drone status
-                    drone.ParcelId = parcel.Id;
-                }
-            }
-
-        }
-       
-        public void PickParcelByDrone(int droneId)
-        {
-            Parcel parcelToPick = DisplayParcel(DisplayDrone(droneId).ParcelInT.Id);
-            if (!(parcelToPick.AssociateTime!= null && parcelToPick.Drone.Id==droneId && parcelToPick.PickUpTime == null))
-            {
-                throw new TransferException($"drone {droneId} can't pick up the parcel");
-            }
-            foreach (DroneToList drone in lstdrn)
-            {
-                if (drone.Id == droneId)
-                {
-                    double batteryNeeded = minBattery(droneId, drone.CurrentLocation, DisplayCustomer(parcelToPick.Sender.Id).Location);
-                    if (batteryNeeded > drone.Battery) throw new DroneCantTakeParcelException("the battery of the drone is not enugh for pick the parcel");
-                    drone.CurrentLocation = DisplayCustomer(parcelToPick.Sender.Id).Location;
-                    drone.Status = DroneStatus.Delivery;
-                    try { dl.PickParcelByDrone(parcelToPick.Id); } //update pick up time in the parcel
-                    catch (DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
-                    return;
-                }
-            }
-
-        }
-       
-        public void DeliverParcelByDrone(int droneId)
-        {
-            Parcel parcelToDeliver = DisplayParcel(DisplayDrone(droneId).ParcelInT.Id);
-            if ((parcelToDeliver.Drone.Id!=droneId || parcelToDeliver.PickUpTime == null || parcelToDeliver.DeliverTime != null))
-            {
-                throw new TransferException($"drone {droneId} can't deliver the parcel");
-            }
-            foreach (DroneToList drone in lstdrn)
-            {
-                if (drone.Id == droneId)
-                {
-                    double batteryNeeded = minBattery(droneId, drone.CurrentLocation, DisplayCustomer(parcelToDeliver.Target.Id).Location);
-                    if(batteryNeeded>drone.Battery) throw new DroneCantTakeParcelException("the battery of the drone is not enugh for deliver the parcel");
-                    drone.CurrentLocation = DisplayCustomer(parcelToDeliver.Target.Id).Location;
-                    try
-                    {
-                        dl.DeliverParcelToCustomer(DisplayDrone(droneId).ParcelInT.Id);//update the deliver time in the data layer
-                    }
-                    catch(DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
-                    drone.Status = DroneStatus.Available;
-                }
-            }
-        }
-       
-        public Parcel DisplayParcel(int parcelId)
-        {
-            DO.Parcel parcelFromDal;
-            Drone droneFromFunc=null;
-            DroneInParcel drone = null;
-            try
-            {
-                parcelFromDal = dl.DisplayParcel(parcelId);
-            }
-            catch (DO.ParcelException ex)
-            {
-                throw new NotExistIDException(ex.Message, "- parcel");
-            }
-            if(parcelFromDal.AssociateTime!= null) //if the parcel is associated
-            {
-                droneFromFunc = DisplayDrone(parcelFromDal.Droneld);
-                drone = new DroneInParcel
-                {
-                    Id = droneFromFunc.Id,
-                    Battery = droneFromFunc.Battery,
-                    CurrentLocation = droneFromFunc.CurrentLocation
-                };
-            }
-            CustomerInParcel sender = new CustomerInParcel
-            {
-                Id = parcelFromDal.Senderld,
-                Name = DisplayCustomer(parcelFromDal.Senderld).Name
-            };
-            CustomerInParcel target = new CustomerInParcel
-            {
-                Id = parcelFromDal.TargetId,
-                Name = DisplayCustomer(parcelFromDal.TargetId).Name
-            };
-            return new Parcel
-            {
-                Id = parcelFromDal.Id,
-                DeliverTime = parcelFromDal.DeliverTime,
-                Drone = drone,
-                PickUpTime = parcelFromDal.PickUpTime,
-                Priority = (Priorities)parcelFromDal.Priority, 
-                CreateTime = parcelFromDal.CreateTime,
-                AssociateTime = parcelFromDal.AssociateTime,
-                Sender = sender,
-                Target = target,
-                Weight = (WeightCategories)parcelFromDal.Weight
-            };
-        }
-        
-        public IEnumerable<ParcelToList> DisplayListOfParcels()
-        {
-            IEnumerable<DO.Parcel> listFromDal = dl.DisplayListOfParcels();
-            ParcelStatus st;
-            foreach (DO.Parcel parcel in listFromDal)
-            {
-                if (parcel.DeliverTime != null) st = ParcelStatus.Delivered;
-                else
-                {
-                    if (parcel.PickUpTime != null) st = ParcelStatus.PickedUp;
-                    else
-                    {
-                        if (parcel.AssociateTime != null) st = ParcelStatus.Associated;
-                        else st = ParcelStatus.Created;
-                    }
-                }
-                ParcelToList answer = new ParcelToList
-                {
-                    Id = parcel.Id,
-                    Priority = (Priorities)parcel.Priority,
-                    SenderName = DisplayCustomer(parcel.Senderld).Name,
-                    TargetName = DisplayCustomer(parcel.TargetId).Name,
-                    Status = st,
-                    Weight = (WeightCategories)parcel.Weight
-                };
-                yield return answer;
-            }
-        }
-       
-        public IEnumerable<ParcelToList> DisplayListOfUnassignedParcels()
-        {
-            IEnumerable<DO.Parcel> listFromDal = dl.DisplayListOfParcels(x=> x.AssociateTime == null);
-            foreach (DO.Parcel parcel in listFromDal)
-            {
-                ParcelToList answer = new ParcelToList
-                {
-                    Id = parcel.Id,
-                    Priority = (Priorities)parcel.Priority,
-                    SenderName = DisplayCustomer(parcel.Senderld).Name,
-                    TargetName = DisplayCustomer(parcel.TargetId).Name,
-                    Status = ParcelStatus.Created,
-                    Weight = (WeightCategories)parcel.Weight
-                };
-                yield return answer;
-            }
-        }
     }
 }
