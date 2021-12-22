@@ -61,7 +61,7 @@ namespace BL
             int count = 0;
             //IEnumerable<DO.DroneCharge> droneCharge = dl.DisplayListOfDroneCharge();
             DroneInCharge temp = new DroneInCharge();
-            bstation.DronesInCharge = new List<DroneInCharge>();
+            bstation.DronesInCharge = new List<DroneInCharge>();//^^^^
             foreach (DO.DroneCharge dCharge in dl.DisplayListOfDroneCharge())
             {
                 if (dCharge.StationId == stationId)
@@ -88,16 +88,19 @@ namespace BL
                 Id = dstation.Id,
                 Name = dstation.Name,
             };
-            List<DO.DroneCharge> droneCharge = (List<DO.DroneCharge>)dl.DisplayListOfDroneCharge();
-            int count = 0;
-            foreach (DO.DroneCharge ddrone in droneCharge)
-            {
-                if (ddrone.StationId == stationId)
-                {
-                    count++;
-                }
-            }
-            bstation.AvailableChargeSlots = dstation.ChargeSlots /*- count*/;
+            //List<DO.DroneCharge> droneCharge = (List<DO.DroneCharge>)dl.DisplayListOfDroneCharge();
+            //int count = 0;
+            //foreach (DO.DroneCharge ddrone in droneCharge)
+            //{
+            //    if (ddrone.StationId == stationId)
+            //    {
+            //        count++;
+            //    }
+            //}
+            int count = dl.DisplayListOfDroneCharge()
+                        .Where(drCharge=>drCharge.StationId == stationId)
+                        .Count();
+            bstation.AvailableChargeSlots = dstation.ChargeSlots - count;
             bstation.NotAvailableChargeSlots = count;
             return bstation;
 
@@ -105,17 +108,13 @@ namespace BL
        
         public IEnumerable<StationToList> DisplayListOfStations()
         {
-            foreach (DO.Station dstation in dl.DisplayListOfStations()) 
-            {
-                yield return DisplayStationToList(dstation.Id);
-            }
+            return from dstation in dl.DisplayListOfStations()
+                   select DisplayStationToList(dstation.Id);
         }
         public IEnumerable<StationToList> DisplayListOfStationsWithAvailableCargeSlots()
         {
-            foreach (DO.Station dstation in dl.DisplayListOfStations(x=>x.ChargeSlots>0))
-            {
-                yield return DisplayStationToList(dstation.Id);
-            }
+            return from dstation in dl.DisplayListOfStations(x=>x.ChargeSlots>0)
+                   select DisplayStationToList(dstation.Id);
         }
     }
 }

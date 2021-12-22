@@ -15,7 +15,7 @@ namespace BO
         public string Name { get; set; }
         public Location Location { get; set; }
         public int AvailableChargeSlots { get; set; }
-        public List<DroneInCharge> DronesInCharge { get; set; }//IEnumerable
+        public IEnumerable<DroneInCharge> DronesInCharge { get; set; }//IEnumerable
         public override string ToString()
         {
             return @$"Station Id: #{Id}:
