@@ -70,10 +70,12 @@ namespace BL
         }
         public IEnumerable<CustomerToList> DisplayListOfCustomers()
         {
-            foreach (DO.Customer dCustomer in dl.DisplayListOfCustomers())
-            {
-                yield return DisplayCustomersToList(dCustomer.Id);
-            }
+            //foreach (DO.Customer dCustomer in dl.DisplayListOfCustomers())
+            //{
+            //    yield return DisplayCustomersToList(dCustomer.Id);
+            //}
+            return (from dCustomer in dl.DisplayListOfCustomers()
+                    select DisplayCustomersToList(dCustomer.Id));
         }
 
 
@@ -84,19 +86,31 @@ namespace BL
         /// <returns></returns>
         private IEnumerable<ParcelInCustomer> getCustomerParcelFrom(int customerId)
         {
-            ParcelInCustomer parcel = new ParcelInCustomer();
-            foreach (ParcelToList tempparcel in DisplayListOfParcels())
-            {
-                if (DisplayParcel(tempparcel.Id).Sender.Id == customerId)
-                {
-                    parcel.Id = tempparcel.Id;
-                    parcel.Priority = tempparcel.Priority;
-                    parcel.SenderOrTarget = new CustomerInParcel { Id = DisplayParcel(tempparcel.Id).Target.Id, Name = DisplayParcel(tempparcel.Id).Target.Name };
-                    parcel.Status = tempparcel.Status;
-                    parcel.Weight = tempparcel.Weight;
-                    yield return parcel;
-                }
-            }
+            //ParcelInCustomer parcel = new ParcelInCustomer();
+            //foreach (ParcelToList tempparcel in DisplayListOfParcels())
+            //{
+            //    if (DisplayParcel(tempparcel.Id).Sender.Id == customerId)
+            //    {
+            //        parcel.Id = tempparcel.Id;
+            //        parcel.Priority = tempparcel.Priority;
+            //        parcel.SenderOrTarget = new CustomerInParcel { Id = DisplayParcel(tempparcel.Id).Target.Id, Name = DisplayParcel(tempparcel.Id).Target.Name };
+            //        parcel.Status = tempparcel.Status;
+            //        parcel.Weight = tempparcel.Weight;
+            //        yield return parcel;
+            //    }
+            //}
+
+            return (from tempparcel in DisplayListOfParcels()
+                    where DisplayParcel(tempparcel.Id).Sender.Id == customerId
+                    let target= DisplayParcel(tempparcel.Id).Target
+                    select new ParcelInCustomer
+                    {
+                        Id = tempparcel.Id,
+                        Priority = tempparcel.Priority,
+                        SenderOrTarget = new CustomerInParcel{ Id = target.Id, Name = target.Name },
+                        Status = tempparcel.Status,
+                        Weight = tempparcel.Weight,
+                    });
         }
         /// <summary>
         /// Returns a list of parcels in the customer - to the customer
@@ -105,19 +119,31 @@ namespace BL
         /// <returns></returns>
         private IEnumerable<ParcelInCustomer> getCustomerParcelTo(int customerId)
         {
-            ParcelInCustomer parcel = new ParcelInCustomer();
-            foreach (ParcelToList tempparcel in DisplayListOfParcels())
-            {
-                if (DisplayParcel(tempparcel.Id).Target.Id == customerId)
-                {
-                    parcel.Id = tempparcel.Id;
-                    parcel.Priority = tempparcel.Priority;
-                    parcel.SenderOrTarget = new CustomerInParcel { Id = DisplayParcel(tempparcel.Id).Sender.Id, Name = DisplayParcel(tempparcel.Id).Sender.Name };
-                    parcel.Status = tempparcel.Status;
-                    parcel.Weight = tempparcel.Weight;
-                    yield return parcel;
-                }
-            }
+            //ParcelInCustomer parcel = new ParcelInCustomer();
+            //foreach (ParcelToList tempparcel in DisplayListOfParcels())
+            //{
+            //    if (DisplayParcel(tempparcel.Id).Target.Id == customerId)
+            //    {
+            //        parcel.Id = tempparcel.Id;
+            //        parcel.Priority = tempparcel.Priority;
+            //        parcel.SenderOrTarget = new CustomerInParcel { Id = DisplayParcel(tempparcel.Id).Sender.Id, Name = DisplayParcel(tempparcel.Id).Sender.Name };
+            //        parcel.Status = tempparcel.Status;
+            //        parcel.Weight = tempparcel.Weight;
+            //        yield return parcel;
+            //    }
+            //}
+
+            return (from tempparcel in DisplayListOfParcels()
+                    where DisplayParcel(tempparcel.Id).Target.Id == customerId
+                    let sender = DisplayParcel(tempparcel.Id).Sender
+                    select new ParcelInCustomer
+                    {
+                        Id = tempparcel.Id,
+                        Priority = tempparcel.Priority,
+                        SenderOrTarget = new CustomerInParcel { Id = sender.Id, Name = sender.Name },
+                        Status = tempparcel.Status,
+                        Weight = tempparcel.Weight,
+                    });
         }
         /// <summary>
         /// Returns the customer with the requested ID
@@ -157,6 +183,10 @@ namespace BL
                     bCustomer.numOfParclReceived++;
                 }
             }
+            //bCustomer.numOfParcelsDelivered = DisplayListOfParcels()
+            //    .Count(x => (DisplayParcel(x.Id).Sender.Id == customerId) && (DisplayParcel(x.Id).DeliverTime != null));
+            //bCustomer.numOfParcelsDelivered = DisplayListOfParcels()
+            //    .Count(x => (DisplayParcel(x.Id).Sender.Id == customerId) && (DisplayParcel(x.Id).DeliverTime != null));
             return bCustomer;
         }
         

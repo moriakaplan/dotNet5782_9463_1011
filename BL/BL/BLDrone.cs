@@ -48,7 +48,7 @@ namespace BL
             DO.Drone ddrone;
             try
             {
-                drone = lstdrn.Find(item => item.Id == id);
+                drone = lstdrn.Single(item => item.Id == id);
                 drone.Model = model;
                 //update the model in the data layer
                 ddrone = dl.DisplayDrone(id);
@@ -104,7 +104,7 @@ namespace BL
         {
             DroneToList drone= new DroneToList();
             int i;
-            for (i = 0; i < lstdrn.Count; i++)
+            for (i = 0; i < lstdrn.Count(); i++)
             {
                 if (lstdrn[i].Id == droneId)
                 {

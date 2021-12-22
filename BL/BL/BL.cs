@@ -30,7 +30,7 @@ namespace BL
             }
         }
 
-        private /*private*/ List<DroneToList> lstdrn;
+        private /*private*/ IEnumerable<DroneToList> lstdrn;
         private /*public */readonly IDal dl;
         private /*private*/ double BatteryForAvailable;
         private /*private*/ double BatteryForEasy; //per kill
@@ -47,7 +47,6 @@ namespace BL
             dl = DalFactory.GetDal();
 
             //lstdrn = (List<DroneToList>)dl.DisplayListOfDrones();
-            lstdrn = new List<DroneToList>();
             double[] batteryData = dl.AskBattery();
             BatteryForAvailable = batteryData[0];
             BatteryForEasy = batteryData[1];
@@ -66,13 +65,20 @@ namespace BL
         private void initializeDrone()
         {
             //add all the drones from the data layer to the list
-            foreach (DO.Drone drone in dl.DisplayListOfDrones())
+            //foreach (DO.Drone drone in dl.DisplayListOfDrones())
+            //{
+            //    lstdrn.Add(new DroneToList { Id = drone.Id, MaxWeight = (WeightCategories)drone.MaxWeight, Model = drone.Model });
+            //}
+            lstdrn = (from drone in dl.DisplayListOfDrones()
+                      select new DroneToList
+                      {
+                          Id = drone.Id,
+                          MaxWeight = (WeightCategories)drone.MaxWeight,
+                          Model = drone.Model
+                      });
+            foreach (DroneToList drone in lstdrn)//^^^^
             {
-                lstdrn.Add(new DroneToList { Id = drone.Id, MaxWeight = (WeightCategories)drone.MaxWeight, Model = drone.Model });
-            }
-            foreach (DroneToList drone in lstdrn)
-            {
-                foreach (DO.Parcel parcel in dl.DisplayListOfParcels())
+                foreach (DO.Parcel parcel in dl.DisplayListOfParcels())//^^^^
                 {
                     Location locOfCus = DisplayCustomer(parcel.Senderld).Location;
                     if ((parcel.Droneld == drone.Id) && (parcel.AssociateTime != null) && (parcel.DeliverTime == null)) //If there is a parcel that has not yet been delivered but the drone is associated
@@ -121,11 +127,13 @@ namespace BL
                     if (drone.Status == DroneStatus.Available)//the drone is available
                     {
                         //the location is in random customer location that received parcels
-                        List<CustomerToList> customersWhoGotParcels = new List<CustomerToList>();
-                        foreach (CustomerToList cus in DisplayListOfCustomers())
-                        {
-                            if (cus.numOfParclReceived > 0) { customersWhoGotParcels.Add(cus); }
-                        }
+                        //List<CustomerToList> customersWhoGotParcels = new List<CustomerToList>();
+                        //foreach (CustomerToList cus in DisplayListOfCustomers())
+                        //{
+                        //    if (cus.numOfParclReceived > 0) { customersWhoGotParcels.Add(cus); }
+                        //}
+                        IEnumerable<CustomerToList> customersWhoGotParcels = from cus in DisplayListOfCustomers()
+                                                                             where (cus.numOfParclReceived > 0);
                         int index = random.Next(0, customersWhoGotParcels.Count());
                         CustomerToList customerForLocation = customersWhoGotParcels[index];
                         drone.CurrentLocation = DisplayCustomer(customerForLocation.Id).Location;
@@ -141,14 +149,17 @@ namespace BL
         /// <returns></returns>
         private bool DroneNotInDelivery(DroneToList drone)
         {
-            foreach (DO.Parcel parcel in dl.DisplayListOfParcels())
-            {
-                if ((parcel.Droneld == drone.Id) && (parcel.DeliverTime == null)) //If the drone in shipment (already collected the parcel)) 
-                {
-                    return false;
-                }
-            }
-            return true;
+            //foreach (DO.Parcel parcel in dl.DisplayListOfParcels())
+            //{
+            //    if ((parcel.Droneld == drone.Id) && (parcel.DeliverTime == null)) //If the drone in shipment (already collected the parcel)) 
+            //    {
+            //        return false;
+            //    }
+            //}
+            //return true;
+            return (dl.DisplayListOfParcels()
+                   .Where(x => (x.Droneld == drone.Id) && (x.DeliverTime == null))
+                   .Count()) == 0;
         }
         /// <summary>
         /// Finds the closest station to the location
