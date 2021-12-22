@@ -50,15 +50,17 @@ namespace PL
             rowParcel.Height = new GridLength(0);
             lblParcel.Visibility = Visibility.Hidden;
             txtParcel.Visibility = Visibility.Hidden;
-
+            
             txtId.Foreground = Brushes.Black;
             txtId.Text = "6 digits";
+            options.Visibility = Visibility.Hidden;
+
             update.Visibility = Visibility.Hidden;
             charge.Visibility = Visibility.Hidden;
-            sendDeliver.Visibility = Visibility.Hidden;
-            pickParcel.Visibility = Visibility.Hidden;
-            deliver.Visibility = Visibility.Hidden;
-            releaseFromCharge.Visibility = Visibility.Hidden;
+            //sendDeliver.Visibility = Visibility.Hidden;
+            //pickParcel.Visibility = Visibility.Hidden;
+            //deliver.Visibility = Visibility.Hidden;
+            //releaseFromCharge.Visibility = Visibility.Hidden;
             //lblOptions.Visibility = Visibility.Hidden;
             //updateOptions.Visibility = Visibility.Hidden;
             lblTimeInCharge.Visibility = Visibility.Hidden;
@@ -97,16 +99,24 @@ namespace PL
             {
                 case DroneStatus.Available:
                     charge.Visibility = Visibility.Visible;
-                    sendDeliver.Visibility = Visibility.Visible;
+                    //sendDeliver.Visibility = Visibility.Visible;
+                    options.Content = "send drone\nto delivery";
+                    options.Click += SendDroneToDelivery;
                     break;
                 case DroneStatus.Maintenance:
-                    releaseFromCharge.Visibility = Visibility.Visible;
+                    //releaseFromCharge.Visibility = Visibility.Visible;
+                    options.Content = "release drone\nfrom charge";
+                    options.Click += ReleaseDroneFromCharge;
                     break;
                 case DroneStatus.Associated:
-                    pickParcel.Visibility = Visibility.Visible;
+                    //pickParcel.Visibility = Visibility.Visible;
+                    options.Content = "pick up\nparcel";
+                    options.Click += PickUpParcel;
                     break;
                 case DroneStatus.Delivery:
-                    deliver.Visibility = Visibility.Visible;
+                    //deliver.Visibility = Visibility.Visible;
+                    options.Content = "deliver\nparcel";
+                    options.Click += DeliverParcel;
                     break;
             }
             //if (status != DroneStatus.Available) charge.Visibility = Visibility.Hidden;
@@ -219,6 +229,7 @@ namespace PL
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); return; }
             MessageBox.Show("the model updated successfully");
+            txtModel.Foreground = Brushes.Black;
         }
         /// <summary>
         /// send the drone to charge in the closest station
@@ -257,8 +268,11 @@ namespace PL
             MessageBox.Show("drone sent successfully");
             InitialiseData(id);
             charge.Visibility = Visibility.Hidden;
-            sendDeliver.Visibility = Visibility.Hidden;
-            releaseFromCharge.Visibility = Visibility.Visible;
+            //sendDeliver.Visibility = Visibility.Hidden;
+            //releaseFromCharge.Visibility = Visibility.Visible;
+            options.Content = "release drone\nfrom charge";
+            options.Click -= SendDroneToDelivery;
+            options.Click += ReleaseDroneFromCharge;
         }
         /// <summary>
         /// ask the user how long the drone has been charging, realese it from charge
@@ -291,7 +305,6 @@ namespace PL
             TimeSpan zero = new TimeSpan(0);
             if (TimeSpan.TryParse(txtTimeInCharge.Text, out time) == false || time < zero)
             {
-
                 MessageBox.Show("the time is not good, change it");
                 return;
             }
@@ -312,9 +325,12 @@ namespace PL
             txtTimeInCharge.Visibility = Visibility.Hidden;
             OKrelease.Visibility = Visibility.Hidden;
             InitialiseData(id);
-            releaseFromCharge.Visibility = Visibility.Hidden;
+            //releaseFromCharge.Visibility = Visibility.Hidden;
+            //sendDeliver.Visibility = Visibility.Visible;
             charge.Visibility = Visibility.Visible;
-            sendDeliver.Visibility = Visibility.Visible;
+            options.Content = "send drone\nto delivery";
+            options.Click -= ReleaseDroneFromCharge;
+            options.Click += SendDroneToDelivery;
         }
         /// <summary>
         /// Send Drone To Delivery- Assign Parcel To the Drone
@@ -328,36 +344,36 @@ namespace PL
                 MessageBox.Show("the drone is not available");
                 return;
             }
-            else
+            int id;
+            int.TryParse(txtId.Text, out id);
+            try
             {
-                int id;
-                int.TryParse(txtId.Text, out id);
-                try
-                {
-                    // blObject.SendDroneToCharge(id);
-                    blObject.AssignParcelToDrone(id);
-                }
-                catch (NotExistIDException)
-                {
-                    MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
-                    return;
-                }
-                catch (DroneCantTakeParcelException)
-                {
-                    MessageBox.Show("drone cant be accociated");
-                    return;
-                }
-                catch (ThereNotGoodParcelToTakeException)
-                {
-                    MessageBox.Show("drone cant take a parcel because its battery not enugh. \nTry to send the drone to charge");
-                    return;
-                }
-                catch (Exception ex) { MessageBox.Show(ex.Message); return; }
-                MessageBox.Show("the drone has send to delivary");
-                charge.Visibility = Visibility.Hidden;
-                sendDeliver.Visibility = Visibility.Hidden;
-                pickParcel.Visibility = Visibility.Visible;
+                // blObject.SendDroneToCharge(id);
+                blObject.AssignParcelToDrone(id);
             }
+            catch (NotExistIDException)
+            {
+                MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
+                return;
+            }
+            catch (DroneCantTakeParcelException)
+            {
+                MessageBox.Show("drone cant be accociated");
+                return;
+            }
+            catch (ThereNotGoodParcelToTakeException)
+            {
+                MessageBox.Show("drone cant take a parcel because its battery not enugh. \nTry to send the drone to charge");
+                return;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); return; }
+            MessageBox.Show("the drone has send to delivary");
+            charge.Visibility = Visibility.Hidden;
+            //sendDeliver.Visibility = Visibility.Hidden;
+            //pickParcel.Visibility = Visibility.Visible;
+            options.Content = "pick up\nparcel";
+            options.Click -= SendDroneToDelivery;
+            options.Click += PickUpParcel;
         }
         /// <summary>
         /// Pick Up Parcel by the drone
@@ -391,8 +407,11 @@ namespace PL
             }
             MessageBox.Show("the drone piked up the parcel");
             InitialiseData(id);
-            pickParcel.Visibility = Visibility.Hidden;
-            deliver.Visibility = Visibility.Visible;
+            //pickParcel.Visibility = Visibility.Hidden;
+            //deliver.Visibility = Visibility.Visible;
+            options.Content = "deliver\nparcel";
+            options.Click -= PickUpParcel;
+            options.Click += DeliverParcel;
         }
         /// <summary>
         /// deliver the parcel
@@ -437,9 +456,12 @@ namespace PL
             }
             MessageBox.Show("drone deliver the parcel successfully");
             InitialiseData(id);
-            deliver.Visibility = Visibility.Hidden;
+            //deliver.Visibility = Visibility.Hidden;
+            //sendDeliver.Visibility = Visibility.Visible;
             charge.Visibility = Visibility.Visible;
-            sendDeliver.Visibility = Visibility.Visible;
+            options.Content = "send drone\nto delivery";
+            options.Click -= DeliverParcel;
+            options.Click += SendDroneToDelivery;
         }
         /// <summary>
         /// determinate the color of the id text box, according to wich is valid or not
@@ -526,7 +548,13 @@ namespace PL
                 mb = MessageBox.Show("do you want to close the window? \nchanges will not happen", "close", MessageBoxButton.YesNo);
 
             if (mb == MessageBoxResult.Yes)
+            {
+                options.Click -= SendDroneToDelivery;
+                options.Click -= ReleaseDroneFromCharge;
+                options.Click -= PickUpParcel;
+                options.Click -= DeliverParcel;
                 this.Close();
+            }
         }
         /// <summary>
         /// prevenet closing the window with the X button.
