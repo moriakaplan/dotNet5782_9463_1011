@@ -4,7 +4,7 @@
 namespace DO
 {
     /// <summary>
-    /// טעינת סוללת רחפן
+    /// drone in charge
     /// </summary>
     public struct DroneCharge
     {

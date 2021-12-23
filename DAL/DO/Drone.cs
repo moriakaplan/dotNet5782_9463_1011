@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace DO
 {
     /// <summary>
-    ///רחפנים 
+    ///drone 
     /// </summary>
     public struct Drone
     {

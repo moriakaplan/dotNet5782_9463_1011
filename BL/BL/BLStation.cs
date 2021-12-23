@@ -10,7 +10,6 @@ namespace BL
 {
     internal partial class BL
     {
-       
         public void AddStation(int id, string name, Location loc, int chargeSlots)
         {
             //creates a new station in the data layer
@@ -30,8 +29,7 @@ namespace BL
             {
                 throw new ExistIdException(ex.Message, "-station");
             }
-        } 
-       
+        }  
         public void UpdateStation(int id, string name, int cargeSlots)
         {
             DO.Station dstation = dl.DisplayStation(id);
@@ -45,8 +43,7 @@ namespace BL
                 dstation.ChargeSlots = cargeSlots;
             }
             dl.AddStationToTheList(dstation);
-        }
-       
+        }    
         public Station DisplayStation(int stationId)
         {
             DO.Station dstation;
@@ -75,6 +72,17 @@ namespace BL
             bstation.AvailableChargeSlots = dstation.ChargeSlots - count;
             return bstation;
         }
+        public IEnumerable<StationToList> DisplayListOfStations()
+        {
+            return from dstation in dl.DisplayListOfStations()
+                   select DisplayStationToList(dstation.Id);
+        }
+        public IEnumerable<StationToList> DisplayListOfStationsWithAvailableCargeSlots()
+        {
+            return from dstation in dl.DisplayListOfStations(x => x.ChargeSlots > 0)
+                   select DisplayStationToList(dstation.Id);
+        }
+
         /// <summary>
         /// display parcel to list
         /// </summary>
@@ -106,15 +114,6 @@ namespace BL
 
         }
        
-        public IEnumerable<StationToList> DisplayListOfStations()
-        {
-            return from dstation in dl.DisplayListOfStations()
-                   select DisplayStationToList(dstation.Id);
-        }
-        public IEnumerable<StationToList> DisplayListOfStationsWithAvailableCargeSlots()
-        {
-            return from dstation in dl.DisplayListOfStations(x=>x.ChargeSlots>0)
-                   select DisplayStationToList(dstation.Id);
-        }
+       
     }
 }

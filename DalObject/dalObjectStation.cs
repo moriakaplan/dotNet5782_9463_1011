@@ -6,14 +6,12 @@ using System.Collections.Generic;
 namespace Dal
 {
     internal partial class DalObject
-    {
-       
+    {       
         public void AddStationToTheList(Station station)
         {
             if (DataSource.stations.Exists(item => item.Id == station.Id)) throw new StationException($"id: {station.Id} already exist"); //it suppose to be this type of exception????**** 
             DataSource.stations.Add(station);
-        }
-        
+        }       
         public Station DisplayStation(int stationId)
         {
             foreach (Station item in DataSource.stations)
@@ -23,29 +21,12 @@ namespace Dal
             }
             throw new StationException($"id: {stationId} does not exist");
         }
-        
         public IEnumerable<Station> DisplayListOfStations(Predicate<Station> pre)
         {
             List<Station> result = new List<Station>(DataSource.stations);
             if (pre == null) return result;
             return result.FindAll(pre);
         }
-
-        /// <summary>
-        /// display a list of all the station with empty charge slots
-        /// </summary>
-        /// <returns></returns>
-        //public IEnumerable<Station> DisplayListOfStationsWithAvailableCargeSlots()
-        //{
-        //    List<Station> StationsWithAvailableCargingSlots = new List<Station>();
-        //    foreach (Station item in DataSource.stations)
-        //    {
-        //        if (item.ChargeSlots > 0)
-        //            StationsWithAvailableCargingSlots.Add(item);
-        //    }
-        //    return StationsWithAvailableCargingSlots;
-        //}
-
         public void DeleteStation(int stationId)
         {
             try

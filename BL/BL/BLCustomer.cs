@@ -10,7 +10,6 @@ namespace BL
 {
     internal partial class BL
     {
-       
         public void AddCustomer(int id, string name, string phone, Location loc)
         {
             //creates a new station in the data level
@@ -77,7 +76,6 @@ namespace BL
             return (from dCustomer in dl.DisplayListOfCustomers()
                     select DisplayCustomersToList(dCustomer.Id));
         }
-
 
         /// <summary>
         /// Returns a list of parcels in the customer - from the customer

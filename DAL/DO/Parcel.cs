@@ -4,7 +4,7 @@
 namespace DO
 {
     /// <summary>
-    /// חבילות 
+    /// parcels 
     /// </summary>
     public struct Parcel
     {
@@ -13,11 +13,11 @@ namespace DO
         public int TargetId { get; set; }
         public int Droneld { get; set; }
         public WeightCategories Weight { get; set; }
-        public Priorities Priority { get; set; } //רגיל, מהיר, חירום
-        public DateTime? CreateTime { get; set; } //יצירת החבילה
-        public DateTime? AssociateTime { get; set; } //שיוך לרחפן
-        public DateTime? PickUpTime { get; set; }  //איסוף מהשולח
-        public DateTime? DeliverTime { get; set; } //מסירה ליעד
+        public Priorities Priority { get; set; } 
+        public DateTime? CreateTime { get; set; } 
+        public DateTime? AssociateTime { get; set; } 
+        public DateTime? PickUpTime { get; set; }  
+        public DateTime? DeliverTime { get; set; }  
         public override string ToString()
         {
             return @$"parcel #{Id}: 

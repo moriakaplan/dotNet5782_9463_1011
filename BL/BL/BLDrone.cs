@@ -10,7 +10,6 @@ namespace BL
 {
     internal partial class BL
     {
-        
         public void AddDrone(int id, string model, WeightCategories weight, int stationId)
         {
             Location location = DisplayStation(stationId).Location;

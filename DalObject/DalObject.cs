@@ -38,22 +38,17 @@ namespace Dal
                 return instance;
             }
         }
-
-       
-
      
         public double DistanceForStation(double longitudeA, double lattitudeA, int id)
         {
             Station st = DisplayStation(id);
             return Distance(longitudeA, lattitudeA, st.Longitude, st.Lattitude);
         }
-     
         public double DistanceForCustomer(double longitudeA, double lattitudeA, int id)
         {
             Customer cu = DisplayCustomer(id);
             return Distance(longitudeA, lattitudeA, cu.Longitude, cu.Lattitude);
         }
-       
         public double Distance(double lattitudeA, double longitudeA, double lattitudeB, double longitudeB)
         {
             var radiansOverDegrees = (Math.PI / 180.0);
@@ -74,7 +69,6 @@ namespace Dal
             // calculate the result
             return (c * r);
         }
-
         public double[] AskBattery()
         {
             return new double[] {

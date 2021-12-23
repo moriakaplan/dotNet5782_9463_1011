@@ -6,16 +6,14 @@ using System.Collections.Generic;
 namespace Dal
 {
     internal partial class DalObject
-    {
-        
+    {      
         public int AddParcelToTheList(Parcel parcel)
         {
             if (DataSource.parcels.Exists(item => item.Id == parcel.Id)) throw new ParcelException($"id: {parcel.Id} already exist"); //it suppose to be this type of exception????**** 
             parcel.Id = ++DataSource.Config.parcelCode;
             DataSource.parcels.Add(parcel);
             return DataSource.Config.parcelCode;
-        }
-      
+        }   
         public Parcel DisplayParcel(int parcelId)
         {
             foreach (Parcel item in DataSource.parcels)
@@ -24,28 +22,13 @@ namespace Dal
                     return item;
             }
             throw new ParcelException($"id: {parcelId} does not exist");
-        }
-        
+        }       
         public IEnumerable<Parcel> DisplayListOfParcels(Predicate<Parcel> pre)
         {
             List<Parcel> result = new List<Parcel>(DataSource.parcels);
             if (pre == null) return result;
             return result.FindAll(pre);
         }
-        ///// <summary>
-        ///// display the list of the unassign parcels
-        ///// </summary>
-        ///// <returns></returns>
-        //public IEnumerable<Parcel> DisplayListOfUnassignedParcels()
-        //{
-        //    List<Parcel> unassignedParcels = new List<Parcel>();
-        //    foreach (Parcel item in DataSource.parcels)
-        //    {
-        //        if (item.AssociateTime == null)
-        //            unassignedParcels.Add(item);
-        //    }
-        //    return unassignedParcels;
-        //}
         public void DeleteParcel(int parcelId)
         {
             try
@@ -56,8 +39,7 @@ namespace Dal
             {
                 throw new ParcelException($"id: {parcelId} does not exist");
             }
-        }
-       
+        }     
         public void AssignParcelToDrone(int parcelId, int droneId)
         {
             if (!DataSource.drones.Exists(item => item.Id == droneId))
@@ -77,7 +59,6 @@ namespace Dal
             }
             throw new ParcelException($"id: {parcelId} does not exist");
         }
-
         public void PickParcelByDrone(int parcelId)
         {
             //Parcel parcel = DisplayParcel(parcelId);
@@ -100,8 +81,7 @@ namespace Dal
             //DataSource.drones.Remove(drone);
             ////drone.Status = DroneStatuses.Sending;//update the status of the drone(sending)
             //AddDroneToTheList(drone);
-        }
-       
+        }    
         public void DeliverParcelToCustomer(int parcelId)
         {
             for (int i = 0; i < DataSource.parcels.Count; i++) //find the parcel and update its details

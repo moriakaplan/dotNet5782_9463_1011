@@ -4,7 +4,7 @@
 namespace DO
 {
     /// <summary>
-    /// לקוח
+    /// Customer
     /// </summary>
     public struct Customer
     {

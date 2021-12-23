@@ -94,20 +94,12 @@ Drone ID (6 digits)-");
                                 model = Console.ReadLine();
                                 Console.WriteLine("Dron max weight (Easy/Medium/Heavy)-");
                                 input = Console.ReadLine();
-                                WeightCategories.TryParse(input, out weight);
-                                //Console.WriteLine("Drone status (Vacant/Maintenance/Sending)-");
-                                //input = Console.ReadLine();
-                                //DroneStatuses.TryParse(input, out status);
-                                //Console.WriteLine("Drone battery-");
-                                //input = Console.ReadLine();
-                                //double.TryParse(input, out battery);
+                                WeightCategories.TryParse(input, out weight);         
                                 Drone drone = new Drone//Creates a new drone
                                 {
                                     Id = id,
                                     Model = model,
                                     MaxWeight = weight,
-                                    //Status = status,
-                                    //Battery = battery
                                 };
                                 dalObject.AddDroneToTheList(drone);//Add the drone to the list
                                 break;

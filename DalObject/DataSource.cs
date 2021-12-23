@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Dal
 {
-    public class DataSource
+    internal class DataSource
     {
         internal static List<Drone> drones = new List<Drone>();
         internal static List<DroneCharge> droneCharges = new List<DroneCharge>();
@@ -43,42 +43,32 @@ namespace Dal
             drones.Add(new Drone
             {
                 Id = random.Next(100000, 1000000),
-                //Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "superFalcon",
-                //Status = DroneStatuses.Assigned
             });
             drones.Add(new Drone
             {
                 Id = random.Next(100000, 1000000), 
-                //Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "superFalcon",
-                //Status = DroneStatuses.Assigned
             });
             drones.Add(new Drone
             {
                 Id = random.Next(100000, 1000000),
-                //Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "superFalcon2",
-                //Status = DroneStatuses.Sending
             });
             drones.Add(new Drone
             {
                 Id = random.Next(100000, 1000000),
-                //Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "nimbus2000",
-                //Status = DroneStatuses.Sending
             });
             drones.Add(new Drone
             {
                 Id = random.Next(100000, 1000000),
-                //Battery = random.NextDouble() * 100,
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "AnaAref",
-                //Status = DroneStatuses.Maintenance
             });
             customers.Add(new Customer
             {

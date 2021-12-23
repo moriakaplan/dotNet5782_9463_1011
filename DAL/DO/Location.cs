@@ -14,13 +14,16 @@ namespace DO
     {
         public double Longi { get; init; }
         public double Latti { get; init; }
-
         public override string ToString()
         {
             return @$"longitude- {SexagesimalCoordinates(Longi, true)},
 lattitude- {SexagesimalCoordinates(Latti, false)}";
         }
 
+        /// <summary>
+        /// Returns a Sexagesimal representation of the coordinate
+        /// </summary>
+        /// <returns></returns>
         private String SexagesimalCoordinates(double value, bool isLongitude)
         {
             char direction;
@@ -46,12 +49,6 @@ lattitude- {SexagesimalCoordinates(Latti, false)}";
             return result;
         }
 
-        //public double Value { set; get; }
-        //public bool IsLongitude { set; get; }
-        /// <summary>
-        /// Returns a Sexagesimal representation of the coordinate
-        /// </summary>
-        /// <returns></returns>
 
 
     }

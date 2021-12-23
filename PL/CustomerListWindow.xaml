@@ -1,0 +1,22 @@
+﻿<Window x:Class="PL.CustomerListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="CustomerListWindow" Height="450" Width="800">
+    <Grid>
+        <DataGrid x:Name="customerToListDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="0,0,0,0" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="numOfParcelsDeliveredColumn" Binding="{Binding numOfParcelsDelivered}" Header="num Of Parcels Delivered" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="numOfParcelsInTheWayColumn" Binding="{Binding numOfParcelsInTheWay}" Header="num Of Parcels In The Way" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="numOfParcelsSentAndNotDeliveredColumn" Binding="{Binding numOfParcelsSentAndNotDelivered}" Header="num Of Parcels Sent And Not Delivered" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="numOfParclReceivedColumn" Binding="{Binding numOfParclReceived}" Header="num Of Parcl Received" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="phoneColumn" Binding="{Binding phone}" Header="phone" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
