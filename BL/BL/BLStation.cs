@@ -55,20 +55,23 @@ namespace BL
                 Location = new Location { Latti = dstation.Lattitude, Longi = dstation.Longitude },
                 Name = dstation.Name
             };
-            int count = 0;
-            //IEnumerable<DO.DroneCharge> droneCharge = dl.DisplayListOfDroneCharge();
-            DroneInCharge temp = new DroneInCharge();
-            bstation.DronesInCharge = new List<DroneInCharge>();//^^^^
-            foreach (DO.DroneCharge dCharge in dl.DisplayListOfDroneCharge())
-            {
-                if (dCharge.StationId == stationId)
-                {
-                    count++;
-                    temp.Id = dCharge.DroneId;
-                    temp.Battery = DisplayDrone(dCharge.DroneId).Battery; 
-                    bstation.DronesInCharge.Add(temp);
-                }
-            }
+            //int count = 0;
+            //DroneInCharge temp = new DroneInCharge();
+            //bstation.DronesInCharge = new List<DroneInCharge>();//^^^^
+            //foreach (DO.DroneCharge dCharge in dl.DisplayListOfDroneCharge())
+            //{
+            //    if (dCharge.StationId == stationId)
+            //    {
+            //        count++;
+            //        temp.Id = dCharge.DroneId;
+            //        temp.Battery = DisplayDrone(dCharge.DroneId).Battery; 
+            //        bstation.DronesInCharge.Add(temp);
+            //    }
+            //}
+            IEnumerable<DO.DroneCharge> droneCharges = dl.DisplayListOfDroneCharge();
+            bstation.DronesInCharge = from item in droneCharges
+                                      select new DroneInCharge { Id = item.DroneId, Battery = DisplayDrone(item.DroneId).Battery };
+            int count = droneCharges.Count(x => x.StationId == stationId);
             bstation.AvailableChargeSlots = dstation.ChargeSlots - count;
             return bstation;
         }

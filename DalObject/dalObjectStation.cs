@@ -14,12 +14,9 @@ namespace Dal
         }       
         public Station DisplayStation(int stationId)
         {
-            foreach (Station item in DataSource.stations)
-            {
-                if (item.Id == stationId)
-                    return item;
-            }
-            throw new StationException($"id: {stationId} does not exist");
+            Station? result = DataSource.stations.Find(x => x.Id == stationId);
+            if (result==null) throw new StationException($"id: {stationId} does not exist");
+            return (Station)result;
         }
         public IEnumerable<Station> DisplayListOfStations(Predicate<Station> pre)
         {

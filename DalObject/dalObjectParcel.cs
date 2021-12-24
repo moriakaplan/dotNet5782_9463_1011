@@ -16,12 +16,10 @@ namespace Dal
         }   
         public Parcel DisplayParcel(int parcelId)
         {
-            foreach (Parcel item in DataSource.parcels)
-            {
-                if (item.Id == parcelId)
-                    return item;
-            }
-            throw new ParcelException($"id: {parcelId} does not exist");
+            Parcel? result= DataSource.parcels.Find(x => x.Id == parcelId);
+            if (result == null) 
+                throw new ParcelException($"id: {parcelId} does not exist");
+            return (Parcel)result;
         }       
         public IEnumerable<Parcel> DisplayListOfParcels(Predicate<Parcel> pre)
         {

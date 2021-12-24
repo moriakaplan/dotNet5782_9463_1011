@@ -14,15 +14,10 @@ namespace Dal
         }   
         public Customer DisplayCustomer(int customerId)
         {
-            foreach (Customer item in DataSource.customers)
-            {
-                if (item.Id == customerId)
-                    return item;
-            }
-            throw new CustomerException($"id: {customerId} does not exist");
-            //Customer? cu= DataSource.customers.Find(item => item.Id == customerId);
-            //if(cu==null) throw new CustomerException($"id: {customerId} does not exist");
-            //return (Customer)cu;
+            Customer? cus = DataSource.customers.Find(item => item.Id == customerId);
+            if (cus == null) 
+                throw new CustomerException($"id: {customerId} does not exist");
+            return (Customer)cus;
         }     
         public IEnumerable<Customer> DisplayListOfCustomers(Predicate<Customer> pre)
         {

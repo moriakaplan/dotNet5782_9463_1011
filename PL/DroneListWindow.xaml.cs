@@ -27,7 +27,8 @@ namespace PL
         public DroneListWindow(IBL obj)
         {
             InitializeComponent();
-            blObject = obj;
+            //blObject = obj;
+            blObject = BLFactory.GetBl();
             //IEnumerable<DroneToList> drones = blObject.DisplayListOfDrones().OrderBy(x => x.Id);
             DroneListView.ItemsSource = blObject.DisplayListOfDrones()
                     .OrderBy(x => x.Id)

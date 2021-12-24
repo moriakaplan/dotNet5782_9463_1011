@@ -13,7 +13,7 @@ namespace BL
         public void AddDrone(int id, string model, WeightCategories weight, int stationId)
         {
             Location location = DisplayStation(stationId).Location;
-            DO.Drone idalDrone=new DO.Drone
+            DO.Drone idalDrone = new DO.Drone
             {
                 Id = id,
                 MaxWeight = (DO.WeightCategories)weight,
@@ -60,11 +60,17 @@ namespace BL
         }
         public Drone DisplayDrone(int droneId)
         {
-            DroneToList droneFromList=null;
-            foreach (DroneToList item in lstdrn)
+            //DroneToList droneFromList=null;
+            //foreach (DroneToList item in lstdrn)
+            //{
+            //    if (item.Id == droneId)
+            //        droneFromList = item;
+            //}
+            DroneToList droneFromList;
+            try { droneFromList = lstdrn.Where(item => item.Id == droneId).Single(); }
+            catch (InvalidOperationException)
             {
-                if (item.Id == droneId)
-                    droneFromList = item;
+                throw new NotExistIDException($"id: {droneId} does not exist - drone");
             }
             if (droneFromList == null) throw new NotExistIDException($"id: {droneId} does not exist - drone");
             ParcelInTransfer parcel = null;
@@ -72,7 +78,7 @@ namespace BL
             {
                 DO.Parcel parcelFromFunc;
                 try { parcelFromFunc = dl.DisplayParcel(droneFromList.ParcelId); }
-                catch(DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
+                catch (DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
                 Location locOfSender = DisplayCustomer(parcelFromFunc.Senderld/*SenderId*/).Location;
                 Location locOfTarget = DisplayCustomer(parcelFromFunc.TargetId).Location;
                 parcel = new ParcelInTransfer
@@ -101,31 +107,40 @@ namespace BL
         }
         public void SendDroneToCharge(int droneId)
         {
-            DroneToList drone= new DroneToList();
-            int i;
-            for (i = 0; i < lstdrn.Count(); i++)
+            //DroneToList drone= new DroneToList();
+            //int i;
+            //for (i = 0; i < lstdrn.Count(); i++)
+            //{
+            //    if (lstdrn[i].Id == droneId)
+            //    {
+            //        drone = lstdrn[i];
+            //        break;
+            //    }
+            //}
+            DroneToList drone;
+            try { drone = lstdrn.Where(item => item.Id == droneId).Single(); }
+            catch (InvalidOperationException)
             {
-                if (lstdrn[i].Id == droneId)
-                {
-                    drone = lstdrn[i];
-                    break;
-                }
+                throw new NotExistIDException($"id: {droneId} does not exist - drone");
             }
-            if (i == lstdrn.Count) throw new NotExistIDException($"id: {droneId} does not exist - drone");
-            double lo = drone.CurrentLocation.Longi, la = drone.CurrentLocation.Latti;
-            if (drone.Status != DroneStatus.Available) 
+            if (drone.Status != DroneStatus.Available)
+            {
                 throw new DroneCantGoToChargeException($"the drone {droneId} is not available so it can't be sended to charging"); //if the drone is not available
-            Station st = closestStationWithChargeSlots(drone.CurrentLocation);
-            double batteryNeed = minBattery(drone.Id, drone.CurrentLocation, st.Location);
-            if (batteryNeed > drone.Battery) 
+            }
+            Location loc = drone.CurrentLocation;
+            Station st = closestStationWithChargeSlots(loc);
+            double batteryNeed = minBattery(drone.Id, loc, st.Location);
+            if (batteryNeed > drone.Battery)
+            {
                 throw new DroneCantGoToChargeException($"the battery of drone {droneId} is not enugh so it can't be sended to charging"); //if the drone dont have enough battery
+            }
             try { dl.SendDroneToCharge(droneId, st.Id); } // Adds a drone charging entity and lowers the amount of available charge slots at the station
             catch (Exception) { throw new DroneCantGoToChargeException(); }
             drone.Battery -= batteryNeed;
             drone.CurrentLocation = st.Location;
             drone.Status = DroneStatus.Maintenance;
-            lstdrn[i] = drone;
-        }     
+            //לעדכן את הרחפן
+        }
         public void ReleaseDroneFromeCharge(int droneId, TimeSpan timeInCharge)
         {
             Drone drone = DisplayDrone(droneId);
@@ -133,27 +148,29 @@ namespace BL
             {
                 message = $"the drone {droneId} is not in maintenance so it can't be released from charging"
             };
-            for(int i=0;i< lstdrn.Count;i++)
+            DroneToList droneFromList;
+            try { droneFromList = lstdrn.Where(item => item.Id == droneId).Single(); }
+            catch (InvalidOperationException)
             {
-                if(lstdrn[i].Id== droneId)
-                {
-                    DroneToList dronetolist = lstdrn[i];
-                    double b = timeInCharge.TotalSeconds * ChargeRatePerHour;
-                    dronetolist.Battery = dronetolist.Battery+(double)(b/3600);
-                    if (dronetolist.Battery > 100) dronetolist.Battery = 100;
-                    dronetolist.Status = DroneStatus.Available;
-                    lstdrn[i] = dronetolist;
-                }
+                throw new NotExistIDException($"id: {droneId} does not exist - drone");
             }
+
+            DroneToList dronetolist = lstdrn[i];
+            double b = timeInCharge.TotalSeconds * ChargeRatePerHour;
+            dronetolist.Battery = dronetolist.Battery + (double)(b / 3600);
+            if (dronetolist.Battery > 100) dronetolist.Battery = 100;
+            dronetolist.Status = DroneStatus.Available;
+            lstdrn[i] = dronetolist; //לעדבן את הרחפן
+
             try
             {
                 dl.ReleaseDroneFromeCharge(droneId); //Deletes the charging entity and adds 1 to the charging slots of the station
             }
             catch (DO.DroneChargeException ex) { throw new NotExistIDException(ex.Message); }
-        }        
+        }
         public IEnumerable<DroneToList> DisplayListOfDrones(Predicate<DroneToList> pre)
-       {
-            foreach(DroneToList drone in lstdrn)
+        {
+            foreach (DroneToList drone in lstdrn)
             {
                 if (pre == null || pre(drone))
                     yield return drone;

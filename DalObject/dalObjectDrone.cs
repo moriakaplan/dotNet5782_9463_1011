@@ -18,7 +18,7 @@ namespace Dal
             {
                 throw new DroneException($"id: {droneId} does not exist");
             }
-            DroneCharge droneCharge = new DroneCharge { DroneId = droneId, StationId = stationId }; //add drone charge to the list for charging the drone
+            DroneCharge droneCharge = new DroneCharge { DroneId = droneId, StationId = stationId, StartedChargeTime=DateTime.Now }; //add drone charge to the list for charging the drone
             DataSource.droneCharges.Add(droneCharge);
             for (int i = 0; i < DataSource.stations.Count; i++) //find the station and update its details
             {
@@ -54,15 +54,10 @@ namespace Dal
         }     
         public Drone DisplayDrone(int droneId)
         {
-            foreach (Drone item in DataSource.drones)
-            {
-                if (item.Id == droneId)
-                    return item;
-            }
-            throw new DroneException($"id: {droneId} does not exist");
-            //Drone? dr = DataSource.drones.Find(item => item.Id == droneId);
-            //if(dr==null) throw new DroneException($"id: {droneId} does not exist");
-            //return (Drone)dr;
+            Drone? dr = DataSource.drones.Find(item => item.Id == droneId);
+            if (dr == null) 
+                throw new DroneException($"id: {droneId} does not exist");
+            return (Drone)dr;
         }     
         public IEnumerable<DroneCharge> DisplayListOfDroneCharge(Predicate<DroneCharge> pre)
         {

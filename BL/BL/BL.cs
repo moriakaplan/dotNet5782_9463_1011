@@ -157,9 +157,8 @@ namespace BL
             //    }
             //}
             //return true;
-            return (dl.DisplayListOfParcels()
-                   .Where(x => (x.Droneld == drone.Id) && (x.DeliverTime == null))
-                   .Count()) == 0;
+            return dl.DisplayListOfParcels()
+                   .Count(x => (x.Droneld == drone.Id) && (x.DeliverTime == null)) == 0;
         }
         /// <summary>
         /// Finds the closest station to the location

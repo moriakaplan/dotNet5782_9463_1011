@@ -161,7 +161,7 @@ namespace BL
                 numOfParcelsSentAndNotDelivered=0, 
                 numOfParclReceived=0
             };
-            foreach (ParcelToList parcelFromList in DisplayListOfParcels())
+            foreach (ParcelToList parcelFromList in DisplayListOfParcels()) //^^^^
             {
                 Parcel parcel = DisplayParcel(parcelFromList.Id);
                 if ((parcel.Sender.Id == customerId) && (parcel.DeliverTime != null))
