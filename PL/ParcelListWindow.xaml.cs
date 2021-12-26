@@ -22,10 +22,11 @@ namespace PL
     /// </summary>
     public partial class ParcelListWindow : Window
     {
-        private IBL blObject;
+        IBL blObject;
 
-        public ParcelListWindow()
+        public ParcelListWindow(IBL obj)
         {
+            blObject = obj;
             InitializeComponent();
         }
 

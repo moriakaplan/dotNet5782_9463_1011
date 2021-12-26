@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BLApi;
 namespace PL
 {
     /// <summary>
@@ -19,8 +19,10 @@ namespace PL
     /// </summary>
     public partial class CustomerListWindow : Window
     {
-        public CustomerListWindow()
+        IBL blObject;
+        public CustomerListWindow(IBL obj)
         {
+            blObject = obj;
             InitializeComponent();
         }
     }
