@@ -1,5 +1,4 @@
 ﻿using System;
-using BO;
 using BLApi;
 
 namespace ConsoleUI_BL
@@ -8,7 +7,7 @@ namespace ConsoleUI_BL
     {
         static void Main(string[] args)
         {
-            IBL blObject = new BL.BL(); //need to be the interface Ibl
+            IBL blObject = BLFactory.GetBl(); //need to be the interface Ibl
             string input;
             Options options;
 

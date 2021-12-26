@@ -96,7 +96,7 @@ namespace ConsoleUI_BL
                         Console.WriteLine("Enter the time that the drone was in charge:");
                         input = Console.ReadLine();
                         TimeSpan.TryParse(input, out timeInCharge);
-                        try { blObject.ReleaseDroneFromeCharge(id, timeInCharge); }
+                        try { blObject.ReleaseDroneFromeCharge(id); }
                         catch (NotExistIDException ex)
                         {
                             //Console.WriteLine("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
