@@ -31,7 +31,7 @@ namespace PL
 
         private void LoginClick(object sender, RoutedEventArgs e)
         {
-            new ManagerWindow();
+            new ManagerWindow().ShowDialog();
         }
     }
 }
