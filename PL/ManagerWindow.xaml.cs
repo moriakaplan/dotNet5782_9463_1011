@@ -10,21 +10,25 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BLApi;
 
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for StationWindow.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class StationWindow : Window
+    public partial class ManagerWindow : Window
     {
-        IBL blObject;
-        public StationWindow(IBL obj, int stationId)
+        internal readonly IBL blObject = BLFactory.GetBl(); //צריך לדאוג שיהיה שדה של המחלקה
+        public ManagerWindow()
         {
             InitializeComponent();
-            blObject = obj;
+        }
+        private void DisplayDronesList_Click(object sender, RoutedEventArgs e)
+        {
+            new DroneListWindow(blObject).Show();
         }
     }
 }

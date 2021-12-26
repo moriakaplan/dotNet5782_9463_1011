@@ -28,7 +28,7 @@
            
             <!--<Button x:Name="Restart" Content="Restart selections" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Stretch" Click="Restart_Click"/>-->
         </Grid>
-        <DataGrid x:Name="stationDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="0,42,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.RowSpan="3" Grid.ColumnSpan="2">
+        <DataGrid x:Name="stationDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="0,42,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.RowSpan="3" Grid.ColumnSpan="2" MouseDoubleClick="ViewStation">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="SizeToHeader"/>
