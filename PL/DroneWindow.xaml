@@ -13,6 +13,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition x:Name="rowBattery" Height="*"/>
@@ -23,23 +24,25 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
-        <Label Content="Id:" Grid.Row="0" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label Content="Model:" Grid.Row="1" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label x:Name="lblBattery" Content="Battery:" Grid.Row="2" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label Content="Status:" Grid.Row="3" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label Content="Max Weight:" Grid.Row="4" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label x:Name="lblParcel" Content="Parcel In Transfer" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Label Content="Location:" Grid.Row="7" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label x:Name="lblStation" Content="Station For First Location:" Grid.Row="5" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+        <Button x:Name="close" Content="Close The Window" Grid.Column="1" Click="Close_Click"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+        <Label Content="Id:" Grid.Row="1" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label Content="Model:" Grid.Row="2" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label x:Name="lblBattery" Content="Battery:" Grid.Row="3" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label Content="Status:" Grid.Row="4" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label Content="Max Weight:" Grid.Row="5" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label x:Name="lblParcel" Content="Parcel In Transfer" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Content="Location:" Grid.Row="8" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label x:Name="lblStation" Content="Station For First Location:" Grid.Row="6" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
 
-        <TextBox x:Name="txtId" Grid.Row="0" Grid.Column="1" Margin="10" TextChanged="IdColor"/>
-        <TextBox x:Name="txtModel" Grid.Row="1" Grid.Column="1" Margin="10" TextChanged="ModelColor"/>
-        <TextBox x:Name="txtBattery" Grid.Row="2" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
-        <TextBox x:Name="txtStatus" Grid.Row="3" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
-        <ComboBox x:Name="txtWeight" Grid.Row="4" Grid.Column="1" Margin="10"/>
-        <ComboBox x:Name="txtStationId" Grid.Row="5" Grid.Column="1" Margin="10" SelectionChanged="txtStationId_SelectionChanged"/>
-        <TextBox x:Name="txtParcel" Grid.Row="6" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
-        <Grid Grid.Column="1" Grid.Row="7">
+        <TextBox x:Name="txtId" Grid.Row="1" Grid.Column="1" Margin="10" TextChanged="IdColor"/>
+        <TextBox x:Name="txtModel" Grid.Row="2" Grid.Column="1" Margin="10" TextChanged="ModelColor"/>
+        <TextBox x:Name="txtBattery" Grid.Row="3" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
+        <TextBox x:Name="txtStatus" Grid.Row="4" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
+        <ComboBox x:Name="txtWeight" Grid.Row="5" Grid.Column="1" Margin="10"/>
+        <ComboBox x:Name="txtStationId" Grid.Row="6" Grid.Column="1" Margin="10" SelectionChanged="txtStationId_SelectionChanged"/>
+        <TextBox x:Name="txtParcel" Grid.Row="7" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
+        <Grid Grid.Column="1" Grid.Row="8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -57,8 +60,6 @@
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78"/>
         <Button x:Name="options" Content="options" Grid.Row="8" Grid.Column="1"
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="17,0,0,0"/>
-        <Button x:Name="close" Content="Close The Window" Grid.Column="1" Grid.Row="8" Click="Close_Click"
-                HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
         <Button x:Name="update" Content="update the&#xD;&#xA;model" Click="UpdateDroneModel" Grid.Row="8"
                 HorizontalAlignment="Right" VerticalAlignment="Center" Width="78"/>
         <Button x:Name="charge" Content="send drone&#xD;&#xA;to charge" Click="SendDroneToCharge" Grid.Column="1" Grid.Row="8" 
