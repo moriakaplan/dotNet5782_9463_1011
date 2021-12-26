@@ -63,7 +63,7 @@ namespace BLApi
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="timeInCharge"></param>
-        void ReleaseDroneFromeCharge(int droneId, TimeSpan timeInCharge);
+        void ReleaseDroneFromeCharge(int droneId);
         /// <summary>
         /// Assign Parcel To Drone
         /// </summary>
@@ -115,7 +115,7 @@ namespace BLApi
         ///  returns the list of the drones
         /// </summary>
         /// <returns></returns>
-        IEnumerable<DroneToList> DisplayListOfDrones(Predicate<DroneToList> pre = null);
+        IEnumerable<DroneToList> DisplayListOfDrones(Func<DroneToList, bool> pre=null);
         /// <summary>
         /// returns the list of the customers
         /// </summary>

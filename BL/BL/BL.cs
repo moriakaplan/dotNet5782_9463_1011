@@ -30,7 +30,7 @@ namespace BL
             }
         }
 
-        private /*private*/ IEnumerable<DroneToList> lstdrn;
+        private /*private*/ List<DroneToList> lstdrn;
         private /*public */readonly IDal dl;
         private /*private*/ double BatteryForAvailable;
         private /*private*/ double BatteryForEasy; //per kill
@@ -69,13 +69,14 @@ namespace BL
             //{
             //    lstdrn.Add(new DroneToList { Id = drone.Id, MaxWeight = (WeightCategories)drone.MaxWeight, Model = drone.Model });
             //}
-            lstdrn = (from drone in dl.DisplayListOfDrones()
-                      select new DroneToList
-                      {
-                          Id = drone.Id,
-                          MaxWeight = (WeightCategories)drone.MaxWeight,
-                          Model = drone.Model
-                      });
+            lstdrn = dl.DisplayListOfDrones()
+                .Select(drone=>new DroneToList
+                {
+                    Id = drone.Id,
+                    MaxWeight = (WeightCategories)drone.MaxWeight,
+                    Model = drone.Model
+                })
+                .ToList();
             foreach (DroneToList drone in lstdrn)//^^^^
             {
                 foreach (DO.Parcel parcel in dl.DisplayListOfParcels())//^^^^
@@ -132,10 +133,9 @@ namespace BL
                         //{
                         //    if (cus.numOfParclReceived > 0) { customersWhoGotParcels.Add(cus); }
                         //}
-                        IEnumerable<CustomerToList> customersWhoGotParcels = from cus in DisplayListOfCustomers()
-                                                                             where (cus.numOfParclReceived > 0);
+                        IEnumerable<CustomerToList> customersWhoGotParcels = DisplayListOfCustomers().Where (x=>x.numOfParclReceived > 0);
                         int index = random.Next(0, customersWhoGotParcels.Count());
-                        CustomerToList customerForLocation = customersWhoGotParcels[index];
+                        CustomerToList customerForLocation = customersWhoGotParcels.ElementAt(index);
                         drone.CurrentLocation = DisplayCustomer(customerForLocation.Id).Location;
                         drone.Battery = random.Next((int)minBattery(drone.Id, drone.CurrentLocation, closestStation(drone.CurrentLocation)) + 1, 99) + random.NextDouble();//random  between a minimal charge that allows it to reach the nearest station and a full charge
                     }
@@ -176,12 +176,14 @@ namespace BL
             foreach (StationToList dstation in stations)//find the station that is the closest to the location
             {
                 station = DisplayStation(dstation.Id);
-                if (distance(loc, station.Location) < minDistance)
+                double dis = distance(loc, station.Location);
+                if (dis < minDistance)
                 {
-                    minDistance = distance(loc, station.Location);
+                    minDistance = dis;
                     minLocation = station.Location;
                 }
             }
+            minDistance = stations.Min(x => distance(loc, DisplayStation(x.Id).Location));
             return minLocation;
         }
         /// <summary>

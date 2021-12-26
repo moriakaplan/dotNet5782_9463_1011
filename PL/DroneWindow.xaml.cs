@@ -310,7 +310,7 @@ namespace PL
             }
             try
             {
-                blObject.ReleaseDroneFromeCharge(id, time);
+                blObject.ReleaseDroneFromeCharge(id);
             }
             catch (NotExistIDException ex)
             {

@@ -60,14 +60,8 @@ namespace BL
         }
         public Drone DisplayDrone(int droneId)
         {
-            //DroneToList droneFromList=null;
-            //foreach (DroneToList item in lstdrn)
-            //{
-            //    if (item.Id == droneId)
-            //        droneFromList = item;
-            //}
             DroneToList droneFromList;
-            try { droneFromList = lstdrn.Where(item => item.Id == droneId).Single(); }
+            try { droneFromList = lstdrn.Find(item => item.Id == droneId); }
             catch (InvalidOperationException)
             {
                 throw new NotExistIDException($"id: {droneId} does not exist - drone");
@@ -86,8 +80,8 @@ namespace BL
                     Id = parcelFromFunc.Id,
                     InTheWay = (parcelFromFunc.PickUpTime != null && parcelFromFunc.DeliverTime == null),
                     Priority = (Priorities)parcelFromFunc.Priority,
-                    Sender = new CustomerInParcel { Id = parcelFromFunc.Senderld, Name = DisplayCustomer(parcelFromFunc.Senderld/*SenderId*/).Name },/*DisplayCustomer(parcelFromFunc.Senderld/*SenderId*/
-                    Target = new CustomerInParcel { Id = parcelFromFunc.TargetId, Name = DisplayCustomer(parcelFromFunc.TargetId/*SenderId*/).Name },
+                    Sender = new CustomerInParcel { Id = parcelFromFunc.Senderld, Name = DisplayCustomer(parcelFromFunc.Senderld).Name },
+                    Target = new CustomerInParcel { Id = parcelFromFunc.TargetId, Name = DisplayCustomer(parcelFromFunc.TargetId).Name },
                     PickingPlace = locOfSender,
                     TargetPlace = locOfTarget,
                     TransportDistance = distance(locOfSender, locOfTarget),
@@ -118,7 +112,12 @@ namespace BL
             //    }
             //}
             DroneToList drone;
-            try { drone = lstdrn.Where(item => item.Id == droneId).Single(); }
+            int index;
+            try 
+            { 
+                index = lstdrn.FindIndex(item => item.Id == droneId); 
+                drone = lstdrn.ElementAt(index); 
+            }
             catch (InvalidOperationException)
             {
                 throw new NotExistIDException($"id: {droneId} does not exist - drone");
@@ -139,42 +138,48 @@ namespace BL
             drone.Battery -= batteryNeed;
             drone.CurrentLocation = st.Location;
             drone.Status = DroneStatus.Maintenance;
-            //לעדכן את הרחפן
+
+            lstdrn.RemoveAt(index);
+            lstdrn.Add(drone);
         }
-        public void ReleaseDroneFromeCharge(int droneId, TimeSpan timeInCharge)
+        public void ReleaseDroneFromeCharge(int droneId)
         {
-            Drone drone = DisplayDrone(droneId);
-            if (drone.Status != DroneStatus.Maintenance) throw new DroneCantReleaseFromChargeException
+            DroneToList drone;
+            int index;
+            try
             {
-                message = $"the drone {droneId} is not in maintenance so it can't be released from charging"
-            };
-            DroneToList droneFromList;
-            try { droneFromList = lstdrn.Where(item => item.Id == droneId).Single(); }
+                index = lstdrn.FindIndex(item => item.Id == droneId);
+                drone = lstdrn.ElementAt(index);
+            }
             catch (InvalidOperationException)
             {
                 throw new NotExistIDException($"id: {droneId} does not exist - drone");
             }
-
-            DroneToList dronetolist = lstdrn[i];
-            double b = timeInCharge.TotalSeconds * ChargeRatePerHour;
-            dronetolist.Battery = dronetolist.Battery + (double)(b / 3600);
-            if (dronetolist.Battery > 100) dronetolist.Battery = 100;
-            dronetolist.Status = DroneStatus.Available;
-            lstdrn[i] = dronetolist; //לעדבן את הרחפן
-
+            if (drone.Status != DroneStatus.Maintenance) throw new DroneCantReleaseFromChargeException
+            {
+                message = $"the drone {droneId} is not in maintenance so it can't be released from charging"
+            };
             try
             {
                 dl.ReleaseDroneFromeCharge(droneId); //Deletes the charging entity and adds 1 to the charging slots of the station
             }
             catch (DO.DroneChargeException ex) { throw new NotExistIDException(ex.Message); }
+            DO.DroneCharge dc= dl.DisplayListOfDroneCharge().Where(x => x.DroneId == droneId).Single();
+            TimeSpan time =DateTime.Now - dc.StartedChargeTime;
+            double b = time.TotalSeconds * ChargeRatePerHour;
+            drone.Battery += (double)(b / 3600);
+            if (drone.Battery > 100) drone.Battery = 100;
+            drone.Status = DroneStatus.Available;
+            
+            lstdrn.RemoveAt(index);
+            lstdrn.Add(drone);
         }
-        public IEnumerable<DroneToList> DisplayListOfDrones(Predicate<DroneToList> pre)
+        public IEnumerable<DroneToList> DisplayListOfDrones(Func<DroneToList, bool> pre)
         {
-            foreach (DroneToList drone in lstdrn)
-            {
-                if (pre == null || pre(drone))
-                    yield return drone;
-            }
+            if (pre != null)
+                return lstdrn.Where(pre);
+            else
+                return lstdrn.Select(x => x);
         }
     }
 }
