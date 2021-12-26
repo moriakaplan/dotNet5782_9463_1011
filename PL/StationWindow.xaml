@@ -26,9 +26,9 @@
         <Label x:Name="AvailableChargeSlots" Content="available charge slots:" Grid.Row="2" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
         <Label x:Name="Location" Content="Location:" Grid.Row="3" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
 
-        <TextBox x:Name="txtId" Grid.Row="0" Grid.Column="1" Margin="10" TextChanged="IdColor"/>
-        <TextBox x:Name="txtName" Grid.Row="1" Grid.Column="1" Margin="10" TextChanged="NameColor"/>
-        <TextBox x:Name="txtDronesInCharge" Grid.Row="4" Grid.Column="1" Margin="10" TextChanged="DronesInChargeColor"/>
+        <TextBox x:Name="txtId" Grid.Row="0" Grid.Column="1" Margin="10" />
+        <TextBox x:Name="txtName" Grid.Row="1" Grid.Column="1" Margin="10" />
+        <TextBox x:Name="txtDronesInCharge" Grid.Row="4" Grid.Column="1" Margin="10" />
         <TextBox x:Name="txtAvailableChargeSlots" Grid.Row="2" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
         <Grid Grid.Column="1" Grid.Row="3">
             <Grid.RowDefinitions>
@@ -44,11 +44,11 @@
             <TextBox x:Name="txtLatti" Grid.Row="0" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
             <TextBox x:Name="txtLongi" Grid.Row="1" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
         </Grid>
-        <Button x:Name="add" Content="Add Station" Grid.Row="5" Grid.Column="1"  Click="AddStation"
+        <!--<Button x:Name="add" Content="Add Station" Grid.Row="5" Grid.Column="1"  Click="AddStation"
                 HorizontalAlignment="Left" VerticalAlignment="Top" Width="78" Margin="381,29,0,0"/>
         <Button x:Name="Delete" Content="Delete Station" Grid.Row="5" Grid.Column="1"  Click="DeleteStation"
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" Margin="103,0,0,0"/>
         <Button x:Name="Update" Content="Update Station" Grid.Row="5" Grid.Column="1"  Click="UpdateStation"
-                HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" Margin="235,0,0,0"/>
+                HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" Margin="235,0,0,0"/>-->
     </Grid>
 </Window>
