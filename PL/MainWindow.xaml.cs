@@ -23,5 +23,20 @@ namespace PL
         {
             InitializeComponent();
         }
+
+        private void LogManager(object sender, RoutedEventArgs e)
+        {
+            new PasswordWindow().Show();//צריך להוסיף פרמטרים מתאימים
+        }
+
+        private void LogUser(object sender, RoutedEventArgs e)
+        {
+            new PasswordWindow().Show();//צריך להוסיף פרמטרים מתאימים
+        }
+
+        private void Sign(object sender, RoutedEventArgs e)
+        {
+            new SignWindow().Show();//צריך להוסיף פרמטרים מתאימים
+        }
     }
 }
