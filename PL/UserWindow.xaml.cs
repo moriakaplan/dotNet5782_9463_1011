@@ -15,23 +15,13 @@ using System.Windows.Shapes;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for PasswordWindow.xaml
+    /// Interaction logic for UserWindow.xaml
     /// </summary>
-    public partial class PasswordWindow : Window
+    public partial class UserWindow : Window
     {
-        public PasswordWindow()
+        public UserWindow()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void LoginClick(object sender, RoutedEventArgs e)
-        {
-            new ManagerWindow().Show();
         }
     }
 }

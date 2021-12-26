@@ -36,7 +36,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add New Drone" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" 
+        <Button Content="Add New Drone" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" 
                 Click="AddDrone_Click" Margin="355,0,0,0"/>
     </Grid>
 </Window>

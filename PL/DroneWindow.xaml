@@ -56,13 +56,13 @@
             <TextBox x:Name="txtLatti" Grid.Row="0" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
             <TextBox x:Name="txtLongi" Grid.Row="1" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
         </Grid>
-        <Button x:Name="add" Content="Add The &#xD;&#xA;Drone" Grid.Row="8" Grid.Column="1"  Click="AddDrone_Click"
+        <Button x:Name="add" Content="Add The &#xD;&#xA;Drone" Grid.Row="9" Grid.Column="1"  Click="AddDrone_Click"
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78"/>
-        <Button x:Name="options" Content="options" Grid.Row="8" Grid.Column="1"
+        <Button x:Name="options" Content="options" Grid.Row="9" Grid.Column="1"
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="17,0,0,0"/>
-        <Button x:Name="update" Content="update the&#xD;&#xA;model" Click="UpdateDroneModel" Grid.Row="8"
+        <Button x:Name="update" Content="update the&#xD;&#xA;model" Click="UpdateDroneModel" Grid.Row="9"
                 HorizontalAlignment="Right" VerticalAlignment="Center" Width="78"/>
-        <Button x:Name="charge" Content="send drone&#xD;&#xA;to charge" Click="SendDroneToCharge" Grid.Column="1" Grid.Row="8" 
+        <Button x:Name="charge" Content="send drone&#xD;&#xA;to charge" Click="SendDroneToCharge" Grid.Column="1" Grid.Row="9" 
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="114,0,0,0" Visibility="Hidden"/>
         <!--<Button x:Name="sendDeliver" Content="send drone&#xD;&#xA;to delivery" Click="SendDroneToDelivery" Grid.Row="8" Grid.ColumnSpan="2" 
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="110,0,0,0" Visibility="Hidden"/>
