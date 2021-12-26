@@ -24,6 +24,7 @@ namespace PL
         {
             blObject = obj;
             InitializeComponent();
+            customerToListDataGrid.ItemsSource = blObject.DisplayListOfCustomers();
         }
     }
 }

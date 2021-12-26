@@ -28,6 +28,7 @@ namespace PL
         {
             blObject = obj;
             InitializeComponent();
+            parcelToListDataGrid.ItemsSource = blObject.DisplayListOfParcels();
         }
 
         private void ViewParcel(object sender, MouseButtonEventArgs e)

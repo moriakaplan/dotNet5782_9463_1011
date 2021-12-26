@@ -25,6 +25,7 @@ namespace PL
         {
             blObject = obj;
             InitializeComponent();
+            stationDataGrid.ItemsSource = blObject.DisplayListOfStations();
         }
 
         private void ViewStation(object sender, MouseButtonEventArgs e)
