@@ -10,9 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BLApi;
 
 namespace PL
 {
@@ -21,14 +19,9 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        internal readonly IBL blObject = BLFactory.GetBl(); //צריך לדאוג שיהיה שדה של המחלקה
         public MainWindow()
         {
             InitializeComponent();
-        }
-        private void DisplayDronesList_Click(object sender, RoutedEventArgs e)
-        {
-            new DroneListWindow(blObject).Show();
         }
     }
 }

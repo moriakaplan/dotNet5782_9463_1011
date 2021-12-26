@@ -25,7 +25,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <Label Content="available Charge Slots:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-           
+            <Button Content="Refresh" Grid.Column="4" HorizontalAlignment="Left" Margin="110,13,0,0" VerticalAlignment="Top"/>
+
             <!--<Button x:Name="Restart" Content="Restart selections" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Stretch" Click="Restart_Click"/>-->
         </Grid>
         <DataGrid x:Name="stationDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="0,42,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.RowSpan="3" Grid.ColumnSpan="2" MouseDoubleClick="ViewStation">
