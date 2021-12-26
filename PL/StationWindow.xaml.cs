@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BLApi;
 
 namespace PL
 {
@@ -19,9 +20,11 @@ namespace PL
     /// </summary>
     public partial class StationWindow : Window
     {
-        public StationWindow()
+        IBL blObject;
+        public StationWindow(IBL obj, int stationId)
         {
             InitializeComponent();
+            blObject = obj;
         }
     }
 }
