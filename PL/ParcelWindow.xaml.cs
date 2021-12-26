@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BLApi;
+using BO;
+using System.ComponentModel;
 
 namespace PL
 {
@@ -19,9 +22,14 @@ namespace PL
     /// </summary>
     public partial class ParcelWindow : Window
     {
+
         public ParcelWindow()
         {
             InitializeComponent();
+        }
+        public ParcelWindow(IBL obj, int droneId)
+        {
+
         }
     }
 }

@@ -27,10 +27,10 @@
         <Label x:Name="ParcelTo" Content="Parcels to the customer:" Grid.Row="4" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
         <Label x:Name="ParcelFrom" Content="Parcels from the customer:" Grid.Row="5" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
 
-        <TextBox x:Name="txtId" Grid.Row="0" Grid.Column="1" Margin="10" TextChanged="IdColor"/>
-        <TextBox x:Name="txtName" Grid.Row="1" Grid.Column="1" Margin="10" TextChanged="NameColor"/>
-        <TextBox x:Name="txtParcelTo" Grid.Row="4" Grid.Column="1" Margin="10" TextChanged="DronesInChargeColor"/>
-        <TextBox x:Name="txtParcelFrom" Grid.Row="5" Grid.Column="1" Margin="10" TextChanged="DronesInChargeColor"/>
+        <TextBox x:Name="txtId" Grid.Row="0" Grid.Column="1" Margin="10" />
+        <TextBox x:Name="txtName" Grid.Row="1" Grid.Column="1" Margin="10" />
+        <TextBox x:Name="txtParcelTo" Grid.Row="4" Grid.Column="1" Margin="10" />
+        <TextBox x:Name="txtParcelFrom" Grid.Row="5" Grid.Column="1" Margin="10"/>
         <TextBox x:Name="txtPhone" Grid.Row="2" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
         <Grid Grid.Column="1" Grid.Row="3">
             <Grid.RowDefinitions>
@@ -46,11 +46,11 @@
             <TextBox x:Name="txtLatti" Grid.Row="0" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
             <TextBox x:Name="txtLongi" Grid.Row="1" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
         </Grid>
-        <Button x:Name="add" Content="Add Customer" Grid.Row="6" Grid.Column="1"  Click="AddCustomer"
+        <!--<Button x:Name="add" Content="Add Customer" Grid.Row="6" Grid.Column="1"  Click="AddCustomer"
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="377,0,0,0"/>
         <Button x:Name="Delete" Content="Delete Customer" Grid.Row="6" Grid.Column="1"  Click="DeleteCustomer"
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" Margin="103,0,0,0"/>
         <Button x:Name="Update" Content="Update Customer" Grid.Row="6" Grid.Column="1"  Click="UpdateCustomer"
-                HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" Margin="235,0,0,0"/>
+                HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" Margin="235,0,0,0"/>-->
     </Grid>
 </Window>

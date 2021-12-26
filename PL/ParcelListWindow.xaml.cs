@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BLApi;
+using BO;
+using System.ComponentModel;
 
 namespace PL
 {
@@ -19,9 +22,17 @@ namespace PL
     /// </summary>
     public partial class ParcelListWindow : Window
     {
+        private IBL blObject;
+
         public ParcelListWindow()
         {
             InitializeComponent();
+        }
+
+        private void ViewParcel(object sender, MouseButtonEventArgs e)
+        {
+            new ParcelWindow(blObject, ((BO.ParcelToList)parcelToListDataGrid.SelectedItem).Id).ShowDialog();
+
         }
     }
 }
