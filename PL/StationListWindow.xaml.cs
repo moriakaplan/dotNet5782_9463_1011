@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BLApi;
 
 namespace PL
 {
@@ -19,9 +20,16 @@ namespace PL
     /// </summary>
     public partial class StationListWindow : Window
     {
-        public StationListWindow()
+        IBL blObject;
+        public StationListWindow(IBL obj)
         {
+            blObject = obj;
             InitializeComponent();
+        }
+
+        private void ViewStation(object sender, MouseButtonEventArgs e)
+        {
+            new StationWindow(blObject, ((BO.StationToList)stationDataGrid.SelectedItem).Id).ShowDialog();
         }
     }
 }
