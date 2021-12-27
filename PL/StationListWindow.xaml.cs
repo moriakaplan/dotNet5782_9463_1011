@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BLApi;
+using BO;
 
 namespace PL
 {
@@ -29,13 +30,19 @@ namespace PL
             //new StationWindow(blObject, 1111).ShowDialog();
         }
 
-        private void ViewStation(object sender, MouseButtonEventArgs e)
+        private void /*ViewStation*/DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new StationWindow(blObject, ((BO.StationToList)stationDataGrid.SelectedItem).Id).ShowDialog();
+            //new StationWindow(blObject, ((BO.StationToList)stationDataGrid.SelectedItem).Id).ShowDialog();
+
+            DataGridCell cell = sender as DataGridCell;
+            StationToList s = cell.DataContext as StationToList;
+            new StationWindow(blObject, s.Id).ShowDialog();
+
         }
 
         private void AddStation(object sender, RoutedEventArgs e)
         {
+
             new StationWindow(blObject).ShowDialog();
         }
     }

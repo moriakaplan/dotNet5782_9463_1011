@@ -29,7 +29,7 @@
 
             <!--<Button x:Name="Restart" Content="Restart selections" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Stretch" Click="Restart_Click"/>-->
         </Grid>
-        <DataGrid x:Name="stationDataGrid" MouseDoubleClick="ViewStation"
+        <DataGrid x:Name="stationDataGrid" 
                   AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="1">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="auto"/>
@@ -37,6 +37,11 @@
                 <DataGridTextColumn x:Name="notAvailableChargeSlotsColumn" Binding="{Binding NotAvailableChargeSlots}" Header="Not Available Charge Slots" Width="auto"/>
                 <DataGridTextColumn x:Name="availableChargeSlotsColumn" Binding="{Binding AvailableChargeSlots}" Header="Available Charge Slots" Width="auto"/>
             </DataGrid.Columns>
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
+                </Style>
+            </DataGrid.Resources>
         </DataGrid>
         <Button Content="AddStation" Grid.Row="2" Click="AddStation" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,12"/>
     </Grid>
