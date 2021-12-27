@@ -27,12 +27,14 @@ namespace PL
             InitializeComponent();
             blObject = obj;
             Station st = blObject.DisplayStation(stationId);
-            txtId.Text = st.Id.ToString();
-            txtName.Text = st.Name;
-            txtAvailableChargeSlots.Text = st.AvailableChargeSlots.ToString();
-            txtLatti.Text = st.Location.Latti.ToString();
-            txtLongi.Text = st.Location.Longi.ToString();
-            txtDronesInCharge.ItemsSource = st.DronesInCharge.Select(x => x.Id);
+            DataContext = st;
+            //locationGrid.DataContext = st.Location;
+            //txtId.Text = st.Id.ToString();
+            //txtName.Text = st.Name;
+            //txtAvailableChargeSlots.Text = st.AvailableChargeSlots.ToString();
+            //txtLatti.Text = st.Location.Latti.ToString();
+            //txtLongi.Text = st.Location.Longi.ToString();
+            //txtDronesInCharge.ItemsSource = st.DronesInCharge.Select(x => x.Id);
         }
 
         public StationWindow(IBL obj) //adding

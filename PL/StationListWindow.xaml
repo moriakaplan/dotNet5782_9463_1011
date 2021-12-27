@@ -7,10 +7,6 @@
         mc:Ignorable="d"
         Title="StationListWindow" Height="450" Width="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="0*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
             <RowDefinition Height="400*"/>
@@ -29,19 +25,19 @@
 
             <!--<Button x:Name="Restart" Content="Restart selections" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Stretch" Click="Restart_Click"/>-->
         </Grid>
-        <DataGrid x:Name="stationDataGrid" 
+        <DataGrid x:Name="stationDataGrid" PreviewMouseDoubleClick="ViewStation"
                   AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="1">
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="auto"/>
-                <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="auto"/>
-                <DataGridTextColumn x:Name="notAvailableChargeSlotsColumn" Binding="{Binding NotAvailableChargeSlots}" Header="Not Available Charge Slots" Width="auto"/>
-                <DataGridTextColumn x:Name="availableChargeSlotsColumn" Binding="{Binding AvailableChargeSlots}" Header="Available Charge Slots" Width="auto"/>
-            </DataGrid.Columns>
-            <DataGrid.Resources>
+            <!--<DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
-                    <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
+                    <EventSetter Event="PreviewMouseDoubleClick"  Handler="ViewStation"/>
                 </Style>
-            </DataGrid.Resources>
+            </DataGrid.Resources>-->
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id"/>
+                <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name"/>
+                <DataGridTextColumn x:Name="notAvailableChargeSlotsColumn" Binding="{Binding NotAvailableChargeSlots}" Header="Not Available Charge Slots"/>
+                <DataGridTextColumn x:Name="availableChargeSlotsColumn" Binding="{Binding AvailableChargeSlots}" Header="Available Charge Slots"/>
+            </DataGrid.Columns>
         </DataGrid>
         <Button Content="AddStation" Grid.Row="2" Click="AddStation" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,12"/>
     </Grid>

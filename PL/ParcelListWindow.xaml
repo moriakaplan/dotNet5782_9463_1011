@@ -7,7 +7,13 @@
         mc:Ignorable="d"
         Title="ParcelListWindow" Height="450" Width="800">
     <Grid >
-        <DataGrid x:Name="parcelToListDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="0,0,0,0" RowDetailsVisibilityMode="VisibleWhenSelected" MouseDoubleClick="ViewParcel">
+        <DataGrid x:Name="parcelToListDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+                  ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" PreviewMouseDoubleClick="ViewParcel">
+            <!--<DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <EventSetter Event="PreviewMouseDoubleClick" Handler="ViewParcel"/>
+                </Style>
+            </DataGrid.Resources>-->
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="priorityColumn" Binding="{Binding Priority}" Header="Priority" Width="SizeToHeader"/>

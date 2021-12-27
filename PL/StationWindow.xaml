@@ -16,7 +16,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -27,10 +27,13 @@
         <Label x:Name="AvailableChargeSlots" Content="available charge slots:" Grid.Row="2" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
         <Label x:Name="Location" Content="Location:" Grid.Row="2" HorizontalAlignment="Center" VerticalContentAlignment="Center" Margin="0,72,0,0" Grid.RowSpan="2"/>
 
-        <TextBox x:Name="txtId" Grid.Row="0" Grid.Column="1" Margin="10,10,10,10" />
-        <TextBox x:Name="txtName" Grid.Row="1" Grid.Column="1" Margin="10,10,10,10" />
+        <TextBox x:Name="txtId" Text="{Binding  Path=Id}" 
+                 Grid.Row="0" Grid.Column="1" Margin="10,10,10,10" />
+        <TextBox x:Name="txtName" Text="{Binding  Path=Name}" 
+                 Grid.Row="1" Grid.Column="1" Margin="10,10,10,10" />
         <ListView x:Name="txtDronesInCharge" Grid.Row="4" Grid.Column="1" Margin="10,10,10,10" />
-        <TextBox x:Name="txtAvailableChargeSlots" Grid.Row="2" Grid.Column="1" Margin="10,10,10,10" IsReadOnly="True" Foreground="Gray"/>
+        <TextBox x:Name="txtAvailableChargeSlots" Text="{Binding  Path=AvailableChargeSlots}" 
+                 Grid.Row="2" Grid.Column="1" Margin="10,10,10,10" IsReadOnly="True" Foreground="Gray"/>
         <Grid Grid.Column="1" Grid.Row="2" Margin="0,72,0,0" Grid.RowSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -40,10 +43,12 @@
                 <ColumnDefinition Width="80"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Lattitude::" Grid.Row="0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+            <Label Content="Lattitude:" Grid.Row="0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
             <Label Content="longitude:" Grid.Row="1" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
-            <TextBox x:Name="txtLatti" Grid.Row="0" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
-            <TextBox x:Name="txtLongi" Grid.Row="1" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
+            <TextBox x:Name="txtLatti" Text="{Binding  Path=Location.Latti}"
+                     Grid.Row="0" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
+            <TextBox x:Name="txtLongi" Text="{Binding  Path=Location.Longi}"
+                     Grid.Row="1" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
         </Grid>
         <!--<Button x:Name="add" Content="Add Station" Grid.Row="5" Grid.Column="1"  Click="AddStation"
                 HorizontalAlignment="Left" VerticalAlignment="Top" Width="78" Margin="381,29,0,0"/>

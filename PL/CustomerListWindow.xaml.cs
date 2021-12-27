@@ -24,7 +24,12 @@ namespace PL
         {
             blObject = obj;
             InitializeComponent();
-            customerToListDataGrid.ItemsSource = blObject.DisplayListOfCustomers();
+            customerToListDataGrid.DataContext = blObject.DisplayListOfCustomers();
+        }
+
+        private void ViewCustomer(object sender, MouseButtonEventArgs e)
+        {
+            new CustomerWindow(blObject, ((BO.CustomerToList)customerToListDataGrid.SelectedItem).Id).ShowDialog();
         }
     }
 }

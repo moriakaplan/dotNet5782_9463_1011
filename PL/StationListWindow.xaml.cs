@@ -26,17 +26,17 @@ namespace PL
         {
             blObject = obj;
             InitializeComponent();
-            stationDataGrid.ItemsSource = blObject.DisplayListOfStations();
+            stationDataGrid.DataContext = blObject.DisplayListOfStations();
             //new StationWindow(blObject, 1111).ShowDialog();
         }
 
-        private void /*ViewStation*/DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ViewStation(object sender, MouseButtonEventArgs e)
         {
-            //new StationWindow(blObject, ((BO.StationToList)stationDataGrid.SelectedItem).Id).ShowDialog();
+            new StationWindow(blObject, ((BO.StationToList)stationDataGrid.SelectedItem).Id).ShowDialog();
 
-            DataGridCell cell = sender as DataGridCell;
-            StationToList s = cell.DataContext as StationToList;
-            new StationWindow(blObject, s.Id).ShowDialog();
+            //DataGridCell cell = sender as DataGridCell;
+            //StationToList s = cell.DataContext as StationToList;
+            //new StationWindow(blObject, s.Id).ShowDialog();
 
         }
 
