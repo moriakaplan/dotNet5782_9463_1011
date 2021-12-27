@@ -26,7 +26,7 @@ namespace Dal
         {
             stations.Add(new Station
             {
-                Id = random.Next(1000, 10000),
+                Id = random.Next(1000, 10000)/*1111*/,
                 Name = "the israelian station",
                 Longitude = 34.8,
                 Lattitude = 32,

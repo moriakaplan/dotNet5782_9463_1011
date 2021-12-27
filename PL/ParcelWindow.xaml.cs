@@ -22,14 +22,24 @@ namespace PL
     /// </summary>
     public partial class ParcelWindow : Window
     {
-
-        public ParcelWindow()
+        IBL blObject;
+        public ParcelWindow(IBL obj, int parcelId)
         {
             InitializeComponent();
-        }
-        public ParcelWindow(IBL obj, int droneId)
-        {
+            blObject = obj;
+            InitializeComponent();
 
+            Parcel parcel = blObject.DisplayParcel(parcelId);
+            txtId.Text = parcel.Id.ToString();
+            txtDrone.Text = parcel.Drone.Id.ToString();
+            txtPriority.Text = parcel.Priority.ToString();
+            txtSender.Text = parcel.Sender.ToString();
+            txtTarget.Text = parcel.Target.ToString();
+            txtWeight.Text = parcel.Weight.ToString();
+            txtCreateTime.Text = parcel.CreateTime.ToString();
+            txtAssociateTime.Text = parcel.AssociateTime.ToString();
+            txtPickUpTime.Text = parcel.PickUpTime.ToString();
+            txtDeliverTime.Text = parcel.DeliverTime.ToString();
         }
     }
 }

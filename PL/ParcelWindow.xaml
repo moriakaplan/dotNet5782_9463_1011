@@ -40,7 +40,7 @@
         <TextBox x:Name="txtTarget" Grid.Row="2" Grid.Column="1" Margin="10" />
         <TextBox x:Name="txtDrone" Grid.Row="3" Grid.Column="1" Margin="10" />
         <TextBox x:Name="txtWeight" Grid.Row="4" Grid.Column="1" Margin="10" />
-        <TextBox x:Name="txtProperty" Grid.Row="5" Grid.Column="1" Margin="10" />
+        <TextBox x:Name="txtPriority" Grid.Row="5" Grid.Column="1" Margin="10" />
         <TextBox x:Name="txtCreateTime" Grid.Row="6" Grid.Column="1" Margin="10" />
         <TextBox x:Name="txtAssociateTime" Grid.Row="7" Grid.Column="1" Margin="10" />
         <TextBox x:Name="txtPickUpTime" Grid.Row="8" Grid.Column="1" Margin="10" />

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BLApi;
+using BO;
 
 namespace PL
 {
@@ -21,10 +22,24 @@ namespace PL
     public partial class StationWindow : Window
     {
         IBL blObject;
-        public StationWindow(IBL obj, int stationId)
+        public StationWindow(IBL obj, int stationId) //updating
         {
             InitializeComponent();
             blObject = obj;
+            Station st = blObject.DisplayStation(stationId);
+            txtId.Text = st.Id.ToString();
+            txtName.Text = st.Name;
+            txtAvailableChargeSlots.Text = st.AvailableChargeSlots.ToString();
+            txtLatti.Text = st.Location.Latti.ToString();
+            txtLongi.Text = st.Location.Longi.ToString();
+            txtDronesInCharge.ItemsSource = st.DronesInCharge.Select(x => x.Id);
+        }
+
+        public StationWindow(IBL obj) //adding
+        {
+            InitializeComponent();
+            blObject = obj;
+            txtId.Visibility = Visibility.Hidden;
         }
     }
 }

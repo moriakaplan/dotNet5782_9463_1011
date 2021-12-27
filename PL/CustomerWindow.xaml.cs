@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BLApi;
+using BO;
 
 namespace PL
 {
@@ -19,9 +21,20 @@ namespace PL
     /// </summary>
     public partial class CustomerWindow : Window
     {
-        public CustomerWindow()
+        IBL blObject;
+        public CustomerWindow(IBL obj, int cusId)
         {
+            blObject = obj;
             InitializeComponent();
+
+            Customer cus = blObject.DisplayCustomer(cusId);
+            txtId.Text = cus.Id.ToString();
+            txtName.Text = cus.Name;
+            txtLatti.Text = cus.Location.Latti.ToString();
+            txtLongi.Text = cus.Location.Longi.ToString();
+            txtPhone.Text = cus.Phone;
+            txtParcelFrom.ItemsSource = cus.parcelFrom.Select(x => x.Id);
+            txtParcelTo.ItemsSource = cus.parcelTo.Select(x => x.Id);
         }
     }
 }

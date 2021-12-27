@@ -26,11 +26,17 @@ namespace PL
             blObject = obj;
             InitializeComponent();
             stationDataGrid.ItemsSource = blObject.DisplayListOfStations();
+            //new StationWindow(blObject, 1111).ShowDialog();
         }
 
         private void ViewStation(object sender, MouseButtonEventArgs e)
         {
             new StationWindow(blObject, ((BO.StationToList)stationDataGrid.SelectedItem).Id).ShowDialog();
+        }
+
+        private void AddStation(object sender, RoutedEventArgs e)
+        {
+            new StationWindow(blObject).ShowDialog();
         }
     }
 }

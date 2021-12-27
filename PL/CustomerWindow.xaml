@@ -29,8 +29,8 @@
 
         <TextBox x:Name="txtId" Grid.Row="0" Grid.Column="1" Margin="10" />
         <TextBox x:Name="txtName" Grid.Row="1" Grid.Column="1" Margin="10" />
-        <TextBox x:Name="txtParcelTo" Grid.Row="4" Grid.Column="1" Margin="10" />
-        <TextBox x:Name="txtParcelFrom" Grid.Row="5" Grid.Column="1" Margin="10"/>
+        <ListView x:Name="txtParcelTo" Grid.Row="4" Grid.Column="1" Margin="10" />
+        <ListView x:Name="txtParcelFrom" Grid.Row="5" Grid.Column="1" Margin="10"/>
         <TextBox x:Name="txtPhone" Grid.Row="2" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
         <Grid Grid.Column="1" Grid.Row="3">
             <Grid.RowDefinitions>

@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Display Drones List" Grid.Row="0" HorizontalAlignment="Left" Margin="73,51,0,0" VerticalAlignment="Top" 
-                Click="displayDronesList_Click"/>
-        <Button Content="Dispaly Stations list" HorizontalAlignment="Left" Height="24" Margin="293,71,0,0" VerticalAlignment="Top" Width="121" Click="displayStationList"/>
-        <Button Content="Dispaly parcels list" HorizontalAlignment="Left" Margin="148,150,0,0" VerticalAlignment="Top" Click="displayParcelList"/>
-        <Button Content="Display customers list" HorizontalAlignment="Left" Margin="343,170,0,0" VerticalAlignment="Top" Click="displayCustomerList"/>
+        <Button Content="Display Drones List" Grid.Row="0" HorizontalAlignment="Left" Margin="145,80,0,0" VerticalAlignment="Top" 
+                Click="displayDronesList_Click" Height="69" Width="144"/>
+        <Button Content="Dispaly Stations list" HorizontalAlignment="Left" Height="69" Margin="386,80,0,0" VerticalAlignment="Top" Width="144" Click="displayStationList"/>
+        <Button Content="Dispaly parcels list" HorizontalAlignment="Left" Margin="145,182,0,0" VerticalAlignment="Top" Click="displayParcelList" Height="66" Width="144"/>
+        <Button Content="Display customers list" HorizontalAlignment="Left" Margin="386,182,0,0" VerticalAlignment="Top" Click="displayCustomerList" Height="66" Width="144"/>
 
     </Grid>
 </Window>
