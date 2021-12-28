@@ -27,13 +27,15 @@ namespace PL
         {
             InitializeComponent();
             blObject = obj;
+            InitializeComponent();
+
             Parcel parcel = blObject.DisplayParcel(parcelId);
             DataContext = parcel;
             //txtId.Text = parcel.Id.ToString();
-            txtDrone.Text = parcel.Drone.Id.ToString();
+            //txtDrone.Text = parcel.Drone.Id.ToString();
             //txtPriority.Text = parcel.Priority.ToString();
-            txtSender.Text = parcel.Sender.ToString();
-            txtTarget.Text = parcel.Target.ToString();
+            //txtSender.Text = parcel.Sender.ToString();
+            //txtTarget.Text = parcel.Target.ToString();
             //txtWeight.Text = parcel.Weight.ToString();
             //txtCreateTime.Text = parcel.CreateTime.ToString();
             //txtAssociateTime.Text = parcel.AssociateTime.ToString();
@@ -41,15 +43,9 @@ namespace PL
             //txtDeliverTime.Text = parcel.DeliverTime.ToString();
         }
 
-        private void viewSender(object sender, MouseButtonEventArgs e)
+        private void viewSender(object senderObj, MouseButtonEventArgs e)
         {
-            new CustomerWindow(blObject, (int)Sender.Content).ShowDialog();
-        }
-
-        public ParcelWindow(IBL obj) //add
-        {
-            InitializeComponent();
-            blObject = obj;
+            new CustomerWindow(blObject, int.Parse(txtSender.Text)).ShowDialog();
         }
     }
 }
