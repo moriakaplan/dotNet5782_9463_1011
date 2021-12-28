@@ -547,5 +547,10 @@ namespace PL
                 e.Cancel = true;
             }
         }
+
+        private void veiwParcelInTransfer(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
