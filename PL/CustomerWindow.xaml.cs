@@ -37,5 +37,10 @@ namespace PL
             txtParcelFrom.ItemsSource = cus.parcelFrom.Select(x => x.Id);
             txtParcelTo.ItemsSource = cus.parcelTo.Select(x => x.Id);
         }
+
+        private void ViewParcelTo(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

@@ -29,7 +29,7 @@
             </Grid.RowDefinitions>
             <Label x:Name="ParcelTo" Content="Parcels to the customer:" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
             <Label x:Name="ParcelFrom" Content="Parcels from the customer:" Grid.Column="1" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-            <ListView x:Name="txtParcelTo" Grid.Row="1"/>
+            <ListView x:Name="txtParcelTo" Grid.Row="1" MouseDoubleClick="ViewParcelTo"/>
             <ListView x:Name="txtParcelFrom" Grid.Row="1" Grid.Column="1"/>
         </Grid>
         <Label x:Name="Id" Content="Id:" Grid.Row="0" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
