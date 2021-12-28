@@ -52,7 +52,7 @@ namespace PL
 
         private void viewParcelFrom(object sender, MouseButtonEventArgs e)
         {
-            new ParcelWindow(blObject, ((int)txtParcelFrom.SelectedItem)).ShowDialog();
+            new ParcelWindow(blObject, ((int)txtParcelsFrom.SelectedItem)).ShowDialog();
         }
     }
 }
