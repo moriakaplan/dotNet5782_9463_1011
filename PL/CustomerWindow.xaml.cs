@@ -40,7 +40,7 @@ namespace PL
 
         private void ViewParcelTo(object sender, MouseButtonEventArgs e)
         {
-
+            new ParcelWindow(blObject, ((int)txtParcelTo.SelectedItem)).ShowDialog();
         }
     }
 }
