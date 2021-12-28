@@ -38,9 +38,16 @@ namespace PL
             txtParcelTo.ItemsSource = cus.parcelTo.Select(x => x.Id);
         }
 
-        private void ViewParcelTo(object sender, MouseButtonEventArgs e)
+      
+
+        private void viewParcelTo(object sender, MouseButtonEventArgs e)
         {
             new ParcelWindow(blObject, ((int)txtParcelTo.SelectedItem)).ShowDialog();
+        }
+
+        private void viewParcelFrom(object sender, MouseButtonEventArgs e)
+        {
+            new ParcelWindow(blObject, ((int)txtParcelFrom.SelectedItem)).ShowDialog();
         }
     }
 }
