@@ -543,7 +543,7 @@ namespace PL
             }
             else
             {
-                return (txtId != null || txtModel != null || txtBattery != null || txtWeight != null);
+                return (txtId.Text != "" || txtModel.Text != "" || txtBattery.Text != "" || txtWeight.SelectedItem != null || txtStationId != null);
             }
         }
         /// <summary>
