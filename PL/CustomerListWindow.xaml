@@ -7,7 +7,13 @@
         mc:Ignorable="d"
         Title="CustomerListWindow" Height="450" Width="840">
     <Grid>
-        <DataGrid x:Name="customerToListDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+        <DataGrid x:Name="customerToListDataGrid" Grid.Row="1"
+                  AutoGenerateColumns="False" EnableRowVirtualization="True" 
                   ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" PreviewMouseDoubleClick="ViewCustomer">
             <!--<DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
@@ -24,5 +30,6 @@
                 <DataGridTextColumn x:Name="phoneColumn" Binding="{Binding phone}" Header="phone"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Button Content="Add Customer" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Click="AddCustomer"/>
     </Grid>
 </Window>

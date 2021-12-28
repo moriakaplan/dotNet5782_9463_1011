@@ -34,7 +34,11 @@ namespace PL
         private void ViewParcel(object sender, MouseButtonEventArgs e)
         {
             new ParcelWindow(blObject, ((BO.ParcelToList)parcelToListDataGrid.SelectedItem).Id).ShowDialog();
+        }
 
+        private void AddParcel(object sender, RoutedEventArgs e)
+        {
+            new ParcelWindow(blObject).ShowDialog();
         }
     }
 }

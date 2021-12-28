@@ -7,7 +7,12 @@
         mc:Ignorable="d"
         Title="ParcelListWindow" Height="450" Width="800">
     <Grid >
-        <DataGrid x:Name="parcelToListDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+        <DataGrid x:Name="parcelToListDataGrid" Grid.Row="1"  AutoGenerateColumns="False" EnableRowVirtualization="True" 
                   ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" PreviewMouseDoubleClick="ViewParcel">
             <!--<DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
@@ -23,5 +28,6 @@
                 <DataGridTextColumn x:Name="weightColumn" Binding="{Binding Weight}" Header="Weight"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Button Content="Add Parcel" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Click="AddParcel"/>
     </Grid>
 </Window>

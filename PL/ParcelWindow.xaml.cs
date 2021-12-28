@@ -27,8 +27,6 @@ namespace PL
         {
             InitializeComponent();
             blObject = obj;
-            InitializeComponent();
-
             Parcel parcel = blObject.DisplayParcel(parcelId);
             DataContext = parcel;
             //txtId.Text = parcel.Id.ToString();
@@ -41,6 +39,12 @@ namespace PL
             //txtAssociateTime.Text = parcel.AssociateTime.ToString();
             //txtPickUpTime.Text = parcel.PickUpTime.ToString();
             //txtDeliverTime.Text = parcel.DeliverTime.ToString();
+        }
+
+        public ParcelWindow(IBL obj) //add
+        {
+            InitializeComponent();
+            blObject = obj;
         }
     }
 }
