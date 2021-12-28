@@ -10,11 +10,11 @@
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="50*"/>
-            <RowDefinition Height="400*"/>
-            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
-        <Button Content="Close The Window" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Close_Click" Margin="697,0,0,0" Width="103"/>
+        <Button Content="Close The Window" HorizontalAlignment="Right" VerticalAlignment="Center" Click="Close_Click" Width="103" Height="30"/>
         <Grid Name="UpGrid" Height="auto" Grid.Row="1" Width="auto" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -27,15 +27,27 @@
             <Label Content="Filter By Max Weight:" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"/>
             <ComboBox x:Name="StatusFilter" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" SelectionChanged="StatusFilter_SelectionChanged"/>
             <ComboBox x:Name="WeightFilter" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" SelectionChanged="WeightFilter_SelectionChanged"/>
-            <Button x:Name="Restart" Content="Restart selections" Grid.Column="4" HorizontalAlignment="Left" Click="Restart_Click" Margin="57,0,0,0" Width="103"/>
+            <Button x:Name="Restart" Content="Restart selections" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right" Click="Restart_Click" Width="103"/>
         </Grid>
-        <ListView x:Name="DroneListView" Margin="0,60,0,62" Grid.Row="1" MouseDoubleClick="ViewDrone" Grid.RowSpan="2">
+        <!--<ListView x:Name="DroneListView" Margin="0,60,0,62" Grid.Row="1" MouseDoubleClick="ViewDrone" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
-        </ListView>
+        </ListView>-->
+        <DataGrid x:Name="DroneListView" PreviewMouseDoubleClick="ViewDrone"
+                  AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id"/>
+                <DataGridTextColumn x:Name="modelColumn" Binding="{Binding Model}" Header="Model"/>
+                <DataGridTextColumn x:Name="batteryColumn" Binding="{Binding Battery}" Header="Battery"/>
+                <DataGridTextColumn x:Name="maxWeightColumn" Binding="{Binding MaxWeight}" Header="Max Weight"/>
+                <DataGridTextColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Status"/>
+                <DataGridTextColumn x:Name="currentLocationColumn" Binding="{Binding CurrentLocation}" Header="Current Location"/>
+                <DataGridTextColumn x:Name="ParcelIdColumn" Binding="{Binding ParcelId}" Header="Parcel Id"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <Button Content="Add New Drone" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" 
                 Click="AddDrone_Click" Margin="355,0,0,0"/>
     </Grid>

@@ -48,7 +48,7 @@ namespace PL
             else
             {
                 DroneStatus status = (DroneStatus)StatusFilter.SelectedItem;
-                DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.Status == status)
+                DroneListView.DataContext = blObject.DisplayListOfDrones(x => x.Status == status)
                     .OrderBy(x => x.Id)
                     .OrderBy(x => x.Status);
             }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="CustomerListWindow" Height="450" Width="800">
+        Title="CustomerListWindow" Height="450" Width="840">
     <Grid>
         <DataGrid x:Name="customerToListDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
                   ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" PreviewMouseDoubleClick="ViewCustomer">
@@ -21,7 +21,7 @@
                 <DataGridTextColumn x:Name="numOfParcelsInTheWayColumn" Binding="{Binding numOfParcelsInTheWay}" Header="num Of Parcels In The Way"/>
                 <DataGridTextColumn x:Name="numOfParcelsSentAndNotDeliveredColumn" Binding="{Binding numOfParcelsSentAndNotDelivered}" Header="num Of Parcels Sent And Not Delivered"/>
                 <DataGridTextColumn x:Name="numOfParclReceivedColumn" Binding="{Binding numOfParclReceived}" Header="num Of Parcl Received"/>
-                <DataGridTextColumn x:Name="phoneColumn" Binding="{Binding phone}" Header="phone" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="phoneColumn" Binding="{Binding phone}" Header="phone"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

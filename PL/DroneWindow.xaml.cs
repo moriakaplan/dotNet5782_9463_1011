@@ -278,8 +278,8 @@ namespace PL
                 return;
             }
             int id = int.Parse(txtId.Text);
-            TimeSpan time;
-            TimeSpan zero = new TimeSpan(0);
+            //TimeSpan time;
+            //TimeSpan zero = new TimeSpan(0);
             //if (TimeSpan.TryParse(txtTimeInCharge.Text, out time) == false || time < zero)
             //{
             //    MessageBox.Show("the time is not good, change it");
