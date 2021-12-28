@@ -27,13 +27,15 @@ namespace PL
         {
             InitializeComponent();
             blObject = obj;
+            InitializeComponent();
+
             Parcel parcel = blObject.DisplayParcel(parcelId);
             DataContext = parcel;
             //txtId.Text = parcel.Id.ToString();
-            txtDrone.Text = parcel.Drone.Id.ToString();
+            //txtDrone.Text = parcel.Drone.Id.ToString();
             //txtPriority.Text = parcel.Priority.ToString();
-            txtSender.Text = parcel.Sender.ToString();
-            txtTarget.Text = parcel.Target.ToString();
+            //txtSender.Text = parcel.Sender.ToString();
+            //txtTarget.Text = parcel.Target.ToString();
             //txtWeight.Text = parcel.Weight.ToString();
             //txtCreateTime.Text = parcel.CreateTime.ToString();
             //txtAssociateTime.Text = parcel.AssociateTime.ToString();
@@ -49,7 +51,20 @@ namespace PL
 
         private void viewSender(object sender, MouseButtonEventArgs e)
         {
-            new CustomerWindow(blObject, (int)Sender.Content).ShowDialog();
+            if (txtSender.Text != "")
+                new CustomerWindow(blObject, int.Parse(txtSender.Text)).ShowDialog();
+        }
+
+        private void viewTarget(object sender, MouseButtonEventArgs e)
+        {
+            if (txtTarget.Text != "")
+                new CustomerWindow(blObject, int.Parse(txtTarget.Text)).ShowDialog();
+        }
+
+        private void viewDroneInParcel(object sender, MouseButtonEventArgs e)
+        {
+            if (txtDrone.Text != "") 
+                new DroneWindow(blObject, int.Parse(txtDrone.Text)).ShowDialog();
         }
     }
 }

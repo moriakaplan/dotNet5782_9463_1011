@@ -32,7 +32,7 @@
                  Grid.Row="1" Grid.Column="1" Margin="10,10,10,10" />
         <!--<ListView x:Name="txtDronesInCharge" Grid.Row="4" Grid.Column="1" Margin="10,10,10,10" />-->
         <DataGrid x:Name="gridDronesInCharge" Grid.Row="4" Grid.Column="1" AutoGenerateColumns="False" 
-                  EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="10,10,10,10">
+                  EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="10,10,10,10" MouseDoubleClick="viewDrone" SelectionChanged="txtDronesInCharge_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="auto"/>
                 <DataGridTextColumn x:Name="batteryColumn" Binding="{Binding Battery}" Header="Battery"/>

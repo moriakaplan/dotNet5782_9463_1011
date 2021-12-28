@@ -131,5 +131,15 @@ namespace PL
                 else txtId.Foreground = Brushes.Red;
             }
         }
+
+        private void viewDrone(object sender, MouseButtonEventArgs e)
+        {
+            new DroneWindow(blObject, ((BO.DroneToList)txtDronesInCharge.SelectedItem).Id).ShowDialog();
+        }
+
+        private void txtDronesInCharge_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
