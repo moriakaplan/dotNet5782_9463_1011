@@ -548,9 +548,10 @@ namespace PL
             }
         }
 
-        private void veiwParcelInTransfer(object sender, MouseButtonEventArgs e)
+      
+        private void viewParcelInTransfer(object sender, MouseButtonEventArgs e)
         {
-
+           // new ParcelWindow(blObject, txtParcel.Text).ShowDialog();
         }
     }
 }
