@@ -13,7 +13,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <!--<RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition x:Name="rowBattery" Height="*"/>
@@ -22,7 +22,17 @@
             <RowDefinition x:Name="rowStation" Height="*"/>
             <RowDefinition x:Name="rowParcel"  Height="*"/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>-->
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition x:Name="rowBattery" Height="auto"/>
+            <RowDefinition Height="auto"/>             
+            <RowDefinition Height="auto"/>             
+            <RowDefinition x:Name="rowStation" Height="auto"/>
+            <RowDefinition x:Name="rowParcel"  Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Button x:Name="close" Content="Close The Window" Grid.Column="1" Click="Close_Click" Height="30"
                 HorizontalAlignment="Right"/>
@@ -41,7 +51,7 @@
         <TextBox x:Name="txtStatus" Text="{Binding  Path=Status}" Grid.Row="4" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
         <ComboBox x:Name="txtWeight" Text="{Binding  Path=MaxWeight}" Grid.Row="5" Grid.Column="1" Margin="10"/>
         <ComboBox x:Name="txtStationId" Grid.Row="6" Grid.Column="1" Margin="10" SelectionChanged="txtStationId_SelectionChanged"/>
-        <TextBox x:Name="txtParcel" Text="{Binding  Path=ParcelInT.Id}" Grid.Row="7" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray" MouseDoubleClick="ViewParcelInTransfer"/>
+        <TextBox x:Name="txtParcel" Text="{Binding  Path=ParcelInT.Id}" Grid.Row="7" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray" MouseDoubleClick="wParcelInTransfer"/>
         <Grid Grid.Column="1" Grid.Row="8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
