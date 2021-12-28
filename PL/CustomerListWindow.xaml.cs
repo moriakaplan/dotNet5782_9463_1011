@@ -31,5 +31,10 @@ namespace PL
         {
             new CustomerWindow(blObject, ((BO.CustomerToList)customerToListDataGrid.SelectedItem).Id).ShowDialog();
         }
+
+        private void AddCustomer(object sender, RoutedEventArgs e)
+        {
+            new CustomerWindow(blObject).ShowDialog();
+        }
     }
 }

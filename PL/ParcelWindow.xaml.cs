@@ -27,8 +27,6 @@ namespace PL
         {
             InitializeComponent();
             blObject = obj;
-            InitializeComponent();
-
             Parcel parcel = blObject.DisplayParcel(parcelId);
             DataContext = parcel;
             //txtId.Text = parcel.Id.ToString();
@@ -46,6 +44,12 @@ namespace PL
         private void viewSender(object sender, MouseButtonEventArgs e)
         {
             new CustomerWindow(blObject, (int)Sender.Content).ShowDialog();
+        }
+
+        public ParcelWindow(IBL obj) //add
+        {
+            InitializeComponent();
+            blObject = obj;
         }
     }
 }

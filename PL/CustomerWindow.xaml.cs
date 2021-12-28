@@ -22,7 +22,7 @@ namespace PL
     public partial class CustomerWindow : Window
     {
         IBL blObject;
-        public CustomerWindow(IBL obj, int cusId)
+        public CustomerWindow(IBL obj, int cusId) //update
         {
             blObject = obj;
             InitializeComponent();
@@ -34,20 +34,25 @@ namespace PL
             //txtLatti.Text = cus.Location.Latti.ToString();
             //txtLongi.Text = cus.Location.Longi.ToString();
             //txtPhone.Text = cus.Phone;
-            txtParcelFrom.ItemsSource = cus.parcelFrom.Select(x => x.Id);
-            txtParcelTo.ItemsSource = cus.parcelTo.Select(x => x.Id);
+            txtParcelsFrom.DataContext = cus.parcelFrom.Select(x => x.Id);
+            txtParcelsTo.DataContext = cus.parcelTo.Select(x => x.Id);
+        }
+        public CustomerWindow(IBL obj) //add
+        {
+            blObject = obj;
+            InitializeComponent();
         }
 
       
 
         private void viewParcelTo(object sender, MouseButtonEventArgs e)
         {
-            new ParcelWindow(blObject, ((int)txtParcelTo.SelectedItem)).ShowDialog();
+            new ParcelWindow(blObject, ((int)txtParcelsTo.SelectedItem)).ShowDialog();
         }
 
         private void viewParcelFrom(object sender, MouseButtonEventArgs e)
         {
-            new ParcelWindow(blObject, ((int)txtParcelFrom.SelectedItem)).ShowDialog();
+            new ParcelWindow(blObject, ((int)txtParcelsFrom.SelectedItem)).ShowDialog();
         }
     }
 }

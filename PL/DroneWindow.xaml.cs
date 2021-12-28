@@ -50,7 +50,7 @@ namespace PL
             rowParcel.Height = new GridLength(0);
             lblParcel.Visibility = Visibility.Hidden;
             txtParcel.Visibility = Visibility.Hidden;
-            
+
             txtId.Foreground = Brushes.Black;
             txtId.Text = "6 digits";
             options.Visibility = Visibility.Hidden;
@@ -520,18 +520,30 @@ namespace PL
         {
             canClose = true;
             MessageBoxResult mb;
-            if (isInActionsState == false)
-                mb = MessageBox.Show("do you want to close the window? \n the drone will not be added", "cancel adding of drone", MessageBoxButton.YesNo);
-            else
-                mb = MessageBox.Show("do you want to close the window? \nchanges will not happen", "close", MessageBoxButton.YesNo);
-
-            if (mb == MessageBoxResult.Yes)
+            if (somethingHasChanged())
             {
-                options.Click -= SendDroneToDelivery;
-                options.Click -= ReleaseDroneFromCharge;
-                options.Click -= PickUpParcel;
-                options.Click -= DeliverParcel;
-                this.Close();
+                if (isInActionsState == false)
+                    mb = MessageBox.Show("do you want to close the window? \n the drone will not be added", "cancel adding of drone", MessageBoxButton.YesNo);
+                else
+                    mb = MessageBox.Show("do you want to close the window? \nchanges will not happen", "close", MessageBoxButton.YesNo);
+                if (mb == MessageBoxResult.No) return;
+            }
+            options.Click -= SendDroneToDelivery;
+            options.Click -= ReleaseDroneFromCharge;
+            options.Click -= PickUpParcel;
+            options.Click -= DeliverParcel;
+            this.Close();
+        }
+
+        bool somethingHasChanged()
+        {
+            if (isInActionsState)
+            {
+                return (txtModel.Foreground == Brushes.Green); //its green if 
+            }
+            else
+            {
+                return (txtId != null || txtModel != null || txtBattery != null || txtWeight != null);
             }
         }
         /// <summary>
@@ -548,10 +560,10 @@ namespace PL
             }
         }
 
-      
-        private void viewParcelInTransfer(object sender, MouseButtonEventArgs e)
+        private void ViewParcelInTransfer(object sender, MouseButtonEventArgs e)
         {
-           // new ParcelWindow(blObject, txtParcel.Text).ShowDialog();
+            if (txtParcel.Text != "")
+                new ParcelWindow(blObject, int.Parse(txtParcel.Text)).ShowDialog();
         }
     }
 }

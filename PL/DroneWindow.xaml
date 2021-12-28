@@ -41,7 +41,7 @@
         <TextBox x:Name="txtStatus" Text="{Binding  Path=Status}" Grid.Row="4" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
         <ComboBox x:Name="txtWeight" Text="{Binding  Path=MaxWeight}" Grid.Row="5" Grid.Column="1" Margin="10"/>
         <ComboBox x:Name="txtStationId" Grid.Row="6" Grid.Column="1" Margin="10" SelectionChanged="txtStationId_SelectionChanged"/>
-        <TextBox x:Name="txtParcel" Text="{Binding  Path=ParcelInT.Id}" Grid.Row="7" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray" MouseDoubleClick="viewParcelInTransfer"/>
+        <TextBox x:Name="txtParcel" Text="{Binding  Path=ParcelInT.Id}" Grid.Row="7" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray" MouseDoubleClick="ViewParcelInTransfer"/>
         <Grid Grid.Column="1" Grid.Row="8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
