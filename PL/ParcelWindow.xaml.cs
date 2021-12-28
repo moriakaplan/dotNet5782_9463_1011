@@ -51,7 +51,20 @@ namespace PL
 
         private void viewSender(object sender, MouseButtonEventArgs e)
         {
-            new CustomerWindow(blObject, int.Parse(txtSender.Text)).ShowDialog();
+            if (txtSender.Text != "")
+                new CustomerWindow(blObject, int.Parse(txtSender.Text)).ShowDialog();
+        }
+
+        private void viewTarget(object sender, MouseButtonEventArgs e)
+        {
+            if (txtTarget.Text != "")
+                new CustomerWindow(blObject, int.Parse(txtTarget.Text)).ShowDialog();
+        }
+
+        private void viewDroneInParcel(object sender, MouseButtonEventArgs e)
+        {
+            if (txtDrone.Text != "") 
+                new DroneWindow(blObject, int.Parse(txtDrone.Text)).ShowDialog();
         }
     }
 }

@@ -43,5 +43,15 @@ namespace PL
             blObject = obj;
             txtId.Visibility = Visibility.Hidden;
         }
+
+        private void viewDrone(object sender, MouseButtonEventArgs e)
+        {
+            new DroneWindow(blObject, ((BO.DroneToList)txtDronesInCharge.SelectedItem).Id).ShowDialog();
+        }
+
+        private void txtDronesInCharge_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

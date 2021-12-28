@@ -37,8 +37,8 @@
 
         <TextBox x:Name="txtId" Text="{Binding  Path=Id}" Grid.Row="0" Grid.Column="1" Margin="10" />
         <TextBox x:Name="txtSender" Text="{Binding  Path=Sender.Id}" Grid.Row="1" Grid.Column="1" Margin="10" MouseDoubleClick="viewSender"/>
-        <TextBox x:Name="txtTarget" Text="{Binding  Path=Target.Id}" Grid.Row="2" Grid.Column="1" Margin="10" />
-        <TextBox x:Name="txtDrone" Text="{Binding  Path=Drone.Id}" Grid.Row="3" Grid.Column="1" Margin="10" />
+        <TextBox x:Name="txtTarget" Text="{Binding  Path=Target.Id}" Grid.Row="2" Grid.Column="1" Margin="10" MouseDoubleClick="viewTarget" />
+        <TextBox x:Name="txtDrone" Text="{Binding  Path=Drone.Id}" Grid.Row="3" Grid.Column="1" Margin="10" MouseDoubleClick="viewDroneInParcel" />
         <TextBox x:Name="txtWeight" Text="{Binding  Path=Weight}" Grid.Row="4" Grid.Column="1" Margin="10" />
         <TextBox x:Name="txtPriority" Text="{Binding  Path=Priority}" Grid.Row="5" Grid.Column="1" Margin="10" />
         <TextBox x:Name="txtCreateTime" Text="{Binding  Path=CreateTime}" Grid.Row="6" Grid.Column="1" Margin="10" />
