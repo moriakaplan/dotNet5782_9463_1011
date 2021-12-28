@@ -43,7 +43,13 @@ namespace PL
             //txtDeliverTime.Text = parcel.DeliverTime.ToString();
         }
 
-        private void viewSender(object senderObj, MouseButtonEventArgs e)
+        public ParcelWindow(IBL obj) //add
+        {
+            InitializeComponent();
+            blObject = obj;
+        }
+
+        private void viewSender(object sender, MouseButtonEventArgs e)
         {
             new CustomerWindow(blObject, int.Parse(txtSender.Text)).ShowDialog();
         }
