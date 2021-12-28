@@ -28,11 +28,12 @@ namespace PL
             InitializeComponent();
 
             Customer cus = blObject.DisplayCustomer(cusId);
-            txtId.Text = cus.Id.ToString();
-            txtName.Text = cus.Name;
-            txtLatti.Text = cus.Location.Latti.ToString();
-            txtLongi.Text = cus.Location.Longi.ToString();
-            txtPhone.Text = cus.Phone;
+            DataContext = cus;
+            //txtId.Text = cus.Id.ToString();
+            //txtName.Text = cus.Name;
+            //txtLatti.Text = cus.Location.Latti.ToString();
+            //txtLongi.Text = cus.Location.Longi.ToString();
+            //txtPhone.Text = cus.Phone;
             txtParcelFrom.ItemsSource = cus.parcelFrom.Select(x => x.Id);
             txtParcelTo.ItemsSource = cus.parcelTo.Select(x => x.Id);
         }

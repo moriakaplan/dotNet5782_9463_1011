@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="log in as a manager" HorizontalAlignment="Left" Margin="142,217,0,0" VerticalAlignment="Top" Click="LogManager" Height="94" Width="100"/>
-        <Button Content="log in as a user" HorizontalAlignment="Left" Margin="358,217,0,0" VerticalAlignment="Top" Click="LogUser" Height="94" Width="101"/>
-        <Button Content="sign in" HorizontalAlignment="Left" Margin="571,217,0,0" VerticalAlignment="Top" Click="Sign" Height="94" Width="101"/>
+        <Button Content="log in as a manager" HorizontalAlignment="Left" Margin="141,0,0,0" VerticalAlignment="Center" Click="LogManager" Height="94" Width="120"/>
+        <Button Content="log in as a user" HorizontalAlignment="Center" VerticalAlignment="Center" Click="LogUser" Height="94" Width="120"/>
+        <Button Content="sign in" HorizontalAlignment="Left" Margin="543,0,0,0" VerticalAlignment="Center" Click="Sign" Height="94" Width="120"/>
     </Grid>
 </Window>

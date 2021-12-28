@@ -17,12 +17,12 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label Content="Id:" Grid.Row="0" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
         <Label Content="Name:" HorizontalAlignment="Center" VerticalContentAlignment="Center" Margin="0,72,0,72" Grid.RowSpan="3"/>
-        <Label Content="Drones in charge" Grid.Row="3" HorizontalAlignment="Center" VerticalContentAlignment="Center" Margin="0,72,0,72" Grid.RowSpan="3"/>
+        <Label Content="Drones in charge" Grid.Row="3" HorizontalAlignment="Center" VerticalContentAlignment="Center" Margin="0,124,0,0" Grid.RowSpan="2"/>
 
         <Label x:Name="AvailableChargeSlots" Content="available charge slots:" Grid.Row="2" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
         <Label x:Name="Location" Content="Location:" Grid.Row="2" HorizontalAlignment="Center" VerticalContentAlignment="Center" Margin="0,72,0,0" Grid.RowSpan="2"/>
@@ -31,7 +31,14 @@
                  Grid.Row="0" Grid.Column="1" Margin="10,10,10,10" />
         <TextBox x:Name="txtName" Text="{Binding  Path=Name}" 
                  Grid.Row="1" Grid.Column="1" Margin="10,10,10,10" />
-        <ListView x:Name="txtDronesInCharge" Grid.Row="4" Grid.Column="1" Margin="10,10,10,10" />
+        <!--<ListView x:Name="txtDronesInCharge" Grid.Row="4" Grid.Column="1" Margin="10,10,10,10" />-->
+        <DataGrid x:Name="txtDronesInCharge" Grid.Row="4" Grid.Column="1" AutoGenerateColumns="False" 
+                  EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="10,10,10,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="auto"/>
+                <DataGridTextColumn x:Name="batteryColumn" Binding="{Binding Battery}" Header="Battery"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <TextBox x:Name="txtAvailableChargeSlots" Text="{Binding  Path=AvailableChargeSlots}" 
                  Grid.Row="2" Grid.Column="1" Margin="10,10,10,10" IsReadOnly="True" Foreground="Gray"/>
         <Grid Grid.Column="1" Grid.Row="2" Margin="0,72,0,0" Grid.RowSpan="2">

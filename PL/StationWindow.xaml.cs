@@ -34,7 +34,7 @@ namespace PL
             //txtAvailableChargeSlots.Text = st.AvailableChargeSlots.ToString();
             //txtLatti.Text = st.Location.Latti.ToString();
             //txtLongi.Text = st.Location.Longi.ToString();
-            //txtDronesInCharge.ItemsSource = st.DronesInCharge.Select(x => x.Id);
+            txtDronesInCharge.DataContext = st.DronesInCharge;
         }
 
         public StationWindow(IBL obj) //adding

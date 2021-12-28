@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ParcelWindow" Height="450" Width="800">
+        Title="ParcelWindow" Height="450" Width="500">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
@@ -35,16 +35,16 @@
         <Label x:Name="PickUpTime" Content="Pick up time:" Grid.Row="8" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
         <Label x:Name="DeliverTime" Content="Deliver time:" Grid.Row="9" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
 
-        <TextBox x:Name="txtId" Grid.Row="0" Grid.Column="1" Margin="10" />
-        <TextBox x:Name="txtSender" Grid.Row="1" Grid.Column="1" Margin="10" />
-        <TextBox x:Name="txtTarget" Grid.Row="2" Grid.Column="1" Margin="10" />
-        <TextBox x:Name="txtDrone" Grid.Row="3" Grid.Column="1" Margin="10" />
-        <TextBox x:Name="txtWeight" Grid.Row="4" Grid.Column="1" Margin="10" />
-        <TextBox x:Name="txtPriority" Grid.Row="5" Grid.Column="1" Margin="10" />
-        <TextBox x:Name="txtCreateTime" Grid.Row="6" Grid.Column="1" Margin="10" />
-        <TextBox x:Name="txtAssociateTime" Grid.Row="7" Grid.Column="1" Margin="10" />
-        <TextBox x:Name="txtPickUpTime" Grid.Row="8" Grid.Column="1" Margin="10" />
-        <TextBox x:Name="txtDeliverTime" Grid.Row="9" Grid.Column="1" Margin="10" />
+        <TextBox x:Name="txtId" Text="{Binding  Path=Id}" Grid.Row="0" Grid.Column="1" Margin="10" />
+        <TextBox x:Name="txtSender" Text="{Binding  Path=Sender}" Grid.Row="1" Grid.Column="1" Margin="10" />
+        <TextBox x:Name="txtTarget" Text="{Binding  Path=Target}" Grid.Row="2" Grid.Column="1" Margin="10" />
+        <TextBox x:Name="txtDrone" Text="{Binding  Path=Drone}" Grid.Row="3" Grid.Column="1" Margin="10" />
+        <TextBox x:Name="txtWeight" Text="{Binding  Path=Weight}" Grid.Row="4" Grid.Column="1" Margin="10" />
+        <TextBox x:Name="txtPriority" Text="{Binding  Path=Priority}" Grid.Row="5" Grid.Column="1" Margin="10" />
+        <TextBox x:Name="txtCreateTime" Text="{Binding  Path=CreateTime}" Grid.Row="6" Grid.Column="1" Margin="10" />
+        <TextBox x:Name="txtAssociateTime" Text="{Binding  Path=AssociateTime}" Grid.Row="7" Grid.Column="1" Margin="10" />
+        <TextBox x:Name="txtPickUpTime" Text="{Binding  Path=PickUpTime}" Grid.Row="8" Grid.Column="1" Margin="10" />
+        <TextBox x:Name="txtDeliverTime" Text="{Binding  Path=DeliverTime}" Grid.Row="9" Grid.Column="1" Margin="10" />
 
         <!--<Button x:Name="add" Content="Add parcel" Grid.Row="10" Grid.Column="1"  Click="AddParcel"
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="377,0,0,0"/>
