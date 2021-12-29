@@ -27,8 +27,8 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition x:Name="rowBattery" Height="auto"/>
-            <RowDefinition Height="auto"/>             
-            <RowDefinition Height="auto"/>             
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition x:Name="rowStation" Height="auto"/>
             <RowDefinition x:Name="rowParcel"  Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -47,7 +47,9 @@
 
         <TextBox x:Name="txtId" Text="{Binding  Path=Id}" Grid.Row="1" Grid.Column="1" Margin="10" TextChanged="IdColor"/>
         <TextBox x:Name="txtModel" Text="{Binding  Path=Model}" Grid.Row="2" Grid.Column="1" Margin="10" TextChanged="ModelColor"/>
-        <TextBox x:Name="txtBattery" Text="{Binding  Path=Battery}" Grid.Row="3" Grid.Column="1" Margin="10" IsEnabled="false"/>
+        <TextBox x:Name="txtBattery" Text="{Binding  Path=Battery}" Grid.Row="3" Grid.Column="1" Margin="10,10,183,10" IsEnabled="false"/>
+        <ProgressBar Grid.Column="1" HorizontalAlignment="Left" Height="22" Margin="84,13,0,0" Grid.Row="3" VerticalAlignment="Top" Width="78" 
+                     Minimum="0" Maximum="100" Value="{Binding  Path=Battery}" Background="WhiteSmoke" Foreground="ForestGreen" BorderBrush="LightGray"/>
         <TextBox x:Name="txtStatus" Text="{Binding  Path=Status}" Grid.Row="4" Grid.Column="1" Margin="10" IsEnabled="false"/>
         <ComboBox x:Name="txtWeight" Text="{Binding  Path=MaxWeight}" Grid.Row="5" Grid.Column="1" Margin="10"/>
         <ComboBox x:Name="txtStationId" Grid.Row="6" Grid.Column="1" Margin="10" SelectionChanged="txtStationId_SelectionChanged"/>
@@ -74,6 +76,7 @@
                 HorizontalAlignment="Right" VerticalAlignment="Center" Width="78"/>
         <Button x:Name="charge" Content="send drone&#xD;&#xA;to charge" Click="SendDroneToCharge" Grid.Column="1" Grid.Row="9" 
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="114,0,0,0" Visibility="Hidden"/>
+
         <!--<Button x:Name="sendDeliver" Content="send drone&#xD;&#xA;to delivery" Click="SendDroneToDelivery" Grid.Row="8" Grid.ColumnSpan="2" 
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="110,0,0,0" Visibility="Hidden"/>
         <Button x:Name="releaseFromCharge" Content="release drone&#xD;&#xA;from charge" Click="ReleaseDroneFromCharge" Grid.Row="8" 
@@ -84,7 +87,7 @@
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Visibility="Hidden"/>-->
         <!--<ComboBox x:Name="updateOptions" HorizontalAlignment="Left" Margin="0,43,0,0" Grid.Row="8" VerticalAlignment="Top" Width="120" Grid.Column="1" SelectionChanged="selectOption"/>-->
         <!--<Label x:Name="lblOptions" Content="Choose the option you want:" HorizontalAlignment="Left" Margin="139,18,0,0" Grid.Row="8" VerticalAlignment="Top" Grid.ColumnSpan="2"/>-->
-        
+
         <!--<Label x:Name="lblTimeInCharge" Content="Time in charge-" Grid.Row="8"
                HorizontalAlignment="Left" Margin="99,55,0,0" VerticalAlignment="Top" Height="26" Grid.Column="1" Visibility="Hidden"/>
         <TextBox x:Name="txtTimeInCharge" Grid.Row="8" Grid.Column="1"
