@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="StationListWindow" Height="450" Width="800">
+        Title="StationListWindow" Height="auto" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50*"/>
-            <RowDefinition Height="400*"/>
-            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
         <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
             <Grid.ColumnDefinitions>

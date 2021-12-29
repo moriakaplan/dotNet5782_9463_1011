@@ -45,6 +45,7 @@
         <TextBox x:Name="txtAssociateTime" Text="{Binding  Path=AssociateTime}" Grid.Row="7" Grid.Column="1" Margin="10" />
         <TextBox x:Name="txtPickUpTime" Text="{Binding  Path=PickUpTime}" Grid.Row="8" Grid.Column="1" Margin="10" />
         <TextBox x:Name="txtDeliverTime" Text="{Binding  Path=DeliverTime}" Grid.Row="9" Grid.Column="1" Margin="10" />
+        <Button x:Name="options" Content="options" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="10" VerticalAlignment="Center"/>
 
         <!--<Button x:Name="add" Content="Add parcel" Grid.Row="10" Grid.Column="1"  Click="AddParcel"
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="377,0,0,0"/>

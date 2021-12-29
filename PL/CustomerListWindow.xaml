@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="CustomerListWindow" Height="450" Width="840">
+        Title="CustomerListWindow" Height="auto" Width="840">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -13,8 +13,8 @@
             <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
         <DataGrid x:Name="customerToListDataGrid" Grid.Row="1"
-                  AutoGenerateColumns="False" EnableRowVirtualization="True" 
-                  ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" PreviewMouseDoubleClick="ViewCustomer">
+                  AutoGenerateColumns="False" EnableRowVirtualization="True" Height="auto"
+                  ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" PreviewMouseDoubleClick="ViewCustomer" SelectionChanged="customerToListDataGrid_SelectionChanged">
             <!--<DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
                     <EventSetter Event="PreviewMouseDoubleClick"  Handler="ViewCustomer"/>
@@ -23,11 +23,11 @@
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id"/>
                 <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name"/>
-                <DataGridTextColumn x:Name="numOfParcelsDeliveredColumn" Binding="{Binding numOfParcelsDelivered}" Header="num Of Parcels Delivered"/>
-                <DataGridTextColumn x:Name="numOfParcelsInTheWayColumn" Binding="{Binding numOfParcelsInTheWay}" Header="num Of Parcels In The Way"/>
-                <DataGridTextColumn x:Name="numOfParcelsSentAndNotDeliveredColumn" Binding="{Binding numOfParcelsSentAndNotDelivered}" Header="num Of Parcels Sent And Not Delivered"/>
-                <DataGridTextColumn x:Name="numOfParclReceivedColumn" Binding="{Binding numOfParclReceived}" Header="num Of Parcl Received"/>
                 <DataGridTextColumn x:Name="phoneColumn" Binding="{Binding phone}" Header="phone"/>
+                <DataGridTextColumn x:Name="numOfParcelsDeliveredColumn" Binding="{Binding numOfParcelsDelivered}" Header="num Of Parcels&#xD;&#xA;Delivered"/>
+                <DataGridTextColumn x:Name="numOfParcelsInTheWayColumn" Binding="{Binding numOfParcelsInTheWay}" Header="num Of Parcels&#xD;&#xA;In The Way"/>
+                <DataGridTextColumn x:Name="numOfParcelsSentAndNotDeliveredColumn" Binding="{Binding numOfParcelsSentAndNotDelivered}" Header="num Of Parcels Sent&#xD;&#xA;And Not Delivered"/>
+                <DataGridTextColumn x:Name="numOfParclReceivedColumn" Binding="{Binding numOfParclReceived}" Header="num Of Parcl&#xD;&#xA;Received"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Add Customer" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Click="AddCustomer"/>

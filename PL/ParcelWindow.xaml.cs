@@ -20,7 +20,7 @@ namespace PL
     /// <summary>
     /// Interaction logic for ParcelWindow.xaml
     /// </summary>
-    public partial class ParcelWindow : Window
+    public partial class ParcelWindow : Window //update, need to add delete
     {
         IBL blObject;
         public ParcelWindow(IBL obj, int parcelId)
@@ -41,12 +41,20 @@ namespace PL
             //txtAssociateTime.Text = parcel.AssociateTime.ToString();
             //txtPickUpTime.Text = parcel.PickUpTime.ToString();
             //txtDeliverTime.Text = parcel.DeliverTime.ToString();
+
+            options.Content = "Update Parcel Data";
+            options.Click -= AddParcel;
+            options.Click += UpdateParcel;
         }
 
         public ParcelWindow(IBL obj) //add
         {
             InitializeComponent();
             blObject = obj;
+
+            options.Content = "Add Parcel";
+            options.Click -= UpdateParcel;
+            options.Click += AddParcel;
         }
 
         private void viewSender(object sender, MouseButtonEventArgs e)
@@ -63,8 +71,18 @@ namespace PL
 
         private void viewDroneInParcel(object sender, MouseButtonEventArgs e)
         {
-            if (txtDrone.Text != "") 
+            if (txtDrone.Text != "")
                 new DroneWindow(blObject, int.Parse(txtDrone.Text)).ShowDialog();
+        }
+
+        private void AddParcel(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void UpdateParcel(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
