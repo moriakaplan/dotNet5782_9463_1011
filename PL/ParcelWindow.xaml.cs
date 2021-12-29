@@ -41,6 +41,7 @@ namespace PL
             //txtAssociateTime.Text = parcel.AssociateTime.ToString();
             //txtPickUpTime.Text = parcel.PickUpTime.ToString();
             //txtDeliverTime.Text = parcel.DeliverTime.ToString();
+            if (parcel.Drone == null) delete.Visibility = Visibility.Visible;
 
             options.Content = "Update Parcel Data";
             options.Click -= AddParcel;
