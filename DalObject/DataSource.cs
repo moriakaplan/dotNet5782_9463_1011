@@ -30,7 +30,7 @@ namespace Dal
                 Name = "the israelian station",
                 Longitude = 34.8,
                 Lattitude = 32,
-                ChargeSlots = 163
+                ChargeSlots = 13
             });
             stations.Add(new Station
             {
@@ -38,7 +38,7 @@ namespace Dal
                 Name = "the biggest station",
                 Longitude = 35,
                 Lattitude = 32,
-                ChargeSlots = 540
+                ChargeSlots = 112
             });
             drones.Add(new Drone
             {

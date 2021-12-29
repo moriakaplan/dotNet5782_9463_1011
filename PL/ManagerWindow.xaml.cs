@@ -33,7 +33,7 @@ namespace PL
 
         private void displayStationList(object sender, RoutedEventArgs e)
         {
-            new StationListWindow(blObject).Show();
+            new StationListWindow(blObject).ShowDialog();
         }
 
         private void displayParcelList(object sender, RoutedEventArgs e)
