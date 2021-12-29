@@ -31,7 +31,7 @@ namespace PL
 
         private void LogUser(object sender, RoutedEventArgs e)
         {
-            new UserWindow().Show();//צריך להוסיף פרמטרים מתאימים
+            new PasswordWindow().Show();//צריך להוסיף פרמטרים מתאימים
         }
 
         private void Sign(object sender, RoutedEventArgs e)
