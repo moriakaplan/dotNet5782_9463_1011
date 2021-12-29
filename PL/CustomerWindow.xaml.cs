@@ -132,7 +132,7 @@ namespace PL
         bool phoneIsOk()
         {
             int phone;
-            if (int.TryParse(txtPhone.Text, out phone) == false || phone<0) return false;
+            if (int.TryParse(txtPhone.Text, out phone) == false || phone<0 || txtPhone.Text.Length!=10) return false;
             //להוסיף בדיקות
             return true;
         }
