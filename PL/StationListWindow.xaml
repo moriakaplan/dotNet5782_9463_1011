@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <Label Content="available Charge Slots:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-            <Button Content="Refresh" Grid.Column="4" HorizontalAlignment="Left" Margin="110,13,0,0" VerticalAlignment="Top"/>
+            <Button Content="Refresh" Grid.Column="4" HorizontalAlignment="Left" Margin="80,13,0,0" VerticalAlignment="Top" Width="80"/>
 
             <!--<Button x:Name="Restart" Content="Restart selections" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Stretch" Click="Restart_Click"/>-->
         </Grid>
