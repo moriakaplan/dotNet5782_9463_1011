@@ -9,12 +9,21 @@
     <Window.Background>
         <ImageBrush ImageSource="\Images\Background3.jpg"/>
     </Window.Background>
-    <Grid RenderTransformOrigin="0.479,0.506">
-        <Button Content="Display drones" Grid.Row="0" HorizontalAlignment="Left" Margin="426,127,0,0" VerticalAlignment="Top" 
-                Click="displayDronesList_Click" Height="69" Width="170"/>
-        <Button Content="Dispaly stations" HorizontalAlignment="Left" Height="69" Margin="426,246,0,0" VerticalAlignment="Top" Width="170" Click="displayStationList"/>
-        <Button Content="Dispaly parcels" HorizontalAlignment="Left" Margin="160,127,0,0" VerticalAlignment="Top" Click="displayParcelList" Height="69" Width="170"/>
-        <Button Content="Display customers" HorizontalAlignment="Left" Margin="160,246,0,0" VerticalAlignment="Top" Click="displayCustomerList" Height="69" Width="170"/>
 
+    <Grid Margin="132,95,132,79">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Button Content="Display drones" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                Click="displayDronesList_Click" Height="69" Width="170"/>
+        <Button Content="Dispaly stations" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Height="69" VerticalAlignment="Center" Width="170" Click="displayStationList"/>
+        <Button Content="Dispaly parcels" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="displayParcelList" Height="69" Width="170"/>
+        <Button Content="Display customers" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"  VerticalAlignment="Center" Click="displayCustomerList" Height="69" Width="170"/>
     </Grid>
 </Window>
