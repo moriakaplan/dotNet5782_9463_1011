@@ -23,5 +23,10 @@ namespace PL
         {
             InitializeComponent();
         }
+
+        private void sendNewParcel(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
