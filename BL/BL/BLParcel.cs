@@ -10,7 +10,7 @@ namespace BL
 {
     internal partial class BL
     {
-        public void AddParcelToDelivery(int senderId, int targetId, WeightCategories weight, Priorities pri)
+        public int AddParcelToDelivery(int senderId, int targetId, WeightCategories weight, Priorities pri)
         {
             DO.Parcel idalParcel = new DO.Parcel
             {
@@ -26,7 +26,7 @@ namespace BL
             };
             try
             {
-                dl.AddParcelToTheList(idalParcel);
+                return dl.AddParcelToTheList(idalParcel);
                 //add the new Parcel to the list in the data level
             }
             catch (DO.ParcelException ex)
