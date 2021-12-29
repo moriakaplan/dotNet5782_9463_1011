@@ -10,11 +10,11 @@
     <Window.Background>
         <ImageBrush ImageSource="\Images\mainIm2.jpg"/>
     </Window.Background>
-    
+
     <Grid>
-        
-        <Button Content="log in as a manager"  HorizontalAlignment="Left" Margin="510,55,0,0" VerticalAlignment="Top" Click="LogManager" Height="72" Width="231"/>
-        <Button Content="log in as a user" HorizontalAlignment="Left" VerticalAlignment="Center" Click="LogUser" Height="72" Width="231" Margin="510,0,0,0"/>
-        <Button Content="sign up" HorizontalAlignment="Left" Margin="574,302,0,0" VerticalAlignment="Top" Click="Sign" Height="72" Width="104"/>
+
+        <Button Content="log in as a manager"  HorizontalAlignment="Left" Margin="527,55,0,0" VerticalAlignment="Top" Click="LogManager" Height="72" Width="214"/>
+        <Button Content="log in as a user" HorizontalAlignment="Left" VerticalAlignment="Center" Click="LogUser" Height="72" Width="214" Margin="527,0,0,0"/>
+        <Button Content="sign up" HorizontalAlignment="Left" Margin="527,302,0,0" VerticalAlignment="Top" Click="Sign" Height="72" Width="214"/>
     </Grid>
 </Window>

@@ -30,11 +30,18 @@ namespace PL
         private void ViewCustomer(object sender, MouseButtonEventArgs e)
         {
             new CustomerWindow(blObject, ((BO.CustomerToList)customerToListDataGrid.SelectedItem).Id).ShowDialog();
+            customerToListDataGrid.DataContext = blObject.DisplayListOfCustomers();
         }
 
         private void AddCustomer(object sender, RoutedEventArgs e)
         {
             new CustomerWindow(blObject).ShowDialog();
+            customerToListDataGrid.DataContext = blObject.DisplayListOfCustomers();
+        }
+
+        private void customerToListDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

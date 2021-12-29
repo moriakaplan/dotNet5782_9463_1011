@@ -13,7 +13,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <!--<RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition x:Name="rowBattery" Height="*"/>
@@ -22,7 +22,17 @@
             <RowDefinition x:Name="rowStation" Height="*"/>
             <RowDefinition x:Name="rowParcel"  Height="*"/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>-->
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition x:Name="rowBattery" Height="auto"/>
+            <RowDefinition Height="auto"/>             
+            <RowDefinition Height="auto"/>             
+            <RowDefinition x:Name="rowStation" Height="auto"/>
+            <RowDefinition x:Name="rowParcel"  Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Button x:Name="close" Content="Close The Window" Grid.Column="1" Click="Close_Click" Height="30"
                 HorizontalAlignment="Right"/>
@@ -37,11 +47,11 @@
 
         <TextBox x:Name="txtId" Text="{Binding  Path=Id}" Grid.Row="1" Grid.Column="1" Margin="10" TextChanged="IdColor"/>
         <TextBox x:Name="txtModel" Text="{Binding  Path=Model}" Grid.Row="2" Grid.Column="1" Margin="10" TextChanged="ModelColor"/>
-        <TextBox x:Name="txtBattery" Text="{Binding  Path=Battery}" Grid.Row="3" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
-        <TextBox x:Name="txtStatus" Text="{Binding  Path=Status}" Grid.Row="4" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
+        <TextBox x:Name="txtBattery" Text="{Binding  Path=Battery}" Grid.Row="3" Grid.Column="1" Margin="10" IsEnabled="false"/>
+        <TextBox x:Name="txtStatus" Text="{Binding  Path=Status}" Grid.Row="4" Grid.Column="1" Margin="10" IsEnabled="false"/>
         <ComboBox x:Name="txtWeight" Text="{Binding  Path=MaxWeight}" Grid.Row="5" Grid.Column="1" Margin="10"/>
         <ComboBox x:Name="txtStationId" Grid.Row="6" Grid.Column="1" Margin="10" SelectionChanged="txtStationId_SelectionChanged"/>
-        <TextBox x:Name="txtParcel" Text="{Binding  Path=ParcelInT.Id}" Grid.Row="7" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray" MouseDoubleClick="ViewParcelInTransfer"/>
+        <TextBox x:Name="txtParcel" Text="{Binding  Path=ParcelInT.Id}" Grid.Row="7" Grid.Column="1" Margin="10" IsEnabled="false" MouseDoubleClick="wParcelInTransfer"/>
         <Grid Grid.Column="1" Grid.Row="8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -53,8 +63,8 @@
             </Grid.ColumnDefinitions>
             <Label Content="Lattitude::" Grid.Row="0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
             <Label Content="longitude:" Grid.Row="1" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
-            <TextBox x:Name="txtLatti" Text="{Binding  Path=CurrentLocation.Latti}" Grid.Row="0" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
-            <TextBox x:Name="txtLongi" Text="{Binding  Path=CurrentLocation.Longi}" Grid.Row="1" Grid.Column="1" Margin="10" IsReadOnly="True" Foreground="Gray"/>
+            <TextBox x:Name="txtLatti" Text="{Binding  Path=CurrentLocation.Latti}" Grid.Row="0" Grid.Column="1" Margin="10" IsEnabled="false"/>
+            <TextBox x:Name="txtLongi" Text="{Binding  Path=CurrentLocation.Longi}" Grid.Row="1" Grid.Column="1" Margin="10" IsEnabled="false"/>
         </Grid>
         <Button x:Name="add" Content="Add The &#xD;&#xA;Drone" Grid.Row="9" Grid.Column="1"  Click="AddDrone_Click"
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78"/>

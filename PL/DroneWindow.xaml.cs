@@ -565,5 +565,10 @@ namespace PL
             if (txtParcel.Text != "")
                 new ParcelWindow(blObject, int.Parse(txtParcel.Text)).ShowDialog();
         }
+
+        private void wParcelInTransfer(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
