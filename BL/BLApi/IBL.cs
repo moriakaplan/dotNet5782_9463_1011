@@ -29,7 +29,7 @@ namespace BLApi
         /// Add Parcel To Delivery
         /// </summary>
         /// <param name="parcel"></param>
-        void AddParcelToDelivery(int senderId, int targetId, WeightCategories weight, Priorities pri);
+        int AddParcelToDelivery(int senderId, int targetId, WeightCategories weight, Priorities pri);
         #endregion adding
 
         #region updating
