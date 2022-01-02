@@ -19,7 +19,7 @@ namespace PL
     /// </summary>
     public partial class UserWindow : Window
     {
-        public UserWindow()
+        public UserWindow(int customerId)
         {
             InitializeComponent();
         }

@@ -31,7 +31,8 @@ namespace PL
 
         private void LoginClick(object sender, RoutedEventArgs e)
         {
-            new UserWindow().Show();
+            if (txtId.Text != "")
+                new UserWindow(int.Parse(txtId.Text)).Show();
         }
     }
 }
