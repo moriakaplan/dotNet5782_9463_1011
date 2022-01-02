@@ -136,7 +136,6 @@ namespace DalApi
         void DeleteParcel(int parcelId);
         #endregion delete
 
-        #region distance functions
         /// <summary>
         /// bonus 2
         /// Calculates the distance between two places.
@@ -147,28 +146,10 @@ namespace DalApi
         /// <param name="latitudeB"></param>
         /// <param name="longitudeB"></param>
         /// <returns></returns>
-        double Distance(double lattitudeA, double longitudeA, double lattitudeB, double longitudeB);
-        /// <summary>
-        /// bonus 2
-        /// calculates the distance between a point and a Customer
-        /// </summary>
-        /// <param name="longitudeA"></param>
-        /// <param name="lattitudeA"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        double DistanceForCustomer(double longitudeA, double lattitudeA, int id);
-        /// <summary>
-        /// bonus 2
-        /// calculates the distance between a point and a station
-        /// </summary>
-        /// <param name="longitudeA"></param>
-        /// <param name="lattitudeA"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        double DistanceForStation(double longitudeA, double lattitudeA, int id);
-        #endregion distance functions
-
-        double[] AskBattery();
+        double Distance(double lattitudeA, double longitudeA, double lattitudeB, double longitudeB); //maybe need to be deleted from the interface
+        
+        
+        double[] GetBatteryData();
 
     }
 }

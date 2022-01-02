@@ -47,7 +47,7 @@ namespace BL
             dl = DalFactory.GetDal();
 
             //lstdrn = (List<DroneToList>)dl.DisplayListOfDrones();
-            double[] batteryData = dl.AskBattery();
+            double[] batteryData = dl.GetBatteryData();
             BatteryForAvailable = batteryData[0];
             BatteryForEasy = batteryData[1];
             BatteryForMedium = batteryData[2];

@@ -38,12 +38,28 @@ namespace Dal
                 return instance;
             }
         }
-     
+
+        /// <summary>
+        /// bonus 2
+        /// calculates the distance between a point and a station
+        /// </summary>
+        /// <param name="longitudeA"></param>
+        /// <param name="lattitudeA"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public double DistanceForStation(double longitudeA, double lattitudeA, int id)
         {
             Station st = DisplayStation(id);
             return Distance(longitudeA, lattitudeA, st.Longitude, st.Lattitude);
         }
+        /// <summary>
+        /// bonus 2
+        /// calculates the distance between a point and a Customer
+        /// </summary>
+        /// <param name="longitudeA"></param>
+        /// <param name="lattitudeA"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public double DistanceForCustomer(double longitudeA, double lattitudeA, int id)
         {
             Customer cu = DisplayCustomer(id);
@@ -69,7 +85,7 @@ namespace Dal
             // calculate the result
             return (c * r);
         }
-        public double[] AskBattery()
+        public double[] GetBatteryData()
         {
             return new double[] {
                 DataSource.Config.available,
