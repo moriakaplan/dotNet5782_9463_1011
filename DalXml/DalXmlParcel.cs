@@ -11,81 +11,97 @@ namespace Dal
     {
         public int AddParcelToTheList(Parcel parcel)
         {
-            //if (DataSource.parcels.Exists(item => item.Id == parcel.Id)) throw new ParcelException($"id: {parcel.Id} already exist"); //it suppose to be this type of exception????**** 
-            //parcel.Id = ++DataSource.Config.parcelCode;
-            //DataSource.parcels.Add(parcel);
-            //return DataSource.Config.parcelCode;
+            List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);
+            if (parcels.Exists(item => item.Id == parcel.Id)) throw new ParcelException($"id: {parcel.Id} already exist"); //it suppose to be this type of exception????**** 
+            parcel.Id = ++DataSource.Config.parcelCode;
+            parcels.Add(parcel);
+            XmlTools.SaveListToXmlSerializer<Parcel>(parcels, dronesPath);
+            return DataSource.Config.parcelCode;
         }
         public Parcel DisplayParcel(int parcelId)
         {
-            //Parcel? result = DataSource.parcels.Find(x => x.Id == parcelId);
-            //if (result == null)
-            //    throw new ParcelException($"id: {parcelId} does not exist");
-            //return (Parcel)result;
+            List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);
+            Parcel? result = parcels.Find(x => x.Id == parcelId);
+            if (result == null)
+                throw new ParcelException($"id: {parcelId} does not exist");
+            return (Parcel)result;
         }
         public IEnumerable<Parcel> DisplayListOfParcels(Predicate<Parcel> pre)
         {
-            //List<Parcel> result = new List<Parcel>(DataSource.parcels);
-            //if (pre == null) return result;
-            //return result.FindAll(pre);
+            List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);
+            List<Parcel> result = new List<Parcel>(parcels);
+            if (pre == null) return result;
+            return result.FindAll(pre);
         }
         public void DeleteParcel(int parcelId)
         {
-            //try
-            //{
-            //    DataSource.drones.Remove(DisplayDrone(parcelId));
-            //}
-            //catch (ArgumentNullException)
-            //{
-            //    throw new ParcelException($"id: {parcelId} does not exist");
-            //}
+            List<Drone> drones = XmlTools.LoadListFromXmlSerializer<Drone>(dronesPath);
+            try
+            {
+                drones.Remove(DisplayDrone(parcelId));
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ParcelException($"id: {parcelId} does not exist");
+            }
+            XmlTools.SaveListToXmlSerializer<Drone>(drones, dronesPath);
+
         }
         public void AssignParcelToDrone(int parcelId, int droneId)
         {
-            //if (!DataSource.drones.Exists(item => item.Id == droneId))
-            //{
-            //    throw new DroneException($"id: {droneId} does not exist");
-            //}
-            //for (int i = 0; i < DataSource.parcels.Count; i++) //find the parcel and update its details
-            //{
-            //    if (DataSource.parcels[i].Id == parcelId)
-            //    {
-            //        Parcel p = DataSource.parcels[i];
-            //        p.Droneld = droneId;//assign the parcel to the drone
-            //        p.AssociateTime = DateTime.Now;//update the time that the parcel was scheduled
-            //        DataSource.parcels[i] = p;
-            //        return;
-            //    }
-            //}
-            //throw new ParcelException($"id: {parcelId} does not exist");
+            List<Drone> drones = XmlTools.LoadListFromXmlSerializer<Drone>(dronesPath);
+            if (!drones.Exists(item => item.Id == droneId))
+            {
+                throw new DroneException($"id: {droneId} does not exist");
+            }
+            List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);
+            for (int i = 0; i < parcels.Count; i++) //find the parcel and update its details
+            {
+                if (parcels[i].Id == parcelId)
+                {
+                    Parcel p = parcels[i];
+                    p.Droneld = droneId;//assign the parcel to the drone
+                    p.AssociateTime = DateTime.Now;//update the time that the parcel was scheduled
+                    parcels[i] = p;
+                    return;
+                }
+            }
+            throw new ParcelException($"id: {parcelId} does not exist");
+            XmlTools.SaveListToXmlSerializer<Drone>(drones, dronesPath);
+            XmlTools.SaveListToXmlSerializer<Parcel>(parcels, dronesPath);
         }
         public void PickParcelByDrone(int parcelId)
         {
-            //for (int i = 0; i < DataSource.parcels.Count; i++) //find the parcel and update its details
-            //{
-            //    if (DataSource.parcels[i].Id == parcelId)
-            //    {
-            //        Parcel p = DataSource.parcels[i];
-            //        p.PickUpTime = DateTime.Now;//update the time that the drone pick up the parcel
-            //        DataSource.parcels[i] = p;
-            //        return;
-            //    }
-            //}
-            //throw new ParcelException($"id: {parcelId} does not exist");
+            List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);
+            for (int i = 0; i < parcels.Count; i++) //find the parcel and update its details
+            {
+                if (parcels[i].Id == parcelId)
+                {
+                    Parcel p = parcels[i];
+                    p.PickUpTime = DateTime.Now;//update the time that the drone pick up the parcel
+                    parcels[i] = p;
+                    return;
+                }
+            }
+            throw new ParcelException($"id: {parcelId} does not exist");
+            XmlTools.SaveListToXmlSerializer<Parcel>(parcels, dronesPath);
         }
         public void DeliverParcelToCustomer(int parcelId)
         {
-            //for (int i = 0; i < DataSource.parcels.Count; i++) //find the parcel and update its details
-            //{
-            //    if (DataSource.parcels[i].Id == parcelId)
-            //    {
-            //        Parcel p = DataSource.parcels[i];
-            //        p.DeliverTime = DateTime.Now;//update the time that the drone pick up the parcel
-            //        DataSource.parcels[i] = p;
-            //        return;
-            //    }
-            //}
-            //throw new ParcelException($"id: {parcelId} does not exist");
+            List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);
+            for (int i = 0; i < parcels.Count; i++) //find the parcel and update its details
+            {
+                if (parcels[i].Id == parcelId)
+                {
+                    Parcel p = parcels[i];
+                    p.DeliverTime = DateTime.Now;//update the time that the drone pick up the parcel
+                    parcels[i] = p;
+                    return;
+                }
+            }
+            throw new ParcelException($"id: {parcelId} does not exist");
+            XmlTools.SaveListToXmlSerializer<Parcel>(parcels, dronesPath);
+
         }
     }
 }
