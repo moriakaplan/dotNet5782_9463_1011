@@ -13,10 +13,12 @@ namespace Dal
         {
             List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);
             if (parcels.Exists(item => item.Id == parcel.Id)) throw new ParcelException($"id: {parcel.Id} already exist"); //it suppose to be this type of exception????**** 
-            parcel.Id = ++DataSource.Config.parcelCode;
+            int newCode = int.Parse(configRoot.Element("parcelCode").Value) + 1;
+            configRoot.Element("parcelCode").Value = newCode.ToString();
+            parcel.Id = newCode;
             parcels.Add(parcel);
             XmlTools.SaveListToXmlSerializer<Parcel>(parcels, parcelsPath);
-            return DataSource.Config.parcelCode;
+            return newCode;
         }
         public Parcel DisplayParcel(int parcelId)
         {
