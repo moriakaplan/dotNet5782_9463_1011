@@ -34,7 +34,7 @@ namespace PL
 
         private void LoginClick(object sender, RoutedEventArgs e)
         {
-            int id = blObject.DisplayListOfCustomers.Where(x => x.Name == txtUserName).Single().Id;
+            int id = blObject.DisplayListOfCustomers().Where(x => x.Name == txtUserName.Text).Single().Id;
             new UserWindow(id).ShowDialog();
         }
     }

@@ -22,11 +22,11 @@ namespace Dal
         {
             
             List<Drone> drones = XmlTools.LoadListFromXmlSerializer<Drone>(dronesPath);
+            List<DroneCharge> dCharge = XmlTools.LoadListFromXmlSerializer<DroneCharge>(droneChargesPath);
+            List<Station> stations = XmlTools.LoadListFromXmlSerializer<Station>(stationsPath);
             if (drones.Exists(item => item.Id == droneId)) throw new DroneException($"id: {droneId} already exist");
             DroneCharge droneCharge = new DroneCharge { DroneId = droneId, StationId = stationId, StartedChargeTime = DateTime.Now }; //add drone charge to the list for charging the drone                                                                                                                          //DataSource.droneCharges.Add(droneCharge);
-            List<DroneCharge> dCharge = XmlTools.LoadListFromXmlSerializer<DroneCharge>(droneChargesPath);
             dCharge.Add(droneCharge);
-            List<Station> stations = XmlTools.LoadListFromXmlSerializer<Station>(stationsPath);
             for (int i = 0; i < stations.Count; i++) //find the station and update its details
             {
                 if (stations[i].Id == stationId)
@@ -35,15 +35,13 @@ namespace Dal
                     Station s = stations[i];
                     s.ChargeSlots--; //++?
                     stations[i] = s;
+                    XmlTools.SaveListToXmlSerializer<Drone>(drones, dronesPath);
+                    XmlTools.SaveListToXmlSerializer<DroneCharge>(dCharge, droneChargesPath);
+                    XmlTools.SaveListToXmlSerializer<Station>(stations, stationsPath);
                     return;
                 }
             }
             throw new StationException($"id: {stationId} does not exist");
-            XmlTools.SaveListToXmlSerializer<Drone>(drones, dronesPath);
-            XmlTools.SaveListToXmlSerializer<DroneCharge>(dCharge, droneChargesPath);
-            XmlTools.SaveListToXmlSerializer<Station>(stations, stationsPath);
-
-
         }
         public void ReleaseDroneFromeCharge(int droneId)
         {
@@ -62,12 +60,12 @@ namespace Dal
                     Station s = stations[i];
                     s.ChargeSlots++; //--?
                     stations[i] = s;
+                    XmlTools.SaveListToXmlSerializer<DroneCharge>(droneCharges, droneChargesPath);
+                    XmlTools.SaveListToXmlSerializer<Station>(stations, stationsPath);
                     return;
                 }
             }
             throw new StationException($"id: {dCharge.StationId} does not exist");
-            XmlTools.SaveListToXmlSerializer<DroneCharge>(droneCharges, droneChargesPath);
-            XmlTools.SaveListToXmlSerializer<Station>(stations, stationsPath);
         }
         public Drone DisplayDrone(int droneId)
         {
