@@ -64,15 +64,20 @@ namespace Dal
         {
             //DataSource.Initialize();
             if (!File.Exists(dronesPath))
-                CreateFiles(dronesRoot, dronesPath, "drones");
+                //CreateFiles(dronesRoot, dronesPath, "drones");
+                XmlTools.SaveListToXmlSerializer<Drone>(new List<Drone>(), dronesPath);
             if (!File.Exists(droneChargesPath))
-                CreateFiles(droneChargesRoot, droneChargesPath, "droneCharges");
+                //CreateFiles(droneChargesRoot, droneChargesPath, "droneCharges");
+                XmlTools.SaveListToXmlSerializer<DroneCharge>(new List<DroneCharge>(), droneChargesPath);
             if (!File.Exists(stationsPath))
-                CreateFiles(stationsRoot, stationsPath, "stations");
+                //CreateFiles(stationsRoot, stationsPath, "stations");
+                XmlTools.SaveListToXmlSerializer<Station>(new List<Station>(), stationsPath);
             if (!File.Exists(customersPath))
-                CreateFiles(customersRoot, customersPath, "customers");
+                //CreateFiles(customersRoot, customersPath, "customers");
+                XmlTools.SaveListToXmlSerializer<Customer>(new List<Customer>(), customersPath);
             if (!File.Exists(parcelsPath))
-                CreateFiles(parcelsRoot, parcelsPath, "parcels");
+                //CreateFiles(parcelsRoot, parcelsPath, "parcels");
+                XmlTools.SaveListToXmlSerializer<Parcel>(new List<Parcel>(), parcelsPath);
             if (!File.Exists(configPath))
                 CreateConfig();
             LoadData();
@@ -100,6 +105,25 @@ namespace Dal
             {
                 try
                 {
+                    //List<Station> stations = new List<Station>();
+                    //stations.Add(new Station
+                    //{
+                    //    Id = 1111,
+                    //    Name = "the israelian station",
+                    //    Longitude = 34.8,
+                    //    Lattitude = 32,
+                    //    ChargeSlots = 13
+                    //});
+                    //stations.Add(new Station
+                    //{
+                    //    Id = 2222,
+                    //    Name = "the biggest station",
+                    //    Longitude = 35,
+                    //    Lattitude = 32,
+                    //    ChargeSlots = 112
+                    //});
+                    //XmlTools.SaveListToXmlSerializer<Station>(stations, stationsPath);
+                    //XmlTools.SaveListToXmlSerializer<Parcel>(new List<Parcel>(), parcelsPath);
                     dronesRoot = XElement.Load(dronesPath);
                     droneChargesRoot = XElement.Load(droneChargesPath);
                     stationsRoot = XElement.Load(stationsPath);

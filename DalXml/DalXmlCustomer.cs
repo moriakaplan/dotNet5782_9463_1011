@@ -17,12 +17,12 @@ namespace Dal
             if (customersRoot.Elements().Any(item => item.Element("Id").Value == cus.Id.ToString()))
                 throw new CustomerException($"id: {cus.Id} already exist"); //it suppose to be this type of exception????**** 
             customersRoot.Add(ConvertCus(cus));
+            customersRoot.Save(customersPath);
         }
         public Customer DisplayCustomer(int customerId)
         {
-            XElement cus;
-            try { cus = customersRoot.Elements().Where(item => item.Element("Id").Value == customerId.ToString()).Single(); }
-            catch (InvalidOperationException)
+            XElement? cus = customersRoot.Elements().Where(item => int.Parse(item.Element("Id").Value) == customerId).SingleOrDefault(); 
+            if (cus==null)
             {
                 throw new CustomerException($"id: {customerId} does not exist");
             }

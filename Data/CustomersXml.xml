@@ -1,2 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<customers />
+<customers>
+  <customer>
+    <Id>123456789</Id>
+    <Name>shuva</Name>
+    <Phone>1234567890</Phone>
+    <Longitude>32</Longitude>
+    <Lattitude>34</Lattitude>
+  </customer>
+</customers>

@@ -49,6 +49,7 @@ namespace Dal
             }
             catch (Exception ex) //****
             {
+                Console.WriteLine(ex.Message+$"fail to load {filePath}");
                 throw new Exception(ex.Message+$"fail to load {filePath}");
             }
         }

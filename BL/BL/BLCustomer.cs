@@ -74,7 +74,7 @@ namespace BL
             //    yield return DisplayCustomersToList(dCustomer.Id);
             //}
             return (from dCustomer in dl.DisplayListOfCustomers()
-                    select DisplayCustomersToList(dCustomer.Id));
+                    select DisplayCustomersToList(dCustomer));
         }
 
         /// <summary>
@@ -148,9 +148,9 @@ namespace BL
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        private CustomerToList DisplayCustomersToList(int customerId)
+        private CustomerToList DisplayCustomersToList(DO.Customer dcustomer)
         {
-            Customer dcustomer = DisplayCustomer(customerId);
+            //Customer dcustomer = DisplayCustomer(customerId);
             CustomerToList bCustomer = new CustomerToList
             {
                 Id = dcustomer.Id,
@@ -164,19 +164,19 @@ namespace BL
             foreach (ParcelToList parcelFromList in DisplayListOfParcels()) //^^^^
             {
                 Parcel parcel = DisplayParcel(parcelFromList.Id);
-                if ((parcel.Sender.Id == customerId) && (parcel.DeliverTime != null))
+                if ((parcel.Sender.Id == dcustomer.Id) && (parcel.DeliverTime != null))
                 {
                     bCustomer.numOfParcelsDelivered++;
                 }
-                if ((parcel.Sender.Id == customerId) && ((parcel.DeliverTime == null) && ((parcel.CreateTime != null))))
+                if ((parcel.Sender.Id == dcustomer.Id) && ((parcel.DeliverTime == null) && ((parcel.CreateTime != null))))
                 {
                     bCustomer.numOfParcelsSentAndNotDelivered++;
                 }
-                if ((parcel.Target.Id == customerId) && (parcel.DeliverTime == null))
+                if ((parcel.Target.Id == dcustomer.Id) && (parcel.DeliverTime == null))
                 {
                     bCustomer.numOfParcelsInTheWay++;
                 }
-                if ((parcel.Target.Id == customerId) && (parcel.DeliverTime != null))
+                if ((parcel.Target.Id == dcustomer.Id) && (parcel.DeliverTime != null))
                 {
                     bCustomer.numOfParclReceived++;
                 }

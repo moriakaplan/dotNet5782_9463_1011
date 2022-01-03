@@ -44,7 +44,7 @@ namespace PL
 
         private void displayCustomerList(object sender, RoutedEventArgs e)
         {
-            new CustomerListWindow(blObject).Show();
+            new CustomerListWindow(blObject).ShowDialog();
         }
     }
 }

@@ -1,2 +1,24 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<stations />
+<?xml version="1.0"?>
+<ArrayOfStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Station>
+    <Id>1111</Id>
+    <Name>the israelian station</Name>
+    <Longitude>34.8</Longitude>
+    <Lattitude>32</Lattitude>
+    <ChargeSlots>13</ChargeSlots>
+  </Station>
+  <Station>
+    <Id>2222</Id>
+    <Name>the biggest station</Name>
+    <Longitude>35</Longitude>
+    <Lattitude>32</Lattitude>
+    <ChargeSlots>112</ChargeSlots>
+  </Station>
+  <Station>
+    <Id>3333</Id>
+    <Name>the funest station</Name>
+    <Longitude>32</Longitude>
+    <Lattitude>31</Lattitude>
+    <ChargeSlots>3</ChargeSlots>
+  </Station>
+</ArrayOfStation>

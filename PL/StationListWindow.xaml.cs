@@ -26,7 +26,7 @@ namespace PL
         {
             blObject = obj;
             InitializeComponent();
-            //nonGroup();
+            nonGroup();
             List<string> a= new List<string>();
             a.Add("regular");
             a.Add("group by number of charge slots");
