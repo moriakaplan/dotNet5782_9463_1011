@@ -89,7 +89,7 @@ namespace DalApi
         /// display the list of thecustomers
         /// </summary>
         /// <returns></returns>
-        IEnumerable<Customer> DisplayListOfCustomers(Predicate<Customer> pre = null);
+        IEnumerable<Customer> DisplayListOfCustomers(Func<Customer, bool> pre = null);
         /// <summary>
         /// display the list of the drones.
         /// </summary>

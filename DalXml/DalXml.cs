@@ -5,6 +5,8 @@ using System.IO;
 using System.Reflection;
 using System.ComponentModel;
 using DO;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Dal
 {
@@ -40,11 +42,13 @@ namespace Dal
         XElement stationsRoot;
         XElement customersRoot;
         XElement parcelsRoot;
+        XElement configRoot;
         string dronesPath = @"DalXml\Data\DronesXml.xml";
         string droneChargesPath = @"DalXml\Data\DroneChargesXml.xml";
         string stationsPath = @"DalXml\Data\StationsXml.xml";
         string customersPath = @"DalXml\Data\CustomersXml.xml";
         string parcelsPath = @"DalXml\Data\ParcelsXml.xml";
+        string configPath = @"DalXml\Data\Config.xml";
         #endregion
 
         #region create, load and convert
@@ -79,6 +83,7 @@ namespace Dal
                 stationsRoot = XElement.Load(stationsPath);
                 customersRoot = XElement.Load(customersPath);
                 parcelsRoot = XElement.Load(parcelsPath);
+                configRoot = XElement.Load(configPath);
             }
             catch
             {
@@ -168,12 +173,15 @@ namespace Dal
         }
         public double[] GetBatteryData()
         {
-            //return new double[] {
-            //    DataSource.Config.available,
-            //    DataSource.Config.easy,
-            //    DataSource.Config.medium,
-            //    DataSource.Config.heavy,
-            //    DataSource.Config.ratePerHour };
+            //return configRoot.Elements().Select(x=>double.Parse(x.Value)).ToArray();
+
+            return new double[] {
+                double.Parse(configRoot.Element("available").Value),
+                double.Parse(configRoot.Element("easy").Value),
+                double.Parse(configRoot.Element("medium").Value),
+                double.Parse(configRoot.Element("heavy").Value),
+                double.Parse(configRoot.Element("ratePerHour").Value)
+            };
         }
     }
 }
