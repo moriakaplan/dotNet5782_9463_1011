@@ -65,6 +65,8 @@ namespace Dal
                 CreateFiles(customersRoot, customersPath, "customers");
             if (!File.Exists(parcelsPath))
                 CreateFiles(parcelsRoot, parcelsPath, "parcels");
+            if (!File.Exists(configPath))
+                CreateConfig();
             LoadData();
         }
 
@@ -74,22 +76,32 @@ namespace Dal
             root.Save(path);
         }
 
-        private void LoadData()
+        private void CreateConfig()
         {
-            try
-            {
-                dronesRoot = XElement.Load(dronesPath);
-                droneChargesRoot = XElement.Load(droneChargesPath);
-                stationsRoot = XElement.Load(stationsPath);
-                customersRoot = XElement.Load(customersPath);
-                parcelsRoot = XElement.Load(parcelsPath);
-                configRoot = XElement.Load(configPath);
-            }
-            catch
-            {
-                throw new Exception("File upload problem");
-            }
+            configRoot.Add(new XElement("parcelCode", 10000000));
+            configRoot.Add(new XElement("available", 0.01));
+            configRoot.Add(new XElement("easy", 0.012));
+            configRoot.Add(new XElement("medium", 0.013));
+            configRoot.Add(new XElement("heavy", 0.014));
+            configRoot.Add(new XElement("ratePerHour", 30));
         }
+
+        private void LoadData()
+            {
+                try
+                {
+                    dronesRoot = XElement.Load(dronesPath);
+                    droneChargesRoot = XElement.Load(droneChargesPath);
+                    stationsRoot = XElement.Load(stationsPath);
+                    customersRoot = XElement.Load(customersPath);
+                    parcelsRoot = XElement.Load(parcelsPath);
+                    configRoot = XElement.Load(configPath);
+                }
+                catch
+                {
+                    throw new Exception("File upload problem");
+                }
+            }
 
         XElement ConvertDrone(Drone drone)
         {
