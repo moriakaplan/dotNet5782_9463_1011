@@ -23,18 +23,22 @@ namespace PL
     public partial class ParcelWindow : Window //update, need to add delete
     {
         IBL blObject;
-        public ParcelWindow(IBL obj, int parcelId)
+        public ParcelWindow(IBL obj, int Id, bool isFromSender=false)
         {
             InitializeComponent();
             blObject = obj;
             InitializeComponent();
 
-            Parcel parcel = blObject.DisplayParcel(parcelId);
+            Parcel parcel = blObject.DisplayParcel(Id);
             DataContext = parcel;
             //txtId.Text = parcel.Id.ToString();
             //txtDrone.Text = parcel.Drone.Id.ToString();
             //txtPriority.Text = parcel.Priority.ToString();
-            //txtSender.Text = parcel.Sender.ToString();
+            if (isFromSender)
+            {
+                txtSender.Text = Id.ToString();
+                txtSender.IsEnabled = false;
+            }
             //txtTarget.Text = parcel.Target.ToString();
             //txtWeight.Text = parcel.Weight.ToString();
             //txtCreateTime.Text = parcel.CreateTime.ToString();

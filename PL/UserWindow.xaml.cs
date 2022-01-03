@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BLApi;
+using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,12 +21,30 @@ namespace PL
     /// </summary>
     public partial class UserWindow : Window
     {
+        IBL blObject;
         public UserWindow(int customerId)
         {
             InitializeComponent();
+            txtId.Text = customerId.ToString();
+            Customer customer = blObject.DisplayCustomer(customerId);
+            txtname.Text = customer.Name;
+            txtId.IsEnabled = false;
+            txtname.IsEnabled = false;
+            //txtParcelsFrom.DataContext = cus.parcelFrom.Select(x => x.Id);
+            //txtParcelsTo.DataContext = cus.parcelTo.Select(x => x.Id);
         }
 
         private void sendNewParcel(object sender, RoutedEventArgs e)
+        {
+            new ParcelWindow(blObject, int.Parse(txtId.Text), true).ShowDialog();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void updateCustomer(object sender, RoutedEventArgs e)
         {
 
         }
