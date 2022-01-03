@@ -25,9 +25,9 @@ namespace Dal
                 throw new CustomerException($"id: {customerId} does not exist");
             return (Customer)ConvertSomething(cus, typeof(Customer));
         }
-        public IEnumerable<Customer> DisplayListOfCustomers(Func<Customer, bool> pre)
+        public IEnumerable<Customer> DisplayListOfCustomers(Predicate<Customer> pre)
         {
-            return customersRoot.Elements().Select(x=>(Customer)ConvertSomething(x, typeof(Customer))).Where(pre);
+            return customersRoot.Elements().Select(x=>(Customer)ConvertSomething(x, typeof(Customer))).ToList().FindAll(pre);
         }
         public void DeleteCustomer(int customerId)
         {

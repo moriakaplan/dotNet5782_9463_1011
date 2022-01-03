@@ -19,7 +19,7 @@ namespace Dal
                 throw new CustomerException($"id: {customerId} does not exist");
             return (Customer)cus;
         }     
-        public IEnumerable<Customer> DisplayListOfCustomers(Func<Customer, bool> pre)
+        public IEnumerable<Customer> DisplayListOfCustomers(Predicate<Customer> pre)
         {
             List<Customer> result = new List<Customer>(DataSource.customers);
             if (pre == null) return result;
