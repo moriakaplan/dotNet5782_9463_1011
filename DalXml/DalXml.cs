@@ -43,12 +43,20 @@ namespace Dal
         XElement customersRoot;
         XElement parcelsRoot;
         XElement configRoot;
-        string dronesPath = @"DalXml\Data\DronesXml.xml";
-        string droneChargesPath = @"DalXml\Data\DroneChargesXml.xml";
-        string stationsPath = @"DalXml\Data\StationsXml.xml";
-        string customersPath = @"DalXml\Data\CustomersXml.xml";
-        string parcelsPath = @"DalXml\Data\ParcelsXml.xml";
-        string configPath = @"DalXml\Data\Config.xml";
+        string dronesPath = @"Data\DronesXml.xml";
+        string droneChargesPath = @"Data\DroneChargesXml.xml";
+        string stationsPath = @"Data\StationsXml.xml";
+        string customersPath = @"Data\CustomersXml.xml";
+        string parcelsPath = @"Data\ParcelsXml.xml";
+        string configPath = @"Data\Config.xml";
+
+        //static string path = @"Data\";
+        //string dronesPath = path + "DronesXml.xml";
+        //string droneChargesPath = path + "DroneChargesXml.xml";
+        //string stationsPath = path + "StationsXml.xml";
+        //string customersPath = path + "CustomersXml.xml";
+        //string parcelsPath = path + "ParcelsXml.xml";
+        //string configPath = path + "Config.xml";
         #endregion
 
         #region create, load and convert
@@ -78,12 +86,14 @@ namespace Dal
 
         private void CreateConfig()
         {
+            configRoot = new XElement("config");
             configRoot.Add(new XElement("parcelCode", 10000000));
             configRoot.Add(new XElement("available", 0.01));
             configRoot.Add(new XElement("easy", 0.012));
             configRoot.Add(new XElement("medium", 0.013));
             configRoot.Add(new XElement("heavy", 0.014));
             configRoot.Add(new XElement("ratePerHour", 30));
+            configRoot.Save(configPath);
         }
 
         private void LoadData()
@@ -116,7 +126,7 @@ namespace Dal
             return DroneElement;
         }
 
-        XElement ConvertSomething(object obj, string name)
+        public XElement ConvertSomething(object obj, string name)
         {
             XElement Element = new XElement(name);
 
@@ -129,7 +139,7 @@ namespace Dal
             return Element;
         }
 
-        Drone ConvertDrone(XElement element)
+        public Drone ConvertDrone(XElement element)
         {
             Drone drone = new Drone();
 
@@ -144,7 +154,7 @@ namespace Dal
 
             return drone;
         }
-        object ConvertSomething(XElement element, Type type)
+        public object ConvertSomething(XElement element, Type type)
         {
             object obj = new object();
 

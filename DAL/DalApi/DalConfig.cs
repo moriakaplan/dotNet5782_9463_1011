@@ -30,7 +30,7 @@ namespace DalApi
         /// </summary>
         static DalConfig()
         {
-            XElement dalConfig = XElement.Load(@"xml/dal-config.xml");
+            XElement dalConfig = XElement.Load(@"dal-config.xml");
             DalName = dalConfig.Element("dal").Value;
             DalPackages = (from package in dalConfig.Element("dal-packages").Elements()
                            let temp1 = package.Attribute("namespace")
