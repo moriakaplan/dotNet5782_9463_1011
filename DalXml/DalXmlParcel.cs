@@ -63,12 +63,12 @@ namespace Dal
                     p.Droneld = droneId;//assign the parcel to the drone
                     p.AssociateTime = DateTime.Now;//update the time that the parcel was scheduled
                     parcels[i] = p;
+                    XmlTools.SaveListToXmlSerializer<Drone>(drones, dronesPath);
+                    XmlTools.SaveListToXmlSerializer<Parcel>(parcels, dronesPath); 
                     return;
                 }
             }
             throw new ParcelException($"id: {parcelId} does not exist");
-            XmlTools.SaveListToXmlSerializer<Drone>(drones, dronesPath);
-            XmlTools.SaveListToXmlSerializer<Parcel>(parcels, dronesPath);
         }
         public void PickParcelByDrone(int parcelId)
         {
@@ -80,11 +80,11 @@ namespace Dal
                     Parcel p = parcels[i];
                     p.PickUpTime = DateTime.Now;//update the time that the drone pick up the parcel
                     parcels[i] = p;
+                    XmlTools.SaveListToXmlSerializer<Parcel>(parcels, dronesPath);
                     return;
                 }
             }
             throw new ParcelException($"id: {parcelId} does not exist");
-            XmlTools.SaveListToXmlSerializer<Parcel>(parcels, dronesPath);
         }
         public void DeliverParcelToCustomer(int parcelId)
         {
@@ -96,12 +96,11 @@ namespace Dal
                     Parcel p = parcels[i];
                     p.DeliverTime = DateTime.Now;//update the time that the drone pick up the parcel
                     parcels[i] = p;
+                    XmlTools.SaveListToXmlSerializer<Parcel>(parcels, dronesPath);
                     return;
                 }
             }
             throw new ParcelException($"id: {parcelId} does not exist");
-            XmlTools.SaveListToXmlSerializer<Parcel>(parcels, dronesPath);
-
         }
     }
 }
