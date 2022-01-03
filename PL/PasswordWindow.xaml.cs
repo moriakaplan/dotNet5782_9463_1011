@@ -20,7 +20,7 @@ namespace PL
     public partial class PasswordWindow : Window
     {
         public PasswordWindow()
-        {
+        { 
             InitializeComponent();
         }
 
