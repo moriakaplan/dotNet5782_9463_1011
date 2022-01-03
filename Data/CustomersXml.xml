@@ -7,4 +7,11 @@
     <Longitude>32</Longitude>
     <Lattitude>34</Lattitude>
   </customer>
+  <customer>
+    <Id>123456788</Id>
+    <Name>vgbhj</Name>
+    <Phone>1234567890</Phone>
+    <Longitude>43</Longitude>
+    <Lattitude>34</Lattitude>
+  </customer>
 </customers>
