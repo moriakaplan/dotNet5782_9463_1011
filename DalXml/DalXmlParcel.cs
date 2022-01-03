@@ -15,7 +15,7 @@ namespace Dal
             if (parcels.Exists(item => item.Id == parcel.Id)) throw new ParcelException($"id: {parcel.Id} already exist"); //it suppose to be this type of exception????**** 
             parcel.Id = ++DataSource.Config.parcelCode;
             parcels.Add(parcel);
-            XmlTools.SaveListToXmlSerializer<Parcel>(parcels, parcelPath);
+            XmlTools.SaveListToXmlSerializer<Parcel>(parcels, parcelsPath);
             return DataSource.Config.parcelCode;
         }
         public Parcel DisplayParcel(int parcelId)
