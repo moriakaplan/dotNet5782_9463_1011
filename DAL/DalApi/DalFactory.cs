@@ -11,9 +11,7 @@ namespace DalApi
     {
         public static IDal GetDal()
         {
-            string dlType;
-            try { dlType = DalConfig.DalName; }
-            catch(Exception ex) { System.Console.WriteLine(ex.Message); throw ex; }
+            string dlType = DalConfig.DalName;
             DalConfig.DalPackage dalPackage;
             try // get dal package info according to dal element value in config file
             {

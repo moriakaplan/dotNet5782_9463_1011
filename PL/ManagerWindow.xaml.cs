@@ -21,11 +21,10 @@ namespace PL
     /// </summary>
     public partial class ManagerWindow : Window
     {
-        private IBL blObject;
-        public ManagerWindow(IBL obj)
+        internal readonly IBL blObject = BLFactory.GetBl(); //צריך לדאוג שיהיה שדה של המחלקה
+        public ManagerWindow()
         {
             InitializeComponent();
-            blObject = obj;
         }
         private void displayDronesList_Click(object sender, RoutedEventArgs e)
         {

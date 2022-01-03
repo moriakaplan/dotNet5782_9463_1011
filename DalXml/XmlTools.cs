@@ -5,14 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using System.Xml.Linq;
-
 
 namespace Dal
 {
     class XmlTools
     {
-        static string dir = @"..\dotNet5782_9463_1011\";
+        static string dir = @"xml\";
         static XmlTools()
         {
             if (!Directory.Exists(dir))
@@ -28,20 +26,15 @@ namespace Dal
                 x.Serialize(file, list);
                 file.Close();
             }
-            catch (Exception ex) //****
+            catch (Exception) //****
             {
-                throw new Exception(ex.Message+$"\nfail to save {filePath}");
+                throw new Exception($"fail to save {filePath}");
             }
         }
         public static List<T> LoadListFromXmlSerializer<T>(string filePath)
         {
             try
             {
-                if (File.Exists(filePath))
-                {
-                    //XElement file = XElement.Load(filePath);
-                    //return file.Elements().Select(x => (T)DalXml.ConvertSomething(x, typeof(T))).ToList();
-                }
                 if (File.Exists(dir + filePath))
                 {
                     List<T> list;
@@ -54,9 +47,9 @@ namespace Dal
                 else
                     return new List<T>();
             }
-            catch (Exception ex) //****
+            catch (Exception) //****
             {
-                throw new Exception(ex.Message+$"\nfail to load {filePath}");
+                throw new Exception($"fail to load {filePath}");
             }
         }
     }
