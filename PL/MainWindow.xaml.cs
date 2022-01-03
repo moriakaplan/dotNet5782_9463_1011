@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BLApi;
 
 namespace PL
 {
@@ -19,6 +20,8 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        internal readonly IBL blObject = BLFactory.GetBl(); //צריך לדאוג שיהיה שדה של המחלקה
+
         public MainWindow()
         {
             InitializeComponent();
@@ -26,7 +29,7 @@ namespace PL
 
         private void LogManager(object sender, RoutedEventArgs e)
         {
-            new ManagerWindow().Show();//צריך להוסיף פרמטרים מתאימים
+            new ManagerWindow(blObject).Show();//צריך להוסיף פרמטרים מתאימים
         }
 
         private void LogUser(object sender, RoutedEventArgs e)

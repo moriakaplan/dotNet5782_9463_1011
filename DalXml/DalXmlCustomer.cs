@@ -16,7 +16,7 @@ namespace Dal
         {
             if (customersRoot.Elements().Any(item => item.Element("Id").Value == cus.Id.ToString()))
                 throw new CustomerException($"id: {cus.Id} already exist"); //it suppose to be this type of exception????**** 
-            customersRoot.Add(ConvertSomething(cus, "customer"));
+            customersRoot.Add(ConvertCus(cus));
         }
         public Customer DisplayCustomer(int customerId)
         {
@@ -31,7 +31,10 @@ namespace Dal
 
         public IEnumerable<Customer> DisplayListOfCustomers(Predicate<Customer> pre)
         {
-            return customersRoot.Elements().Select(x=>(Customer)ConvertSomething(x, typeof(Customer))).ToList().FindAll(pre);
+            if (pre != null)
+                return customersRoot.Elements().Select(x => ConvertCus(x)).ToList().FindAll(pre);
+            else
+                return customersRoot.Elements().Select(x => ConvertCus(x));
         }
         public void DeleteCustomer(int customerId)
         {

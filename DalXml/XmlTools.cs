@@ -26,9 +26,9 @@ namespace Dal
                 x.Serialize(file, list);
                 file.Close();
             }
-            catch (Exception) //****
+            catch (Exception ex) //****
             {
-                throw new Exception($"fail to save {filePath}");
+                throw new Exception(ex.Message + $"fail to save {filePath}");
             }
         }
         public static List<T> LoadListFromXmlSerializer<T>(string filePath)
@@ -47,9 +47,9 @@ namespace Dal
                 else
                     return new List<T>();
             }
-            catch (Exception) //****
+            catch (Exception ex) //****
             {
-                throw new Exception($"fail to load {filePath}");
+                throw new Exception(ex.Message+$"fail to load {filePath}");
             }
         }
     }
