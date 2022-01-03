@@ -4,40 +4,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DO;
+using System.Xml.Linq;
+
+//with linq to xml
 
 namespace Dal
 {
     public partial class DalXml
     {
-        public void AddCustomerToTheList(Customer customer)
+        public void AddCustomerToTheList(Customer cus)
         {
-            //if (DataSource.customers.Exists(item => item.Id == customer.Id))
-            //    throw new CustomerException($"id: {customer.Id} already exist"); //it suppose to be this type of exception????**** 
-            //DataSource.customers.Add(customer);
+            if (customersRoot.Elements().Any(item => item.Attribute("id").Value == cus.Id.ToString()))
+                throw new CustomerException($"id: {cus.Id} already exist"); //it suppose to be this type of exception????**** 
+            customersRoot.Add(ConvertSomething(cus, "customer"));
         }
         public Customer DisplayCustomer(int customerId)
         {
-            //Customer? cus = DataSource.customers.Find(item => item.Id == customerId);
-            //if (cus == null)
-            //    throw new CustomerException($"id: {customerId} does not exist");
-            //return (Customer)cus;
+            XElement cus = customersRoot.Elements().Where(item => item.Attribute("id").Value == customerId.ToString()).FirstOrDefault();
+            if (cus == null)
+                throw new CustomerException($"id: {customerId} does not exist");
+            return (Customer)ConvertSomething(cus, typeof(Customer));
         }
-        public IEnumerable<Customer> DisplayListOfCustomers(Predicate<Customer> pre)
+        public IEnumerable<Customer> DisplayListOfCustomers(Func<Customer, bool> pre)
         {
-            //List<Customer> result = new List<Customer>(DataSource.customers);
-            //if (pre == null) return result;
-            //return result.FindAll(pre);
+            return customersRoot.Elements().Select(x=>(Customer)ConvertSomething(x, typeof(Customer))).Where(pre);
         }
         public void DeleteCustomer(int customerId)
         {
-            //try
-            //{
-            //    DataSource.customers.Remove(DisplayCustomer(customerId));
-            //}
-            //catch (ArgumentNullException)
-            //{
-            //    throw new CustomerException($"id: {customerId} does not exist");
-            //}
+            if (customersRoot.Elements().Any(item => item.Attribute("id").Value == customerId.ToString()))
+            {
+                throw new CustomerException($"id: {customerId} does not exist");
+            }
+            customersRoot.Elements().Where(item => item.Attribute("id").Value == customerId.ToString()).Remove();
         }
     }
 }

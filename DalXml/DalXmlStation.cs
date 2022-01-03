@@ -7,7 +7,7 @@ using DO;
 
 namespace Dal
 {
-    public partial class DalXml //to do with linq to xml. the others- to do with xmlSerialized
+    public partial class DalXml
     {
         public void AddStationToTheList(Station station)
         {
