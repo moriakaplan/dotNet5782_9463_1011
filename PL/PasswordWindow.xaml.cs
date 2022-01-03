@@ -21,10 +21,10 @@ namespace PL
     public partial class PasswordWindow : Window
     {
         IBL blObject;
-        public PasswordWindow(IBL obj)
+        public PasswordWindow()
         {
             InitializeComponent();
-            blObject = obj;
+            //blObject = obj;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

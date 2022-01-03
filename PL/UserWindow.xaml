@@ -6,8 +6,27 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="UserWindow" Height="450" Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource="\Images\background1.jpg"/>
+    </Window.Background>
     <Grid>
-        <Button Content="send new parcel" HorizontalAlignment="Left" Height="42" Margin="288,175,0,0" VerticalAlignment="Top" Width="138" Click="sendNewParcel"/>
-        <Button Content="view my parcels" HorizontalAlignment="Left" Margin="291,244,0,0" VerticalAlignment="Top" Height="42" Width="138"/>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Button Content="send new parcel" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Height="42" Margin="222,39,0,0" VerticalAlignment="Top" Width="147" Click="sendNewParcel"/>
+        <TextBox Name="txtId" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Height="12" Margin="60,55,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="91"/>
+        <Label Content="id:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Height="24" Margin="33,45,0,0" VerticalAlignment="Top" Width="20"/>
+        <Label Content="name:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Height="26" Margin="13,73,0,0" VerticalAlignment="Top" Width="40"/>
+        <TextBox Name="txtname" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" Margin="60,73,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="91"/>
+        <Button Content="settings" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Margin="33,118,0,0" VerticalAlignment="Top" Click="updateCustomer"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="251,17,0,0" VerticalAlignment="Top" Background="orange" Width="298" Grid.ColumnSpan="2" />
+        <!--<ListView x:Name="txtParcelsTo"  Grid.Row="1" Grid.Column="0" MouseDoubleClick="viewParcelTo" Margin="-484,-133,484,132"/>
+        <ListView x:Name="txtParcelsFrom" Grid.Row="1" Grid.Column="1" MouseDoubleClick="viewParcelFrom" Margin="-484,-200,484,200"/>-->
     </Grid>
 </Window>
