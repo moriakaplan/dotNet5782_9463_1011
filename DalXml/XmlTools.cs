@@ -10,7 +10,7 @@ namespace Dal
 {
     class XmlTools
     {
-        static string dir = @"xml\";
+        static string dir = @"..\dotNet5782_9463_1011\";
         static XmlTools()
         {
             if (!Directory.Exists(dir))

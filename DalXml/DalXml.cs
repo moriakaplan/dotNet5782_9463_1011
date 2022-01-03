@@ -43,12 +43,20 @@ namespace Dal
         XElement customersRoot;
         XElement parcelsRoot;
         XElement configRoot;
-        string dronesPath = @"DalXml\Data\DronesXml.xml";
-        string droneChargesPath = @"DalXml\Data\DroneChargesXml.xml";
-        string stationsPath = @"DalXml\Data\StationsXml.xml";
-        string customersPath = @"DalXml\Data\CustomersXml.xml";
-        string parcelsPath = @"DalXml\Data\ParcelsXml.xml";
-        string configPath = @"DalXml\Data\Config.xml";
+        string dronesPath = @"Data\DronesXml.xml";
+        string droneChargesPath = @"Data\DroneChargesXml.xml";
+        string stationsPath = @"Data\StationsXml.xml";
+        string customersPath = @"Data\CustomersXml.xml";
+        string parcelsPath = @"Data\ParcelsXml.xml";
+        string configPath = @"Data\Config.xml";
+
+        //static string path = @"Data\";
+        //string dronesPath = path + "DronesXml.xml";
+        //string droneChargesPath = path + "DroneChargesXml.xml";
+        //string stationsPath = path + "StationsXml.xml";
+        //string customersPath = path + "CustomersXml.xml";
+        //string parcelsPath = path + "ParcelsXml.xml";
+        //string configPath = path + "Config.xml";
         #endregion
 
         #region create, load and convert
@@ -103,20 +111,20 @@ namespace Dal
                 }
             }
 
-        XElement ConvertDrone(Drone drone)
+        XElement ConvertCus(Customer cus)
         {
-            XElement DroneElement = new XElement("drone");
+            XElement cusElement = new XElement("customer");
 
-            foreach (PropertyInfo item in drone.GetType().GetProperties())
-                    DroneElement.Add
-                    (
-                    new XElement(item.Name, item.GetValue(drone, null).ToString())
-                    );
-            
-            return DroneElement;
+            foreach (PropertyInfo item in typeof(Customer).GetProperties())
+                cusElement.Add
+                (
+                new XElement(item.Name, item.GetValue(cus, null).ToString())
+                );
+
+            return cusElement;
         }
 
-        XElement ConvertSomething(object obj, string name)
+        public XElement ConvertSomething(object obj, string name)
         {
             XElement Element = new XElement(name);
 
@@ -129,21 +137,22 @@ namespace Dal
             return Element;
         }
 
-        Drone ConvertDrone(XElement element)
+        public Customer ConvertCus(XElement element)
         {
-            Drone drone = new Drone();
+            Customer cus = new Customer();
 
-            foreach (PropertyInfo item in typeof(Drone).GetProperties())
+            foreach (PropertyInfo item in typeof(Customer).GetProperties())
             {
                 TypeConverter typeConverter = TypeDescriptor.GetConverter(item.PropertyType);
                 object convertValue = typeConverter.ConvertFromString(element.Element(item.Name).Value);
 
                 if (item.CanWrite)
-                    item.SetValue(drone, convertValue);
+                    item.SetValue(cus, convertValue);
             }
 
-            return drone;
+            return cus;
         }
+
         object ConvertSomething(XElement element, Type type)
         {
             object obj = new object();

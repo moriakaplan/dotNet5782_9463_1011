@@ -14,28 +14,32 @@ namespace Dal
     {
         public void AddCustomerToTheList(Customer cus)
         {
-            if (customersRoot.Elements().Any(item => item.Attribute("id").Value == cus.Id.ToString()))
+            if (customersRoot.Elements().Any(item => item.Element("Id").Value == cus.Id.ToString()))
                 throw new CustomerException($"id: {cus.Id} already exist"); //it suppose to be this type of exception????**** 
             customersRoot.Add(ConvertSomething(cus, "customer"));
         }
         public Customer DisplayCustomer(int customerId)
         {
-            XElement cus = customersRoot.Elements().Where(item => item.Attribute("id").Value == customerId.ToString()).FirstOrDefault();
-            if (cus == null)
+            XElement cus;
+            try { cus = customersRoot.Elements().Where(item => item.Element("Id").Value == customerId.ToString()).Single(); }
+            catch (InvalidOperationException)
+            {
                 throw new CustomerException($"id: {customerId} does not exist");
-            return (Customer)ConvertSomething(cus, typeof(Customer));
+            }
+            return ConvertCus(cus);
         }
+
         public IEnumerable<Customer> DisplayListOfCustomers(Predicate<Customer> pre)
         {
             return customersRoot.Elements().Select(x=>(Customer)ConvertSomething(x, typeof(Customer))).ToList().FindAll(pre);
         }
         public void DeleteCustomer(int customerId)
         {
-            if (customersRoot.Elements().Any(item => item.Attribute("id").Value == customerId.ToString()))
+            if (customersRoot.Elements().Any(item => item.Element("Id").Value == customerId.ToString()))
             {
                 throw new CustomerException($"id: {customerId} does not exist");
             }
-            customersRoot.Elements().Where(item => item.Attribute("id").Value == customerId.ToString()).Remove();
+            customersRoot.Elements().Where(item => item.Element("Id").Value == customerId.ToString()).Remove();
         }
     }
 }

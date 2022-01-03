@@ -24,8 +24,10 @@ namespace PL
         {
             blObject = obj;
             InitializeComponent();
-            customerToListDataGrid.DataContext = blObject.DisplayListOfCustomers();
+            try { customerToListDataGrid.DataContext = blObject.DisplayListOfCustomers(); }
+            catch (NotExistIDException ex) { MessageBox.Show(ex.Message); }
         }
+
 
         private void ViewCustomer(object sender, MouseButtonEventArgs e)
         {

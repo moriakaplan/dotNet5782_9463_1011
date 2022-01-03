@@ -26,8 +26,13 @@ namespace PL
         {
             blObject = obj;
             InitializeComponent();
-
-            Customer cus = blObject.DisplayCustomer(cusId);
+            Customer cus;
+            try { cus = blObject.DisplayCustomer(cusId); }
+            catch (NotExistIDException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
             DataContext = cus;
             //txtId.Text = cus.Id.ToString();
             //txtName.Text = cus.Name;
