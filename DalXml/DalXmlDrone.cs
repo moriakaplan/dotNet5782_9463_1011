@@ -13,6 +13,10 @@ namespace Dal
         {
             //if (DataSource.drones.Exists(item => item.Id == drone.Id)) throw new DroneException($"id: {drone.Id} already exist"); //it suppose to be this type of exception????**** 
             //DataSource.drones.Add(drone);
+            List<Drone> drones = XmlTools.LoadListFromXmlSerializer<Drone>(dronesPath);
+            if (drones.Exists(item => item.Id == drone.Id)) throw new DroneException($"id: {drone.Id} already exist"); //it suppose to be this type of exception????**** 
+            drones.Add(drone);
+            XmlTools.SaveListToXmlSerializer<Drone>(drones, dronesPath);
         }
         public void SendDroneToCharge(int droneId, int stationId)
         {
@@ -63,9 +67,9 @@ namespace Dal
         }
         public IEnumerable<DroneCharge> DisplayListOfDroneCharge(Predicate<DroneCharge> pre)
         {
-            //List<DroneCharge> result = new List<DroneCharge>(DataSource.droneCharges);
-            //if (pre == null) return result;
-            //return result.FindAll(pre);
+            List<DroneCharge> list = XmlTools.LoadListFromXmlSerializer<DroneCharge>(droneChargesPath);
+            if (pre == null) return list;
+            return list.FindAll(pre);
         }
         public IEnumerable<Drone> DisplayListOfDrones(Predicate<Drone> pre)
         {
