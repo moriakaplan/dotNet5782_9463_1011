@@ -58,8 +58,7 @@ namespace ConsoleUI
                         {
                             case AddingOptions.Station://if the user wants to add a station
                                                        //Receives the details of the station from the user
-                                Console.WriteLine(@"Please enter the following details:
-Station ID (4 digits)-");
+                                Console.WriteLine("Please enter the following details:\nStation ID (4 digits)-");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
                                 Console.WriteLine("Station name-");
@@ -86,8 +85,7 @@ Station ID (4 digits)-");
                             case AddingOptions.Drone://if the user wants to add a drone
                                                      //Receives the details of the drone from the user
 
-                                Console.WriteLine(@"Please enter the following details:
-Drone ID (6 digits)-");
+                                Console.WriteLine("Please enter the following details:\nDrone ID (6 digits)-");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
                                 Console.WriteLine("Dron model-");
@@ -105,8 +103,7 @@ Drone ID (6 digits)-");
                                 break;
                             case AddingOptions.Customer://if the user wants to add a customer
                                                         //Receives the details of the customer from the user
-                                Console.WriteLine(@"Please enter the following details:
-Customer ID (9 digits)-");
+                                Console.WriteLine("Please enter the following details: \nCustomer ID (9 digits)-");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
                                 Console.WriteLine("Customer name-");
@@ -334,14 +331,16 @@ longitude- ");
                             Console.WriteLine("Enter the station ID: (4 digits) ");
                             input = Console.ReadLine();
                             int.TryParse(input, out id);
-                            distance = dalObject.DistanceForStation(longitude, lattitude, id); 
+                            Station st = dalObject.DisplayStation(id);
+                            distance = dalObject.Distance(longitude, lattitude, st.Longitude, st.Lattitude);
                         }
                         else if (input == "customers" || input == "Customers")//if the user want to know the distance between customer and another place
                         {
                             Console.WriteLine("Enter the customer ID: (9 digits) ");
                             input = Console.ReadLine();
                             int.TryParse(input, out id);
-                            distance = dalObject.DistanceForCustomer(longitude, lattitude, id); 
+                            Customer cu = dalObject.DisplayCustomer(id);
+                            distance = dalObject.Distance(longitude, lattitude, cu.Longitude, cu.Lattitude);
                         }
                         Console.WriteLine("the distance is: "+distance);
                         break;

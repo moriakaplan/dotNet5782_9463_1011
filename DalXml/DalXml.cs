@@ -145,33 +145,7 @@ namespace Dal
         #endregion
 
         //from dalObject, maybe need changes or to be deleted or something
-
-        /// <summary>
-        /// bonus 2
-        /// calculates the distance between a point and a station
-        /// </summary>
-        /// <param name="longitudeA"></param>
-        /// <param name="lattitudeA"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public double DistanceForStation(double longitudeA, double lattitudeA, int id)
-        {
-            Station st = DisplayStation(id);
-            return Distance(longitudeA, lattitudeA, st.Longitude, st.Lattitude);
-        }
-        /// <summary>
-        /// bonus 2
-        /// calculates the distance between a point and a Customer
-        /// </summary>
-        /// <param name="longitudeA"></param>
-        /// <param name="lattitudeA"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public double DistanceForCustomer(double longitudeA, double lattitudeA, int id)
-        {
-            Customer cu = DisplayCustomer(id);
-            return Distance(longitudeA, lattitudeA, cu.Longitude, cu.Lattitude);
-        }
+        
         public double Distance(double lattitudeA, double longitudeA, double lattitudeB, double longitudeB)
         {
             var radiansOverDegrees = (Math.PI / 180.0);
