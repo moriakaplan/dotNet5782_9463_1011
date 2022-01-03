@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BLApi;
 
 namespace PL
 {
@@ -19,9 +20,11 @@ namespace PL
     /// </summary>
     public partial class PasswordWindow : Window
     {
-        public PasswordWindow()
-        { 
+        IBL blObject;
+        public PasswordWindow(IBL obj)
+        {
             InitializeComponent();
+            blObject = obj;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -31,8 +34,8 @@ namespace PL
 
         private void LoginClick(object sender, RoutedEventArgs e)
         {
-            if (txtId.Text != "")
-                new UserWindow(int.Parse(txtId.Text)).Show();
+            int id = blObject.DisplayListOfCustomers.Where(x => x.Name == txtUserName).Single().Id;
+            new UserWindow(id).ShowDialog();
         }
     }
 }
