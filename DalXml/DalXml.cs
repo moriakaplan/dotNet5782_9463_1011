@@ -139,7 +139,7 @@ namespace Dal
 
         XElement ConvertCus(Customer cus)
         {
-            XElement cusElement = new XElement("customer");
+            XElement cusElement = new XElement("Customer");
 
             foreach (PropertyInfo item in typeof(Customer).GetProperties())
                 cusElement.Add
@@ -165,17 +165,23 @@ namespace Dal
 
         public Customer ConvertCus(XElement element)
         {
-            Customer cus = new Customer();
-
-            foreach (PropertyInfo item in typeof(Customer).GetProperties())
+            Customer cus = new Customer()
             {
-                TypeConverter typeConverter = TypeDescriptor.GetConverter(item.PropertyType);
-                object convertValue = typeConverter.ConvertFromString(element.Element(item.Name).Value);
+                Id = int.Parse(element.Element("Id").Value),
+                Name = element.Element("Name").Value,
+                Phone = element.Element("Phone").Value,
+                Longitude = double.Parse(element.Element("Longitude").Value),
+                Lattitude = double.Parse(element.Element("Lattitude").Value)
+            };
 
-                if (item.CanWrite)
-                    item.SetValue(cus, convertValue);
-            }
+            //foreach (PropertyInfo item in typeof(Customer).GetProperties())
+            //{
+            //    TypeConverter typeConverter = TypeDescriptor.GetConverter(item.PropertyType);
+            //    object convertValue = typeConverter.ConvertFromString(element.Element(item.Name).Value);
 
+            //    if (item.CanWrite)
+            //        item.SetValue(cus, convertValue);
+            //}
             return cus;
         }
 
