@@ -201,6 +201,17 @@ namespace Dal
                 throw new UserException($"UserName {name} does not exist");
             return (User)result;
         }
+
+        void AddUser(User user)
+        {
+            List<User> users = XmlTools.LoadListFromXmlSerializer<User>(usersPath);
+            if (user.IsManager == false && users.Exists(item => item.Id == user.Id))
+                throw new UserException($"User for the customer {user.Id} already exist");
+            if (users.Exists(item => item.UserName == user.UserName)) 
+                throw new UserException($"User with the usernam '{user.Id}' already exist");
+            users.Add(user);
+            XmlTools.SaveListToXmlSerializer<User>(users, stationsPath);
+        }
         #endregion
 
         //from dalObject, maybe need changes or to be deleted or something

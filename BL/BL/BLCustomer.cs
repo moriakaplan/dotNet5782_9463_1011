@@ -13,7 +13,7 @@ namespace BL
     {
         public void AddCustomer(int id, string name, string phone, Location loc)
         {
-            //creates a new station in the data level
+            //creates a new customer in the data level
             DO.Customer dCustomer = new DO.Customer
             {
                 Id = id,

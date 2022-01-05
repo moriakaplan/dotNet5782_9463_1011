@@ -28,6 +28,11 @@ namespace DalApi
         /// </summary>
         /// <param name="station"></param>
         void AddStation(Station station);
+        /// <summary>
+        /// add the user that he gets to the list of the users.
+        /// </summary>
+        /// <param name="user"></param>
+        void AddUser(User user);
         #endregion adding
 
         #region updating

@@ -7,6 +7,15 @@
         mc:Ignorable="d"
         Title="SignWindow" Height="450" Width="800">
     <Grid>
-        
+        <Button Content="sighn" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="217,335,0,0" Click="Sighn"/>
+        <Label x:Name="lblId" Content="yuor id" HorizontalAlignment="Left" Margin="139,80,0,0" VerticalAlignment="Top"/>
+        <Label Content="choose a username" HorizontalAlignment="Left" Margin="138,130,0,0" VerticalAlignment="Top"/>
+        <Label Content="choose a password" HorizontalAlignment="Left" Margin="140,193,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblManager" Content="enter the managment password for approve your identity" HorizontalAlignment="Left" Margin="138,259,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtId" HorizontalAlignment="Left" Margin="375,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="375,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="358,193,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtManager"  HorizontalAlignment="Left" Margin="490,258,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="?" HorizontalAlignment="Left" Margin="512,92,0,0" VerticalAlignment="Top" IsEnabled="False"/>
     </Grid>
 </Window>

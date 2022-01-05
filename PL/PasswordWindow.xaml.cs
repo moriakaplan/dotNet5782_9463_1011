@@ -48,7 +48,7 @@ namespace PL
             {
                 if (blObject.ExistManager(txtUserName.Text, txtPassword.Text))
                         new ManagerWindow(blObject).ShowDialog();
-                else { MessageBox.Show("the username or the password are not correct, please try again. maybe you are a manger?"); }
+                else { MessageBox.Show("the username or the password are not correct, please try again. maybe you are a regular customer?"); }
             }
             //int id = blObject.GetCustomersList().Where(x => x.Name == txtUserName.Text).Single().Id;
         }

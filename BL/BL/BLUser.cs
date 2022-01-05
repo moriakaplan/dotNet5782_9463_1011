@@ -44,6 +44,42 @@ namespace BL
         public void AddUser(int id, string name, string password)
         {
             //צריך לבדוק שאין כבר משתמש לאידי הזה ושהשם משתמש לא תפוס
+            //creates a new station in the data level
+            DO.User user = new DO.User
+            {
+                Id = id,
+                UserName = name,
+                Password = password,
+                IsManager=false
+            };
+            try
+            {
+                dl.AddUser(user); //add the new customer to the list in the data level
+            }
+            catch (DO.UserException)
+            {
+                throw new ExistIdException("this id or username already exist");//to change to 2 cases****
+            }
+        }
+        public void AddManager(string name, string password)
+        {
+            //צריך לבדוק שאין כבר משתמש לאידי הזה ושהשם משתמש לא תפוס
+            //creates a new station in the data level
+            DO.User user = new DO.User
+            {
+                Id = null,
+                UserName = name,
+                Password = password,
+                IsManager=true
+            };
+            try
+            {
+                dl.AddUser(user); //add the new customer to the list in the data level
+            }
+            catch (DO.UserException)
+            {
+                throw new ExistIdException("this username already exist");
+            }
         }
     }
 }
