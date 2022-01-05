@@ -55,7 +55,7 @@ namespace PL
         {
             stationDataGrid.Visibility = Visibility.Visible;
             ListViewStations.Visibility = Visibility.Collapsed;
-            stationDataGrid.DataContext = blObject.DisplayListOfStations();
+            stationDataGrid.DataContext = blObject.GetStationsList();
         }
         private void refresh(object sender, RoutedEventArgs e)
         {
@@ -69,7 +69,7 @@ namespace PL
         {
                 stationDataGrid.Visibility = Visibility.Collapsed;
                 ListViewStations.Visibility = Visibility.Visible;
-                IEnumerable<IGrouping<int, StationToList>> result = from st in blObject.DisplayListOfStations()
+                IEnumerable<IGrouping<int, StationToList>> result = from st in blObject.GetStationsList()
                                                                     group st by st.AvailableChargeSlots into gs
                                                                     select gs;
                 //DataGrid func(IGrouping<int, StationToList> g)

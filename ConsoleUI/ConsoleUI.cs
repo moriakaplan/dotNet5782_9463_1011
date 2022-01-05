@@ -80,7 +80,7 @@ namespace ConsoleUI
                                     Lattitude = lattitude,
                                     ChargeSlots = chargeSlots
                                 };
-                                dalObject.AddStationToTheList(station);//Add the station to the list
+                                dalObject.AddStation(station);//Add the station to the list
                                 break;
                             case AddingOptions.Drone://if the user wants to add a drone
                                                      //Receives the details of the drone from the user
@@ -99,7 +99,7 @@ namespace ConsoleUI
                                     Model = model,
                                     MaxWeight = weight,
                                 };
-                                dalObject.AddDroneToTheList(drone);//Add the drone to the list
+                                dalObject.AddDrone(drone);//Add the drone to the list
                                 break;
                             case AddingOptions.Customer://if the user wants to add a customer
                                                         //Receives the details of the customer from the user
@@ -124,7 +124,7 @@ namespace ConsoleUI
                                     Longitude = longitude,
                                     Lattitude = lattitude
                                 };
-                                dalObject.AddCustomerToTheList(customer);//Add the customer to the list
+                                dalObject.AddCustomer(customer);//Add the customer to the list
                                 break;
                             case AddingOptions.Parcel://if the user wants to add a parcel
                                                       //Receives the details of the parcel from the user
@@ -154,7 +154,7 @@ namespace ConsoleUI
                                     PickUpTime = null,
                                     DeliverTime = null
                                 };
-                                dalObject.AddParcelToTheList(pa);//Add the parcel to the list
+                                dalObject.AddParcel(pa);//Add the parcel to the list
                                 break;
                             default:
                                 Console.WriteLine("ERROR");
@@ -230,25 +230,25 @@ namespace ConsoleUI
                                 Console.WriteLine("Enter the station ID (4 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
-                                Console.WriteLine(dalObject.DisplayStation(id));
+                                Console.WriteLine(dalObject.GetStation(id));
                                 break;
                             case DisplayOptions.Drone://display a drone
                                 Console.WriteLine("Enter the drone ID (6 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
-                                Console.WriteLine(dalObject.DisplayDrone(id));
+                                Console.WriteLine(dalObject.GetDrone(id));
                                 break;
                             case DisplayOptions.Customer://display a customer
                                 Console.WriteLine("Enter the customer ID (9 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
-                                Console.WriteLine(dalObject.DisplayCustomer(id));
+                                Console.WriteLine(dalObject.GetCustomer(id));
                                 break;
                             case DisplayOptions.Parcel://display a paecel
                                 Console.WriteLine("Enter the parcel ID (8 digits):");
                                 input = Console.ReadLine();
                                 int.TryParse(input, out id);
-                                Console.WriteLine(dalObject.DisplayParcel(id));
+                                Console.WriteLine(dalObject.GetParcel(id));
                                 break;
                             default:
                                 Console.WriteLine("ERROR");
@@ -270,42 +270,42 @@ namespace ConsoleUI
                         {
                             case DisplayListOptions.Stations://display a list of stations
                                 Console.WriteLine("The stations are:");
-                                foreach (Station item in dalObject.DisplayListOfStations())
+                                foreach (Station item in dalObject.GetStationsList())
                                 {
                                     Console.WriteLine(item);
                                 }
                                 break;
                             case DisplayListOptions.Drones://display a list of drones
                                 Console.WriteLine("The drones are:");
-                                foreach (Drone item in dalObject.DisplayListOfDrones())
+                                foreach (Drone item in dalObject.GetDronesList())
                                 {
                                     Console.WriteLine(item);
                                 }
                                 break;
                             case DisplayListOptions.Customers://display a list of customers
                                 Console.WriteLine("The customers are:");
-                                foreach (Customer item in dalObject.DisplayListOfCustomers())
+                                foreach (Customer item in dalObject.GetCustomersList())
                                 {
                                     Console.WriteLine(item);
                                 }
                                 break;
                             case DisplayListOptions.Parcels://display a list of parcels
                                 Console.WriteLine("The parcels are:");
-                                foreach (Parcel item in dalObject.DisplayListOfParcels())
+                                foreach (Parcel item in dalObject.GetParcelsList())
                                 {
                                     Console.WriteLine(item);
                                 }
                                 break;
                             case DisplayListOptions.UnassignedParcels://display the list of the parcels that not assign to a drone.
                                 Console.WriteLine("The parcels that not assigned to drone are:"); //לכתוב תיאור של מה מודפס
-                                foreach (Parcel item in dalObject.DisplayListOfParcels(x=>x.AssociateTime==null))
+                                foreach (Parcel item in dalObject.GetParcelsList(x=>x.AssociateTime==null))
                                 {
                                     Console.WriteLine(item);
                                 }
                                 break;
                             case DisplayListOptions.StationsWithAvailableCargingSlots://display the list of the stations that have available charge slots
                                 Console.WriteLine("The stations with available charge slots are:"); //לכתוב תיאור של מה מודפס
-                                foreach (Station item in dalObject.DisplayListOfStations(x=>x.ChargeSlots>0))
+                                foreach (Station item in dalObject.GetStationsList(x=>x.ChargeSlots>0))
                                 {
                                     Console.WriteLine(item);
                                 }
@@ -331,7 +331,7 @@ longitude- ");
                             Console.WriteLine("Enter the station ID: (4 digits) ");
                             input = Console.ReadLine();
                             int.TryParse(input, out id);
-                            Station st = dalObject.DisplayStation(id);
+                            Station st = dalObject.GetStation(id);
                             distance = dalObject.Distance(longitude, lattitude, st.Longitude, st.Lattitude);
                         }
                         else if (input == "customers" || input == "Customers")//if the user want to know the distance between customer and another place
@@ -339,7 +339,7 @@ longitude- ");
                             Console.WriteLine("Enter the customer ID: (9 digits) ");
                             input = Console.ReadLine();
                             int.TryParse(input, out id);
-                            Customer cu = dalObject.DisplayCustomer(id);
+                            Customer cu = dalObject.GetCustomer(id);
                             distance = dalObject.Distance(longitude, lattitude, cu.Longitude, cu.Lattitude);
                         }
                         Console.WriteLine("the distance is: "+distance);

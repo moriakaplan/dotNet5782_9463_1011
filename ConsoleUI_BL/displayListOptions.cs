@@ -27,42 +27,42 @@ namespace ConsoleUI_BL
                 {
                     case DisplayListOptions.Stations://display a list of stations
                         Console.WriteLine("The stations are:");
-                        foreach (StationToList item in blObject.DisplayListOfStations())
+                        foreach (StationToList item in blObject.GetStationsList())
                         {
                             Console.WriteLine(item);
                         }
                         break;
                     case DisplayListOptions.Drones://display a list of drones
                         Console.WriteLine("The drones are:");
-                        foreach (DroneToList item in blObject.DisplayListOfDrones())
+                        foreach (DroneToList item in blObject.GetDronesList())
                         {
                             Console.WriteLine(item);
                         }
                         break;
                     case DisplayListOptions.Customers://display a list of customers
                         Console.WriteLine("The customers are:");
-                        foreach (CustomerToList item in blObject.DisplayListOfCustomers())
+                        foreach (CustomerToList item in blObject.GetCustomersList())
                         {
                             Console.WriteLine(item);
                         }
                         break;
                     case DisplayListOptions.Parcels://display a list of parcels
                         Console.WriteLine("The parcels are:");
-                        foreach (ParcelToList item in blObject.DisplayListOfParcels())
+                        foreach (ParcelToList item in blObject.GetParcelsList())
                         {
                             Console.WriteLine(item);
                         }
                         break;
                     case DisplayListOptions.UnassignedParcels://display the list of the parcels that not assign to a drone.
                         Console.WriteLine("The parcels that not assigned to drone are:"); //לכתוב תיאור של מה מודפס
-                        foreach (ParcelToList item in blObject.DisplayListOfUnassignedParcels())
+                        foreach (ParcelToList item in blObject.GetListOfUnassignedParcels())
                         {
                             Console.WriteLine(item);
                         }
                         break;
                     case DisplayListOptions.StationsWithAvailableCargingSlots://display the list of the stations that have available charge slots
                         Console.WriteLine("The stations with available charge slots are:"); //לכתוב תיאור של מה מודפס
-                        foreach (StationToList item in blObject.DisplayListOfStationsWithAvailableCargeSlots())
+                        foreach (StationToList item in blObject.GetListOfStationsWithAvailableCargeSlots())
                         {
                             Console.WriteLine(item);
                         }

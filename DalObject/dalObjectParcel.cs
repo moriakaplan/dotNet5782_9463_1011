@@ -7,21 +7,21 @@ namespace Dal
 {
     internal partial class DalObject
     {      
-        public int AddParcelToTheList(Parcel parcel)
+        public int AddParcel(Parcel parcel)
         {
             if (DataSource.parcels.Exists(item => item.Id == parcel.Id)) throw new ParcelException($"id: {parcel.Id} already exist"); //it suppose to be this type of exception????**** 
             parcel.Id = ++DataSource.Config.parcelCode;
             DataSource.parcels.Add(parcel);
             return DataSource.Config.parcelCode;
         }   
-        public Parcel DisplayParcel(int parcelId)
+        public Parcel GetParcel(int parcelId)
         {
             Parcel? result= DataSource.parcels.Find(x => x.Id == parcelId);
             if (result == null) 
                 throw new ParcelException($"id: {parcelId} does not exist");
             return (Parcel)result;
         }       
-        public IEnumerable<Parcel> DisplayListOfParcels(Predicate<Parcel> pre)
+        public IEnumerable<Parcel> GetParcelsList(Predicate<Parcel> pre)
         {
             List<Parcel> result = new List<Parcel>(DataSource.parcels);
             if (pre == null) return result;
@@ -31,7 +31,7 @@ namespace Dal
         {
             try
             {
-                DataSource.drones.Remove(DisplayDrone(parcelId));
+                DataSource.drones.Remove(GetDrone(parcelId));
             }
             catch (ArgumentNullException)
             {

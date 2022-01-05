@@ -43,12 +43,14 @@ namespace Dal
         XElement customersRoot;
         XElement parcelsRoot;
         XElement configRoot;
+        XElement usersRoot;
         string dronesPath = @"Data\DronesXml.xml";
         string droneChargesPath = @"Data\DroneChargesXml.xml";
         string stationsPath = @"Data\StationsXml.xml";
         string customersPath = @"Data\CustomersXml.xml";
         string parcelsPath = @"Data\ParcelsXml.xml";
         string configPath = @"Data\Config.xml";
+        string usersPath = @"Data\Users.xml";
 
         //static string path = @"Data\";
         //string dronesPath = path + "DronesXml.xml";
@@ -78,6 +80,13 @@ namespace Dal
             if (!File.Exists(parcelsPath))
                 //CreateFiles(parcelsRoot, parcelsPath, "parcels");
                 XmlTools.SaveListToXmlSerializer<Parcel>(new List<Parcel>(), parcelsPath);
+            if (!File.Exists(usersPath))
+            {
+                List<User> u = new List<User>();
+                u.Add(new User { Id = null, UserName = "general manager", Password = "123456", IsManager = true });
+                u.Add(new User { Id = null, UserName = "", Password = "", IsManager = true }); //****
+                XmlTools.SaveListToXmlSerializer<User>(u, usersPath);
+            }
             if (!File.Exists(configPath))
                 CreateConfig();
             LoadData();
@@ -105,25 +114,6 @@ namespace Dal
             {
                 try
                 {
-                    //List<Station> stations = new List<Station>();
-                    //stations.Add(new Station
-                    //{
-                    //    Id = 1111,
-                    //    Name = "the israelian station",
-                    //    Longitude = 34.8,
-                    //    Lattitude = 32,
-                    //    ChargeSlots = 13
-                    //});
-                    //stations.Add(new Station
-                    //{
-                    //    Id = 2222,
-                    //    Name = "the biggest station",
-                    //    Longitude = 35,
-                    //    Lattitude = 32,
-                    //    ChargeSlots = 112
-                    //});
-                    //XmlTools.SaveListToXmlSerializer<Station>(stations, stationsPath);
-                    //XmlTools.SaveListToXmlSerializer<Parcel>(new List<Parcel>(), parcelsPath);
                     dronesRoot = XElement.Load(dronesPath);
                     droneChargesRoot = XElement.Load(droneChargesPath);
                     stationsRoot = XElement.Load(stationsPath);
@@ -202,8 +192,19 @@ namespace Dal
         }
         #endregion
 
+        #region users functions
+        public User GetUser(string name)
+        {
+            List<User> users = XmlTools.LoadListFromXmlSerializer<User>(usersPath);
+            User? result = users.Find(x => x.UserName == name);
+            if (result == null)
+                throw new UserException($"UserName {name} does not exist");
+            return (User)result;
+        }
+        #endregion
+
         //from dalObject, maybe need changes or to be deleted or something
-        
+
         public double Distance(double lattitudeA, double longitudeA, double lattitudeB, double longitudeB)
         {
             var radiansOverDegrees = (Math.PI / 180.0);

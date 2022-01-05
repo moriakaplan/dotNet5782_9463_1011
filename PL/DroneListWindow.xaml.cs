@@ -30,7 +30,7 @@ namespace PL
             //blObject = obj;
             blObject = BLFactory.GetBl();
             //IEnumerable<DroneToList> drones = blObject.DisplayListOfDrones().OrderBy(x => x.Id);
-            DroneListView.ItemsSource = blObject.DisplayListOfDrones()
+            DroneListView.ItemsSource = blObject.GetDronesList()
                     .OrderBy(x => x.Id)
                     .OrderBy(x => x.Status);
             StatusFilter.ItemsSource = Enum.GetValues(typeof(DroneStatus));
@@ -48,7 +48,7 @@ namespace PL
             else
             {
                 DroneStatus status = (DroneStatus)StatusFilter.SelectedItem;
-                DroneListView.DataContext = blObject.DisplayListOfDrones(x => x.Status == status)
+                DroneListView.DataContext = blObject.GetDronesList(x => x.Status == status)
                     .OrderBy(x => x.Id)
                     .OrderBy(x => x.Status);
             }
@@ -65,7 +65,7 @@ namespace PL
             else
             {
                 WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
-                DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.MaxWeight == weight)
+                DroneListView.ItemsSource = blObject.GetDronesList(x => x.MaxWeight == weight)
                     .OrderBy(x => x.Id)
                     .OrderBy(x => x.Status);
             }
@@ -79,7 +79,7 @@ namespace PL
         {
             DroneStatus status = (DroneStatus)StatusFilter.SelectedItem;
             WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
-            DroneListView.ItemsSource = blObject.DisplayListOfDrones(x => x.Status == status && x.MaxWeight == weight)
+            DroneListView.ItemsSource = blObject.GetDronesList(x => x.Status == status && x.MaxWeight == weight)
                     .OrderBy(x => x.Id)
                     .OrderBy(x => x.Status);
         }
@@ -92,7 +92,7 @@ namespace PL
         {
             StatusFilter.SelectedIndex = -1;
             WeightFilter.SelectedIndex = -1;
-            DroneListView.ItemsSource = blObject.DisplayListOfDrones();
+            DroneListView.ItemsSource = blObject.GetDronesList();
         }
         /// <summary>
         /// open the drone window in adding state
@@ -107,7 +107,7 @@ namespace PL
             else
             {
                 if (WeightFilter.SelectedItem != null) WeightFilter_SelectionChanged(WeightFilter, null);
-                else DroneListView.ItemsSource = blObject.DisplayListOfDrones();
+                else DroneListView.ItemsSource = blObject.GetDronesList();
             }
         }
         /// <summary>
@@ -123,7 +123,7 @@ namespace PL
             else
             {
                 if (WeightFilter.SelectedItem != null) WeightFilter_SelectionChanged(WeightFilter, null);
-                else DroneListView.ItemsSource = blObject.DisplayListOfDrones();
+                else DroneListView.ItemsSource = blObject.GetDronesList();
             }
         }
         /// <summary>

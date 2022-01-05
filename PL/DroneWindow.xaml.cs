@@ -67,7 +67,7 @@ namespace PL
             //txtTimeInCharge.Visibility = Visibility.Hidden;
             //OKrelease.Visibility = Visibility.Hidden;
 
-            txtStationId.ItemsSource = blObject.DisplayListOfStations().Select(x => x.Id);
+            txtStationId.ItemsSource = blObject.GetStationsList().Select(x => x.Id);
             txtStatus.Text = DroneStatus.Maintenance.ToString();
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
@@ -81,7 +81,7 @@ namespace PL
             InitializeComponent();
             isInActionsState = true;
             blObject = obj;
-            Drone drone = blObject.DisplayDrone(droneId);
+            Drone drone = blObject.GetDrone(droneId);
             DataContext = drone;
             //txtBattery.Text = string.Format($"{drone.Battery:0.000}");
             //txtStatus.Text = drone.Status.ToString();
@@ -190,7 +190,7 @@ namespace PL
         /// <param name="e"></param>
         private void txtStationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Location loc = blObject.DisplayStation((int)txtStationId.SelectedItem).Location;
+            Location loc = blObject.GetStation((int)txtStationId.SelectedItem).Location;
             txtLatti.Text = loc.Latti.ToString();
             txtLongi.Text = loc.Longi.ToString();
         }
@@ -203,7 +203,7 @@ namespace PL
         {
             int id;
             int.TryParse(txtId.Text, out id);
-            if (txtModel.Text == blObject.DisplayDrone(id).Model)
+            if (txtModel.Text == blObject.GetDrone(id).Model)
             {
                 MessageBox.Show("there nothing to update");
                 return;
@@ -256,7 +256,7 @@ namespace PL
             }
             MessageBox.Show("drone sent successfully");
             //InitialiseData(id);
-            DataContext = blObject.DisplayDrone(id);//?צריך
+            DataContext = blObject.GetDrone(id);//?צריך
             charge.Visibility = Visibility.Hidden;
             //sendDeliver.Visibility = Visibility.Hidden;
             //releaseFromCharge.Visibility = Visibility.Visible;
@@ -299,7 +299,7 @@ namespace PL
             catch (Exception ex) { MessageBox.Show(ex.Message); return; }
             MessageBox.Show("the drone released successfully");
             //InitialiseData(id);
-            DataContext = blObject.DisplayDrone(id);//?צריך
+            DataContext = blObject.GetDrone(id);//?צריך
             //releaseFromCharge.Visibility = Visibility.Hidden;
             //sendDeliver.Visibility = Visibility.Visible;
             charge.Visibility = Visibility.Visible;
@@ -382,7 +382,7 @@ namespace PL
             }
             MessageBox.Show("the drone piked up the parcel");
             //InitialiseData(id);
-            DataContext = blObject.DisplayDrone(id);//?צריך
+            DataContext = blObject.GetDrone(id);//?צריך
             //pickParcel.Visibility = Visibility.Hidden;
             //deliver.Visibility = Visibility.Visible;
             options.Content = "deliver\nparcel";
@@ -432,7 +432,7 @@ namespace PL
             }
             MessageBox.Show("drone deliver the parcel successfully");
             //InitialiseData(id);
-            DataContext = blObject.DisplayDrone(id);//?צריך
+            DataContext = blObject.GetDrone(id);//?צריך
             //deliver.Visibility = Visibility.Hidden;
             //sendDeliver.Visibility = Visibility.Visible;
             charge.Visibility = Visibility.Visible;
@@ -496,7 +496,7 @@ namespace PL
         /// <param name="e"></param>
         private void ModelColor(object sender, TextChangedEventArgs e) //color for model
         {
-            if (isInActionsState && txtModel.Text == blObject.DisplayDrone(int.Parse(txtId.Text)).Model)
+            if (isInActionsState && txtModel.Text == blObject.GetDrone(int.Parse(txtId.Text)).Model)
                 txtModel.Foreground = Brushes.Black;
             else
                 txtModel.Foreground = Brushes.Green;

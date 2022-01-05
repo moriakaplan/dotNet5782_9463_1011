@@ -9,7 +9,7 @@ namespace Dal
 {
     public partial class DalXml
     {
-        public void AddDroneToTheList(Drone drone)
+        public void AddDrone(Drone drone)
         {
             //if (DataSource.drones.Exists(item => item.Id == drone.Id)) throw new DroneException($"id: {drone.Id} already exist"); //it suppose to be this type of exception????**** 
             //DataSource.drones.Add(drone);
@@ -67,7 +67,7 @@ namespace Dal
             }
             throw new StationException($"id: {dCharge.StationId} does not exist");
         }
-        public Drone DisplayDrone(int droneId)
+        public Drone GetDrone(int droneId)
         {
             List<Drone> drones = XmlTools.LoadListFromXmlSerializer<Drone>(dronesPath);
             Drone? dr =drones.Find(item => item.Id == droneId);
@@ -75,13 +75,13 @@ namespace Dal
                 throw new DroneException($"id: {droneId} does not exist");
             return (Drone)dr;
         }
-        public IEnumerable<DroneCharge> DisplayListOfDroneCharge(Predicate<DroneCharge> pre)
+        public IEnumerable<DroneCharge> GetDroneChargesList(Predicate<DroneCharge> pre)
         {
             List<DroneCharge> list = XmlTools.LoadListFromXmlSerializer<DroneCharge>(droneChargesPath);
             if (pre == null) return list;
             return list.FindAll(pre);
         }
-        public IEnumerable<Drone> DisplayListOfDrones(Predicate<Drone> pre)
+        public IEnumerable<Drone> GetDronesList(Predicate<Drone> pre)
         {
             List<Drone> drones = XmlTools.LoadListFromXmlSerializer<Drone>(dronesPath);
             List<Drone> result = new List<Drone>(drones);
@@ -91,7 +91,7 @@ namespace Dal
         public void DeleteDrone(int droneId)
         {
             List<Drone> drones = XmlTools.LoadListFromXmlSerializer<Drone>(dronesPath);
-            try { drones.Remove(DisplayDrone(droneId)); }
+            try { drones.Remove(GetDrone(droneId)); }
             catch (ArgumentNullException)
             {
                 throw new DroneException($"id: {droneId} does not exist");

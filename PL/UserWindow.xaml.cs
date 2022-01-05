@@ -22,11 +22,12 @@ namespace PL
     public partial class UserWindow : Window
     {
         IBL blObject;
-        public UserWindow(int customerId)
+        public UserWindow(IBL obj, int customerId)
         {
             InitializeComponent();
+            blObject = obj;
             txtId.Text = customerId.ToString();
-            Customer customer = blObject.DisplayCustomer(customerId);
+            Customer customer = blObject.GetCustomer(customerId);
             txtname.Text = customer.Name;
             txtId.IsEnabled = false;
             txtname.IsEnabled = false;

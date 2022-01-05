@@ -29,12 +29,13 @@ namespace PL
 
         private void LogManager(object sender, RoutedEventArgs e)
         {
-            new ManagerWindow(blObject).Show();//צריך להוסיף פרמטרים מתאימים
+            //new ManagerWindow(blObject).Show();//צריך להוסיף פרמטרים מתאימים
+            new PasswordWindow(blObject, true).Show();//צריך להוסיף פרמטרים מתאימים
         }
 
         private void LogUser(object sender, RoutedEventArgs e)
         {
-            new PasswordWindow().Show();//צריך להוסיף פרמטרים מתאימים
+            new PasswordWindow(blObject, false).Show();//צריך להוסיף פרמטרים מתאימים
         }
 
         private void Sign(object sender, RoutedEventArgs e)

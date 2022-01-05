@@ -26,7 +26,7 @@ namespace PL
         {
             InitializeComponent();
             blObject = obj;
-            Station st = blObject.DisplayStation(stationId);
+            Station st = blObject.GetStation(stationId);
             DataContext = st;
             txtId.IsEnabled = false;
             txtLatti.IsEnabled = false;

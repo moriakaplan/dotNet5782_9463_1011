@@ -69,7 +69,7 @@ namespace BL
             //{
             //    lstdrn.Add(new DroneToList { Id = drone.Id, MaxWeight = (WeightCategories)drone.MaxWeight, Model = drone.Model });
             //}
-            lstdrn = dl.DisplayListOfDrones()
+            lstdrn = dl.GetDronesList()
                 .Select(drone=>new DroneToList
                 {
                     Id = drone.Id,
@@ -79,9 +79,9 @@ namespace BL
                 .ToList();
             foreach (DroneToList drone in lstdrn)//^^^^
             {
-                foreach (DO.Parcel parcel in dl.DisplayListOfParcels())//^^^^
+                foreach (DO.Parcel parcel in dl.GetParcelsList())//^^^^
                 {
-                    Location locOfCus = DisplayCustomer(parcel.Senderld).Location;
+                    Location locOfCus = GetCustomer(parcel.Senderld).Location;
                     if ((parcel.Droneld == drone.Id) && (parcel.AssociateTime != null) && (parcel.DeliverTime == null)) //If there is a parcel that has not yet been delivered but the drone is associated
                     {
                         if (parcel.PickUpTime == null) //If the parcel was associated but not picked up
@@ -118,7 +118,7 @@ namespace BL
                     if (drone.Status == DroneStatus.Maintenance)
                     {
                         //the location is in random station
-                        IEnumerable<DO.Station> stations = dl.DisplayListOfStations();
+                        IEnumerable<DO.Station> stations = dl.GetStationsList();
                         int index = random.Next(0, stations.Count());
                         DO.Station stationForLocation = stations.ElementAt(index);
                         drone.CurrentLocation = new Location { Latti = stationForLocation.Lattitude, Longi = stationForLocation.Longitude };
@@ -133,10 +133,10 @@ namespace BL
                         //{
                         //    if (cus.numOfParclReceived > 0) { customersWhoGotParcels.Add(cus); }
                         //}
-                        IEnumerable<CustomerToList> customersWhoGotParcels = DisplayListOfCustomers().Where (x=>x.numOfParclReceived > 0);
+                        IEnumerable<CustomerToList> customersWhoGotParcels = GetCustomersList().Where (x=>x.numOfParclReceived > 0);
                         int index = random.Next(0, customersWhoGotParcels.Count());
                         CustomerToList customerForLocation = customersWhoGotParcels.ElementAt(index);
-                        drone.CurrentLocation = DisplayCustomer(customerForLocation.Id).Location;
+                        drone.CurrentLocation = GetCustomer(customerForLocation.Id).Location;
                         drone.Battery = random.Next((int)minBattery(drone.Id, drone.CurrentLocation, closestStation(drone.CurrentLocation)) + 1, 99) + random.NextDouble();//random  between a minimal charge that allows it to reach the nearest station and a full charge
                     }
                 }
@@ -157,7 +157,7 @@ namespace BL
             //    }
             //}
             //return true;
-            return dl.DisplayListOfParcels()
+            return dl.GetParcelsList()
                    .Count(x => (x.Droneld == drone.Id) && (x.DeliverTime == null)) == 0;
         }
         /// <summary>
@@ -168,14 +168,14 @@ namespace BL
         /// <returns></returns>
         private Location closestStation(Location loc)
         {
-            IEnumerable<StationToList> stations = DisplayListOfStations();
+            IEnumerable<StationToList> stations = GetStationsList();
             if (stations.Count() == 0) throw new Exception("there not stations");
-            Station station = DisplayStation(stations.First().Id); ;
+            Station station = GetStation(stations.First().Id); ;
             Location minLocation = station.Location;
             double minDistance = distance(loc, station.Location);
             foreach (StationToList dstation in stations)//find the station that is the closest to the location
             {
-                station = DisplayStation(dstation.Id);
+                station = GetStation(dstation.Id);
                 double dis = distance(loc, station.Location);
                 if (dis < minDistance)
                 {
@@ -183,7 +183,7 @@ namespace BL
                     minLocation = station.Location;
                 }
             }
-            minDistance = stations.Min(x => distance(loc, DisplayStation(x.Id).Location));
+            minDistance = stations.Min(x => distance(loc, GetStation(x.Id).Location));
             return minLocation;
         }
         /// <summary>
@@ -193,13 +193,13 @@ namespace BL
         /// <returns></returns>
         private Station closestStationWithChargeSlots(Location loc)
         {
-            IEnumerable<StationToList> stations = DisplayListOfStationsWithAvailableCargeSlots();
-            Station station = DisplayStation(stations.First().Id); ;
+            IEnumerable<StationToList> stations = GetListOfStationsWithAvailableCargeSlots();
+            Station station = GetStation(stations.First().Id); ;
             Station minStation = station;
             double minDistance = distance(loc, station.Location);
             foreach (StationToList dstation in stations)//find the station that is the closest to the location
             {
-                station = DisplayStation(dstation.Id);
+                station = GetStation(dstation.Id);
                 if (distance(loc, station.Location) < minDistance)
                 {
                     minDistance = distance(loc, station.Location);
@@ -216,7 +216,7 @@ namespace BL
         /// <returns></returns>
         private double minBattery(int droneId, Location from, Location to)
         {
-            Drone drone = DisplayDrone(droneId);
+            Drone drone = GetDrone(droneId);
             double batteryForKil = 0;
             if (drone.Status == DroneStatus.Available) batteryForKil = BatteryForAvailable;
             else

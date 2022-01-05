@@ -12,7 +12,7 @@ namespace BL
     {
         public void AddDrone(int id, string model, WeightCategories weight, int stationId)
         {
-            Location location = DisplayStation(stationId).Location;
+            Location location = GetStation(stationId).Location;
             DO.Drone idalDrone = new DO.Drone
             {
                 Id = id,
@@ -21,7 +21,7 @@ namespace BL
             };
             try
             {
-                dl.AddDroneToTheList(idalDrone);
+                dl.AddDrone(idalDrone);
                 //add the new customer to the list in the data level
             }
             catch (DO.DroneException ex)
@@ -50,15 +50,15 @@ namespace BL
                 drone = lstdrn.Single(item => item.Id == id);
                 drone.Model = model;
                 //update the model in the data layer
-                ddrone = dl.DisplayDrone(id);
+                ddrone = dl.GetDrone(id);
                 dl.DeleteDrone(id);
             }
             catch (ArgumentNullException) { throw new NotExistIDException($"id: {id} does not exist - drone"); }
             catch (DO.DroneException ex) { throw new NotExistIDException(ex.Message, " - drone"); }
             ddrone.Model = model;
-            dl.AddDroneToTheList(ddrone);
+            dl.AddDrone(ddrone);
         }
-        public Drone DisplayDrone(int droneId)
+        public Drone GetDrone(int droneId)
         {
             DroneToList droneFromList;
             try { droneFromList = lstdrn.Find(item => item.Id == droneId); }
@@ -71,17 +71,17 @@ namespace BL
             if (droneFromList.Status == DroneStatus.Associated || droneFromList.Status == DroneStatus.Delivery)
             {
                 DO.Parcel parcelFromFunc;
-                try { parcelFromFunc = dl.DisplayParcel(droneFromList.ParcelId); }
+                try { parcelFromFunc = dl.GetParcel(droneFromList.ParcelId); }
                 catch (DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
-                Location locOfSender = DisplayCustomer(parcelFromFunc.Senderld/*SenderId*/).Location;
-                Location locOfTarget = DisplayCustomer(parcelFromFunc.TargetId).Location;
+                Location locOfSender = GetCustomer(parcelFromFunc.Senderld/*SenderId*/).Location;
+                Location locOfTarget = GetCustomer(parcelFromFunc.TargetId).Location;
                 parcel = new ParcelInTransfer
                 {
                     Id = parcelFromFunc.Id,
                     InTheWay = (parcelFromFunc.PickUpTime != null && parcelFromFunc.DeliverTime == null),
                     Priority = (Priorities)parcelFromFunc.Priority,
-                    Sender = new CustomerInParcel { Id = parcelFromFunc.Senderld, Name = DisplayCustomer(parcelFromFunc.Senderld).Name },
-                    Target = new CustomerInParcel { Id = parcelFromFunc.TargetId, Name = DisplayCustomer(parcelFromFunc.TargetId).Name },
+                    Sender = new CustomerInParcel { Id = parcelFromFunc.Senderld, Name = GetCustomer(parcelFromFunc.Senderld).Name },
+                    Target = new CustomerInParcel { Id = parcelFromFunc.TargetId, Name = GetCustomer(parcelFromFunc.TargetId).Name },
                     PickingPlace = locOfSender,
                     TargetPlace = locOfTarget,
                     TransportDistance = distance(locOfSender, locOfTarget),
@@ -164,7 +164,7 @@ namespace BL
                 dl.ReleaseDroneFromeCharge(droneId); //Deletes the charging entity and adds 1 to the charging slots of the station
             }
             catch (DO.DroneChargeException ex) { throw new NotExistIDException(ex.Message); }
-            DO.DroneCharge dc= dl.DisplayListOfDroneCharge().Where(x => x.DroneId == droneId).Single();
+            DO.DroneCharge dc= dl.GetDroneChargesList().Where(x => x.DroneId == droneId).Single();
             TimeSpan time =DateTime.Now - dc.StartedChargeTime;
             double b = time.TotalSeconds * ChargeRatePerHour;
             drone.Battery += (double)(b / 3600);
@@ -174,7 +174,7 @@ namespace BL
             lstdrn.RemoveAt(index);
             lstdrn.Add(drone);
         }
-        public IEnumerable<DroneToList> DisplayListOfDrones(Func<DroneToList, bool> pre)
+        public IEnumerable<DroneToList> GetDronesList(Func<DroneToList, bool> pre)
         {
             if (pre != null)
                 return lstdrn.Where(pre);

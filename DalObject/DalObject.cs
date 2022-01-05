@@ -39,6 +39,14 @@ namespace Dal
             }
         }
 
+        public User GetUser(string name)
+        {
+            User? result = DataSource.users.Find(x => x.UserName == name);
+            if (result == null)
+                throw new UserException($"UserName {name} does not exist");
+            return (User)result;
+        }
+
         public double Distance(double lattitudeA, double longitudeA, double lattitudeB, double longitudeB)
         {
             var radiansOverDegrees = (Math.PI / 180.0);
