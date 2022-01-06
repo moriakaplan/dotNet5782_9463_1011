@@ -47,8 +47,10 @@ namespace PL
                     blObject.AddManager(txtName.Text, txtPassword.Text);
                 else
                     blObject.AddUser(int.Parse(txtId.Text), txtName.Text, txtPassword.Text);
+                MessageBox.Show("the user added successfully");
+                this.Close();
             }
-            catch(ExistIdException ex)
+            catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }

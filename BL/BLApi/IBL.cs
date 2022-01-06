@@ -141,8 +141,8 @@ namespace BLApi
         #region users functions
         int GetUserId(string name, string password);
         bool ExistManager(string name, string password);
-        void AddUser(int id, string name, string password)
-        void AddManager(string name, string password)
+        void AddUser(int id, string name, string password);
+        void AddManager(string name, string password);
         #endregion
     }
 }

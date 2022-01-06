@@ -47,7 +47,7 @@ namespace Dal
             return (User)result;
         }
 
-        void AddUser(User user)
+        public void AddUser(User user)
         {
             if (user.IsManager == false && DataSource.users.Exists(item => item.Id == user.Id))
                 throw new UserException($"User for the customer {user.Id} already exist");

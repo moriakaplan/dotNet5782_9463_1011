@@ -202,15 +202,23 @@ namespace Dal
             return (User)result;
         }
 
-        void AddUser(User user)
+        public void AddUser(User user)
         {
             List<User> users = XmlTools.LoadListFromXmlSerializer<User>(usersPath);
-            if (user.IsManager == false && users.Exists(item => item.Id == user.Id))
-                throw new UserException($"User for the customer {user.Id} already exist");
+            if (user.IsManager == false)
+            {
+                try { GetCustomer((int)user.Id); }
+                catch (CustomerException) 
+                { 
+                    throw new UserException($"the customer {user.Id} is not exist"); 
+                }
+                if (users.Exists(item => item.Id == user.Id))
+                    throw new UserException($"User for the customer {user.Id} already exist");
+            }
             if (users.Exists(item => item.UserName == user.UserName)) 
                 throw new UserException($"User with the usernam '{user.Id}' already exist");
             users.Add(user);
-            XmlTools.SaveListToXmlSerializer<User>(users, stationsPath);
+            XmlTools.SaveListToXmlSerializer<User>(users, usersPath);
         }
         #endregion
 
