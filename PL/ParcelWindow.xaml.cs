@@ -29,7 +29,7 @@ namespace PL
             blObject = obj;
             InitializeComponent();
 
-            Parcel parcel = blObject.DisplayParcel(Id);
+            Parcel parcel = blObject.GetParcel(Id);
             DataContext = parcel;
             //txtId.Text = parcel.Id.ToString();
             //txtDrone.Text = parcel.Drone.Id.ToString();

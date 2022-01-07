@@ -39,6 +39,23 @@ namespace Dal
             }
         }
 
+        public User GetUser(string name)
+        {
+            User? result = DataSource.users.Find(x => x.UserName == name);
+            if (result == null)
+                throw new UserException($"UserName {name} does not exist");
+            return (User)result;
+        }
+
+        public void AddUser(User user)
+        {
+            if (user.IsManager == false && DataSource.users.Exists(item => item.Id == user.Id))
+                throw new UserException($"User for the customer {user.Id} already exist");
+            if (DataSource.users.Exists(item => item.UserName == user.UserName))
+                throw new UserException($"User with the usernam '{user.Id}' already exist");
+            DataSource.users.Add(user);
+        }
+
         public double Distance(double lattitudeA, double longitudeA, double lattitudeB, double longitudeB)
         {
             var radiansOverDegrees = (Math.PI / 180.0);

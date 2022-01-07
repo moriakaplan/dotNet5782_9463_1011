@@ -29,17 +29,20 @@ namespace PL
 
         private void LogManager(object sender, RoutedEventArgs e)
         {
-            new ManagerWindow(blObject).Show();//צריך להוסיף פרמטרים מתאימים
+            //new ManagerWindow(blObject).Show();//צריך להוסיף פרמטרים מתאימים
+            new PasswordWindow(blObject, true).Show();//צריך להוסיף פרמטרים מתאימים
         }
 
         private void LogUser(object sender, RoutedEventArgs e)
         {
-            new PasswordWindow(blObject).Show();//צריך להוסיף פרמטרים מתאימים
+            new PasswordWindow(blObject, false).Show();//צריך להוסיף פרמטרים מתאימים
         }
 
         private void Sign(object sender, RoutedEventArgs e)
         {
-            new SignWindow().Show();//צריך להוסיף פרמטרים מתאימים
+            MessageBoxResult mb= MessageBox.Show("are you a manager or worker of the company?", "sighn up", MessageBoxButton.YesNoCancel);
+            if(mb==MessageBoxResult.No) new SignWindow(blObject, false).Show();//צריך להוסיף פרמטרים מתאימים
+            if(mb==MessageBoxResult.Yes) new SignWindow(blObject, true).Show();//צריך להוסיף פרמטרים מתאימים
         }
     }
 }

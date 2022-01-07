@@ -11,6 +11,7 @@ namespace Dal
         internal static List<Parcel> parcels = new List<Parcel>();
         internal static List<Customer> customers = new List<Customer>();
         internal static List<Station> stations = new List<Station>();
+        internal static List<User> users = new List<User>();
 
         internal static Random random = new Random();
         internal static class Config

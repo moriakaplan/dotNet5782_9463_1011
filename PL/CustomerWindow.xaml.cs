@@ -27,7 +27,7 @@ namespace PL
             blObject = obj;
             InitializeComponent();
             Customer cus;
-            try { cus = blObject.DisplayCustomer(cusId); }
+            try { cus = blObject.GetCustomer(cusId); }
             catch (NotExistIDException ex)
             {
                 MessageBox.Show(ex.Message);

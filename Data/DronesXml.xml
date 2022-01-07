@@ -1,8 +1,2 @@
 <?xml version="1.0"?>
-<ArrayOfDrone xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Drone>
-    <Id>123345</Id>
-    <Model>shuva</Model>
-    <MaxWeight>Medium</MaxWeight>
-  </Drone>
-</ArrayOfDrone>
+<ArrayOfDrone xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />

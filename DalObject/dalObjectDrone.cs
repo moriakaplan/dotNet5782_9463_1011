@@ -7,7 +7,7 @@ namespace Dal
 {
     internal partial class DalObject
     {    
-        public void AddDroneToTheList(Drone drone)
+        public void AddDrone(Drone drone)
         {
             if (DataSource.drones.Exists(item => item.Id == drone.Id)) throw new DroneException($"id: {drone.Id} already exist"); //it suppose to be this type of exception????**** 
             DataSource.drones.Add(drone);
@@ -52,20 +52,20 @@ namespace Dal
             }
             throw new StationException($"id: {dCharge.StationId} does not exist");
         }     
-        public Drone DisplayDrone(int droneId)
+        public Drone GetDrone(int droneId)
         {
             Drone? dr = DataSource.drones.Find(item => item.Id == droneId);
             if (dr == null) 
                 throw new DroneException($"id: {droneId} does not exist");
             return (Drone)dr;
         }     
-        public IEnumerable<DroneCharge> DisplayListOfDroneCharge(Predicate<DroneCharge> pre)
+        public IEnumerable<DroneCharge> GetDroneChargesList(Predicate<DroneCharge> pre)
         {
             List<DroneCharge> result = new List<DroneCharge>(DataSource.droneCharges);
             if (pre == null) return result;
             return result.FindAll(pre);
         }     
-        public IEnumerable<Drone> DisplayListOfDrones(Predicate<Drone> pre)
+        public IEnumerable<Drone> GetDronesList(Predicate<Drone> pre)
         {
             List<Drone> result = new List<Drone>(DataSource.drones);
             if (pre == null) return result;
@@ -73,7 +73,7 @@ namespace Dal
         }    
         public void DeleteDrone(int droneId)
         {
-            try { DataSource.drones.Remove(DisplayDrone(droneId)); }
+            try { DataSource.drones.Remove(GetDrone(droneId)); }
             catch (ArgumentNullException)
             {
                 throw new DroneException($"id: {droneId} does not exist");

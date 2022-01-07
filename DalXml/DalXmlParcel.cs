@@ -9,7 +9,7 @@ namespace Dal
 {
     public partial class DalXml
     {
-        public int AddParcelToTheList(Parcel parcel)
+        public int AddParcel(Parcel parcel)
         {
             List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);
             if (parcels.Exists(item => item.Id == parcel.Id)) throw new ParcelException($"id: {parcel.Id} already exist"); //it suppose to be this type of exception????**** 
@@ -20,7 +20,7 @@ namespace Dal
             XmlTools.SaveListToXmlSerializer<Parcel>(parcels, parcelsPath);
             return newCode;
         }
-        public Parcel DisplayParcel(int parcelId)
+        public Parcel GetParcel(int parcelId)
         {
             List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);
             Parcel? result = parcels.Find(x => x.Id == parcelId);
@@ -28,7 +28,7 @@ namespace Dal
                 throw new ParcelException($"id: {parcelId} does not exist");
             return (Parcel)result;
         }
-        public IEnumerable<Parcel> DisplayListOfParcels(Predicate<Parcel> pre)
+        public IEnumerable<Parcel> GetParcelsList(Predicate<Parcel> pre)
         {
             List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);
             List<Parcel> result = new List<Parcel>(parcels);
@@ -40,7 +40,7 @@ namespace Dal
             List<Drone> drones = XmlTools.LoadListFromXmlSerializer<Drone>(dronesPath);
             try
             {
-                drones.Remove(DisplayDrone(parcelId));
+                drones.Remove(GetDrone(parcelId));
             }
             catch (ArgumentNullException)
             {

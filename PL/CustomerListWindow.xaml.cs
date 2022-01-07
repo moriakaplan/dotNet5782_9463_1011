@@ -24,7 +24,7 @@ namespace PL
         {
             blObject = obj;
             InitializeComponent();
-            try { customerToListDataGrid.DataContext = blObject.DisplayListOfCustomers(); }
+            try { customerToListDataGrid.DataContext = blObject.GetCustomersList(); }
             catch (NotExistIDException ex) { MessageBox.Show(ex.Message); }
         }
 
@@ -32,13 +32,13 @@ namespace PL
         private void ViewCustomer(object sender, MouseButtonEventArgs e)
         {
             new CustomerWindow(blObject, ((BO.CustomerToList)customerToListDataGrid.SelectedItem).Id).ShowDialog();
-            customerToListDataGrid.DataContext = blObject.DisplayListOfCustomers();
+            customerToListDataGrid.DataContext = blObject.GetCustomersList();
         }
 
         private void AddCustomer(object sender, RoutedEventArgs e)
         {
             new CustomerWindow(blObject).ShowDialog();
-            customerToListDataGrid.DataContext = blObject.DisplayListOfCustomers();
+            customerToListDataGrid.DataContext = blObject.GetCustomersList();
         }
 
         private void customerToListDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

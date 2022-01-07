@@ -21,12 +21,13 @@ namespace PL
     public partial class PasswordWindow : Window
     {
         IBL blObject;
-        public PasswordWindow(IBL blObj)
+        bool isManager;
+        public PasswordWindow(IBL obj, bool manager)
         {
             InitializeComponent();
-            blObject = blObj;
+            blObject = obj;
+            isManager = manager;
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
@@ -34,8 +35,22 @@ namespace PL
 
         private void LoginClick(object sender, RoutedEventArgs e)
         {
-            int id = blObject.DisplayListOfCustomers().Where(x => x.Id.ToString() == txtUserId.Text.ToString()).Single().Id;
-            new UserWindow(id, blObject).ShowDialog();
+            if (isManager == false)
+            {
+                try 
+                {
+                    int id = blObject.GetUserId(txtUserName.Text, txtPassword.Text);
+                    new UserWindow(blObject, id).ShowDialog();
+                }
+                catch (NotExistIDException ex) { MessageBox.Show(/*"the username or the password are not correct, please try again. maybe you are a manger?"*/ ex.Message); }
+            }
+            else
+            {
+                if (blObject.ExistManager(txtUserName.Text, txtPassword.Text))
+                        new ManagerWindow(blObject).ShowDialog();
+                else { MessageBox.Show("the username or the password are not correct, please try again. maybe you are a regular customer?"); }
+            }
+            //int id = blObject.GetCustomersList().Where(x => x.Name == txtUserName.Text).Single().Id;
         }
     }
 }

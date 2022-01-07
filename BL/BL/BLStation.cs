@@ -23,7 +23,7 @@ namespace BL
             };
             try
             {
-                dl.AddStationToTheList(dstation);//add the new station to the list in the data level
+                dl.AddStation(dstation);//add the new station to the list in the data level
             }
             catch(DO.StationException ex)
             {
@@ -32,7 +32,7 @@ namespace BL
         }  
         public void UpdateStation(int id, string name, int cargeSlots)
         {
-            DO.Station dstation = dl.DisplayStation(id);
+            DO.Station dstation = dl.GetStation(id);
             dl.DeleteStation(id);
             if (name != null)//update the name
             {
@@ -42,12 +42,12 @@ namespace BL
             {
                 dstation.ChargeSlots = cargeSlots;
             }
-            dl.AddStationToTheList(dstation);
+            dl.AddStation(dstation);
         }    
-        public Station DisplayStation(int stationId)
+        public Station GetStation(int stationId)
         {
             DO.Station dstation;
-            try { dstation = dl.DisplayStation(stationId); }
+            try { dstation = dl.GetStation(stationId); }
             catch(DO.StationException ex) { throw new NotExistIDException(ex.Message, " - station"); }
             Station bstation = new Station
             {
@@ -68,21 +68,21 @@ namespace BL
             //        bstation.DronesInCharge.Add(temp);
             //    }
             //}
-            IEnumerable<DO.DroneCharge> droneCharges = dl.DisplayListOfDroneCharge();
+            IEnumerable<DO.DroneCharge> droneCharges = dl.GetDroneChargesList();
             bstation.DronesInCharge = from item in droneCharges
-                                      select new DroneInCharge { Id = item.DroneId, Battery = DisplayDrone(item.DroneId).Battery };
+                                      select new DroneInCharge { Id = item.DroneId, Battery = GetDrone(item.DroneId).Battery };
             int count = droneCharges.Count(x => x.StationId == stationId);
             bstation.AvailableChargeSlots = dstation.ChargeSlots - count;
             return bstation;
         }
-        public IEnumerable<StationToList> DisplayListOfStations()
+        public IEnumerable<StationToList> GetStationsList()
         {
-            return from dstation in dl.DisplayListOfStations()
+            return from dstation in dl.GetStationsList()
                    select DisplayStationToList(dstation.Id);
         }
-        public IEnumerable<StationToList> DisplayListOfStationsWithAvailableCargeSlots()
+        public IEnumerable<StationToList> GetListOfStationsWithAvailableCargeSlots()
         {
-            return from dstation in dl.DisplayListOfStations(x => x.ChargeSlots > 0)
+            return from dstation in dl.GetStationsList(x => x.ChargeSlots > 0)
                    select DisplayStationToList(dstation.Id);
         }
 
@@ -93,7 +93,7 @@ namespace BL
         /// <returns></returns>
         private StationToList DisplayStationToList(int stationId)
         {
-            DO.Station dstation = dl.DisplayStation(stationId);
+            DO.Station dstation = dl.GetStation(stationId);
             StationToList bstation = new StationToList
             {
                 Id = dstation.Id,
@@ -108,7 +108,7 @@ namespace BL
             //        count++;
             //    }
             //}
-            int count = dl.DisplayListOfDroneCharge()
+            int count = dl.GetDroneChargesList()
                         .Where(drCharge=>drCharge.StationId == stationId)
                         .Count();
             bstation.AvailableChargeSlots = dstation.ChargeSlots - count;

@@ -11,23 +11,28 @@ namespace DalApi
         /// add the customer that he gets to the list of the customers.
         /// </summary>
         /// <param name="customer"></param>
-        void AddCustomerToTheList(Customer customer);
+        void AddCustomer(Customer customer);
         /// <summary>
         /// add the drone that he gets to the list of the drones.
         /// </summary>
         /// <param name="drone"></param>
-        void AddDroneToTheList(Drone drone);
+        void AddDrone(Drone drone);
         /// <summary>
         /// add the parcel that he gets to the list of the parcels.
         /// </summary>
         /// <param name="parcel"></param>
         /// <returns></returns>
-        int AddParcelToTheList(Parcel parcel);
+        int AddParcel(Parcel parcel);
         /// <summary>
         /// add the station that he gets to the list of the stations.
         /// </summary>
         /// <param name="station"></param>
-        void AddStationToTheList(Station station);
+        void AddStation(Station station);
+        /// <summary>
+        /// add the user that he gets to the list of the users.
+        /// </summary>
+        /// <param name="user"></param>
+        void AddUser(User user);
         #endregion adding
 
         #region updating
@@ -62,55 +67,61 @@ namespace DalApi
 
         #region display
         /// <summary>
+        /// display a user of the system
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        User GetUser(string name);
+        /// <summary>
         /// display a customer
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        Customer DisplayCustomer(int customerId);
+        Customer GetCustomer(int customerId);
         /// <summary>
         /// display a drone
         /// </summary>
         /// <param name="droneId"></param>
         /// <returns></returns>
-        Drone DisplayDrone(int droneId);
+        Drone GetDrone(int droneId);
         /// <summary>
         /// display a parcel
         /// </summary>
         /// <param name="parcelId"></param>
         /// <returns></returns>
-        Parcel DisplayParcel(int parcelId);
+        Parcel GetParcel(int parcelId);
         /// <summary>
         /// return a station
         /// </summary>
         /// <param name="stationId"></param>
         /// <returns></returns>
-        Station DisplayStation(int stationId);
+        Station GetStation(int stationId);
         /// <summary>
         /// display the list of thecustomers
         /// </summary>
         /// <returns></returns>
-        IEnumerable<Customer> DisplayListOfCustomers(Predicate<Customer> pre = null);
+        IEnumerable<Customer> GetCustomersList(Predicate<Customer> pre = null);
         /// <summary>
         /// display the list of the drones.
         /// </summary>
         /// <returns></returns>
-        IEnumerable<Drone> DisplayListOfDrones(Predicate<Drone> pre = null);
+        IEnumerable<Drone> GetDronesList(Predicate<Drone> pre = null);
         /// <summary>
         /// display the list of the customers
         /// </summary>
         /// <returns></returns>
-        IEnumerable<Parcel> DisplayListOfParcels(Predicate<Parcel> pre = null);
+        IEnumerable<Parcel> GetParcelsList(Predicate<Parcel> pre = null);
         /// <summary>
         /// display the list of the stations.
         /// </summary>
         /// <returns></returns>
-        IEnumerable<Station> DisplayListOfStations(Predicate<Station> pre = null);
+        IEnumerable<Station> GetStationsList(Predicate<Station> pre = null);
         /// <summary>
         /// display the list of drone charge
         /// </summary>
         /// <param name="pre"></param>
         /// <returns></returns>
-        IEnumerable<DroneCharge> DisplayListOfDroneCharge(Predicate<DroneCharge> pre = null);
+        IEnumerable<DroneCharge> GetDroneChargesList(Predicate<DroneCharge> pre = null);
         #endregion display
 
         #region delete

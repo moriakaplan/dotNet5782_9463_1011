@@ -87,56 +87,62 @@ namespace BLApi
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        Customer DisplayCustomer(int customerId);
+        Customer GetCustomer(int customerId);
         /// <summary>
         ///  Returns the drone with the requested ID
         /// </summary>
         /// <param name="droneId"></param>
         /// <returns></returns>
-        Drone DisplayDrone(int droneId);
+        Drone GetDrone(int droneId);
         /// <summary>
         /// Returns the parcel with the requested ID
         /// </summary>
         /// <param name="parcelId"></param>
         /// <returns></returns>
-        Parcel DisplayParcel(int parcelId);
+        Parcel GetParcel(int parcelId);
         /// <summary>
         /// return the station
         /// </summary>
         /// <param name="stationId"></param>
         /// <returns></returns>
-        Station DisplayStation(int stationId);
+        Station GetStation(int stationId);
         /// <summary>
         /// returns the list of the stations
         /// </summary>
         /// <returns></returns>
-        IEnumerable<StationToList> DisplayListOfStations();
+        IEnumerable<StationToList> GetStationsList();
         /// <summary>
         ///  returns the list of the drones
         /// </summary>
         /// <returns></returns>
-        IEnumerable<DroneToList> DisplayListOfDrones(Func<DroneToList, bool> pre=null);
+        IEnumerable<DroneToList> GetDronesList(Func<DroneToList, bool> pre=null);
         /// <summary>
         /// returns the list of the customers
         /// </summary>
         /// <returns></returns>
-        IEnumerable<CustomerToList> DisplayListOfCustomers();
+        IEnumerable<CustomerToList> GetCustomersList();
         /// <summary>
         /// Display List Of Parcels
         /// </summary>
         /// <returns></returns>
-        IEnumerable<ParcelToList> DisplayListOfParcels();
+        IEnumerable<ParcelToList> GetParcelsList();
         /// <summary>
         /// Display List Of Unassigned Parcels
         /// </summary>
         /// <returns></returns>
-        IEnumerable<ParcelToList> DisplayListOfUnassignedParcels();
+        IEnumerable<ParcelToList> GetListOfUnassignedParcels();
         /// <summary>
         /// returns the stations with available cargeing slots
         /// </summary>
         /// <returns></returns>
-        IEnumerable<StationToList> DisplayListOfStationsWithAvailableCargeSlots();
+        IEnumerable<StationToList> GetListOfStationsWithAvailableCargeSlots();
         #endregion display
 
+        #region users functions
+        int GetUserId(string name, string password);
+        bool ExistManager(string name, string password);
+        void AddUser(int id, string name, string password);
+        void AddManager(string name, string password);
+        #endregion
     }
 }

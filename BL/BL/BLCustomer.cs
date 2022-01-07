@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using BO;
 using BLApi;
 
+
 namespace BL
 {
     internal partial class BL
     {
         public void AddCustomer(int id, string name, string phone, Location loc)
         {
-            //creates a new station in the data level
+            //creates a new customer in the data level
             DO.Customer dCustomer = new DO.Customer
             {
                 Id = id,
@@ -23,7 +24,7 @@ namespace BL
             };
             try
             { 
-                dl.AddCustomerToTheList(dCustomer); //add the new customer to the list in the data level
+                dl.AddCustomer(dCustomer); //add the new customer to the list in the data level
             }
              catch(DO.CustomerException ex)
             {
@@ -33,7 +34,7 @@ namespace BL
         public void UpdateCustomer(int customerId, string name, string phone)
         {
             DO.Customer dCustomer;
-            try { dCustomer = dl.DisplayCustomer(customerId); }
+            try { dCustomer = dl.GetCustomer(customerId); }
             catch(DO.CustomerException ex)
             {
                 throw new NotExistIDException(ex.Message, "-customer");
@@ -47,13 +48,13 @@ namespace BL
             {
                 dCustomer.Phone = phone;
             }
-            dl.AddCustomerToTheList(dCustomer);
+            dl.AddCustomer(dCustomer);
 
         } 
-        public Customer DisplayCustomer(int customerId)
+        public Customer GetCustomer(int customerId)
         {
             DO.Customer dCustomer;
-            try { dCustomer = dl.DisplayCustomer(customerId); }
+            try { dCustomer = dl.GetCustomer(customerId); }
             catch (DO.CustomerException ex)
             {
                 throw new NotExistIDException(ex.Message, "-customer");
@@ -67,13 +68,13 @@ namespace BL
             bCustomer.parcelTo = getCustomerParcelTo(customerId);
             return bCustomer;
         }
-        public IEnumerable<CustomerToList> DisplayListOfCustomers()
+        public IEnumerable<CustomerToList> GetCustomersList()
         {
             //foreach (DO.Customer dCustomer in dl.DisplayListOfCustomers())
             //{
             //    yield return DisplayCustomersToList(dCustomer.Id);
             //}
-            return (from dCustomer in dl.DisplayListOfCustomers()
+            return (from dCustomer in dl.GetCustomersList()
                     select DisplayCustomersToList(dCustomer));
         }
 
@@ -98,9 +99,9 @@ namespace BL
             //    }
             //}
 
-            return (from tempparcel in DisplayListOfParcels()
-                    where DisplayParcel(tempparcel.Id).Sender.Id == customerId
-                    let target= DisplayParcel(tempparcel.Id).Target
+            return (from tempparcel in GetParcelsList()
+                    where GetParcel(tempparcel.Id).Sender.Id == customerId
+                    let target= GetParcel(tempparcel.Id).Target
                     select new ParcelInCustomer
                     {
                         Id = tempparcel.Id,
@@ -131,9 +132,9 @@ namespace BL
             //    }
             //}
 
-            return (from tempparcel in DisplayListOfParcels()
-                    where DisplayParcel(tempparcel.Id).Target.Id == customerId
-                    let sender = DisplayParcel(tempparcel.Id).Sender
+            return (from tempparcel in GetParcelsList()
+                    where GetParcel(tempparcel.Id).Target.Id == customerId
+                    let sender = GetParcel(tempparcel.Id).Sender
                     select new ParcelInCustomer
                     {
                         Id = tempparcel.Id,
@@ -161,9 +162,9 @@ namespace BL
                 numOfParcelsSentAndNotDelivered=0, 
                 numOfParclReceived=0
             };
-            foreach (ParcelToList parcelFromList in DisplayListOfParcels()) //^^^^
+            foreach (ParcelToList parcelFromList in GetParcelsList()) //^^^^
             {
-                Parcel parcel = DisplayParcel(parcelFromList.Id);
+                Parcel parcel = GetParcel(parcelFromList.Id);
                 if ((parcel.Sender.Id == dcustomer.Id) && (parcel.DeliverTime != null))
                 {
                     bCustomer.numOfParcelsDelivered++;
