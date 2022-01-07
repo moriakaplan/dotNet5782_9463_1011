@@ -21,4 +21,11 @@
     <Lattitude>31</Lattitude>
     <ChargeSlots>3</ChargeSlots>
   </Station>
+  <Station>
+    <Id>1223</Id>
+    <Name>moria</Name>
+    <Longitude>32</Longitude>
+    <Lattitude>32</Lattitude>
+    <ChargeSlots>56</ChargeSlots>
+  </Station>
 </ArrayOfStation>

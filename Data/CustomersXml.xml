@@ -14,4 +14,32 @@
     <Longitude>43</Longitude>
     <Lattitude>34</Lattitude>
   </customer>
+  <customer>
+    <Id>123454567</Id>
+    <Name>gh</Name>
+    <Phone>1234567897</Phone>
+    <Longitude>55</Longitude>
+    <Lattitude>45</Lattitude>
+  </customer>
+  <customer>
+    <Id>234567890</Id>
+    <Name>fg</Name>
+    <Phone>1234567898</Phone>
+    <Longitude>56</Longitude>
+    <Lattitude>56</Lattitude>
+  </customer>
+  <customer>
+    <Id>987654321</Id>
+    <Name>gh</Name>
+    <Phone>1234567899</Phone>
+    <Longitude>7</Longitude>
+    <Lattitude>7</Lattitude>
+  </customer>
+  <customer>
+    <Id>123567908</Id>
+    <Name>moria</Name>
+    <Phone>1234567890</Phone>
+    <Longitude>34</Longitude>
+    <Lattitude>34</Lattitude>
+  </customer>
 </customers>

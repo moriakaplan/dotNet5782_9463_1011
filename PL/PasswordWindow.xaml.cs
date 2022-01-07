@@ -21,10 +21,10 @@ namespace PL
     public partial class PasswordWindow : Window
     {
         IBL blObject;
-        public PasswordWindow()
+        public PasswordWindow(IBL blObj)
         {
             InitializeComponent();
-            //blObject = obj;
+            blObject = blObj;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -34,8 +34,8 @@ namespace PL
 
         private void LoginClick(object sender, RoutedEventArgs e)
         {
-            int id = blObject.DisplayListOfCustomers().Where(x => x.Name == txtUserName.Text).Single().Id;
-            new UserWindow(id).ShowDialog();
+            int id = blObject.DisplayListOfCustomers().Where(x => x.Id.ToString() == txtUserId.Text.ToString()).Single().Id;
+            new UserWindow(id, blObject).ShowDialog();
         }
     }
 }
