@@ -7,4 +7,11 @@
     <Longitude>33</Longitude>
     <Lattitude>32</Lattitude>
   </Customer>
+  <Customer>
+    <Id>111111111</Id>
+    <Name>moria</Name>
+    <Phone>0501111111</Phone>
+    <Longitude>33</Longitude>
+    <Lattitude>33</Lattitude>
+  </Customer>
 </ArrayOfCustomer>

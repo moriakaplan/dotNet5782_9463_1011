@@ -23,7 +23,7 @@ namespace PL
     public partial class ParcelWindow : Window //update, need to add delete
     {
         IBL blObject;
-        public ParcelWindow(IBL obj, int Id, bool isFromSender=false)
+        public ParcelWindow(IBL obj, int Id)
         {
             InitializeComponent();
             blObject = obj;
@@ -34,11 +34,6 @@ namespace PL
             //txtId.Text = parcel.Id.ToString();
             //txtDrone.Text = parcel.Drone.Id.ToString();
             //txtPriority.Text = parcel.Priority.ToString();
-            if (isFromSender)
-            {
-                txtSender.Text = Id.ToString();
-                txtSender.IsEnabled = false;
-            }
             //txtTarget.Text = parcel.Target.ToString();
             //txtWeight.Text = parcel.Weight.ToString();
             //txtCreateTime.Text = parcel.CreateTime.ToString();
@@ -53,6 +48,28 @@ namespace PL
         }
 
         public ParcelWindow(IBL obj) //add
+        {
+            InitializeComponent();
+            blObject = obj;
+            lblId.Visibility = Visibility.Collapsed;
+            lblDrone.Visibility = Visibility.Collapsed;
+            lblCreateTime.Visibility = Visibility.Collapsed;
+            lblAssociateTime.Visibility = Visibility.Collapsed;
+            lblPickUpTime.Visibility = Visibility.Collapsed;
+            txtId.Visibility = Visibility.Collapsed;
+            txtDeliverTime.Visibility = Visibility.Collapsed;
+            txtDrone.Visibility = Visibility.Collapsed;
+            txtCreateTime.Visibility = Visibility.Collapsed;
+            txtAssociateTime.Visibility = Visibility.Collapsed;
+            txtPickUpTime.Visibility = Visibility.Collapsed;
+            txtDeliverTime.Visibility = Visibility.Collapsed;
+            txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
+            options.Content = "Add Parcel";
+            options.Click -= UpdateParcel;
+            options.Click += AddParcel;
+        }
+        public ParcelWindow(IBL obj, bool isFromSender, int cusId) //updat
         {
             InitializeComponent();
             blObject = obj;
@@ -82,7 +99,7 @@ namespace PL
 
         private void AddParcel(object sender, RoutedEventArgs e)
         {
-
+            blObject.AddParcelToDelivery(int.Parse(txtSender.Text), int.Parse(txtTarget.Text), (WeightCategories)txtWeight.SelectedItem, (Priorities)txtPriority.SelectedItem);
         }
 
         private void UpdateParcel(object sender, RoutedEventArgs e)

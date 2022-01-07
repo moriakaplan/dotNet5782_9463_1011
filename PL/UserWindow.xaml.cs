@@ -37,7 +37,7 @@ namespace PL
 
         private void sendNewParcel(object sender, RoutedEventArgs e)
         {
-            new ParcelWindow(blObject, int.Parse(txtId.Text), true).ShowDialog();
+            //new ParcelWindow(blObject, int.Parse(txtId.Text), true).ShowDialog();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

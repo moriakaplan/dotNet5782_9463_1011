@@ -1,2 +1,15 @@
 <?xml version="1.0"?>
-<ArrayOfParcel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+<ArrayOfParcel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Parcel>
+    <Id>10000001</Id>
+    <Senderld>123456789</Senderld>
+    <TargetId>111111111</TargetId>
+    <Droneld>0</Droneld>
+    <Weight>Easy</Weight>
+    <Priority>Emergency</Priority>
+    <CreateTime>2022-01-07T12:37:14.3585456+02:00</CreateTime>
+    <AssociateTime xsi:nil="true" />
+    <PickUpTime xsi:nil="true" />
+    <DeliverTime xsi:nil="true" />
+  </Parcel>
+</ArrayOfParcel>

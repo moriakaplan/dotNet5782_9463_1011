@@ -36,7 +36,7 @@
                 </GridView>
             </ListView.View>
         </ListView>-->
-        <DataGrid x:Name="DroneListView" PreviewMouseDoubleClick="ViewDrone"
+        <DataGrid x:Name="DroneListView" IsReadOnly="True" MouseDoubleClick="ViewDrone"
                   AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="2">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id"/>
