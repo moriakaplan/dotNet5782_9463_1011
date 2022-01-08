@@ -22,7 +22,7 @@ namespace PL
     public partial class PasswordWindow : Window
     {
         IBL blObject;
-        bool isManager;
+        bool closeX = true;
         public PasswordWindow(IBL obj)
         {
             InitializeComponent();
