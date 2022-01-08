@@ -23,7 +23,6 @@ namespace PL
     public partial class ParcelListWindow : Window
     {
         IBL blObject;
-
         public ParcelListWindow(IBL obj)
         {
             blObject = obj;
@@ -41,6 +40,12 @@ namespace PL
             new ParcelWindow(blObject).ShowDialog();
         }
 
-        
+        void DataWindow_Closing(object sender, CancelEventArgs e)
+        {
+            //MessageBoxResult mb;
+            //mb = MessageBox.Show("do you want to close the window?", "close", MessageBoxButton.YesNo);
+            //if (mb == MessageBoxResult.No) e.Cancel=true;
+            new ManagerWindow(blObject).Show();
+        }
     }
 }

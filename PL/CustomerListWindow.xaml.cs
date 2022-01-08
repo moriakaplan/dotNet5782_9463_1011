@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,13 @@ namespace PL
             try { customerToListDataGrid.DataContext = blObject.GetCustomersList(); }
             catch (NotExistIDException ex) { MessageBox.Show(ex.Message); }
         }
-
+        void DataWindow_Closing(object sender, CancelEventArgs e)
+        {
+            //MessageBoxResult mb;
+            //mb = MessageBox.Show("do you want to close the window?", "close", MessageBoxButton.YesNo);
+            //if (mb == MessageBoxResult.No) e.Cancel=true;
+            new ManagerWindow(blObject).Show();
+        }
 
         private void ViewCustomer(object sender, MouseButtonEventArgs e)
         {

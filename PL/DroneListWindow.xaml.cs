@@ -135,6 +135,7 @@ namespace PL
         {
             canClose = true;
             this.Close();
+            new ManagerWindow(blObject).Show();
         }
         /// <summary>
         /// prevenet closing the window with the X button.

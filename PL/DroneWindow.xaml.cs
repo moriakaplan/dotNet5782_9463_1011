@@ -488,5 +488,10 @@ namespace PL
             if (txtParcel.Text != "")
                 new ParcelWindow(blObject, int.Parse(txtParcel.Text)).ShowDialog();
         }
+
+        private void txtParcel_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
