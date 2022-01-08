@@ -47,5 +47,6 @@ namespace PL
             //if (mb == MessageBoxResult.No) e.Cancel=true;
             new ManagerWindow(blObject).Show();
         }
+
     }
 }

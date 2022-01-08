@@ -39,16 +39,16 @@ namespace PL
 
         private void displayDronesList_Click(object sender, RoutedEventArgs e)
         {
+            new DroneListWindow(blObject).Show();
             closeX = false;
             this.Close();
-            new DroneListWindow(blObject).Show(); 
         }
 
         private void displayStationList(object sender, RoutedEventArgs e)
         {
+            new StationListWindow(blObject).Show();
             closeX = false;
             this.Close();
-            new StationListWindow(blObject).ShowDialog();
             
         }
 
@@ -61,7 +61,7 @@ namespace PL
 
         private void displayCustomerList(object sender, RoutedEventArgs e)
         {
-            new CustomerListWindow(blObject).ShowDialog();
+            new CustomerListWindow(blObject).Show();
              closeX = false;
             this.Close();
         }
