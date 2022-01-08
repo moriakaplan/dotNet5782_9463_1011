@@ -22,6 +22,7 @@ namespace PL
     public partial class PasswordWindow : Window
     {
         IBL blObject;
+        bool isManager;
         public PasswordWindow(IBL obj)
         {
             InitializeComponent();
@@ -30,10 +31,10 @@ namespace PL
         
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
-            MessageBoxResult mb;
-            mb = MessageBox.Show("do you want to close the window? \n and go back to the main window?", "close", MessageBoxButton.YesNo);
-            if (mb == MessageBoxResult.No) e.Cancel=true;
-            else new MainWindow().Show();
+            //MessageBoxResult mb;
+            //mb = MessageBox.Show("do you want to close the window?", "close", MessageBoxButton.YesNo);
+            //if (mb == MessageBoxResult.No) e.Cancel=true;
+            if(closeX) new MainWindow().Show();
         }
 
         private void LoginClick(object sender, RoutedEventArgs e)
@@ -41,6 +42,7 @@ namespace PL
             if (blObject.ExistManager(txtUserName.Text, txtPassword.Text))
             {
                 new ManagerWindow(blObject).Show();
+                closeX = false;
                 this.Close();
                 return;
             }
@@ -49,6 +51,7 @@ namespace PL
             {
                 int id = blObject.GetUserId(txtUserName.Text, txtPassword.Text);
                 new UserWindow(blObject, id).ShowDialog();
+                closeX = false;
                 this.Close();
             }
             catch (NotExistIDException ex) { MessageBox.Show(/*"the username or the password are not correct, please try again. maybe you are a manger?"*/ ex.Message); }
@@ -57,7 +60,8 @@ namespace PL
 
         private void signUp(object sender, RoutedEventArgs e)
         {
-            new SignWindow(blObject).ShowDialog();
+            new SignWindow(blObject).Show();
+            closeX = false;
             this.Close();
         }
     }

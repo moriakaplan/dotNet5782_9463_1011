@@ -133,6 +133,7 @@ namespace PL
         /// <param name="e"></param>
         private void Close_Click(object sender, RoutedEventArgs e)
         {
+            new ManagerWindow(blObject).Show();
             canClose = true;
             this.Close();
         }

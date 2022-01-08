@@ -492,5 +492,10 @@ namespace PL
         {
 
         }
+
+        private void txtParcel_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
