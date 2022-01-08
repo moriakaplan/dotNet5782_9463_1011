@@ -100,9 +100,8 @@ namespace Dal
 
         private void CreateConfig()
         {
-            Random rand = new Random();
             configRoot = new XElement("configData");
-            configRoot.Add(new XElement("managmentPassword", rand.Next());
+            configRoot.Add(new XElement("managmentPassword", getGoodPass()));
             configRoot.Add(new XElement("parcelCode", 10000000));
             configRoot.Add(new XElement("available", 0.01));
             configRoot.Add(new XElement("easy", 0.012));
@@ -110,6 +109,17 @@ namespace Dal
             configRoot.Add(new XElement("heavy", 0.014));
             configRoot.Add(new XElement("ratePerHour", 30));
             configRoot.Save(configPath);
+        }
+        private string getGoodPass()
+        {
+            Random rand = new Random();
+            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            char[] stringChars = new char[8];
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[rand.Next(chars.Length)];
+            }
+            return new String(stringChars);
         }
 
         private void LoadData()
