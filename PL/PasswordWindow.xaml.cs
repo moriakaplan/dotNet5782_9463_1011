@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,29 +29,40 @@ namespace PL
             blObject = obj;
             isManager = manager;
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        void DataWindow_Closing(object sender, CancelEventArgs e)
         {
-
+            MessageBoxResult mb;
+            mb = MessageBox.Show("do you want to close the window? \n and go back to the main window?", "close", MessageBoxButton.YesNo);
+            if (mb == MessageBoxResult.No) e.Cancel=true;
+            else new MainWindow().Show();
         }
 
         private void LoginClick(object sender, RoutedEventArgs e)
         {
             if (isManager == false)
             {
-                try 
+                try
                 {
                     int id = blObject.GetUserId(txtUserName.Text, txtPassword.Text);
                     new UserWindow(blObject, id).ShowDialog();
+                    this.Close();
                 }
                 catch (NotExistIDException ex) { MessageBox.Show(/*"the username or the password are not correct, please try again. maybe you are a manger?"*/ ex.Message); }
             }
             else
             {
                 if (blObject.ExistManager(txtUserName.Text, txtPassword.Text))
-                        new ManagerWindow(blObject).Show();
+                {
+                    new ManagerWindow(blObject).Show();
+                    this.Close();
+                }
                 else { MessageBox.Show("the username or the password are not correct, please try again. maybe you are a regular customer?"); }
             }
-            //int id = blObject.GetCustomersList().Where(x => x.Name == txtUserName.Text).Single().Id;
+        }
+        private void signUp(object sender, RoutedEventArgs e)
+        {
+            new SignWindow(blObject, isManager).ShowDialog();
+            this.Close();
         }
     }
 }
