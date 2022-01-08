@@ -42,9 +42,10 @@ namespace PL
 
         private void Sign(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult mb= MessageBox.Show("are you a manager or worker of the company?", "sighn up", MessageBoxButton.YesNoCancel);
-            if(mb==MessageBoxResult.No) new SignWindow(blObject, false).Show();//צריך להוסיף פרמטרים מתאימים
-            if(mb==MessageBoxResult.Yes) new SignWindow(blObject, true).Show();//צריך להוסיף פרמטרים מתאימים
+            //MessageBoxResult mb= MessageBox.Show("are you a manager or worker of the company?", "sighn up", MessageBoxButton.YesNoCancel);
+            //if(mb==MessageBoxResult.No) new SignWindow(blObject, false).Show();//צריך להוסיף פרמטרים מתאימים
+            //if(mb==MessageBoxResult.Yes) new SignWindow(blObject, true).Show();//צריך להוסיף פרמטרים מתאימים
+            new SignWindow(blObject).Show();
             this.Close();
         }
     }

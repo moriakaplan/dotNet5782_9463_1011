@@ -21,29 +21,20 @@ namespace PL
     public partial class SignWindow : Window
     {
         IBL blObject;
-        bool isManager;
-        public SignWindow(IBL obj, bool isManag)
+        enum typesOfUsers { RegularUser, Manager };
+        public SignWindow(IBL obj)
         {
             InitializeComponent();
             blObject = obj;
-            isManager = isManag;
-            if(isManager)
-            {
-                txtId.Visibility = Visibility.Collapsed;
-                lblId.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                txtManager.Visibility = Visibility.Collapsed;
-                lblManager.Visibility = Visibility.Collapsed;
-            }
+            typeOfUser.ItemsSource = Enum.GetValues(typeof(typesOfUsers));
+            typeOfUser.SelectedItem = typesOfUsers.RegularUser;
         }
 
         private void Sighn(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (isManager)
+                if ((typesOfUsers)typeOfUser.SelectedItem == typesOfUsers.Manager)
                     blObject.AddManager(txtName.Text, txtPassword.Text);
                 else
                     blObject.AddUser(int.Parse(txtId.Text), txtName.Text, txtPassword.Text);
@@ -53,6 +44,26 @@ namespace PL
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void typeOfUserChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((typesOfUsers)typeOfUser.SelectedItem==typesOfUsers.Manager)
+            {
+                txtManager.Visibility = Visibility.Visible;
+                lblManager.Visibility = Visibility.Visible;
+                txtId.Visibility = Visibility.Collapsed;
+                lblId.Visibility = Visibility.Collapsed;
+                help.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                txtId.Visibility = Visibility.Visible;
+                lblId.Visibility = Visibility.Visible;
+                help.Visibility = Visibility.Visible;
+                txtManager.Visibility = Visibility.Collapsed;
+                lblManager.Visibility = Visibility.Collapsed;
             }
         }
     }

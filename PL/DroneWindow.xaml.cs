@@ -22,15 +22,6 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        enum Options
-        {
-            UpdateTheModel,
-            SendDroneToCharge,
-            ReleaseDroneFromCharge,
-            SendDroneToDelivery,
-            PickUpParcel,
-            DeliverParcel,
-        }
         private IBL blObject;
         bool isInActionsState;
         bool canClose = false;
@@ -60,16 +51,7 @@ namespace PL
 
             update.Visibility = Visibility.Hidden;
             charge.Visibility = Visibility.Hidden;
-            //sendDeliver.Visibility = Visibility.Hidden;
-            //pickParcel.Visibility = Visibility.Hidden;
-            //deliver.Visibility = Visibility.Hidden;
-            //releaseFromCharge.Visibility = Visibility.Hidden;
-            //lblOptions.Visibility = Visibility.Hidden;
-            //updateOptions.Visibility = Visibility.Hidden;
-            //lblTimeInCharge.Visibility = Visibility.Hidden;
-            //txtTimeInCharge.Visibility = Visibility.Hidden;
-            //OKrelease.Visibility = Visibility.Hidden;
-
+            
             txtStationId.ItemsSource = blObject.GetStationsList().Select(x => x.Id);
             txtStatus.Text = DroneStatus.Maintenance.ToString();
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
@@ -103,16 +85,6 @@ namespace PL
             lblStation.Visibility = Visibility.Hidden;
             add.Visibility = Visibility.Hidden;
 
-            //Array optionsNames=new Array[6];
-            //optionsNames.SetValue("update the model", 0);
-            //optionsNames.SetValue("send drone to charge", 1);
-            //optionsNames.SetValue("release drone from charge", 2);
-            //optionsNames.SetValue("send drone to delivery", 3);
-            //optionsNames.SetValue("pick up parcel", 4);
-            //optionsNames.SetValue("deliver parcel", 5);
-            //options.ItemsSource = optionsNames;
-            //updateOptions.ItemsSource = Enum.GetValues(typeof(Options));
-
             switch (drone.Status)
             {
                 case DroneStatus.Available:
@@ -137,11 +109,6 @@ namespace PL
                     options.Click += DeliverParcel;
                     break;
             }
-            //if (status != DroneStatus.Available) charge.Visibility = Visibility.Hidden;
-            //if (status != DroneStatus.Maintenance) releaseFromCharge.Visibility = Visibility.Hidden;
-            //if (status != DroneStatus.Available) sendDeliver.Visibility = Visibility.Hidden;
-            //if (status != DroneStatus.Associated || blObject.DisplayParcel(int.Parse(txtId.Text)).PickUpTime != null) 
-            //    sendDeliver.Visibility = Visibility.Hidden;
         }
 
         /// <summary>
@@ -281,13 +248,6 @@ namespace PL
                 return;
             }
             int id = int.Parse(txtId.Text);
-            //TimeSpan time;
-            //TimeSpan zero = new TimeSpan(0);
-            //if (TimeSpan.TryParse(txtTimeInCharge.Text, out time) == false || time < zero)
-            //{
-            //    MessageBox.Show("the time is not good, change it");
-            //    return;
-            //}
             try
             {
                 blObject.ReleaseDroneFromeCharge(id);
@@ -463,36 +423,6 @@ namespace PL
             }
         }
         /// <summary>
-        /// go to the fuction that do what the user choosed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //private void selectOption(object sender, SelectionChangedEventArgs e)
-        //{
-        //    switch (updateOptions.SelectedItem)
-        //    {
-        //        case (Options.DeliverParcel):
-        //            DeliverParcel(sender, e);
-        //            break;
-        //        case (Options.PickUpParcel):
-        //            PickUpParcel(sender, e);
-        //            break;
-        //        case (Options.ReleaseDroneFromCharge):
-        //            ReleaseDroneFromCharge(sender, e);
-        //            break;
-        //        case (Options.SendDroneToCharge):
-        //            SendDroneToCharge(sender, e);
-        //            break;
-        //        case (Options.SendDroneToDelivery):
-        //            SendDroneToDelivery(sender, e);
-        //            break;
-        //        case (Options.UpdateTheModel):
-        //            UpdateDroneModel(sender, e);
-        //            break;
-
-        //    }
-        //}
-        /// <summary>
         /// in actions window- paint the model green when the user change it
         /// </summary>
         /// <param name="sender"></param>
@@ -504,16 +434,6 @@ namespace PL
             else
                 txtModel.Foreground = Brushes.Green;
         }
-        //private void TimeColor(object sender, TextChangedEventArgs e)
-        //{
-        //    TimeSpan time;
-        //    TimeSpan zero = new TimeSpan(0);
-        //    if (TimeSpan.TryParse(txtTimeInCharge.Text, out time) && time > zero)
-        //        txtTimeInCharge.Foreground = Brushes.Green;
-        //    else
-        //        txtTimeInCharge.Foreground = Brushes.Red;
-        //    //if (txtTimeInCharge.Text.Last() == '\n') ReleaseAfterGetTime(sender, e); //why it dosnt work?
-        //}
         /// <summary>
         /// close the window after clicking the close button
         /// </summary>
@@ -567,11 +487,6 @@ namespace PL
         {
             if (txtParcel.Text != "")
                 new ParcelWindow(blObject, int.Parse(txtParcel.Text)).ShowDialog();
-        }
-
-        private void wParcelInTransfer(object sender, MouseButtonEventArgs e)
-        {
-
         }
     }
 }
