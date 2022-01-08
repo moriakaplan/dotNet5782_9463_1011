@@ -27,16 +27,9 @@ namespace PL
             InitializeComponent();
         }
 
-        private void LogManager(object sender, RoutedEventArgs e)
+        private void LogIn(object sender, RoutedEventArgs e)
         {
-            //new ManagerWindow(blObject).Show();//צריך להוסיף פרמטרים מתאימים
-            new PasswordWindow(blObject, true).Show();//צריך להוסיף פרמטרים מתאימים
-            this.Close();
-        }
-
-        private void LogUser(object sender, RoutedEventArgs e)
-        {
-            new PasswordWindow(blObject, false).Show();//צריך להוסיף פרמטרים מתאימים
+            new PasswordWindow(blObject).Show();//צריך להוסיף פרמטרים מתאימים
             this.Close();
         }
 

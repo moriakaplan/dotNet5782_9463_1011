@@ -20,10 +20,10 @@ namespace PL
     /// <summary>
     /// Interaction logic for ParcelWindow.xaml
     /// </summary>
-    public partial class ParcelWindow : Window //update, need to add delete
+    public partial class ParcelWindow : Window 
     {
         IBL blObject;
-        public ParcelWindow(IBL obj, int Id)
+        public ParcelWindow(IBL obj, int Id)//update, need to add delete
         {
             InitializeComponent();
             blObject = obj;
@@ -56,6 +56,7 @@ namespace PL
             lblCreateTime.Visibility = Visibility.Collapsed;
             lblAssociateTime.Visibility = Visibility.Collapsed;
             lblPickUpTime.Visibility = Visibility.Collapsed;
+            lblDeliverTime.Visibility = Visibility.Collapsed;
             txtId.Visibility = Visibility.Collapsed;
             txtDeliverTime.Visibility = Visibility.Collapsed;
             txtDrone.Visibility = Visibility.Collapsed;
@@ -65,6 +66,9 @@ namespace PL
             txtDeliverTime.Visibility = Visibility.Collapsed;
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
+            var customersId = blObject.GetCustomersList().Select(x => x.Id);
+            txtSender.ItemsSource = customersId;
+            txtTarget.ItemsSource = customersId;
             options.Content = "Add Parcel";
             options.Click -= UpdateParcel;
             options.Click += AddParcel;
@@ -99,12 +103,22 @@ namespace PL
 
         private void AddParcel(object sender, RoutedEventArgs e)
         {
-            blObject.AddParcelToDelivery(int.Parse(txtSender.Text), int.Parse(txtTarget.Text), (WeightCategories)txtWeight.SelectedItem, (Priorities)txtPriority.SelectedItem);
+            blObject.AddParcelToDelivery((int)txtSender.SelectedItem, (int)txtTarget.SelectedItem, (WeightCategories)txtWeight.SelectedItem, (Priorities)txtPriority.SelectedItem);
         }
 
         private void UpdateParcel(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void txtSender_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            txtTarget.ItemsSource = blObject.GetCustomersList().Select(x => x.Id).Where(x => x != (int)txtSender.SelectedItem);
+        }
+
+        private void txtTarget_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            txtSender.ItemsSource = blObject.GetCustomersList().Select(x => x.Id).Where(x => x != (int)txtTarget.SelectedItem);
         }
     }
 }

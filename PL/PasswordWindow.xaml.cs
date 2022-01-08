@@ -22,13 +22,12 @@ namespace PL
     public partial class PasswordWindow : Window
     {
         IBL blObject;
-        bool isManager;
-        public PasswordWindow(IBL obj, bool manager)
+        public PasswordWindow(IBL obj)
         {
             InitializeComponent();
             blObject = obj;
-            isManager = manager;
         }
+        
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
             MessageBoxResult mb;
@@ -39,29 +38,26 @@ namespace PL
 
         private void LoginClick(object sender, RoutedEventArgs e)
         {
-            if (isManager == false)
+            if (blObject.ExistManager(txtUserName.Text, txtPassword.Text))
             {
-                try
-                {
-                    int id = blObject.GetUserId(txtUserName.Text, txtPassword.Text);
-                    new UserWindow(blObject, id).ShowDialog();
-                    this.Close();
-                }
-                catch (NotExistIDException ex) { MessageBox.Show(/*"the username or the password are not correct, please try again. maybe you are a manger?"*/ ex.Message); }
+                new ManagerWindow(blObject).Show();
+                this.Close();
+                return;
             }
-            else
+            
+            try
             {
-                if (blObject.ExistManager(txtUserName.Text, txtPassword.Text))
-                {
-                    new ManagerWindow(blObject).Show();
-                    this.Close();
-                }
-                else { MessageBox.Show("the username or the password are not correct, please try again. maybe you are a regular customer?"); }
+                int id = blObject.GetUserId(txtUserName.Text, txtPassword.Text);
+                new UserWindow(blObject, id).ShowDialog();
+                this.Close();
             }
+            catch (NotExistIDException ex) { MessageBox.Show(/*"the username or the password are not correct, please try again. maybe you are a manger?"*/ ex.Message); }
+            MessageBox.Show("the username or the password are not correct, please try again");
         }
+
         private void signUp(object sender, RoutedEventArgs e)
         {
-            new SignWindow(blObject, isManager).ShowDialog();
+            new SignWindow(blObject).ShowDialog();
             this.Close();
         }
     }
