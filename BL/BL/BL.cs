@@ -30,14 +30,14 @@ namespace BL
             }
         }
 
-        private /*private*/ List<DroneToList> lstdrn;
-        private /*public */readonly IDal dl;
-        private /*private*/ double BatteryForAvailable;
-        private /*private*/ double BatteryForEasy; //per kill
-        private /*private*/ double BatteryForMedium; //per kill
-        private /*private*/ double BatteryForHeavy; //per kill
-        private /*private*/ double ChargeRatePerHour;
-        private /*private*/ static Random random = new Random();
+        private List<DroneToList> lstdrn;
+        private readonly IDal dl;
+        private double BatteryForAvailable;
+        private double BatteryForEasy; //per kill
+        private double BatteryForMedium; //per kill
+        private double BatteryForHeavy; //per kill
+        private double ChargeRatePerHour;
+        private static Random random = new Random();
 
         /// <summary>
         /// constractor

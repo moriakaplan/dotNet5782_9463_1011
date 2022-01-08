@@ -17,5 +17,7 @@
         <TextBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="358,193,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtManager"  HorizontalAlignment="Left" Margin="490,258,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="?" HorizontalAlignment="Left" Margin="512,92,0,0" VerticalAlignment="Top" IsEnabled="False"/>
+        <Label Content="I am" HorizontalAlignment="Left" Margin="263,45,0,0" VerticalAlignment="Top"/>
+        <ComboBox HorizontalAlignment="Left" Margin="315,45,0,0" VerticalAlignment="Top" Width="120" ItemsSource=""/>
     </Grid>
 </Window>

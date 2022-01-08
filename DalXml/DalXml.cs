@@ -100,7 +100,9 @@ namespace Dal
 
         private void CreateConfig()
         {
+            Random rand = new Random();
             configRoot = new XElement("configData");
+            configRoot.Add(new XElement("managmentPassword", rand.Next());
             configRoot.Add(new XElement("parcelCode", 10000000));
             configRoot.Add(new XElement("available", 0.01));
             configRoot.Add(new XElement("easy", 0.012));

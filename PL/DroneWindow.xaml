@@ -27,7 +27,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition x:Name="rowBattery" Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition x:Name="rowStatus" Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition x:Name="rowStation" Height="auto"/>
             <RowDefinition x:Name="rowParcel"  Height="auto"/>
@@ -39,7 +39,7 @@
         <Label Content="Id:" Grid.Row="1" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
         <Label Content="Model:" Grid.Row="2" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
         <Label x:Name="lblBattery" Content="Battery:" Grid.Row="3" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label Content="Status:" Grid.Row="4" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label x:Name="lblStatus" Content="Status:" Grid.Row="4" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
         <Label Content="Max Weight:" Grid.Row="5" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
         <Label x:Name="lblParcel" Content="Parcel In Transfer" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Label Content="Location:" Grid.Row="8" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>

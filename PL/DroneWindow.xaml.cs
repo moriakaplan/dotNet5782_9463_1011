@@ -47,6 +47,9 @@ namespace PL
             rowBattery.Height = new GridLength(0);
             lblBattery.Visibility = Visibility.Hidden;
             txtBattery.Visibility = Visibility.Hidden;
+            rowStatus.Height = new GridLength(0);
+            lblStatus.Visibility = Visibility.Hidden;
+            txtStatus.Visibility = Visibility.Hidden;
             rowParcel.Height = new GridLength(0);
             lblParcel.Visibility = Visibility.Hidden;
             txtParcel.Visibility = Visibility.Hidden;
