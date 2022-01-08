@@ -20,7 +20,7 @@
             <!--<DataGridTextColumn x:Name="numColumn" Binding="{Binding num}" Header="number of"/>
             <DataGridTextColumn x:Name="dataColumn" Binding="{Binding dataGrid}" Header="bknlk"/>-->
         </ListView>
-        <DataGrid x:Name="stationDataGrid" Grid.Row="1" PreviewMouseDoubleClick="ViewStation"
+        <DataGrid x:Name="stationDataGrid" Grid.Row="1" MouseDoubleClick="ViewStation" IsReadOnly="True"
                   AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" >
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id"/>

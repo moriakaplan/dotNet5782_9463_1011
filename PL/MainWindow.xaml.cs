@@ -31,11 +31,13 @@ namespace PL
         {
             //new ManagerWindow(blObject).Show();//צריך להוסיף פרמטרים מתאימים
             new PasswordWindow(blObject, true).Show();//צריך להוסיף פרמטרים מתאימים
+            this.Close();
         }
 
         private void LogUser(object sender, RoutedEventArgs e)
         {
             new PasswordWindow(blObject, false).Show();//צריך להוסיף פרמטרים מתאימים
+            this.Close();
         }
 
         private void Sign(object sender, RoutedEventArgs e)
@@ -43,6 +45,7 @@ namespace PL
             MessageBoxResult mb= MessageBox.Show("are you a manager or worker of the company?", "sighn up", MessageBoxButton.YesNoCancel);
             if(mb==MessageBoxResult.No) new SignWindow(blObject, false).Show();//צריך להוסיף פרמטרים מתאימים
             if(mb==MessageBoxResult.Yes) new SignWindow(blObject, true).Show();//צריך להוסיף פרמטרים מתאימים
+            this.Close();
         }
     }
 }

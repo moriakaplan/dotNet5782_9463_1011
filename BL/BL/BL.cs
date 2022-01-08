@@ -58,6 +58,7 @@ namespace BL
                 initializeDrone();
             }
             catch (Exception) { Console.WriteLine("was a problem in the initialize"); }
+
         }
         /// <summary>
         /// initialize the list of drones
@@ -115,6 +116,8 @@ namespace BL
                 if (DroneNotInDelivery(drone))//If the drone does not ship
                 {
                     drone.Status = (DroneStatus)random.Next(0, 2);//Maintenance or availability
+                    try { dl.ReleaseDroneFromeCharge(drone.Id); }
+                    catch (DO.DroneChargeException) { }
                     if (drone.Status == DroneStatus.Maintenance)
                     {
                         //the location is in random station

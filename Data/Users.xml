@@ -18,4 +18,10 @@
     <Password>123</Password>
     <IsManager>true</IsManager>
   </User>
+  <User>
+    <Id xsi:nil="true" />
+    <UserName />
+    <Password />
+    <IsManager>true</IsManager>
+  </User>
 </ArrayOfUser>

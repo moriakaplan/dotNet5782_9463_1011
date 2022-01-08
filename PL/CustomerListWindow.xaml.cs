@@ -41,9 +41,5 @@ namespace PL
             customerToListDataGrid.DataContext = blObject.GetCustomersList();
         }
 
-        private void customerToListDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }
