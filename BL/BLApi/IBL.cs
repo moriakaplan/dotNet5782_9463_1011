@@ -138,6 +138,10 @@ namespace BLApi
         IEnumerable<StationToList> GetListOfStationsWithAvailableCargeSlots();
         #endregion display
 
+        #region delete
+        void DeleteParcel(int id);
+        #endregion
+
         #region users functions
         int GetUserId(string name, string password);
         bool ExistManager(string name, string password);

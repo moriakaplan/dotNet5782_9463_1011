@@ -69,11 +69,11 @@
             <TextBox x:Name="txtLongi" Text="{Binding  Path=CurrentLocation.Longi}" Grid.Row="1" Grid.Column="1" Margin="10" IsEnabled="false"/>
         </Grid>
         <Button x:Name="add" Content="Add The &#xD;&#xA;Drone" Grid.Row="9" Grid.Column="1"  Click="AddDrone_Click"
-                HorizontalAlignment="Left" VerticalAlignment="Center" Width="78"/>
+                HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Height="60"/>
         <Button x:Name="options" Content="options" Grid.Row="9" Grid.Column="1"
-                HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="17,0,0,0"/>
+                HorizontalAlignment="Left" VerticalAlignment="Center" Width="auto" Height="60" Margin="17,0,0,0"/>
         <Button x:Name="update" Content="update the&#xD;&#xA;model" Click="UpdateDroneModel" Grid.Row="9"
-                HorizontalAlignment="Right" VerticalAlignment="Center" Width="78"/>
+                HorizontalAlignment="Right" VerticalAlignment="Center" Width="78" Height="60"/>
         <Button x:Name="charge" Content="send drone&#xD;&#xA;to charge" Click="SendDroneToCharge" Grid.Column="1" Grid.Row="9" 
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="114,0,0,0" Visibility="Hidden"/>
 

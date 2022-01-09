@@ -10,6 +10,16 @@ namespace BL
 {
     internal partial class BL
     {
+        public void DeleteParcel(int id)
+        {
+            Parcel pa = GetParcel(id);
+            if (pa.AssociateTime == null)
+            {
+                try { dl.DeleteParcel(id); }
+                catch (DO.ParcelException) { throw new NotExistIDException(""); }
+            }
+            else throw new DeleteException($"parcel {id} can't be deleted");
+        }
         public int AddParcelToDelivery(int senderId, int targetId, WeightCategories weight, Priorities pri)
         {
             DO.Parcel idalParcel = new DO.Parcel

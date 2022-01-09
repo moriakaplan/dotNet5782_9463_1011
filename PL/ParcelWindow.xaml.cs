@@ -40,7 +40,7 @@ namespace PL
             //txtAssociateTime.Text = parcel.AssociateTime.ToString();
             //txtPickUpTime.Text = parcel.PickUpTime.ToString();
             //txtDeliverTime.Text = parcel.DeliverTime.ToString();
-            if (parcel.Drone == null) delete.Visibility = Visibility.Visible;
+            if (parcel.Drone != null) delete.Visibility = Visibility.Hidden;
 
             options.Content = "Update Parcel Data";
             options.Click -= AddParcel;
@@ -64,6 +64,7 @@ namespace PL
             txtAssociateTime.Visibility = Visibility.Collapsed;
             txtPickUpTime.Visibility = Visibility.Collapsed;
             txtDeliverTime.Visibility = Visibility.Collapsed;
+            delete.Visibility = Visibility.Hidden;
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
             var customersId = blObject.GetCustomersList().Select(x => x.Id);
@@ -120,5 +121,23 @@ namespace PL
         {
             txtSender.ItemsSource = blObject.GetCustomersList().Select(x => x.Id).Where(x => x != (int)txtTarget.SelectedItem);
         }
+
+        private void DeleteParcel(object sender, RoutedEventArgs e)
+        {
+             MessageBoxResult mb= MessageBox.Show("Do you realy want to delete the parcel?", "delete parcel", MessageBoxButton.YesNo);
+             if (mb == MessageBoxResult.Yes)
+             {
+                try
+                {
+
+                    blObject.DeleteParcel(int.Parse(txtId.Text));
+                    MessageBox.Show("The parcel deleted successfully");
+                    this.Close();
+                }
+                catch (NotExistIDException) { MessageBox.Show("something strange"); }
+                catch (DeleteException) { MessageBox.Show("the parcel can't be deleted. apperently it associated to a drone."); }
+            }
+        }
+            
     }
 }
