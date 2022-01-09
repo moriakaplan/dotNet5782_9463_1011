@@ -41,10 +41,10 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void StatusFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void statusFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (StatusFilter.SelectedIndex == -1) return;
-            if (WeightFilter.SelectedItem != null) StatusAndWeightFilter(sender, e);
+            if (WeightFilter.SelectedItem != null) statusAndWeightFilter(sender, e);
             else
             {
                 DroneStatus status = (DroneStatus)StatusFilter.SelectedItem;
@@ -58,10 +58,10 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void WeightFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void weightFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (WeightFilter.SelectedIndex == -1) return;
-            if (StatusFilter.SelectedItem != null) StatusAndWeightFilter(sender, e);
+            if (StatusFilter.SelectedItem != null) statusAndWeightFilter(sender, e);
             else
             {
                 WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
@@ -75,7 +75,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void StatusAndWeightFilter(object sender, SelectionChangedEventArgs e)
+        private void statusAndWeightFilter(object sender, SelectionChangedEventArgs e)
         {
             DroneStatus status = (DroneStatus)StatusFilter.SelectedItem;
             WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
@@ -103,10 +103,10 @@ namespace PL
         {
             new DroneWindow(blObject).ShowDialog();
             //update the drones list
-            if (StatusFilter.SelectedItem != null) StatusFilter_SelectionChanged(StatusFilter, null);
+            if (StatusFilter.SelectedItem != null) statusFilter_SelectionChanged(StatusFilter, null);
             else
             {
-                if (WeightFilter.SelectedItem != null) WeightFilter_SelectionChanged(WeightFilter, null);
+                if (WeightFilter.SelectedItem != null) weightFilter_SelectionChanged(WeightFilter, null);
                 else DroneListView.ItemsSource = blObject.GetDronesList();
             }
         }
@@ -119,10 +119,10 @@ namespace PL
         {
             new DroneWindow(blObject, ((BO.DroneToList)DroneListView.SelectedItem).Id).ShowDialog();
             //update the drones list
-            if (StatusFilter.SelectedItem != null) StatusFilter_SelectionChanged(StatusFilter, null);
+            if (StatusFilter.SelectedItem != null) statusFilter_SelectionChanged(StatusFilter, null);
             else
             {
-                if (WeightFilter.SelectedItem != null) WeightFilter_SelectionChanged(WeightFilter, null);
+                if (WeightFilter.SelectedItem != null) weightFilter_SelectionChanged(WeightFilter, null);
                 else DroneListView.ItemsSource = blObject.GetDronesList();
             }
         }

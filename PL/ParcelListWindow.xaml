@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ParcelListWindow" Height="auto" Width="800"
+        Title="ParcelListWindow" Height="199" Width="800"
         Closing="DataWindow_Closing">
     <Grid >
         <Grid.RowDefinitions>
@@ -13,7 +13,20 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="parcelToListDataGrid" Grid.Row="1"  AutoGenerateColumns="False" EnableRowVirtualization="True" 
+        <Grid Name="UpGrid" Height="auto" Grid.Row="1" Width="auto" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+            <Label Content="Filter By Status:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label Content="Filter By Max Weight:" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="53,0,0,0"/>
+            <ComboBox x:Name="StatusFilter" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" SelectionChanged="statusFilter_SelectionChanged" Grid.ColumnSpan="2" Margin="88,0,0,0"/>
+            <ComboBox x:Name="WeightFilter" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" SelectionChanged="weightFilter_SelectionChanged" Margin="18,0,0,0"/>
+        </Grid>
+        <DataGrid x:Name="parcelToListDataGrid" Grid.Row="2"  AutoGenerateColumns="False" EnableRowVirtualization="True" 
                   ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" MouseDoubleClick="ViewParcel" >
             <!--<DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
@@ -29,6 +42,6 @@
                 <DataGridTextColumn x:Name="weightColumn" Binding="{Binding Weight}" Header="Weight"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Add Parcel" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Click="AddParcel"/>
+        <Button Content="Add Parcel" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Click="AddParcel" Margin="0,48,0,0"  />
     </Grid>
 </Window>

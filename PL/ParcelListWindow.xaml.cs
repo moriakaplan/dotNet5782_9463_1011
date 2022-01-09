@@ -28,6 +28,8 @@ namespace PL
             blObject = obj;
             InitializeComponent();
             parcelToListDataGrid.DataContext= blObject.GetParcelsList();
+            StatusFilter.ItemsSource = Enum.GetValues(typeof(ParcelStatus));
+            WeightFilter.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
 
         private void ViewParcel(object sender, MouseButtonEventArgs e)
@@ -48,5 +50,39 @@ namespace PL
             new ManagerWindow(blObject).Show();
         }
 
+        private void weightFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+            if (WeightFilter.SelectedIndex == -1) return;
+            if (StatusFilter.SelectedItem != null) statusAndWeightFilter(sender, e);
+            else
+            {
+                WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
+                parcelToListDataGrid.ItemsSource = blObject.GetParcelsList().Where(x => x.Weight == weight)
+                    .OrderBy(x => x.Id)
+                    .OrderBy(x => x.Status);
+            }
+        }
+
+        private void statusFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (StatusFilter.SelectedIndex == -1) return;
+            if (WeightFilter.SelectedItem != null) statusAndWeightFilter(sender, e);
+            else
+            {
+                ParcelStatus status = (ParcelStatus)StatusFilter.SelectedItem;
+                parcelToListDataGrid.DataContext = blObject.GetParcelsList().Where(x => x.Status == status)
+                    .OrderBy(x => x.Id)
+                    .OrderBy(x => x.Status);
+            }
+        }
+        private void statusAndWeightFilter(object sender, SelectionChangedEventArgs e)
+        {
+            ParcelStatus status = (ParcelStatus)StatusFilter.SelectedItem;
+            WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
+            parcelToListDataGrid.ItemsSource = blObject.GetParcelsList().Where(x => (x.Status == status) && (x.Weight == weight))
+                    .OrderBy(x => x.Id)
+                    .OrderBy(x => x.Status);
+        }
     }
 }
