@@ -72,4 +72,16 @@
     <PickUpTime xsi:nil="true" />
     <DeliverTime xsi:nil="true" />
   </Parcel>
+  <Parcel>
+    <Id>10000001</Id>
+    <Senderld>222222222</Senderld>
+    <TargetId>333333333</TargetId>
+    <Droneld>0</Droneld>
+    <Weight>Easy</Weight>
+    <Priority>Emergency</Priority>
+    <CreateTime>2022-01-09T16:33:17.3622221+02:00</CreateTime>
+    <AssociateTime xsi:nil="true" />
+    <PickUpTime xsi:nil="true" />
+    <DeliverTime xsi:nil="true" />
+  </Parcel>
 </ArrayOfParcel>

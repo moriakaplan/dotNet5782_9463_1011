@@ -14,4 +14,18 @@
     <Longitude>33</Longitude>
     <Lattitude>33</Lattitude>
   </Customer>
+  <Customer>
+    <Id>222222222</Id>
+    <Name>naty</Name>
+    <Phone>0909090909</Phone>
+    <Longitude>32</Longitude>
+    <Lattitude>32.12</Lattitude>
+  </Customer>
+  <Customer>
+    <Id>333333333</Id>
+    <Name>efrat</Name>
+    <Phone>0888888888</Phone>
+    <Longitude>32</Longitude>
+    <Lattitude>32.121</Lattitude>
+  </Customer>
 </ArrayOfCustomer>

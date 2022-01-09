@@ -159,12 +159,14 @@ namespace BL
             {
                 message = $"the drone {droneId} is not in maintenance so it can't be released from charging"
             };
+            DO.DroneCharge dc;
             try
             {
+                dc = dl.GetDroneChargesList().Where(x => x.DroneId == droneId).Single();//לא עובד
                 dl.ReleaseDroneFromeCharge(droneId); //Deletes the charging entity and adds 1 to the charging slots of the station
             }
             catch (DO.DroneChargeException ex) { throw new NotExistIDException(ex.Message); }
-            DO.DroneCharge dc= dl.GetDroneChargesList().Where(x => x.DroneId == droneId).Single();
+            //אמור להיות פה
             TimeSpan time =DateTime.Now - dc.StartedChargeTime;
             double b = time.TotalSeconds * ChargeRatePerHour;
             drone.Battery += (double)(b / 3600);

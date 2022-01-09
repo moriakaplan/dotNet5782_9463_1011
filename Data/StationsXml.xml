@@ -5,7 +5,7 @@
     <Name>big station</Name>
     <Longitude>32</Longitude>
     <Lattitude>32</Lattitude>
-    <ChargeSlots>20</ChargeSlots>
+    <ChargeSlots>21</ChargeSlots>
   </Station>
   <Station>
     <Id>2345</Id>
@@ -19,6 +19,6 @@
     <Name>station3</Name>
     <Longitude>32.1</Longitude>
     <Lattitude>32</Lattitude>
-    <ChargeSlots>20</ChargeSlots>
+    <ChargeSlots>19</ChargeSlots>
   </Station>
 </ArrayOfStation>
