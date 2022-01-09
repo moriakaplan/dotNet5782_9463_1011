@@ -31,15 +31,11 @@ namespace PL
 
             Parcel parcel = blObject.GetParcel(Id);
             DataContext = parcel;
-            //txtId.Text = parcel.Id.ToString();
-            //txtDrone.Text = parcel.Drone.Id.ToString();
-            //txtPriority.Text = parcel.Priority.ToString();
-            //txtTarget.Text = parcel.Target.ToString();
-            //txtWeight.Text = parcel.Weight.ToString();
-            //txtCreateTime.Text = parcel.CreateTime.ToString();
-            //txtAssociateTime.Text = parcel.AssociateTime.ToString();
-            //txtPickUpTime.Text = parcel.PickUpTime.ToString();
-            //txtDeliverTime.Text = parcel.DeliverTime.ToString();
+            txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
+            var customersId = blObject.GetCustomersList().Select(x => x.Id);
+            txtSender.ItemsSource = customersId;
+            txtTarget.ItemsSource = customersId;
             if (parcel.Drone != null) delete.Visibility = Visibility.Hidden;
 
             options.Content = "Update Parcel Data";
