@@ -78,9 +78,9 @@ namespace BL
                     Model = drone.Model
                 })
                 .ToList();
-            foreach (DroneToList drone in lstdrn)//^^^^
+            foreach (DroneToList drone in lstdrn)
             {
-                foreach (DO.Parcel parcel in dl.GetParcelsList())//^^^^
+                foreach (DO.Parcel parcel in dl.GetParcelsList())
                 {
                     Location locOfCus = GetCustomer(parcel.Senderld).Location;
                     if ((parcel.Droneld == drone.Id) && (parcel.AssociateTime != null) && (parcel.DeliverTime == null)) //If there is a parcel that has not yet been delivered but the drone is associated
@@ -115,7 +115,7 @@ namespace BL
                 }
                 if (DroneNotInDelivery(drone))//If the drone does not ship
                 {
-                    drone.Status = (DroneStatus)random.Next(0, 2);//Maintenance or availability
+                    //drone.Status = (DroneStatus)random.Next(0, 2);//Maintenance or availability
                     try { dl.ReleaseDroneFromeCharge(drone.Id); }
                     catch (DO.DroneChargeException) { }
                     if (drone.Status == DroneStatus.Maintenance)

@@ -5,9 +5,4 @@
     <Model>moria</Model>
     <MaxWeight>Heavy</MaxWeight>
   </Drone>
-  <Drone>
-    <Id>234567</Id>
-    <Model>moria</Model>
-    <MaxWeight>Heavy</MaxWeight>
-  </Drone>
 </ArrayOfDrone>

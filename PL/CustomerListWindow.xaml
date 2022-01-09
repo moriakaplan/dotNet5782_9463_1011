@@ -13,7 +13,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="customerToListDataGrid" Grid.Row="1" IsReadOnly="true"
+        <DataGrid x:Name="customerToListDataGrid" Grid.Row="1" IsReadOnly="True"
                   AutoGenerateColumns="False" EnableRowVirtualization="True" Height="auto"
                   ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" MouseDoubleClick="ViewCustomer">
             <!--<DataGrid.Resources>

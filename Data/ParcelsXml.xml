@@ -2,72 +2,24 @@
 <ArrayOfParcel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Parcel>
     <Id>10000001</Id>
-    <Senderld>123456789</Senderld>
-    <TargetId>111111111</TargetId>
-    <Droneld>0</Droneld>
+    <Senderld>222222222</Senderld>
+    <TargetId>333333333</TargetId>
+    <Droneld>123456</Droneld>
     <Weight>Easy</Weight>
     <Priority>Emergency</Priority>
-    <CreateTime>2022-01-07T12:37:14.3585456+02:00</CreateTime>
-    <AssociateTime xsi:nil="true" />
-    <PickUpTime xsi:nil="true" />
-    <DeliverTime xsi:nil="true" />
+    <CreateTime>2022-01-09T17:11:16.0127069+02:00</CreateTime>
+    <AssociateTime>2022-01-09T17:11:35.0392041+02:00</AssociateTime>
+    <PickUpTime>2022-01-09T17:11:47.7661175+02:00</PickUpTime>
+    <DeliverTime>2022-01-09T17:13:38.2489385+02:00</DeliverTime>
   </Parcel>
   <Parcel>
     <Id>10000001</Id>
-    <Senderld>111111111</Senderld>
-    <TargetId>123456789</TargetId>
+    <Senderld>333333333</Senderld>
+    <TargetId>222222222</TargetId>
     <Droneld>0</Droneld>
     <Weight>Medium</Weight>
-    <Priority>Regular</Priority>
-    <CreateTime>2022-01-09T01:02:42.1919325+02:00</CreateTime>
-    <AssociateTime xsi:nil="true" />
-    <PickUpTime xsi:nil="true" />
-    <DeliverTime xsi:nil="true" />
-  </Parcel>
-  <Parcel>
-    <Id>10000002</Id>
-    <Senderld>111111111</Senderld>
-    <TargetId>123456789</TargetId>
-    <Droneld>0</Droneld>
-    <Weight>Medium</Weight>
-    <Priority>Regular</Priority>
-    <CreateTime>2022-01-09T01:02:45.8389219+02:00</CreateTime>
-    <AssociateTime xsi:nil="true" />
-    <PickUpTime xsi:nil="true" />
-    <DeliverTime xsi:nil="true" />
-  </Parcel>
-  <Parcel>
-    <Id>10000003</Id>
-    <Senderld>111111111</Senderld>
-    <TargetId>123456789</TargetId>
-    <Droneld>0</Droneld>
-    <Weight>Medium</Weight>
-    <Priority>Regular</Priority>
-    <CreateTime>2022-01-09T01:02:48.7289229+02:00</CreateTime>
-    <AssociateTime xsi:nil="true" />
-    <PickUpTime xsi:nil="true" />
-    <DeliverTime xsi:nil="true" />
-  </Parcel>
-  <Parcel>
-    <Id>10000001</Id>
-    <Senderld>123456789</Senderld>
-    <TargetId>111111111</TargetId>
-    <Droneld>0</Droneld>
-    <Weight>Medium</Weight>
-    <Priority>Fast</Priority>
-    <CreateTime>2022-01-09T13:29:36.9790686+02:00</CreateTime>
-    <AssociateTime xsi:nil="true" />
-    <PickUpTime xsi:nil="true" />
-    <DeliverTime xsi:nil="true" />
-  </Parcel>
-  <Parcel>
-    <Id>10000002</Id>
-    <Senderld>123456789</Senderld>
-    <TargetId>111111111</TargetId>
-    <Droneld>0</Droneld>
-    <Weight>Medium</Weight>
-    <Priority>Fast</Priority>
-    <CreateTime>2022-01-09T13:29:40.8345506+02:00</CreateTime>
+    <Priority>Emergency</Priority>
+    <CreateTime>2022-01-10T00:23:40.8081286+02:00</CreateTime>
     <AssociateTime xsi:nil="true" />
     <PickUpTime xsi:nil="true" />
     <DeliverTime xsi:nil="true" />

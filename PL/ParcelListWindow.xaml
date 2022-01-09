@@ -9,9 +9,10 @@
         Closing="DataWindow_Closing">
     <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
