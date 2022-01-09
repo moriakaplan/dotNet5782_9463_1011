@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="UserWindow" Height="450" Width="800">
     <Window.Background>
-        <ImageBrush ImageSource="\Images\background1.jpg"/>
+        <ImageBrush ImageSource="\Images\background3.jpg"/>
     </Window.Background>
     <Grid>
 
@@ -20,7 +20,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Button Content="send new parcel" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Height="42" Margin="222,39,0,0" VerticalAlignment="Top" Width="147" Click="sendNewParcel"/>
-        <TextBox Name="txtId" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"  Margin="60,55,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="91"/>
+        <TextBox Name="txtId" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"  Margin="60,43,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="91"/>
         <TextBox Name="txtname" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left"  Margin="60,73,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="91"/>
 
         <Label Content="id:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Height="24" Margin="33,45,0,0" VerticalAlignment="Top" Width="20"/>

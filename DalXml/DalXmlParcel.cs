@@ -66,7 +66,7 @@ namespace Dal
                     p.AssociateTime = DateTime.Now;//update the time that the parcel was scheduled
                     parcels[i] = p;
                     XmlTools.SaveListToXmlSerializer<Drone>(drones, dronesPath);
-                    XmlTools.SaveListToXmlSerializer<Parcel>(parcels, dronesPath); 
+                    XmlTools.SaveListToXmlSerializer<Parcel>(parcels, parcelsPath); 
                     return;
                 }
             }
@@ -82,7 +82,7 @@ namespace Dal
                     Parcel p = parcels[i];
                     p.PickUpTime = DateTime.Now;//update the time that the drone pick up the parcel
                     parcels[i] = p;
-                    XmlTools.SaveListToXmlSerializer<Parcel>(parcels, dronesPath);
+                    XmlTools.SaveListToXmlSerializer<Parcel>(parcels, parcelsPath);
                     return;
                 }
             }
@@ -98,7 +98,7 @@ namespace Dal
                     Parcel p = parcels[i];
                     p.DeliverTime = DateTime.Now;//update the time that the drone pick up the parcel
                     parcels[i] = p;
-                    XmlTools.SaveListToXmlSerializer<Parcel>(parcels, dronesPath);
+                    XmlTools.SaveListToXmlSerializer<Parcel>(parcels, parcelsPath);
                     return;
                 }
             }

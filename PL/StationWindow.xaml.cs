@@ -134,7 +134,7 @@ namespace PL
 
         private void viewDrone(object sender, MouseButtonEventArgs e)
         {
-            new DroneWindow(blObject, ((BO.DroneToList)gridDronesInCharge.SelectedItem).Id).ShowDialog();
+            new DroneWindow(blObject, ((BO.DroneInCharge)gridDronesInCharge.SelectedItem).Id).ShowDialog();
         }
 
         private void txtDronesInCharge_SelectionChanged(object sender, SelectionChangedEventArgs e)
