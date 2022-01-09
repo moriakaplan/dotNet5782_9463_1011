@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using BLApi;
 using BO;
 using System.ComponentModel;
+using System.Xml.Linq;
 
 namespace PL
 {
@@ -28,7 +29,8 @@ namespace PL
             InitializeComponent();
             blObject = obj;
             InitializeComponent();
-
+            grid.IsEnabled = false;
+            delete.IsEnabled = true;
             Parcel parcel = blObject.GetParcel(Id);
             DataContext = parcel;
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
@@ -37,16 +39,15 @@ namespace PL
             txtSender.ItemsSource = customersId;
             txtTarget.ItemsSource = customersId;
             if (parcel.Drone != null) delete.Visibility = Visibility.Hidden;
-
-            options.Content = "Update Parcel Data";
-            options.Click -= AddParcel;
-            options.Click += UpdateParcel;
+            add.Visibility = Visibility.Hidden;
+            
         }
 
         public ParcelWindow(IBL obj) //add
         {
             InitializeComponent();
             blObject = obj;
+            //(this.Resources.FindName("myVisibility") as TextBlock).Visibility= Visibility.Collapsed;
             lblId.Visibility = Visibility.Collapsed;
             lblDrone.Visibility = Visibility.Collapsed;
             lblCreateTime.Visibility = Visibility.Collapsed;
@@ -66,18 +67,13 @@ namespace PL
             var customersId = blObject.GetCustomersList().Select(x => x.Id);
             txtSender.ItemsSource = customersId;
             txtTarget.ItemsSource = customersId;
-            options.Content = "Add Parcel";
-            options.Click -= UpdateParcel;
-            options.Click += AddParcel;
+            
         }
         public ParcelWindow(IBL obj, bool isFromSender, int cusId) //updat
         {
             InitializeComponent();
             blObject = obj;
 
-            options.Content = "Add Parcel";
-            options.Click -= UpdateParcel;
-            options.Click += AddParcel;
         }
 
         private void viewSender(object sender, MouseButtonEventArgs e)
@@ -100,12 +96,9 @@ namespace PL
 
         private void AddParcel(object sender, RoutedEventArgs e)
         {
-            blObject.AddParcelToDelivery((int)txtSender.SelectedItem, (int)txtTarget.SelectedItem, (WeightCategories)txtWeight.SelectedItem, (Priorities)txtPriority.SelectedItem);
-        }
-
-        private void UpdateParcel(object sender, RoutedEventArgs e)
-        {
-
+            int id = blObject.AddParcelToDelivery((int)txtSender.SelectedItem, (int)txtTarget.SelectedItem, (WeightCategories)txtWeight.SelectedItem, (Priorities)txtPriority.SelectedItem);
+            MessageBox.Show($"your parcel added successfuly and got the number {id}");
+            this.Close();
         }
 
         private void txtSender_SelectionChanged(object sender, SelectionChangedEventArgs e)

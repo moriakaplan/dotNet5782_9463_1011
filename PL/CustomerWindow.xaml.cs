@@ -34,11 +34,6 @@ namespace PL
                 return;
             }
             DataContext = cus;
-            //txtId.Text = cus.Id.ToString();
-            //txtName.Text = cus.Name;
-            //txtLatti.Text = cus.Location.Latti.ToString();
-            //txtLongi.Text = cus.Location.Longi.ToString();
-            //txtPhone.Text = cus.Phone;
             txtParcelsFrom.DataContext = cus.parcelFrom.Select(x => x.Id);
             txtParcelsTo.DataContext = cus.parcelTo.Select(x => x.Id);
 
