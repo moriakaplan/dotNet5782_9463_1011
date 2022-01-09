@@ -37,16 +37,16 @@ namespace Dal
         }
         public void DeleteParcel(int parcelId)
         {
-            List<Drone> drones = XmlTools.LoadListFromXmlSerializer<Drone>(dronesPath);
+            List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);
             try
             {
-                drones.Remove(GetDrone(parcelId));
+                parcels.Remove(GetParcel(parcelId));
             }
             catch (ArgumentNullException)
             {
                 throw new ParcelException($"id: {parcelId} does not exist");
             }
-            XmlTools.SaveListToXmlSerializer<Drone>(drones, dronesPath);
+            XmlTools.SaveListToXmlSerializer<Parcel>(parcels, parcelsPath);
 
         }
         public void AssignParcelToDrone(int parcelId, int droneId)
