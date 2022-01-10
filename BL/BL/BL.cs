@@ -48,12 +48,16 @@ namespace BL
             dl = DalFactory.GetDal();
 
             //lstdrn = (List<DroneToList>)dl.DisplayListOfDrones();
-            double[] batteryData = dl.GetBatteryData();
-            BatteryForAvailable = batteryData[0];
-            BatteryForEasy = batteryData[1];
-            BatteryForMedium = batteryData[2];
-            BatteryForHeavy = batteryData[3];
-            ChargeRatePerHour = batteryData[4];
+            lock(dl)
+            {
+                double[] batteryData = dl.GetBatteryData();
+                BatteryForAvailable = batteryData[0];
+                BatteryForEasy = batteryData[1];
+                BatteryForMedium = batteryData[2];
+                BatteryForHeavy = batteryData[3];
+                ChargeRatePerHour = batteryData[4];
+            }
+           
             try
             {
                 initializeDrone();
@@ -66,72 +70,75 @@ namespace BL
         /// </summary>
         private void initializeDrone()
         {
-            lstdrn = dl.GetDronesList()
-                .Select(drone=>new DroneToList
-                {
-                    Id = drone.Id,
-                    MaxWeight = (WeightCategories)drone.MaxWeight,
-                    Model = drone.Model
-                })
-                .ToList();
+            lock(dl)
+            {
+                lstdrn = dl.GetDronesList()
+               .Select(drone => new DroneToList
+               {
+                   Id = drone.Id,
+                   MaxWeight = (WeightCategories)drone.MaxWeight,
+                   Model = drone.Model
+               })
+               .ToList();
+            }
             foreach (DroneToList drone in lstdrn)
             {
-                foreach (DO.Parcel parcel in dl.GetParcelsList())
+                lock(dl)
                 {
-                    Location locOfCus = GetCustomer(parcel.Senderld).Location;
-                    if ((parcel.Droneld == drone.Id) && (parcel.AssociateTime != null) && (parcel.DeliverTime == null)) //If there is a parcel that has not yet been delivered but the drone is associated
+                    foreach (DO.Parcel parcel in dl.GetParcelsList())
                     {
-                        if (parcel.PickUpTime == null) //If the parcel was associated but not picked up
+                        Location locOfCus = GetCustomer(parcel.Senderld).Location;
+                        if ((parcel.Droneld == drone.Id) && (parcel.AssociateTime != null) && (parcel.DeliverTime == null)) //If there is a parcel that has not yet been delivered but the drone is associated
                         {
-                            drone.Status = DroneStatus.Associated;
-                            drone.CurrentLocation = closestStation(locOfCus);
-                        }
-                        else //If the parcel was picked up but not delivered
-                        {
-                            drone.Status = DroneStatus.Delivery;
-                            drone.CurrentLocation = locOfCus;//The location of the drone is in the location of the sender
-                        }
+                            if (parcel.PickUpTime == null) //If the parcel was associated but not picked up
+                            {
+                                drone.Status = DroneStatus.Associated;
+                                drone.CurrentLocation = closestStation(locOfCus);
+                            }
+                            else //If the parcel was picked up but not delivered
+                            {
+                                drone.Status = DroneStatus.Delivery;
+                                drone.CurrentLocation = locOfCus;//The location of the drone is in the location of the sender
+                            }
 
-                        double batteryForKil = 0;
-                        DO.WeightCategories weight = parcel.Weight;
-                        if (weight == DO.WeightCategories.Easy) batteryForKil = BatteryForEasy;
-                        if (weight == DO.WeightCategories.Medium) batteryForKil = BatteryForMedium;
-                        if (weight == DO.WeightCategories.Heavy) batteryForKil = BatteryForHeavy;
+                            double batteryForKil = 0;
+                            DO.WeightCategories weight = parcel.Weight;
+                            if (weight == DO.WeightCategories.Easy) batteryForKil = BatteryForEasy;
+                            if (weight == DO.WeightCategories.Medium) batteryForKil = BatteryForMedium;
+                            if (weight == DO.WeightCategories.Heavy) batteryForKil = BatteryForHeavy;
 
-                        double batteryNeeded = BatteryForAvailable * distance(drone.CurrentLocation, locOfCus) + //=0 if the drone already took the parcel
-                            batteryForKil * distance(locOfCus, closestStation(locOfCus));
-                        //double batteryNeeded = 
-                        //    minBattery(drone.Id, drone.CurrentLocation, locOfCus) +
-                        //    minBattery(drone.Id, locOfCus, closestStation(locOfCus));
-                        if (batteryNeeded > 100) throw new DroneCantTakeParcelException("the drone has not enugh battery for take the parcel he suppose to take.");
-                        drone.Battery = random.Next((int)batteryNeeded /*+ 1*/, 100) + random.NextDouble();
-                        drone.ParcelId = parcel.Id;
-                        break;
+                            double batteryNeeded = BatteryForAvailable * distance(drone.CurrentLocation, locOfCus) + //=0 if the drone already took the parcel
+                                batteryForKil * distance(locOfCus, closestStation(locOfCus));
+                            //double batteryNeeded = 
+                            //    minBattery(drone.Id, drone.CurrentLocation, locOfCus) +
+                            //    minBattery(drone.Id, locOfCus, closestStation(locOfCus));
+                            if (batteryNeeded > 100) throw new DroneCantTakeParcelException("the drone has not enugh battery for take the parcel he suppose to take.");
+                            drone.Battery = random.Next((int)batteryNeeded /*+ 1*/, 100) + random.NextDouble();
+                            drone.ParcelId = parcel.Id;
+                            break;
+                        }
                     }
                 }
+               
                 if (DroneNotInDelivery(drone))//If the drone does not ship
                 {
                     //drone.Status = (DroneStatus)random.Next(0, 2);//Maintenance or availability
-                    try { dl.ReleaseDroneFromeCharge(drone.Id); }
+                    try { lock (dl) { dl.ReleaseDroneFromeCharge(drone.Id); } }
                     catch (DO.DroneChargeException) { }
                     if (drone.Status == DroneStatus.Maintenance)
                     {
                         //the location is in random station
-                        IEnumerable<DO.Station> stations = dl.GetStationsList();
-                        int index = random.Next(0, stations.Count());
-                        DO.Station stationForLocation = stations.ElementAt(index);
-                        drone.CurrentLocation = new Location { Latti = stationForLocation.Lattitude, Longi = stationForLocation.Longitude };
-                        drone.Battery = random.Next(0, 19) + random.NextDouble();//random battery mode between 0 and 20
-                        dl.SendDroneToCharge(drone.Id, stationForLocation.Id);
+                        lock (dl) 
+                        { IEnumerable<DO.Station> stations = dl.GetStationsList();
+                            int index = random.Next(0, stations.Count());
+                            DO.Station stationForLocation = stations.ElementAt(index);
+                            drone.CurrentLocation = new Location { Latti = stationForLocation.Lattitude, Longi = stationForLocation.Longitude };
+                            drone.Battery = random.Next(0, 19) + random.NextDouble();//random battery mode between 0 and 20
+                            dl.SendDroneToCharge(drone.Id, stationForLocation.Id);
+                        }    
                     }
                     if (drone.Status == DroneStatus.Available)//the drone is available
                     {
-                        //the location is in random customer location that received parcels
-                        //List<CustomerToList> customersWhoGotParcels = new List<CustomerToList>();
-                        //foreach (CustomerToList cus in DisplayListOfCustomers())
-                        //{
-                        //    if (cus.numOfParclReceived > 0) { customersWhoGotParcels.Add(cus); }
-                        //}
                         IEnumerable<CustomerToList> customersWhoGotParcels = GetCustomersList().Where (x=>x.numOfParclReceived > 0);
                         int index = random.Next(0, customersWhoGotParcels.Count());
                         CustomerToList customerForLocation = customersWhoGotParcels.ElementAt(index);
@@ -148,16 +155,12 @@ namespace BL
         /// <returns></returns>
         private bool DroneNotInDelivery(DroneToList drone)
         {
-            //foreach (DO.Parcel parcel in dl.DisplayListOfParcels())
-            //{
-            //    if ((parcel.Droneld == drone.Id) && (parcel.DeliverTime == null)) //If the drone in shipment (already collected the parcel)) 
-            //    {
-            //        return false;
-            //    }
-            //}
-            //return true;
-            return dl.GetParcelsList()
-                   .Count(x => (x.Droneld == drone.Id) && (x.DeliverTime == null)) == 0;
+            lock(dl)
+            {
+                return dl.GetParcelsList()
+                  .Count(x => (x.Droneld == drone.Id) && (x.DeliverTime == null)) == 0;
+            }
+               
         }
         /// <summary>
         /// Finds the closest station to the location
@@ -236,7 +239,10 @@ namespace BL
         /// <returns></returns>
         private double distance(Location a, Location b)
         {
-            return dl.Distance(a.Latti, a.Longi, b.Latti, b.Longi);
+            lock (dl)
+            {
+                return dl.Distance(a.Latti, a.Longi, b.Latti, b.Longi);
+            }
         }
     }
 }

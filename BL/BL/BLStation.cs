@@ -103,18 +103,23 @@ namespace BL
         /// <returns></returns>
         private StationToList DisplayStationToList(int stationId)
         {
-            DO.Station dstation = dl.GetStation(stationId);
-            StationToList bstation = new StationToList
+            lock(dl)
             {
-                Id = dstation.Id,
-                Name = dstation.Name,
-            };
-            int count = dl.GetDroneChargesList()
-                        .Where(drCharge=>drCharge.StationId == stationId)
-                        .Count();
-            bstation.AvailableChargeSlots = dstation.ChargeSlots - count;
-            bstation.NotAvailableChargeSlots = count;
-            return bstation;
+                DO.Station dstation = dl.GetStation(stationId);
+                StationToList bstation = new StationToList
+                {
+                    Id = dstation.Id,
+                    Name = dstation.Name,
+                };
+                int count = dl.GetDroneChargesList()
+                            .Where(drCharge => drCharge.StationId == stationId)
+                            .Count();
+                bstation.AvailableChargeSlots = dstation.ChargeSlots - count;
+                bstation.NotAvailableChargeSlots = count;
+                return bstation;
+
+            }
+            
         }  
     }
 }

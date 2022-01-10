@@ -201,50 +201,58 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelToList> GetParcelsList()
         {
-            
-            IEnumerable<DO.Parcel> listFromDal = dl.GetParcelsList();//lock?***
-            ParcelStatus st;
-            foreach (DO.Parcel parcel in listFromDal)
+            lock(dl)
             {
-                if (parcel.DeliverTime != null) st = ParcelStatus.Delivered;
-                else
+                IEnumerable<DO.Parcel> listFromDal = dl.GetParcelsList();
+                ParcelStatus st;
+                foreach (DO.Parcel parcel in listFromDal)
                 {
-                    if (parcel.PickUpTime != null) st = ParcelStatus.PickedUp;
+                    if (parcel.DeliverTime != null) st = ParcelStatus.Delivered;
                     else
                     {
-                        if (parcel.AssociateTime != null) st = ParcelStatus.Associated;
-                        else st = ParcelStatus.Created;
+                        if (parcel.PickUpTime != null) st = ParcelStatus.PickedUp;
+                        else
+                        {
+                            if (parcel.AssociateTime != null) st = ParcelStatus.Associated;
+                            else st = ParcelStatus.Created;
+                        }
                     }
+                    ParcelToList answer = new ParcelToList
+                    {
+                        Id = parcel.Id,
+                        Priority = (Priorities)parcel.Priority,
+                        SenderName = GetCustomer(parcel.Senderld).Name,
+                        TargetName = GetCustomer(parcel.TargetId).Name,
+                        Status = st,
+                        Weight = (WeightCategories)parcel.Weight
+                    };
+                    yield return answer;
                 }
-                ParcelToList answer = new ParcelToList
-                {
-                    Id = parcel.Id,
-                    Priority = (Priorities)parcel.Priority,
-                    SenderName = GetCustomer(parcel.Senderld).Name,
-                    TargetName = GetCustomer(parcel.TargetId).Name,
-                    Status = st,
-                    Weight = (WeightCategories)parcel.Weight
-                };
-                yield return answer;
+
             }
+            
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelToList> GetListOfUnassignedParcels()
         {
-            IEnumerable<DO.Parcel> listFromDal = dl.GetParcelsList(x=> x.AssociateTime == null);//lock?***
-            foreach (DO.Parcel parcel in listFromDal)
+            lock(dl)
             {
-                ParcelToList answer = new ParcelToList
+                IEnumerable<DO.Parcel> listFromDal = dl.GetParcelsList(x => x.AssociateTime == null);
+                foreach (DO.Parcel parcel in listFromDal)
                 {
-                    Id = parcel.Id,
-                    Priority = (Priorities)parcel.Priority,
-                    SenderName = GetCustomer(parcel.Senderld).Name,
-                    TargetName = GetCustomer(parcel.TargetId).Name,
-                    Status = ParcelStatus.Created,
-                    Weight = (WeightCategories)parcel.Weight
-                };
-                yield return answer;
+                    ParcelToList answer = new ParcelToList
+                    {
+                        Id = parcel.Id,
+                        Priority = (Priorities)parcel.Priority,
+                        SenderName = GetCustomer(parcel.Senderld).Name,
+                        TargetName = GetCustomer(parcel.TargetId).Name,
+                        Status = ParcelStatus.Created,
+                        Weight = (WeightCategories)parcel.Weight
+                    };
+                    yield return answer;
+                }
             }
+           
         }
 
         /// <summary>
