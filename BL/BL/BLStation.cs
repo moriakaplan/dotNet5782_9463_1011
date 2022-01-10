@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 using BLApi;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {
     internal partial class BL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(int id, string name, Location loc, int chargeSlots)
         {
             //creates a new station in the data layer
@@ -29,7 +31,8 @@ namespace BL
             {
                 throw new ExistIdException(ex.Message, "-station");
             }
-        }  
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(int id, string name, int cargeSlots)
         {
             DO.Station dstation = dl.GetStation(id);
@@ -43,7 +46,8 @@ namespace BL
                 dstation.ChargeSlots = cargeSlots;
             }
             dl.AddStation(dstation);
-        }    
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station GetStation(int stationId)
         {
             DO.Station dstation;
@@ -75,11 +79,13 @@ namespace BL
             bstation.AvailableChargeSlots = dstation.ChargeSlots - count;
             return bstation;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<StationToList> GetStationsList()
         {
             return from dstation in dl.GetStationsList()
                    select DisplayStationToList(dstation.Id);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<StationToList> GetListOfStationsWithAvailableCargeSlots()
         {
             return from dstation in dl.GetStationsList(x => x.ChargeSlots > 0)

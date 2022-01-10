@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 using BLApi;
+using System.Runtime.CompilerServices;
 
 
 namespace BL
 {
     internal partial class BL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(int id, string name, string phone, Location loc)
         {
             //creates a new customer in the data level
@@ -30,7 +32,8 @@ namespace BL
             {
                 throw new ExistIdException(ex.Message, "-customer");
             }
-        } 
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(int customerId, string name, string phone)
         {
             DO.Customer dCustomer;
@@ -50,7 +53,8 @@ namespace BL
             }
             dl.AddCustomer(dCustomer);
 
-        } 
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomer(int customerId)
         {
             DO.Customer dCustomer;
@@ -68,6 +72,7 @@ namespace BL
             bCustomer.parcelTo = getCustomerParcelTo(customerId);
             return bCustomer;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<CustomerToList> GetCustomersList()
         {
             //foreach (DO.Customer dCustomer in dl.DisplayListOfCustomers())

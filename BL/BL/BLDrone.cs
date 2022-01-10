@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 using BLApi;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {
     internal partial class BL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(int id, string model, WeightCategories weight, int stationId)
         {
             Location location = GetStation(stationId).Location;
@@ -40,6 +42,7 @@ namespace BL
             });//add drone to the list of the drone in the logical layer
             dl.SendDroneToCharge(id, stationId);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDroneModel(int id, string model)
         {
             //update the model in the logical layer
@@ -58,6 +61,7 @@ namespace BL
             ddrone.Model = model;
             dl.AddDrone(ddrone);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int droneId)
         {
             DroneToList droneFromList;
@@ -99,6 +103,7 @@ namespace BL
                 ParcelInT = parcel
             };
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void SendDroneToCharge(int droneId)
         {
             //DroneToList drone= new DroneToList();
@@ -142,6 +147,7 @@ namespace BL
             lstdrn.RemoveAt(index);
             lstdrn.Add(drone);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReleaseDroneFromeCharge(int droneId)
         {
             DroneToList drone;
@@ -176,6 +182,7 @@ namespace BL
             lstdrn.RemoveAt(index);
             lstdrn.Add(drone);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> GetDronesList(Func<DroneToList, bool> pre)
         {
             if (pre != null)
