@@ -14,10 +14,11 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(int id)
         {
+           
             Parcel pa = GetParcel(id);
             if (pa.AssociateTime == null)
             {
-                try { dl.DeleteParcel(id); }
+                try { lock (dl) { dl.DeleteParcel(id); } }
                 catch (DO.ParcelException) { throw new NotExistIDException(""); }
             }
             else throw new DeleteException($"parcel {id} can't be deleted");
@@ -39,8 +40,11 @@ namespace BL
             };
             try
             {
-                return dl.AddParcel(idalParcel);
-                //add the new Parcel to the list in the data level
+                lock(dl)
+                {
+                    return dl.AddParcel(idalParcel);
+                    //add the new Parcel to the list in the data level
+                }
             }
             catch (DO.ParcelException ex)
             {
@@ -56,7 +60,7 @@ namespace BL
             {
                 throw new DroneCantTakeParcelException($"drone {droneId} is not available so it cant take a new parcel");
             }
-            Parcel parcel = findClosestParcel(droneId);//אולי צריך שזה יהיה תנאי ביצירת רשימת החבילות?
+            Parcel parcel = findClosestParcel(droneId);
             Location locOfSender = GetCustomer(parcel.Sender.Id).Location;
             Location locOfTarget = GetCustomer(parcel.Target.Id).Location;
             double batteryNeeded =
@@ -69,7 +73,10 @@ namespace BL
             }
             try
             {
-                dl.AssignParcelToDrone(parcel.Id, droneId); //update drone and scheduled time in parcel
+                lock(dl)
+                {
+                    dl.AssignParcelToDrone(parcel.Id, droneId); //update drone and scheduled time in parcel
+                }
             }
             catch (DO.DroneException ex)
             {
@@ -106,7 +113,7 @@ namespace BL
                     if (batteryNeeded > drone.Battery) throw new DroneCantTakeParcelException("the battery of the drone is not enugh for pick the parcel");
                     drone.CurrentLocation = GetCustomer(parcelToPick.Sender.Id).Location;
                     drone.Status = DroneStatus.Delivery;
-                    try { dl.PickParcelByDrone(parcelToPick.Id); } //update pick up time in the parcel
+                    try { lock (dl) { dl.PickParcelByDrone(parcelToPick.Id); } } //update pick up time in the parcel
                     catch (DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
                     return;
                 }
@@ -130,7 +137,10 @@ namespace BL
                     drone.CurrentLocation = GetCustomer(parcelToDeliver.Target.Id).Location;
                     try
                     {
-                        dl.DeliverParcelToCustomer(GetDrone(droneId).ParcelInT.Id);//update the deliver time in the data layer
+                        lock(dl)
+                        {
+                            dl.DeliverParcelToCustomer(GetDrone(droneId).ParcelInT.Id);//update the deliver time in the data layer
+                        }
                     }
                     catch(DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
                     drone.Status = DroneStatus.Available;
@@ -145,7 +155,10 @@ namespace BL
             DroneInParcel drone = null;
             try
             {
-                parcelFromDal = dl.GetParcel(parcelId);
+                lock(dl)
+                {
+                    parcelFromDal = dl.GetParcel(parcelId);
+                }
             }
             catch (DO.ParcelException ex)
             {
@@ -188,7 +201,8 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelToList> GetParcelsList()
         {
-            IEnumerable<DO.Parcel> listFromDal = dl.GetParcelsList();
+            
+            IEnumerable<DO.Parcel> listFromDal = dl.GetParcelsList();//lock?***
             ParcelStatus st;
             foreach (DO.Parcel parcel in listFromDal)
             {
@@ -217,7 +231,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelToList> GetListOfUnassignedParcels()
         {
-            IEnumerable<DO.Parcel> listFromDal = dl.GetParcelsList(x=> x.AssociateTime == null);
+            IEnumerable<DO.Parcel> listFromDal = dl.GetParcelsList(x=> x.AssociateTime == null);//lock?***
             foreach (DO.Parcel parcel in listFromDal)
             {
                 ParcelToList answer = new ParcelToList
@@ -237,7 +251,6 @@ namespace BL
         /// Returns all parcels with the highest priority
         /// </summary>
         /// <returns></returns>
-        [MethodImpl(MethodImplOptions.Synchronized)]
         private IEnumerable<Parcel> findHighesPrioritiy()
         {
             Priorities temp = Priorities.Regular;//gets the highest priority 
