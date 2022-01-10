@@ -65,48 +65,48 @@ namespace PL
             else
                 group();
         }
-             
+
         private void group()
         {
-                stationDataGrid.Visibility = Visibility.Collapsed;
-                ListViewStations.Visibility = Visibility.Visible;
-                IEnumerable<IGrouping<int, StationToList>> result = from st in blObject.GetStationsList()
-                                                                    group st by st.AvailableChargeSlots into gs
-                                                                    select gs;
-                //DataGrid func(IGrouping<int, StationToList> g)
-                //{ 
-                //    DataGrid d = new DataGrid(); 
-                //    d.ItemsSource = g.ToList(); 
-                //    return d; 
-                //};
-                var datagrids =
-                    result.Select(g =>
-                    {
-                        DataGrid d = new DataGrid();
-                        d.ItemsSource = g.ToList();
-                        d.PreviewMouseDoubleClick += ViewStation;
-                        return d /*new { num=g.Key, dataGrid = d }*/;
-                    });
-                ////////IEnumerable<DataGrid> datagrids =
-                ////////    result.Select(g =>
-                ////////    {
-                ////////        DataGrid d = new DataGrid();
-                ////////        d.DataContext = g.ToList();
-                ////////        List<DataGridTextColumn> l = new List<DataGridTextColumn>();
-                ////////        //l.Add( { Binding = , });
-                ////////        //d.Columns = new List<DataGridTextColumn>();
-                ////////        //= new DataGridTextColumn x: Name = "idColumn" Binding = "{Binding Id}" Header = "Id" />
+            stationDataGrid.Visibility = Visibility.Collapsed;
+            ListViewStations.Visibility = Visibility.Visible;
+            IEnumerable<IGrouping<int, StationToList>> result = from st in blObject.GetStationsList()
+                                                                group st by st.AvailableChargeSlots into gs
+                                                                select gs;
+            //DataGrid func(IGrouping<int, StationToList> g)
+            //{ 
+            //    DataGrid d = new DataGrid(); 
+            //    d.ItemsSource = g.ToList(); 
+            //    return d; 
+            //};
+            var datagrids =
+                result.Select(g =>
+                {
+                    DataGrid d = new DataGrid();
+                    d.ItemsSource = g.ToList();
+                    d.PreviewMouseDoubleClick += ViewStation;
+                    return d /*new { num=g.Key, dataGrid = d }*/;
+                });
+            //IEnumerable<DataGrid> datagrids =
+            //    result.Select(g =>
+            //    {
+            //        DataGrid d = new DataGrid();
+            //        d.DataContext = g.ToList();
+            //        List<DataGridTextColumn> l = new List<DataGridTextColumn>();
+            //        //l.Add( { Binding = , });
+            //        //d.Columns = new List<DataGridTextColumn>();
+            //        //= new DataGridTextColumn x: Name = "idColumn" Binding = "{Binding Id}" Header = "Id" />
 
-                ////////        //  //< DataGridTextColumn x: Name = "nameColumn" Binding = "{Binding Name}" Header = "Name" />
+            //        //  //< DataGridTextColumn x: Name = "nameColumn" Binding = "{Binding Name}" Header = "Name" />
 
-                ////////        //  //      < DataGridTextColumn x: Name = "notAvailableChargeSlotsColumn" Binding = "{Binding NotAvailableChargeSlots}" Header = "Not Available Charge Slots" />
+            //        //  //      < DataGridTextColumn x: Name = "notAvailableChargeSlotsColumn" Binding = "{Binding NotAvailableChargeSlots}" Header = "Not Available Charge Slots" />
 
-                ////////        //  //            < DataGridTextColumn x: Name = "availableChargeSlotsColumn" Binding = "{Binding AvailableChargeSlots}" Header = "Available Charge Slots" />
+            //        //  //            < DataGridTextColumn x: Name = "availableChargeSlotsColumn" Binding = "{Binding AvailableChargeSlots}" Header = "Available Charge Slots" />
 
-                ////////        d.PreviewMouseDoubleClick += ViewStation;
-                ////////        return d;
-                ////////    });
-                ListViewStations.DataContext = datagrids;
+            //        d.PreviewMouseDoubleClick += ViewStation;
+            //        return d;
+            //    });
+            ListViewStations.DataContext = datagrids;
         }
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
