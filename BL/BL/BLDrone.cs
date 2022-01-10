@@ -14,16 +14,16 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(int id, string model, WeightCategories weight, int stationId)
         {
-            Location location = GetStation(stationId).Location;
-            DO.Drone idalDrone = new DO.Drone
-            {
-                Id = id,
-                MaxWeight = (DO.WeightCategories)weight,
-                Model = model
-            };
-
             lock (dl)
             {
+                Location location = GetStation(stationId).Location;
+                DO.Drone idalDrone = new DO.Drone
+                {
+                    Id = id,
+                    MaxWeight = (DO.WeightCategories)weight,
+                    Model = model
+                };
+
                 try
                 {
                     dl.AddDrone(idalDrone);
@@ -82,22 +82,27 @@ namespace BL
             if (droneFromList.Status == DroneStatus.Associated || droneFromList.Status == DroneStatus.Delivery)
             {
                 DO.Parcel parcelFromFunc;
-                try { parcelFromFunc = dl.GetParcel(droneFromList.ParcelId); }
-                catch (DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
-                Location locOfSender = GetCustomer(parcelFromFunc.Senderld/*SenderId*/).Location;
-                Location locOfTarget = GetCustomer(parcelFromFunc.TargetId).Location;
-                parcel = new ParcelInTransfer
+                Location locOfSender, locOfTarget;
+                lock (dl)
                 {
-                    Id = parcelFromFunc.Id,
-                    InTheWay = (parcelFromFunc.PickUpTime != null && parcelFromFunc.DeliverTime == null),
-                    Priority = (Priorities)parcelFromFunc.Priority,
-                    Sender = new CustomerInParcel { Id = parcelFromFunc.Senderld, Name = GetCustomer(parcelFromFunc.Senderld).Name },
-                    Target = new CustomerInParcel { Id = parcelFromFunc.TargetId, Name = GetCustomer(parcelFromFunc.TargetId).Name },
-                    PickingPlace = locOfSender,
-                    TargetPlace = locOfTarget,
-                    TransportDistance = distance(locOfSender, locOfTarget),
-                    Weight = (WeightCategories)parcelFromFunc.Weight
-                };
+                    try { parcelFromFunc = dl.GetParcel(droneFromList.ParcelId); }
+                    catch (DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
+                    locOfSender = GetCustomer(parcelFromFunc.Senderld/*SenderId*/).Location;
+                    locOfTarget = GetCustomer(parcelFromFunc.TargetId).Location;
+
+                    parcel = new ParcelInTransfer
+                    {
+                        Id = parcelFromFunc.Id,
+                        InTheWay = (parcelFromFunc.PickUpTime != null && parcelFromFunc.DeliverTime == null),
+                        Priority = (Priorities)parcelFromFunc.Priority,
+                        Sender = new CustomerInParcel { Id = parcelFromFunc.Senderld, Name = GetCustomer(parcelFromFunc.Senderld).Name },
+                        Target = new CustomerInParcel { Id = parcelFromFunc.TargetId, Name = GetCustomer(parcelFromFunc.TargetId).Name },
+                        PickingPlace = locOfSender,
+                        TargetPlace = locOfTarget,
+                        TransportDistance = distance(locOfSender, locOfTarget),
+                        Weight = (WeightCategories)parcelFromFunc.Weight
+                    };
+                }
             }
             return new Drone
             {
@@ -129,25 +134,24 @@ namespace BL
                 throw new DroneCantGoToChargeException($"the drone {droneId} is not available so it can't be sended to charging"); //if the drone is not available
             }
             Location loc = drone.CurrentLocation;
-            Station st = closestStationWithChargeSlots(loc);
-            double batteryNeed = minBattery(drone.Id, loc, st.Location);
-            if (batteryNeed > drone.Battery)
+            lock (dl)
             {
-                throw new DroneCantGoToChargeException($"the battery of drone {droneId} is not enugh so it can't be sended to charging"); //if the drone dont have enough battery
-            }
-            try 
-            {
-                lock (dl)
+                Station st = closestStationWithChargeSlots(loc);
+                double batteryNeed = minBattery(drone.Id, loc, st.Location);
+                if (batteryNeed > drone.Battery)
+                {
+                    throw new DroneCantGoToChargeException($"the battery of drone {droneId} is not enugh so it can't be sended to charging"); //if the drone dont have enough battery
+                }
+                try
                 {
                     // Adds a drone charging entity and lowers the amount of available charge slots at the station
                     dl.SendDroneToCharge(droneId, st.Id);
                 }
-            } 
-            catch (Exception) { throw new DroneCantGoToChargeException(); }
-            drone.Battery -= batteryNeed;
-            drone.CurrentLocation = st.Location;
-            drone.Status = DroneStatus.Maintenance;
-
+                catch (Exception) { throw new DroneCantGoToChargeException(); }
+                drone.Battery -= batteryNeed;
+                drone.CurrentLocation = st.Location;
+                drone.Status = DroneStatus.Maintenance;
+            }
             lstdrn.RemoveAt(index);
             lstdrn.Add(drone);
         }

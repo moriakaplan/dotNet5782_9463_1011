@@ -67,10 +67,13 @@ namespace BL
         public Customer GetCustomer(int customerId)
         {
             DO.Customer dCustomer;
-            try { dCustomer = dl.GetCustomer(customerId); }
-            catch (DO.CustomerException ex)
+            lock (dl)
             {
-                throw new NotExistIDException(ex.Message, "-customer");
+                try { dCustomer = dl.GetCustomer(customerId); }
+                catch (DO.CustomerException ex)
+                {
+                    throw new NotExistIDException(ex.Message, "-customer");
+                }
             }
             Customer bCustomer = new Customer();
             bCustomer.Id = dCustomer.Id;
@@ -84,8 +87,11 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<CustomerToList> GetCustomersList()
         {
-            return from dCustomer in dl.GetCustomersList()
-                   select GetCustomersToList(dCustomer);
+            lock (dl)
+            {
+                return from dCustomer in dl.GetCustomersList()
+                       select GetCustomersToList(dCustomer);
+            }
         }
 
         /// <summary>
@@ -95,17 +101,20 @@ namespace BL
         /// <returns></returns>
         private IEnumerable<ParcelInCustomer> getCustomerParcelFrom(int customerId)
         {
-            return from tempparcel in GetParcelsList()
-                   where GetParcel(tempparcel.Id).Sender.Id == customerId
-                   let target= GetParcel(tempparcel.Id).Target
-                   select new ParcelInCustomer
-                   {
-                       Id = tempparcel.Id,
-                       Priority = tempparcel.Priority,
-                       SenderOrTarget = new CustomerInParcel{ Id = target.Id, Name = target.Name },
-                       Status = tempparcel.Status,
-                       Weight = tempparcel.Weight,
-                   };
+            lock (dl)
+            {
+                return from tempparcel in GetParcelsList()
+                       where GetParcel(tempparcel.Id).Sender.Id == customerId
+                       let target = GetParcel(tempparcel.Id).Target
+                       select new ParcelInCustomer
+                       {
+                           Id = tempparcel.Id,
+                           Priority = tempparcel.Priority,
+                           SenderOrTarget = new CustomerInParcel { Id = target.Id, Name = target.Name },
+                           Status = tempparcel.Status,
+                           Weight = tempparcel.Weight,
+                       };
+            }
         }
         /// <summary>
         /// Returns a list of parcels in the customer - to the customer
@@ -114,17 +123,20 @@ namespace BL
         /// <returns></returns>
         private IEnumerable<ParcelInCustomer> getCustomerParcelTo(int customerId)
         {
-            return from tempparcel in GetParcelsList()
-                   where GetParcel(tempparcel.Id).Target.Id == customerId
-                   let sender = GetParcel(tempparcel.Id).Sender
-                   select new ParcelInCustomer
-                   {
-                       Id = tempparcel.Id,
-                       Priority = tempparcel.Priority,
-                       SenderOrTarget = new CustomerInParcel { Id = sender.Id, Name = sender.Name },
-                       Status = tempparcel.Status,
-                       Weight = tempparcel.Weight,
-                   };
+            lock (dl)
+            {
+                return from tempparcel in GetParcelsList()
+                       where GetParcel(tempparcel.Id).Target.Id == customerId
+                       let sender = GetParcel(tempparcel.Id).Sender
+                       select new ParcelInCustomer
+                       {
+                           Id = tempparcel.Id,
+                           Priority = tempparcel.Priority,
+                           SenderOrTarget = new CustomerInParcel { Id = sender.Id, Name = sender.Name },
+                           Status = tempparcel.Status,
+                           Weight = tempparcel.Weight,
+                       };
+            }
         }
         /// <summary>
         /// Returns the customer with the requested ID
@@ -143,24 +155,27 @@ namespace BL
                 numOfParcelsSentAndNotDelivered=0, 
                 numOfParclReceived=0
             };
-            foreach (ParcelToList parcelFromList in GetParcelsList()) //^^^^
+            lock (dl)
             {
-                Parcel parcel = GetParcel(parcelFromList.Id);
-                if ((parcel.Sender.Id == dcustomer.Id) && (parcel.DeliverTime != null))
+                foreach (ParcelToList parcelFromList in GetParcelsList()) //^^^^
                 {
-                    bCustomer.numOfParcelsDelivered++;
-                }
-                if ((parcel.Sender.Id == dcustomer.Id) && ((parcel.DeliverTime == null) && ((parcel.CreateTime != null))))
-                {
-                    bCustomer.numOfParcelsSentAndNotDelivered++;
-                }
-                if ((parcel.Target.Id == dcustomer.Id) && (parcel.DeliverTime == null))
-                {
-                    bCustomer.numOfParcelsInTheWay++;
-                }
-                if ((parcel.Target.Id == dcustomer.Id) && (parcel.DeliverTime != null))
-                {
-                    bCustomer.numOfParclReceived++;
+                    Parcel parcel = GetParcel(parcelFromList.Id);
+                    if ((parcel.Sender.Id == dcustomer.Id) && (parcel.DeliverTime != null))
+                    {
+                        bCustomer.numOfParcelsDelivered++;
+                    }
+                    if ((parcel.Sender.Id == dcustomer.Id) && ((parcel.DeliverTime == null) && ((parcel.CreateTime != null))))
+                    {
+                        bCustomer.numOfParcelsSentAndNotDelivered++;
+                    }
+                    if ((parcel.Target.Id == dcustomer.Id) && (parcel.DeliverTime == null))
+                    {
+                        bCustomer.numOfParcelsInTheWay++;
+                    }
+                    if ((parcel.Target.Id == dcustomer.Id) && (parcel.DeliverTime != null))
+                    {
+                        bCustomer.numOfParclReceived++;
+                    }
                 }
             }
             //bCustomer.numOfParcelsDelivered = DisplayListOfParcels()

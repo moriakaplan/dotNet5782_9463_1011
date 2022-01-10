@@ -15,19 +15,29 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string getManagmentPassword()
         {
-            return dl.getManagmentPassword();
+            lock (dl)
+            {
+                return dl.getManagmentPassword();
+            }
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string changeManagmentPassword()
         {
-            return dl.setNewManagmentPassword();
+            lock (dl)
+            {
+                return dl.setNewManagmentPassword();
+            }
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public int GetUserId(string name, string password)
         {
             try
             {
-                User user =dl.GetUser(name);
+                User user;
+                lock (dl)
+                {
+                    user = dl.GetUser(name);
+                }
                 if (user.Password != password) throw new NotExistIDException("the password is not correct");
                 if (user.IsManager) throw new NotExistIDException("the user is manager and not a regular user");
                 return (int)user.Id;
@@ -42,7 +52,11 @@ namespace BL
         {
             try
             {
-                User user = dl.GetUser(name);
+                User user;
+                lock (dl)
+                {
+                    user = dl.GetUser(name);
+                }
                 if (user.Password != password) return false; //throw new NotExistIDException("the password is not correct");
                 if (user.IsManager==false) return false; //throw new NotExistIDException("the user is a regular user and not a manager");
                 return true;
@@ -106,12 +120,18 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<string> GetListOfManagersNames()
         {
-            return dl.GetUsersList(x => x.IsManager == true).Select(x => x.UserName);
+            lock (dl)
+            {
+                return dl.GetUsersList(x => x.IsManager == true).Select(x => x.UserName);
+            }
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<string> GetListOfUsersNames()
         {
-            return dl.GetUsersList(x => x.IsManager == false).Select(x => x.UserName);
+            lock (dl)
+            {
+                return dl.GetUsersList(x => x.IsManager == false).Select(x => x.UserName);
+            }
         }
     }
 }
