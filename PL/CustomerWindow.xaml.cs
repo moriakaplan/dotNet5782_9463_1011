@@ -34,8 +34,8 @@ namespace PL
                 return;
             }
             DataContext = cus;
-            txtParcelsFrom.DataContext = cus.parcelFrom.Select(x => x.Id);
-            txtParcelsTo.DataContext = cus.parcelTo.Select(x => x.Id);
+            lstParcelsFrom.DataContext = cus.parcelFrom.Select(x => x.Id);
+            lstParcelsTo.DataContext = cus.parcelTo.Select(x => x.Id);
 
             txtId.IsEnabled = false;
             txtLatti.IsEnabled = false;
@@ -54,8 +54,8 @@ namespace PL
 
             ParcelsFrom.Visibility = Visibility.Collapsed;
             ParcelsTo.Visibility = Visibility.Collapsed;
-            txtParcelsFrom.Visibility = Visibility.Collapsed;
-            txtParcelsTo.Visibility = Visibility.Collapsed;
+            lstParcelsFrom.Visibility = Visibility.Collapsed;
+            lstParcelsTo.Visibility = Visibility.Collapsed;
             txtId.Text = "9 digits";
             //לדאוג שהמספר טלפון יהיה תקין פה ובהמשך
             options.Content = "Add Customer";
@@ -67,12 +67,12 @@ namespace PL
 
         private void viewParcelTo(object sender, MouseButtonEventArgs e)
         {
-            new ParcelWindow(blObject, ((int)txtParcelsTo.SelectedItem)).ShowDialog();
+            new ParcelWindow(blObject, ((int)lstParcelsTo.SelectedItem)).ShowDialog();
         }
 
         private void viewParcelFrom(object sender, MouseButtonEventArgs e)
         {
-            new ParcelWindow(blObject, ((int)txtParcelsFrom.SelectedItem)).ShowDialog();
+            new ParcelWindow(blObject, ((int)lstParcelsFrom.SelectedItem)).ShowDialog();
         }
 
         private void AddCustomer(object sender, RoutedEventArgs e)

@@ -37,11 +37,11 @@
                 </GridView>
             </ListView.View>
         </ListView>-->
-        <DataGrid x:Name="DroneListView" IsReadOnly="True" MouseDoubleClick="ViewDrone"
-                  AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="2">
+        <DataGrid x:Name="DroneListView" IsReadOnly="True" MouseDoubleClick="ViewDrone" Background="WhiteSmoke"
+                  AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="2" Margin="49,0,49,0">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id"/>
-                <DataGridTextColumn x:Name="modelColumn" Binding="{Binding Model}" Header="Model"/>
+                <DataGridTextColumn x:Name="modelColumn" Binding="{Binding Model}" Header="Model" />
                 <DataGridTextColumn x:Name="batteryColumn" Binding="{Binding Battery}" Header="Battery"/>
                 <DataGridTextColumn x:Name="maxWeightColumn" Binding="{Binding MaxWeight}" Header="Max Weight"/>
                 <DataGridTextColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Status"/>
