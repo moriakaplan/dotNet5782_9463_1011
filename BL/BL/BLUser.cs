@@ -68,7 +68,10 @@ namespace BL
             };
             try
             {
-                dl.AddUser(user); //add the new customer to the list in the data level
+                lock (dl)
+                {
+                    dl.AddUser(user); //add the new customer to the list in the data level
+                }
             }
             catch (DO.UserException)
             {
@@ -89,7 +92,10 @@ namespace BL
             };
             try
             {
-                dl.AddUser(user); //add the new customer to the list in the data level
+                lock (dl)
+                {
+                    dl.AddUser(user); //add the new customer to the list in the data level
+                }
             }
             catch (DO.UserException)
             {

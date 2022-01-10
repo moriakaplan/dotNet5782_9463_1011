@@ -21,26 +21,30 @@ namespace BL
                 MaxWeight = (DO.WeightCategories)weight,
                 Model = model
             };
-            try
+
+            lock (dl)
             {
-                dl.AddDrone(idalDrone);
-                //add the new customer to the list in the data level
+                try
+                {
+                    dl.AddDrone(idalDrone);
+                    //add the new customer to the list in the data level
+                }
+                catch (DO.DroneException ex)
+                {
+                    throw new ExistIdException(ex.Message, "-drone");
+                }
+                lstdrn.Add(new DroneToList  //add drone to the list of the drone in the logical layer
+                {
+                    Id = id,
+                    Battery = random.Next(20, 39) + random.NextDouble(),
+                    CurrentLocation = location,
+                    MaxWeight = weight,
+                    Model = model,
+                    ParcelId = 0,
+                    Status = DroneStatus.Maintenance
+                });
+                dl.SendDroneToCharge(id, stationId);
             }
-            catch (DO.DroneException ex)
-            {
-                throw new ExistIdException(ex.Message, "-drone");
-            }
-            lstdrn.Add(new DroneToList
-            {
-                Id = id,
-                Battery = random.Next(20, 39) + random.NextDouble(),
-                CurrentLocation = location,
-                MaxWeight = weight,
-                Model = model,
-                ParcelId = 0,
-                Status = DroneStatus.Maintenance
-            });//add drone to the list of the drone in the logical layer
-            dl.SendDroneToCharge(id, stationId);
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDroneModel(int id, string model)
@@ -48,18 +52,21 @@ namespace BL
             //update the model in the logical layer
             DroneToList drone;
             DO.Drone ddrone;
-            try
+            lock (dl)
             {
-                drone = lstdrn.Single(item => item.Id == id);
-                drone.Model = model;
-                //update the model in the data layer
-                ddrone = dl.GetDrone(id);
-                dl.DeleteDrone(id);
+                try
+                {
+                    drone = lstdrn.Single(item => item.Id == id);
+                    drone.Model = model;
+                    //update the model in the data layer
+                    ddrone = dl.GetDrone(id);
+                    dl.DeleteDrone(id);
+                }
+                catch (ArgumentNullException) { throw new NotExistIDException($"id: {id} does not exist - drone"); }
+                catch (DO.DroneException ex) { throw new NotExistIDException(ex.Message, " - drone"); }
+                ddrone.Model = model;
+                dl.AddDrone(ddrone);
             }
-            catch (ArgumentNullException) { throw new NotExistIDException($"id: {id} does not exist - drone"); }
-            catch (DO.DroneException ex) { throw new NotExistIDException(ex.Message, " - drone"); }
-            ddrone.Model = model;
-            dl.AddDrone(ddrone);
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int droneId)
@@ -106,16 +113,6 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void SendDroneToCharge(int droneId)
         {
-            //DroneToList drone= new DroneToList();
-            //int i;
-            //for (i = 0; i < lstdrn.Count(); i++)
-            //{
-            //    if (lstdrn[i].Id == droneId)
-            //    {
-            //        drone = lstdrn[i];
-            //        break;
-            //    }
-            //}
             DroneToList drone;
             int index;
             try 
@@ -138,7 +135,14 @@ namespace BL
             {
                 throw new DroneCantGoToChargeException($"the battery of drone {droneId} is not enugh so it can't be sended to charging"); //if the drone dont have enough battery
             }
-            try { dl.SendDroneToCharge(droneId, st.Id); } // Adds a drone charging entity and lowers the amount of available charge slots at the station
+            try 
+            {
+                lock (dl)
+                {
+                    // Adds a drone charging entity and lowers the amount of available charge slots at the station
+                    dl.SendDroneToCharge(droneId, st.Id);
+                }
+            } 
             catch (Exception) { throw new DroneCantGoToChargeException(); }
             drone.Battery -= batteryNeed;
             drone.CurrentLocation = st.Location;
@@ -147,6 +151,7 @@ namespace BL
             lstdrn.RemoveAt(index);
             lstdrn.Add(drone);
         }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReleaseDroneFromeCharge(int droneId)
         {
@@ -168,10 +173,15 @@ namespace BL
             DO.DroneCharge dc;
             try
             {
-                dc = dl.GetDroneChargesList().Where(x => x.DroneId == droneId).Single();//לא עובד
-                dl.ReleaseDroneFromeCharge(droneId); //Deletes the charging entity and adds 1 to the charging slots of the station
+                lock (dl)
+                {
+                    dc = dl.GetDroneChargesList().Where(x => x.DroneId == droneId).Single();//לא עובד
+                    dl.ReleaseDroneFromeCharge(droneId); //Deletes the charging entity and adds 1 to the charging slots of the station
+                }
             }
             catch (DO.DroneChargeException ex) { throw new NotExistIDException(ex.Message); }
+            catch (ArgumentNullException ex) { throw new NotExistIDException(ex.Message); }
+            catch (InvalidOperationException ex) { throw new NotExistIDException(ex.Message); }
             //אמור להיות פה
             TimeSpan time =DateTime.Now - dc.StartedChargeTime;
             double b = time.TotalSeconds * ChargeRatePerHour;
