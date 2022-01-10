@@ -42,7 +42,7 @@ namespace Dal
         internal static string getGoodPass()
         {
             Random rand = new Random();
-            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz0123456789";
             char[] stringChars = new char[8];
             for (int i = 0; i < stringChars.Length; i++)
             {
