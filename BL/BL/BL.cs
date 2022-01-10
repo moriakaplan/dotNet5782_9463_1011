@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BO;
 using BLApi;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {
@@ -65,11 +66,6 @@ namespace BL
         /// </summary>
         private void initializeDrone()
         {
-            //add all the drones from the data layer to the list
-            //foreach (DO.Drone drone in dl.DisplayListOfDrones())
-            //{
-            //    lstdrn.Add(new DroneToList { Id = drone.Id, MaxWeight = (WeightCategories)drone.MaxWeight, Model = drone.Model });
-            //}
             lstdrn = dl.GetDronesList()
                 .Select(drone=>new DroneToList
                 {

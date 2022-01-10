@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 using BLApi;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {
     internal partial class BL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(int id)
         {
             Parcel pa = GetParcel(id);
@@ -20,6 +22,7 @@ namespace BL
             }
             else throw new DeleteException($"parcel {id} can't be deleted");
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int AddParcelToDelivery(int senderId, int targetId, WeightCategories weight, Priorities pri)
         {
             DO.Parcel idalParcel = new DO.Parcel
@@ -43,7 +46,8 @@ namespace BL
             {
                 throw new ExistIdException(ex.Message, "-parcel");
             }
-        }     
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AssignParcelToDrone(int droneId)
         {
             Drone bdrone;
@@ -85,7 +89,8 @@ namespace BL
                 }
             }
 
-        }     
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void PickParcelByDrone(int droneId)
         {
             Parcel parcelToPick = GetParcel(GetDrone(droneId).ParcelInT.Id);
@@ -107,7 +112,8 @@ namespace BL
                 }
             }
 
-        }       
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeliverParcelByDrone(int droneId)
         {
             Parcel parcelToDeliver = GetParcel(GetDrone(droneId).ParcelInT.Id);
@@ -130,7 +136,8 @@ namespace BL
                     drone.Status = DroneStatus.Available;
                 }
             }
-        }     
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int parcelId)
         {
             DO.Parcel parcelFromDal;
@@ -178,6 +185,7 @@ namespace BL
                 Weight = (WeightCategories)parcelFromDal.Weight
             };
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelToList> GetParcelsList()
         {
             IEnumerable<DO.Parcel> listFromDal = dl.GetParcelsList();
@@ -206,6 +214,7 @@ namespace BL
                 yield return answer;
             }
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelToList> GetListOfUnassignedParcels()
         {
             IEnumerable<DO.Parcel> listFromDal = dl.GetParcelsList(x=> x.AssociateTime == null);
@@ -228,6 +237,7 @@ namespace BL
         /// Returns all parcels with the highest priority
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private IEnumerable<Parcel> findHighesPrioritiy()
         {
             Priorities temp = Priorities.Regular;//gets the highest priority 
