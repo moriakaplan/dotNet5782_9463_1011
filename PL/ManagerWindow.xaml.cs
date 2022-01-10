@@ -28,6 +28,7 @@ namespace PL
         {
             InitializeComponent();
             blObject = obj;
+            btnPass.DataContext = blObject;
         }
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
