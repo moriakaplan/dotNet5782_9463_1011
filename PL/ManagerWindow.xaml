@@ -33,15 +33,16 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="LightBlue" />
                             <Setter Property="Content" Value="{Binding Path=getManagmentPassword}" />
-                        </Trigger> 
+                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="False">
                             <Setter Property="Background" Value="SkyBlue" />
                             <Setter Property="Content" Value="see managment password" />
-                        </Trigger> 
+                        </Trigger>
                     </Style.Triggers>
-                </Style> 
+                </Style>
             </Button.Style>
         </Button>
         <Label x:Name="pass"  Margin="104,158,226,-60" Grid.Row="1" Height="auto" Width="auto" Grid.ColumnSpan="2"/>
+        <Button Content="change the managment password" Margin="172,158,-110,-60" Grid.Row="1" Height="auto" Width="auto" Grid.Column="1" Click="changePass"/>
     </Grid>
 </Window>

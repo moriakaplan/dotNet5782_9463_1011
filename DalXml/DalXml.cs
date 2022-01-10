@@ -107,7 +107,7 @@ namespace Dal
             configRoot.Add(new XElement("easy", 0.012));
             configRoot.Add(new XElement("medium", 0.013));
             configRoot.Add(new XElement("heavy", 0.014));
-            configRoot.Add(new XElement("ratePerHour", 30));
+            configRoot.Add(new XElement("ratePerHour", 1000));
             configRoot.Save(configPath);
         }
         private string getGoodPass()
