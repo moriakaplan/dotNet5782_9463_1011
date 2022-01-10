@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using DO;
 using System.Xml.Linq;
+using System.Runtime.CompilerServices;
+
 
 //with linq to xml
 
@@ -12,6 +14,7 @@ namespace Dal
 {
     public partial class DalXml
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(Customer cus)
         {
             if (customersRoot.Elements().Any(item => item.Element("Id").Value == cus.Id.ToString()))
@@ -19,6 +22,8 @@ namespace Dal
             customersRoot.Add(ConvertCus(cus));
             customersRoot.Save(customersPath);
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomer(int customerId)
         {
             XElement? cus = customersRoot.Elements().Where(item => int.Parse(item.Element("Id").Value) == customerId).SingleOrDefault(); 
@@ -29,6 +34,7 @@ namespace Dal
             return ConvertCus(cus);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> GetCustomersList(Predicate<Customer> pre)
         {
             if (pre != null)
@@ -36,6 +42,8 @@ namespace Dal
             else
                 return customersRoot.Elements().Select(x => ConvertCus(x));
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteCustomer(int customerId)
         {
             if (customersRoot.Elements().Any(item => item.Element("Id").Value == customerId.ToString()))

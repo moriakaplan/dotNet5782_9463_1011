@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DO;
+using System.Runtime.CompilerServices;
+
 
 namespace Dal
 {
     public partial class DalXml
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(Station station)
         {
             List<Station> stations = XmlTools.LoadListFromXmlSerializer<Station>(stationsPath);
@@ -17,6 +20,8 @@ namespace Dal
             XmlTools.SaveListToXmlSerializer<Station>(stations, stationsPath);
 
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station GetStation(int stationId)
         {
             List<Station> stations = XmlTools.LoadListFromXmlSerializer<Station>(stationsPath);
@@ -24,6 +29,8 @@ namespace Dal
             if (result == null) throw new StationException($"id: {stationId} does not exist");
             return (Station)result;
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetStationsList(Predicate<Station> pre)
         {
             List<Station> stations = XmlTools.LoadListFromXmlSerializer<Station>(stationsPath);
@@ -31,6 +38,8 @@ namespace Dal
             if (pre == null) return result;
             return result.FindAll(pre);
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteStation(int stationId)
         {
             List<Station> stations = XmlTools.LoadListFromXmlSerializer<Station>(stationsPath);

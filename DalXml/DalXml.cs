@@ -7,6 +7,8 @@ using System.ComponentModel;
 using DO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+
 
 namespace Dal
 {
@@ -62,6 +64,7 @@ namespace Dal
         #endregion
 
         #region create, load and convert
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DalXml()
         {
             //DataSource.Initialize();
@@ -152,6 +155,7 @@ namespace Dal
             return cusElement;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public XElement ConvertSomething(object obj, string name)
         {
             XElement Element = new XElement(name);
@@ -165,6 +169,7 @@ namespace Dal
             return Element;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer ConvertCus(XElement element)
         {
             Customer cus = new Customer()
@@ -175,15 +180,6 @@ namespace Dal
                 Longitude = double.Parse(element.Element("Longitude").Value),
                 Lattitude = double.Parse(element.Element("Lattitude").Value)
             };
-
-            //foreach (PropertyInfo item in typeof(Customer).GetProperties())
-            //{
-            //    TypeConverter typeConverter = TypeDescriptor.GetConverter(item.PropertyType);
-            //    object convertValue = typeConverter.ConvertFromString(element.Element(item.Name).Value);
-
-            //    if (item.CanWrite)
-            //        item.SetValue(cus, convertValue);
-            //}
             return cus;
         }
 
@@ -205,11 +201,14 @@ namespace Dal
         #endregion
 
         #region users functions
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string getManagmentPassword()
         {
             return configRoot.Element("managmentPassword").Value;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string setNewManagmentPassword()
         {
             string pass = getGoodPass();
@@ -218,6 +217,7 @@ namespace Dal
             return pass;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public User GetUser(string name)
         {
             List<User> users = XmlTools.LoadListFromXmlSerializer<User>(usersPath);
@@ -227,6 +227,7 @@ namespace Dal
             return (User)result;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddUser(User user)
         {
             List<User> users = XmlTools.LoadListFromXmlSerializer<User>(usersPath);
@@ -245,6 +246,8 @@ namespace Dal
             users.Add(user);
             XmlTools.SaveListToXmlSerializer<User>(users, usersPath);
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<User> GetUsersList(Predicate<User> pre)
         {
             List<User> users = XmlTools.LoadListFromXmlSerializer<User>(usersPath);
@@ -255,7 +258,7 @@ namespace Dal
         #endregion
 
         //from dalObject, maybe need changes or to be deleted or something
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double Distance(double lattitudeA, double longitudeA, double lattitudeB, double longitudeB)
         {
             var radiansOverDegrees = (Math.PI / 180.0);
@@ -276,6 +279,8 @@ namespace Dal
             // calculate the result
             return (c * r);
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] GetBatteryData()
         {
             //return configRoot.Elements().Select(x=>double.Parse(x.Value)).ToArray();
