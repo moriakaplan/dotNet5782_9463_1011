@@ -33,10 +33,30 @@ namespace PL
 
         private void Sighn(object sender, RoutedEventArgs e)
         {
+            if(txtName.Text=="")
+            {
+                MessageBox.Show("Please choose a username");
+                return;
+            }
+            if(txtPassword.Text=="")
+            {
+                MessageBox.Show("Please choose a password");
+                return;
+            }
+            if(!passIsStrong(txtPassword.Text))
+            {
+                MessageBox.Show("this password is not strong enugh, please choose another one.\n in the password must be big letters, small letters and numbers and it must have at least 8 chars.");
+                return;
+            }
             try
             {
                 if ((typesOfUsers)typeOfUser.SelectedItem == typesOfUsers.Manager)
-                    blObject.AddManager(txtName.Text, txtPassword.Text);
+                {
+                    if (txtManager.Text == blObject.getManagmentPassword())
+                        blObject.AddManager(txtName.Text, txtPassword.Text);
+                    else
+                        MessageBox.Show("this is not the right password, \n please ask another manager what is the current password.");
+                }
                 else
                     blObject.AddUser(int.Parse(txtId.Text), txtName.Text, txtPassword.Text);
                 MessageBox.Show("the user added successfully");
@@ -44,8 +64,20 @@ namespace PL
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("the username already exist, try another name");
             }
+        }
+
+        private bool passIsStrong(string pass)
+        {
+            if (pass.Length < 8 || 
+                pass.Distinct().Count() < 6) 
+                return false;
+            if (pass.Any(x=> x >= 'a' && x <= 'z') && 
+                pass.Any(x => x >= 'A' && x <= 'Z') && 
+                pass.Any(x => x >= '0' && x <= '9')) 
+                return true;
+            return false;
         }
 
         private void typeOfUserChanged(object sender, SelectionChangedEventArgs e)
@@ -73,6 +105,25 @@ namespace PL
             //mb = MessageBox.Show("do you want to close the window?", "close", MessageBoxButton.YesNo);
             //if (mb == MessageBoxResult.No) e.Cancel=true;
              new MainWindow().Show();
+        }
+
+        private void passChange(object sender, TextChangedEventArgs e)
+        {
+            if (txtPassword.Text == "")
+            {
+                lblGoodOrWrong.Content = "";
+                return;
+            }
+            if (passIsStrong(txtPassword.Text))
+            {
+                lblGoodOrWrong.Content = "strong password";
+                lblGoodOrWrong.Foreground = Brushes.Green;
+            }
+            else
+            {
+                lblGoodOrWrong.Content = "not strong password";
+                lblGoodOrWrong.Foreground = Brushes.Red;
+            }
         }
     }
 }

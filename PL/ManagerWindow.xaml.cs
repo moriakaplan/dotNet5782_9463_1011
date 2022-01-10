@@ -69,13 +69,29 @@ namespace PL
 
         private void seePassword(object sender, RoutedEventArgs e)
         {
-            pass.Content = blObject.getManagmentPassword();
+            if (btnPass.Content.ToString() == "see managment password")
+            {
+                btnPass.Content = "hide managment password";
+                pass.Content = blObject.getManagmentPassword();
+            }
+            else
+            {
+                btnPass.Content = "see managment password";
+                pass.Content = "";
+            }
         }
 
         private void changePass(object sender, RoutedEventArgs e)
         {
             MessageBoxResult mb = MessageBox.Show($"Do you really want to change the password?\n it will changed in the computer of every manager", "change password", MessageBoxButton.OKCancel);
-            if (mb == MessageBoxResult.OK) pass.Content = blObject.changeManagmentPassword();
+            if (mb == MessageBoxResult.OK)
+            {
+                string newPass = blObject.changeManagmentPassword();
+                if (btnPass.Content.ToString() == "hide managment password")
+                {
+                    pass.Content = newPass;
+                }
+            }
         }
     }
 }

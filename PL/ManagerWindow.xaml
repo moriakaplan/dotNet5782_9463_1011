@@ -10,24 +10,26 @@
     <Window.Background>
         <ImageBrush ImageSource="\Images\Background3.jpg"/>
     </Window.Background>
+    <Grid Margin="0,-19,0,0">
+        <Grid Margin="132,95,132,79">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-    <Grid Margin="132,95,132,79">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <Button Content="Drones" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
+            <Button Content="Drones" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
                 Click="displayDronesList_Click" Height="69" Width="170"/>
-        <Button Content="Stations" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Height="69" VerticalAlignment="Center" Width="170" Click="displayStationList"/>
-        <Button Content="Parcels" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="displayParcelList" Height="69" Width="170"/>
-        <Button Content="Customers" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"  VerticalAlignment="Center" Click="displayCustomerList" Height="69" Width="170"/>
-        <Button x:Name="btnPass" Content="see managment password" Click="seePassword" Margin="-115,158,178,-60" Grid.Row="1">
-            <Button.Style>
+            <Button Content="Stations" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Height="69" VerticalAlignment="Center" Width="170" Click="displayStationList"/>
+            <Button Content="Parcels" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="displayParcelList" Height="69" Width="170"/>
+            <Button Content="Customers" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"  VerticalAlignment="Center" Click="displayCustomerList" Height="69" Width="170"/>
+
+        </Grid>
+        <Button x:Name="btnPass" Content="see managment password" Click="seePassword" Margin="9,30,546,391" Background="LightBlue"/>
+        <!--<Button.Style>
                 <Style TargetType="Button">
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -40,9 +42,8 @@
                         </Trigger>
                     </Style.Triggers>
                 </Style>
-            </Button.Style>
-        </Button>
-        <Label x:Name="pass"  Margin="104,158,226,-60" Grid.Row="1" Height="auto" Width="auto" Grid.ColumnSpan="2"/>
-        <Button Content="change the managment password" Margin="172,158,-110,-60" Grid.Row="1" Height="auto" Width="auto" Grid.Column="1" Click="changePass"/>
+            </Button.Style>-->
+        <Label x:Name="pass" Margin="270,16,437,392" Foreground="white"/>
+        <Button Content="change the managment password" Height="auto" Width="auto" Click="changePass" Background="LightBlue" Margin="10,67,544,354"/>
     </Grid>
 </Window>

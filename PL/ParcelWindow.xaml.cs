@@ -31,6 +31,7 @@ namespace PL
             InitializeComponent();
             grid.IsEnabled = false;
             delete.IsEnabled = true;
+
             Parcel parcel = blObject.GetParcel(Id);
             DataContext = parcel;
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
@@ -40,7 +41,12 @@ namespace PL
             txtTarget.ItemsSource = customersId;
             if (parcel.Drone != null) delete.Visibility = Visibility.Hidden;
             add.Visibility = Visibility.Hidden;
-            
+            if (txtDrone.Text == "")
+            {
+                btnDrone.Visibility = Visibility.Collapsed;
+                txtDrone.Visibility = Visibility.Collapsed;
+                lblDrone.Visibility = Visibility.Collapsed;
+            }
         }
 
         public ParcelWindow(IBL obj) //add
@@ -54,9 +60,11 @@ namespace PL
             lblAssociateTime.Visibility = Visibility.Collapsed;
             lblPickUpTime.Visibility = Visibility.Collapsed;
             lblDeliverTime.Visibility = Visibility.Collapsed;
+            
             txtId.Visibility = Visibility.Collapsed;
             txtDeliverTime.Visibility = Visibility.Collapsed;
             txtDrone.Visibility = Visibility.Collapsed;
+            btnDrone.Visibility = Visibility.Collapsed;
             txtCreateTime.Visibility = Visibility.Collapsed;
             txtAssociateTime.Visibility = Visibility.Collapsed;
             txtPickUpTime.Visibility = Visibility.Collapsed;
@@ -76,22 +84,19 @@ namespace PL
 
         }
 
-        private void viewSender(object sender, MouseButtonEventArgs e)
+        private void viewSender(object sender, RoutedEventArgs e)
         {
-            if (txtSender.Text != "")
-                new CustomerWindow(blObject, int.Parse(txtSender.Text)).ShowDialog();
+            new CustomerWindow(blObject, int.Parse(txtSender.Text)).Show();
         }
 
-        private void viewTarget(object sender, MouseButtonEventArgs e)
+        private void viewTarget(object sender, RoutedEventArgs e)
         {
-            if (txtTarget.Text != "")
-                new CustomerWindow(blObject, int.Parse(txtTarget.Text)).ShowDialog();
+            new CustomerWindow(blObject, int.Parse(txtTarget.Text)).Show();
         }
 
-        private void viewDroneInParcel(object sender, MouseButtonEventArgs e)
+        private void viewDrone(object sender, RoutedEventArgs e)
         {
-            if (txtDrone.Text != "")
-                new DroneWindow(blObject, int.Parse(txtDrone.Text)).ShowDialog();
+            new DroneWindow(blObject, int.Parse(txtDrone.Text)).Show();
         }
 
         private void AddParcel(object sender, RoutedEventArgs e)
@@ -129,6 +134,18 @@ namespace PL
                 catch (DeleteException) { MessageBox.Show("the parcel can't be deleted. apperently it associated to a drone."); }
             }
         }
-            
+
+        //private void viewCustomer(object sender, RoutedEventArgs e)
+        //{
+        //    if(sender==viewSender)
+        //    {
+        //        new CustomerWindow(blObject, int.Parse(txtSender.Text)).ShowDialog();
+        //    }
+        //    if(sender==viewSender)
+        //    {
+        //        new CustomerWindow(blObject, int.Parse(txtTarget.Text)).ShowDialog();
+        //    }
+
+        //}
     }
 }

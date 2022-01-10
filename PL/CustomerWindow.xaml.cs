@@ -34,8 +34,12 @@ namespace PL
                 return;
             }
             DataContext = cus;
-            lstParcelsFrom.DataContext = cus.parcelFrom.Select(x => x.Id);
-            lstParcelsTo.DataContext = cus.parcelTo.Select(x => x.Id);
+            if (cus.parcelFrom.Count() == 0 && cus.parcelTo.Count() == 0) parcels.Visibility = Visibility.Collapsed;
+            else
+            {
+                lstParcelsFrom.DataContext = cus.parcelFrom.Select(x => x.Id);
+                lstParcelsTo.DataContext = cus.parcelTo.Select(x => x.Id);
+            }
 
             txtId.IsEnabled = false;
             txtLatti.IsEnabled = false;
