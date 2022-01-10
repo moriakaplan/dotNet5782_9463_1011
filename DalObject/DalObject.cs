@@ -39,7 +39,7 @@ namespace Dal
             }
         }
 
-        internal string getGoodPass()
+        internal static string getGoodPass()
         {
             Random rand = new Random();
             string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

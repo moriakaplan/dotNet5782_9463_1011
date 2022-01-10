@@ -16,7 +16,7 @@ namespace Dal
         internal static Random random = new Random();
         internal static class Config
         {
-            internal static string managmentPassword = getGoodPass();
+            internal static string managmentPassword = DalObject.getGoodPass();
             internal static int parcelCode = 10000000;
             public static double available=0.01; //per kill
             public static double easy=0.012;      //per kill
