@@ -40,8 +40,8 @@
             <Label x:Name="lblDeliverTime" Content="Deliver time:" Grid.Row="9" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
 
             <TextBox x:Name="txtId" Text="{Binding  Path=Id}" Grid.Row="0" Grid.Column="1" Margin="10" />
-            <ComboBox x:Name="txtSender" Text="{Binding  Path=Sender.Id}" Grid.Row="1" Grid.Column="1" Margin="10" MouseDoubleClick="viewSender" SelectionChanged="txtSender_SelectionChanged"/>
-            <ComboBox x:Name="txtTarget" Text="{Binding  Path=Target.Id}" Grid.Row="2" Grid.Column="1" Margin="10" MouseDoubleClick="viewTarget" SelectionChanged="txtTarget_SelectionChanged" />
+            <ComboBox x:Name="txtSender" Text="{Binding  Path=Sender.Id}" Grid.Row="1" Grid.Column="1" Margin="10,10,200,10" MouseDoubleClick="viewSender" SelectionChanged="txtSender_SelectionChanged"/>
+            <ComboBox x:Name="txtTarget" Text="{Binding  Path=Target.Id}" Grid.Row="2" Grid.Column="1" Margin="10,10,200,10" MouseDoubleClick="viewTarget" SelectionChanged="txtTarget_SelectionChanged" />
             <TextBox x:Name="txtDrone" Text="{Binding  Path=Drone.Id}" Grid.Row="3" Grid.Column="1" Margin="10" MouseDoubleClick="viewDroneInParcel" />
             <ComboBox x:Name="txtWeight" Text="{Binding  Path=Weight}" Grid.Row="4" Grid.Column="1" Margin="10" />
             <ComboBox x:Name="txtPriority" Text="{Binding  Path=Priority}" Grid.Row="5" Grid.Column="1" Margin="10" />
@@ -49,6 +49,8 @@
             <TextBox x:Name="txtAssociateTime" Text="{Binding  Path=AssociateTime}" Grid.Row="7" Grid.Column="1" Margin="10" />
             <TextBox x:Name="txtPickUpTime" Text="{Binding  Path=PickUpTime}" Grid.Row="8" Grid.Column="1" Margin="10" />
             <TextBox x:Name="txtDeliverTime" Text="{Binding  Path=DeliverTime}" Grid.Row="9" Grid.Column="1" Margin="10" />
+            <Label x:Name="txtSenderName" Content="{Binding  Path=Sender.Name}" Grid.Column="1" HorizontalAlignment="Left" Margin="175,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
+            <Label x:Name="txtTargetName" Content="{Binding  Path=Target.Name}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Margin="175,0,0,0"/>
 
             <!--<Button x:Name="add" Content="Add parcel" Grid.Row="10" Grid.Column="1"  Click="AddParcel"
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="377,0,0,0"/>

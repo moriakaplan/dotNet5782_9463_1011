@@ -24,17 +24,7 @@ namespace Dal
             public static double heavy=0.014;     //per kill
             public static double ratePerHour=30;
 
-            private static string getGoodPass()
-            {
-                Random rand = new Random();
-                string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-                char[] stringChars = new char[8];
-                for (int i = 0; i < stringChars.Length; i++)
-                {
-                    stringChars[i] = chars[rand.Next(chars.Length)];
-                }
-                return new String(stringChars);
-            }
+            
         }
         
         public static void Initialize()//Initializes 2 stations, 5 drones, 10 customers and 10 parcels.

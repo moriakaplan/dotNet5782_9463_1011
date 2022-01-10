@@ -11,6 +11,14 @@ namespace BL
 {
     internal partial class BL
     {
+        public string getManagmentPassword()
+        {
+            return dl.getManagmentPassword();
+        }
+        public string changeManagmentPassword()
+        {
+            return dl.setNewManagmentPassword();
+        }
         public int GetUserId(string name, string password)
         {
             try

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using DO;
 
 namespace Dal
@@ -14,7 +15,8 @@ namespace Dal
             List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);
             if (parcels.Exists(item => item.Id == parcel.Id)) throw new ParcelException($"id: {parcel.Id} already exist"); //it suppose to be this type of exception????**** 
             int newCode = int.Parse(configRoot.Element("parcelCode").Value) + 1;
-            configRoot.Element("parcelCode").Value = newCode.ToString();
+            configRoot.Element("parcelCode").Remove();
+            configRoot.AddFirst(new XElement("parcelCode", newCode.ToString()));
             parcel.Id = newCode;
             parcels.Add(parcel);
             XmlTools.SaveListToXmlSerializer<Parcel>(parcels, parcelsPath);

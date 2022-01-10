@@ -65,5 +65,10 @@ namespace PL
              closeX = false;
             this.Close();
         }
+
+        private void seePassword(object sender, RoutedEventArgs e)
+        {
+            pass.Content = blObject.getManagmentPassword();
+        }
     }
 }

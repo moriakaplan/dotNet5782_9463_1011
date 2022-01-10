@@ -205,6 +205,19 @@ namespace Dal
         #endregion
 
         #region users functions
+        public string getManagmentPassword()
+        {
+            return configRoot.Element("managmentPassword").Value;
+        }
+
+        public string setNewManagmentPassword()
+        {
+            string pass = getGoodPass();
+            configRoot.Element("managmentPassword").Remove();
+            configRoot.Add(new XElement("managmentPassword", pass));
+            return pass;
+        }
+
         public User GetUser(string name)
         {
             List<User> users = XmlTools.LoadListFromXmlSerializer<User>(usersPath);
