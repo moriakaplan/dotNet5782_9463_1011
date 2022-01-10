@@ -39,6 +39,30 @@ namespace Dal
             }
         }
 
+        internal string getGoodPass()
+        {
+            Random rand = new Random();
+            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            char[] stringChars = new char[8];
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[rand.Next(chars.Length)];
+            }
+            return new String(stringChars);
+        }
+
+        public string getManagmentPassword()
+        {
+            return DataSource.Config.managmentPassword;
+        }
+
+        public string setNewManagmentPassword()
+        {
+            string pass = getGoodPass();
+            DataSource.Config.managmentPassword = pass;
+            return pass;
+        }
+
         public User GetUser(string name)
         {
             User? result = DataSource.users.Find(x => x.UserName == name);

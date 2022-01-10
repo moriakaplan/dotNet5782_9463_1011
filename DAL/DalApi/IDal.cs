@@ -162,5 +162,8 @@ namespace DalApi
         
         double[] GetBatteryData();
 
+        string getManagmentPassword();
+
+        string setNewManagmentPassword();
     }
 }

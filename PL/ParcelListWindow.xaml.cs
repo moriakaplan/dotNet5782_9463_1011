@@ -35,11 +35,15 @@ namespace PL
         private void ViewParcel(object sender, MouseButtonEventArgs e)
         {
             new ParcelWindow(blObject, ((BO.ParcelToList)parcelToListDataGrid.SelectedItem).Id).ShowDialog();
+            if (StatusFilter.SelectedItem != null) statusFilter_SelectionChanged(null, null);
+            else parcelToListDataGrid.DataContext = blObject.GetParcelsList();
         }
 
         private void AddParcel(object sender, RoutedEventArgs e)
         {
             new ParcelWindow(blObject).ShowDialog();
+            if (StatusFilter.SelectedItem != null) statusFilter_SelectionChanged(null, null);
+            else parcelToListDataGrid.DataContext = blObject.GetParcelsList();
         }
 
         void DataWindow_Closing(object sender, CancelEventArgs e)
