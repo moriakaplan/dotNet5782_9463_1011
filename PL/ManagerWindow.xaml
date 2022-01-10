@@ -26,6 +26,6 @@
         <Button Content="Stations" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Height="69" VerticalAlignment="Center" Width="170" Click="displayStationList"/>
         <Button Content="Parcels" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="displayParcelList" Height="69" Width="170"/>
         <Button Content="Customers" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"  VerticalAlignment="Center" Click="displayCustomerList" Height="69" Width="170"/>
-        <Image Source="\Images\droneicon.png" HorizontalAlignment="Left" Height="87" Margin="-20,0,0,0" VerticalAlignment="Center" Width="64" />
+       
     </Grid>
 </Window>
