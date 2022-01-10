@@ -5,11 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using DO;
+using System.Runtime.CompilerServices;
+
 
 namespace Dal
 {
     public partial class DalXml
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int AddParcel(Parcel parcel)
         {
             List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);
@@ -22,6 +25,8 @@ namespace Dal
             XmlTools.SaveListToXmlSerializer<Parcel>(parcels, parcelsPath);
             return newCode;
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int parcelId)
         {
             List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);
@@ -30,6 +35,8 @@ namespace Dal
                 throw new ParcelException($"id: {parcelId} does not exist");
             return (Parcel)result;
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> GetParcelsList(Predicate<Parcel> pre)
         {
             List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);
@@ -37,6 +44,8 @@ namespace Dal
             if (pre == null) return result;
             return result.FindAll(pre);
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(int parcelId)
         {
             List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);
@@ -51,6 +60,8 @@ namespace Dal
             XmlTools.SaveListToXmlSerializer<Parcel>(parcels, parcelsPath);
 
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AssignParcelToDrone(int parcelId, int droneId)
         {
             List<Drone> drones = XmlTools.LoadListFromXmlSerializer<Drone>(dronesPath);
@@ -74,6 +85,8 @@ namespace Dal
             }
             throw new ParcelException($"id: {parcelId} does not exist");
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void PickParcelByDrone(int parcelId)
         {
             List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);
@@ -90,6 +103,8 @@ namespace Dal
             }
             throw new ParcelException($"id: {parcelId} does not exist");
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeliverParcelToCustomer(int parcelId)
         {
             List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);

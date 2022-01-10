@@ -2,16 +2,21 @@
 using DalApi;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+
 
 namespace Dal
 {
     internal partial class DalObject
-    {    
+    {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone drone)
         {
             if (DataSource.drones.Exists(item => item.Id == drone.Id)) throw new DroneException($"id: {drone.Id} already exist"); //it suppose to be this type of exception????**** 
             DataSource.drones.Add(drone);
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void SendDroneToCharge(int droneId, int stationId)
         {
             if (!DataSource.drones.Exists(item => item.Id == droneId))
@@ -33,6 +38,8 @@ namespace Dal
             }
             throw new StationException($"id: {stationId} does not exist");
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReleaseDroneFromeCharge(int droneId)
         {
             DroneCharge dCharge;
@@ -51,26 +58,34 @@ namespace Dal
                 }
             }
             throw new StationException($"id: {dCharge.StationId} does not exist");
-        }     
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int droneId)
         {
             Drone? dr = DataSource.drones.Find(item => item.Id == droneId);
             if (dr == null) 
                 throw new DroneException($"id: {droneId} does not exist");
             return (Drone)dr;
-        }     
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> GetDroneChargesList(Predicate<DroneCharge> pre)
         {
             List<DroneCharge> result = new List<DroneCharge>(DataSource.droneCharges);
             if (pre == null) return result;
             return result.FindAll(pre);
-        }     
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> GetDronesList(Predicate<Drone> pre)
         {
             List<Drone> result = new List<Drone>(DataSource.drones);
             if (pre == null) return result;
             return result.FindAll(pre);
-        }    
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDrone(int droneId)
         {
             try { DataSource.drones.Remove(GetDrone(droneId)); }

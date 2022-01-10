@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+
 
 namespace Dal
 {
@@ -51,11 +53,14 @@ namespace Dal
             return new String(stringChars);
         }
 
+        
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string getManagmentPassword()
         {
             return DataSource.Config.managmentPassword;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string setNewManagmentPassword()
         {
             string pass = getGoodPass();
@@ -63,6 +68,7 @@ namespace Dal
             return pass;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public User GetUser(string name)
         {
             User? result = DataSource.users.Find(x => x.UserName == name);
@@ -71,6 +77,7 @@ namespace Dal
             return (User)result;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddUser(User user)
         {
             if (user.IsManager == false && DataSource.users.Exists(item => item.Id == user.Id))
@@ -79,6 +86,8 @@ namespace Dal
                 throw new UserException($"User with the usernam '{user.Id}' already exist");
             DataSource.users.Add(user);
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<User> GetUsersList(Predicate<User> pre)
         {
             List<User> result = new List<User>(DataSource.users);
@@ -86,6 +95,7 @@ namespace Dal
             return result.FindAll(pre);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double Distance(double lattitudeA, double longitudeA, double lattitudeB, double longitudeB)
         {
             var radiansOverDegrees = (Math.PI / 180.0);
@@ -106,6 +116,8 @@ namespace Dal
             // calculate the result
             return (c * r);
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] GetBatteryData()
         {
             return new double[] {
