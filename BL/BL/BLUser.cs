@@ -89,5 +89,14 @@ namespace BL
                 throw new ExistIdException("this username already exist");
             }
         }
+
+        public IEnumerable<string> GetListOfManagersNames()
+        {
+            return dl.GetUsersList(x => x.IsManager == true).Select(x => x.UserName);
+        }
+        public IEnumerable<string> GetListOfUsersNames()
+        {
+            return dl.GetUsersList(x => x.IsManager == false).Select(x => x.UserName);
+        }
     }
 }

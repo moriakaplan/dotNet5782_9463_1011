@@ -122,6 +122,12 @@ namespace DalApi
         /// <param name="pre"></param>
         /// <returns></returns>
         IEnumerable<DroneCharge> GetDroneChargesList(Predicate<DroneCharge> pre = null);
+        /// <summary>
+        /// display the list of users (regulars and managers)
+        /// </summary>
+        /// <param name="pre"></param>
+        /// <returns></returns>
+        IEnumerable<User> GetUsersList(Predicate<User> pre=null);
         #endregion display
 
         #region delete

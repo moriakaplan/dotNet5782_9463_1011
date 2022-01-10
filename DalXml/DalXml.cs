@@ -245,6 +245,13 @@ namespace Dal
             users.Add(user);
             XmlTools.SaveListToXmlSerializer<User>(users, usersPath);
         }
+        public IEnumerable<User> GetUsersList(Predicate<User> pre)
+        {
+            List<User> users = XmlTools.LoadListFromXmlSerializer<User>(usersPath);
+            List<User> result = new List<User>(users);
+            if (pre == null) return result;
+            return result.FindAll(pre);
+        }
         #endregion
 
         //from dalObject, maybe need changes or to be deleted or something

@@ -149,6 +149,8 @@ namespace BLApi
         bool ExistManager(string name, string password);
         void AddUser(int id, string name, string password);
         void AddManager(string name, string password);
+        IEnumerable<string> GetListOfManagersNames();
+        IEnumerable<string> GetListOfUsersNames();
         #endregion
     }
 }

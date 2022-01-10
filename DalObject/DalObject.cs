@@ -79,6 +79,12 @@ namespace Dal
                 throw new UserException($"User with the usernam '{user.Id}' already exist");
             DataSource.users.Add(user);
         }
+        public IEnumerable<User> GetUsersList(Predicate<User> pre)
+        {
+            List<User> result = new List<User>(DataSource.users);
+            if (pre == null) return result;
+            return result.FindAll(pre);
+        }
 
         public double Distance(double lattitudeA, double longitudeA, double lattitudeB, double longitudeB)
         {

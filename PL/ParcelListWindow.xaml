@@ -38,8 +38,8 @@
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id"/>
                 <DataGridTextColumn x:Name="priorityColumn" Binding="{Binding Priority}" Header="Priority"/>
                 <DataGridTextColumn x:Name="senderNameColumn" Binding="{Binding SenderName}" Header="Sender Name"/>
-                <DataGridTextColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Status"/>
                 <DataGridTextColumn x:Name="targetNameColumn" Binding="{Binding TargetName}" Header="Target Name"/>
+                <DataGridTextColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Status"/>
                 <DataGridTextColumn x:Name="weightColumn" Binding="{Binding Weight}" Header="Weight"/>
             </DataGrid.Columns>
         </DataGrid>

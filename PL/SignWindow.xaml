@@ -5,25 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="SignWindow" Height="450" Width="663"
-        Closing="DataWindow_Closing">
-    <Window.Background>
+        Title="SignWindow" Height="450" Width="366"
+        Closing="DataWindow_Closing"
+        Background="LightGray">
+    <!--<Window.Background>
         <ImageBrush ImageSource="\Images\background2.jpg"/>
-    </Window.Background>
-    <Grid>
-        <Button Content="sighn" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="217,335,0,0" Click="Sighn"/>
-        <Label x:Name="lblId" Content="yuor id" HorizontalAlignment="Left" Margin="139,107,0,0" VerticalAlignment="Top"/>
-        <Label Content="choose a username" HorizontalAlignment="Left" Margin="138,176,0,0" VerticalAlignment="Top"/>
-        <Label Content="choose a password" HorizontalAlignment="Left" Margin="140,0,0,0" VerticalAlignment="Center"/>
-        <Label x:Name="lblManager" Content="enter the managment password for approve your identity" HorizontalAlignment="Left" Margin="138,107,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtId" HorizontalAlignment="Left" Margin="375,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="263,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="263,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
-        <TextBox x:Name="txtManager"  HorizontalAlignment="Left" Margin="481,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="help" Content="?" HorizontalAlignment="Left" Margin="528,114,0,0" VerticalAlignment="Top" IsEnabled="False">
-
+    </Window.Background>-->
+    <Grid Margin="0,0,10,0">
+        <Button Content="sign" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Sighn" Margin="0,349,0,0"/>
+        <Label x:Name="lblId" Content="yuor id" HorizontalAlignment="Left" Margin="42,128,0,0" VerticalAlignment="Top" Width="56"/>
+        <Label Content="choose a username" HorizontalAlignment="Left" Margin="42,164,0,0" VerticalAlignment="Top" Width="110"/>
+        <Label Content="choose a password" HorizontalAlignment="Left" Margin="42,198,0,0" VerticalAlignment="Top" Width="110"/>
+        <Label x:Name="lblManager" Content="enter the managment password" HorizontalAlignment="Left" Margin="42,128,0,0" VerticalAlignment="Top" Width="184"/>
+        <TextBox x:Name="txtId" HorizontalAlignment="Left" Margin="98,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="216"/>
+        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="160,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="154"/>
+        <TextBox x:Name="txtPassword" TextChanged="passChange" HorizontalAlignment="Left" Margin="160,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="154"/>
+        <TextBox x:Name="txtManager" Text="8 digits" HorizontalAlignment="Left" Margin="232,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82"/>
+        <Label x:Name="help" Content="the signing is just for customers of the company.&#xD;&#xA;if you are not please call the company and foin its customers" HorizontalAlignment="Left" Margin="319,128,0,0" VerticalAlignment="Top" Foreground="Gray">
+            <Label.Style>
+                <Style TargetType="Label">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Content" Value="the signing is just for customers of the company.&#xD;&#xA;if you are not please call the company and foin its customers" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="Content" Value="?" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
         </Label>
-        <Label Content="I am:" HorizontalAlignment="Left" Margin="263,45,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="typeOfUser" HorizontalAlignment="Left" Margin="315,45,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="typeOfUserChanged"/>
+        <Label Content="I am:" HorizontalAlignment="Left" Margin="116,52,0,0" VerticalAlignment="Top" Width="34"/>
+        <ComboBox x:Name="typeOfUser" HorizontalAlignment="Left" Margin="154,52,0,0" VerticalAlignment="Top" Width="104" SelectionChanged="typeOfUserChanged"/>
+        <Label x:Name="lblGoodOrWrong" HorizontalAlignment="Left" Margin="320,193,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.5,-0.891"/>
     </Grid>
 </Window>
