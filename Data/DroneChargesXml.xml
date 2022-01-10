@@ -7,7 +7,7 @@
   </DroneCharge>
   <DroneCharge>
     <DroneId>123456</DroneId>
-    <StationId>2345</StationId>
-    <StartedChargeTime>2022-01-10T13:48:51.5663627+02:00</StartedChargeTime>
+    <StationId>0</StationId>
+    <StartedChargeTime>2022-01-10T13:58:11.8396943+02:00</StartedChargeTime>
   </DroneCharge>
 </ArrayOfDroneCharge>
