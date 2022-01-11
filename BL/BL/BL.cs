@@ -40,6 +40,11 @@ namespace BL
         private double ChargeRatePerHour;
         private static Random random = new Random();
 
+        void RunsTheSimulator(int droneId, Action UpdateDisplayDelegate, Func<bool> checkStop)
+        {
+            //call the constructor of the class simulator
+        }
+
         /// <summary>
         /// constractor
         /// </summary>
@@ -103,7 +108,7 @@ namespace BL
 
                             double batteryForKil = 0;
                             DO.WeightCategories weight = parcel.Weight;
-                            if (weight == DO.WeightCategories.Easy) batteryForKil = BatteryForEasy;
+                            if (weight == DO.WeightCategories.Light) batteryForKil = BatteryForEasy;
                             if (weight == DO.WeightCategories.Medium) batteryForKil = BatteryForMedium;
                             if (weight == DO.WeightCategories.Heavy) batteryForKil = BatteryForHeavy;
 
@@ -113,7 +118,7 @@ namespace BL
                             //    minBattery(drone.Id, drone.CurrentLocation, locOfCus) +
                             //    minBattery(drone.Id, locOfCus, closestStation(locOfCus));
                             if (batteryNeeded > 100) throw new DroneCantTakeParcelException("the drone has not enugh battery for take the parcel he suppose to take.");
-                            drone.Battery = random.Next((int)batteryNeeded /*+ 1*/, 100) + random.NextDouble();
+                            drone.Battery = random.Next((int)batteryNeeded /*+ 1*/, 100);
                             drone.ParcelId = parcel.Id;
                             break;
                         }
@@ -133,7 +138,7 @@ namespace BL
                             int index = random.Next(0, stations.Count());
                             DO.Station stationForLocation = stations.ElementAt(index);
                             drone.CurrentLocation = new Location { Latti = stationForLocation.Lattitude, Longi = stationForLocation.Longitude };
-                            drone.Battery = random.Next(0, 19) + random.NextDouble();//random battery mode between 0 and 20
+                            drone.Battery = random.Next(0, 19) /*+ random.NextDouble()*/;//random battery mode between 0 and 20
                             dl.SendDroneToCharge(drone.Id, stationForLocation.Id);
                         }    
                     }
@@ -143,7 +148,7 @@ namespace BL
                         int index = random.Next(0, customersWhoGotParcels.Count());
                         CustomerToList customerForLocation = customersWhoGotParcels.ElementAt(index);
                         drone.CurrentLocation = GetCustomer(customerForLocation.Id).Location;
-                        drone.Battery = random.Next((int)minBattery(drone.Id, drone.CurrentLocation, closestStation(drone.CurrentLocation)) + 1, 99) + random.NextDouble();//random  between a minimal charge that allows it to reach the nearest station and a full charge
+                        drone.Battery = random.Next((int)minBattery(drone.Id, drone.CurrentLocation, closestStation(drone.CurrentLocation)) + 1, 99) /*+ random.NextDouble()*/;//random  between a minimal charge that allows it to reach the nearest station and a full charge
                     }
                 }
             }
@@ -224,7 +229,7 @@ namespace BL
             else
             {
                 WeightCategories weight = drone.ParcelInT.Weight;
-                if (weight == WeightCategories.Easy) batteryForKil = BatteryForEasy;
+                if (weight == WeightCategories.Light) batteryForKil = BatteryForEasy;
                 if (weight == WeightCategories.Medium) batteryForKil = BatteryForMedium;
                 if (weight == WeightCategories.Heavy) batteryForKil = BatteryForHeavy;
             }
@@ -243,6 +248,11 @@ namespace BL
             {
                 return dl.Distance(a.Latti, a.Longi, b.Latti, b.Longi);
             }
+        }
+
+        void IBL.RunsTheSimulator(int droneId, Action UpdateDisplayDelegate, Func<bool> checkStop)
+        {
+            throw new NotImplementedException();
         }
     }
 }

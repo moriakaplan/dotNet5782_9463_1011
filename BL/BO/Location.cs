@@ -16,7 +16,37 @@ namespace BO
 
         public override string ToString()
         {
-            return @$"longitude- {Longi}, lattitude- {Latti}";
+            //return @$"longitude- {Longi}, lattitude- {Latti}";
+            return @$"longitude- {SexagesimalCoordinates(Longi, true)}, lattitude- {SexagesimalCoordinates(Latti, false)}";
+        }
+
+        /// <summary>
+        /// Returns a Sexagesimal representation of the coordinate
+        /// </summary>
+        /// <returns></returns>
+        private String SexagesimalCoordinates(double value, bool isLongitude)
+        {
+            char direction;
+            double minutes, seconds;
+            if (isLongitude)
+                direction = 'N';
+            else
+                direction = 'E';
+            string result;
+            if (value < 0)
+            {
+                value = -value;
+                if (isLongitude)
+                    direction = 'S';
+                else
+                    direction = 'W';
+            }
+            value = (value - (int)value) * 60;
+            minutes = (int)value;
+            value -= minutes;
+            seconds = value * 60;
+            result = (int)value + "° " + minutes + "' " + seconds + "'' " + direction;
+            return result;
         }
     }
 }

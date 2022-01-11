@@ -287,7 +287,7 @@ namespace BL
         private IEnumerable<Parcel> findHighesWeight(WeightCategories weight)
         {
 
-            WeightCategories temp = WeightCategories.Easy;
+            WeightCategories temp = WeightCategories.Light;
             foreach (Parcel parcel in findHighesPrioritiy())
             {
                 if ((parcel.Weight < weight) && (parcel.Weight > temp))

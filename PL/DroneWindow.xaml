@@ -7,22 +7,16 @@
         mc:Ignorable="d"
         Title="AddDrone" Height="650" Width="400"
         Closing="DataWindow_Closing">
+    <Window.Resources>
+        <local:BatteryToColorConverter
+            x:Key="batteryToColorConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <!--<RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition x:Name="rowBattery" Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition x:Name="rowStation" Height="*"/>
-            <RowDefinition x:Name="rowParcel"  Height="*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="3*"/>-->
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -47,9 +41,10 @@
 
         <TextBox x:Name="txtId" Text="{Binding  Path=Id}" Grid.Row="1" Grid.Column="1" Margin="10" TextChanged="IdColor"/>
         <TextBox x:Name="txtModel" Text="{Binding  Path=Model}" Grid.Row="2" Grid.Column="1" Margin="10" TextChanged="ModelColor"/>
-        <TextBox x:Name="txtBattery" Text="{Binding  Path=Battery}" Grid.Row="3" Grid.Column="1" Margin="10,10,183,10" IsEnabled="false"/>
-        <ProgressBar Grid.Column="1" HorizontalAlignment="Left" Height="22" Margin="84,13,0,0" Grid.Row="3" VerticalAlignment="Top" Width="78" 
-                     Minimum="0" Maximum="100" Value="{Binding  Path=Battery}" Background="WhiteSmoke" Foreground="ForestGreen" BorderBrush="LightGray"/>
+        <ProgressBar Grid.Column="1" HorizontalAlignment="Left" Height="22" Margin="10,0,0,0" Grid.Row="3" VerticalAlignment="Center" Width="152" 
+                     Minimum="0" Maximum="100" Value="{Binding  Path=Battery}" Background="WhiteSmoke" BorderBrush="LightGray"
+                     Foreground="{Binding Path=Battery, Converter={StaticResource batteryToColorConverter}}"/>
+        <Label x:Name="txtBattery" Content="{Binding  Path=Battery}" Grid.Row="3" Grid.Column="1" Margin="10,10,162,10" />
         <TextBox x:Name="txtStatus" Text="{Binding  Path=Status}" Grid.Row="4" Grid.Column="1" Margin="10" IsEnabled="false"/>
         <ComboBox x:Name="txtWeight" Text="{Binding  Path=MaxWeight}" Grid.Row="5" Grid.Column="1" Margin="10"/>
         <ComboBox x:Name="txtStationId" Grid.Row="6" Grid.Column="1" Margin="10" SelectionChanged="txtStationId_SelectionChanged"/>

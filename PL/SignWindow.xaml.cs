@@ -62,9 +62,9 @@ namespace PL
                 MessageBox.Show("the user added successfully");
                 this.Close();
             }
-            catch(Exception ex)
+            catch(ExistIdException)
             {
-                MessageBox.Show("the username already exist, try another name");
+                MessageBox.Show("the username already exist, try to choose another one");
             }
         }
 

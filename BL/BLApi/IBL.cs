@@ -152,5 +152,7 @@ namespace BLApi
         IEnumerable<string> GetListOfManagersNames();
         IEnumerable<string> GetListOfUsersNames();
         #endregion
+
+        void RunsTheSimulator(int droneId, Action UpdateDisplayDelegate, Func<bool> checkStop);
     }
 }
