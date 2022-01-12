@@ -55,22 +55,10 @@ namespace PL
             InitializeComponent();
             blObject = obj;
             timesVisibility.Visibility = Visibility.Collapsed;
-            //(this.Resources.FindName("myVisibility") as TextBlock).Visibility= Visibility.Collapsed;
 
-            //lblId.Visibility = Visibility.Collapsed;
-            //txtId.Visibility = Visibility.Collapsed;
             lblDrone.Visibility = Visibility.Collapsed;
             txtDrone.Visibility = Visibility.Collapsed;
             btnDrone.Visibility = Visibility.Collapsed;
-            //lblCreateTime.Visibility = Visibility.Collapsed;
-            //txtCreateTime.Visibility = Visibility.Collapsed;
-            //txtAssociateTime.Visibility = Visibility.Collapsed;
-            //lblAssociateTime.Visibility = Visibility.Collapsed;
-            //txtPickUpTime.Visibility = Visibility.Collapsed;
-            //lblPickUpTime.Visibility = Visibility.Collapsed;
-            //txtDeliverTime.Visibility = Visibility.Collapsed;
-            //lblDeliverTime.Visibility = Visibility.Collapsed;
-
             delete.Visibility = Visibility.Collapsed;
 
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
@@ -131,18 +119,5 @@ namespace PL
                 catch (DeleteException) { MessageBox.Show("the parcel can't be deleted. apperently it associated to a drone."); }
             }
         }
-
-        //private void viewCustomer(object sender, RoutedEventArgs e)
-        //{
-        //    if(sender==viewSender)
-        //    {
-        //        new CustomerWindow(blObject, int.Parse(txtSender.Text)).ShowDialog();
-        //    }
-        //    if(sender==viewSender)
-        //    {
-        //        new CustomerWindow(blObject, int.Parse(txtTarget.Text)).ShowDialog();
-        //    }
-
-        //}
     }
 }

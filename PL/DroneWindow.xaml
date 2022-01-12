@@ -39,16 +39,16 @@
         <Label Content="Location:" Grid.Row="8" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
         <Label x:Name="lblStation" Content="Station For First Location:" Grid.Row="6" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
 
-        <TextBox x:Name="txtId" Text="{Binding  Path=Id}" Grid.Row="1" Grid.Column="1" Margin="10" TextChanged="IdColor"/>
-        <TextBox x:Name="txtModel" Text="{Binding  Path=Model}" Grid.Row="2" Grid.Column="1" Margin="10" TextChanged="ModelColor"/>
-        <ProgressBar Grid.Column="1" HorizontalAlignment="Left" Height="22" Margin="10,0,0,0" Grid.Row="3" VerticalAlignment="Center" Width="152" 
-                     Minimum="0" Maximum="100" Value="{Binding  Path=Battery}" Background="WhiteSmoke" BorderBrush="LightGray"
+        <TextBox x:Name="txtId" Text="{Binding  Id}" Grid.Row="1" Grid.Column="1" Margin="10" TextChanged="IdColor"/>
+        <TextBox x:Name="txtModel" Text="{Binding  Model}" Grid.Row="2" Grid.Column="1" Margin="10" TextChanged="ModelColor"/>
+        <ProgressBar Grid.Column="1" Grid.Row="3" Margin="10" Height="22" Width="152" HorizontalAlignment="Left" VerticalAlignment="Center"  
+                     Minimum="0" Maximum="100" Value="{Binding  Battery}" Background="WhiteSmoke" BorderBrush="LightGray"
                      Foreground="{Binding Path=Battery, Converter={StaticResource batteryToColorConverter}}"/>
-        <Label x:Name="txtBattery" Content="{Binding  Path=Battery}" Grid.Row="3" Grid.Column="1" Margin="10,10,162,10" />
-        <TextBox x:Name="txtStatus" Text="{Binding  Path=Status}" Grid.Row="4" Grid.Column="1" Margin="10" IsEnabled="false"/>
-        <ComboBox x:Name="txtWeight" Text="{Binding  Path=MaxWeight}" Grid.Row="5" Grid.Column="1" Margin="10"/>
+        <Label x:Name="txtBattery" Content="{Binding  Battery}" ContentStringFormat="{}{0:0%}" Grid.Column="1" Grid.Row="3" Margin="10" Width="152" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"/>
+        <TextBox x:Name="txtStatus" Text="{Binding  Status}" Grid.Row="4" Grid.Column="1" Margin="10" IsEnabled="false"/>
+        <ComboBox x:Name="txtWeight" Text="{Binding  MaxWeight}" Grid.Row="5" Grid.Column="1" Margin="10"/>
         <ComboBox x:Name="txtStationId" Grid.Row="6" Grid.Column="1" Margin="10" SelectionChanged="txtStationId_SelectionChanged"/>
-        <TextBox x:Name="txtParcel" Text="{Binding  Path=ParcelInT.Id}" Grid.Row="7" Grid.Column="1" Margin="10" IsEnabled="false" />
+        <TextBox x:Name="txtParcel" Text="{Binding  ParcelInT.Id}" Grid.Row="7" Grid.Column="1" Margin="10" IsEnabled="false" />
         <Grid Grid.Column="1" Grid.Row="8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -71,6 +71,7 @@
                 HorizontalAlignment="Right" VerticalAlignment="Center" Width="78" Height="60"/>
         <Button x:Name="charge" Content="send drone&#xD;&#xA;to charge" Click="SendDroneToCharge" Grid.Column="1" Grid.Row="9" 
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="114,0,0,0" Visibility="Hidden"/>
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="9" Text="{Binding  CurrentLocation}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="56"/>
 
         <!--<Button x:Name="sendDeliver" Content="send drone&#xD;&#xA;to delivery" Click="SendDroneToDelivery" Grid.Row="8" Grid.ColumnSpan="2" 
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="110,0,0,0" Visibility="Hidden"/>

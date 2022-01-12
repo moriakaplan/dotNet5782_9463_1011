@@ -17,7 +17,7 @@ namespace BO
         public override string ToString()
         {
             //return @$"longitude- {Longi}, lattitude- {Latti}";
-            return @$"longitude- {SexagesimalCoordinates(Longi, true)}, lattitude- {SexagesimalCoordinates(Latti, false)}";
+            return $"{SexagesimalCoordinates(Longi, true)}, \n{SexagesimalCoordinates(Latti, false)}";
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace BO
             minutes = (int)value;
             value -= minutes;
             seconds = value * 60;
-            result = (int)value + "° " + minutes + "' " + seconds + "'' " + direction;
+            result = (int)value + "° " + minutes + "' " + string.Format($"{seconds:0.000}") + "'' " + direction;
             return result;
         }
     }

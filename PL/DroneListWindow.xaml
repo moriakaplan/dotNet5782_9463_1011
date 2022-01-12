@@ -6,6 +6,10 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="DroneList" Height="auto" Width="800">
+    <Window.Resources>
+        <local:BatteryToColorConverter
+            x:Key="batteryToColorConverter"/>
+    </Window.Resources>
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -28,7 +32,7 @@
             <Label Content="Filter By Max Weight:" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
             <ComboBox x:Name="StatusFilter" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" SelectionChanged="statusFilter_SelectionChanged"/>
             <ComboBox x:Name="WeightFilter" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" SelectionChanged="weightFilter_SelectionChanged"/>
-            <Button x:Name="Restart" Content="Restart selections" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left" Click="Restart_Click" Width="auto" Height="auto" Grid.ColumnSpan="3" Margin="17,0,0,0"/>
+            <Button x:Name="Restart" Content="Restart selections" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left" Click="Restart_Click" Width="150" Height="auto" Grid.ColumnSpan="3" Margin="10,0,0,0"/>
         </Grid>
         <!--<ListView x:Name="DroneListView" Margin="0,60,0,62" Grid.Row="1" MouseDoubleClick="ViewDrone" Grid.RowSpan="2">
             <ListView.View>
@@ -42,7 +46,19 @@
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id"/>
                 <DataGridTextColumn x:Name="modelColumn" Binding="{Binding Model}" Header="Model" />
-                <DataGridTextColumn x:Name="batteryColumn" Binding="{Binding Battery}" Header="Battery"/>
+                <DataGridTemplateColumn x:Name="battColumn" Header="Battery">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <ProgressBar x:Name="BatteryProcess" Value="{Binding Battery}" Orientation="Horizontal" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True" 
+                                             Minimum="0" Maximum="100" Background="WhiteSmoke" BorderBrush="LightGray"
+                                             Foreground="{Binding Path=Battery, Converter={StaticResource batteryToColorConverter}}" 
+                                             Margin="0" Height="20" Width="80"/>
+                                <TextBlock Text="{Binding Battery, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Stretch"  FontWeight="Bold"/>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn x:Name="maxWeightColumn" Binding="{Binding MaxWeight}" Header="Max Weight"/>
                 <DataGridTextColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Status"/>
                 <DataGridTextColumn x:Name="currentLocationColumn" Binding="{Binding CurrentLocation}" Header="Current Location"/>
