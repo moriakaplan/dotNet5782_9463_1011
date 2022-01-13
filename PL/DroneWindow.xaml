@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="AddDrone" Height="650" Width="400"
+        Title="AddDrone" Height="591" Width="400"
         Closing="DataWindow_Closing">
     <Window.Resources>
         <local:BatteryToColorConverter
@@ -44,7 +44,7 @@
         <ProgressBar Grid.Column="1" Grid.Row="3" Margin="10" Height="22" Width="152" HorizontalAlignment="Left" VerticalAlignment="Center"  
                      Minimum="0" Maximum="100" Value="{Binding  Battery}" Background="WhiteSmoke" BorderBrush="LightGray"
                      Foreground="{Binding Path=Battery, Converter={StaticResource batteryToColorConverter}}"/>
-        <Label x:Name="txtBattery" Content="{Binding  Battery}" ContentStringFormat="{}{0:0%}" Grid.Column="1" Grid.Row="3" Margin="10" Width="152" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"/>
+        <Label x:Name="txtBattery" Content="{Binding  Battery}" ContentStringFormat="{}{0:0}%" Grid.Column="1" Grid.Row="3" Margin="10" Width="152" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"/>
         <TextBox x:Name="txtStatus" Text="{Binding  Status}" Grid.Row="4" Grid.Column="1" Margin="10" IsEnabled="false"/>
         <ComboBox x:Name="txtWeight" Text="{Binding  MaxWeight}" Grid.Row="5" Grid.Column="1" Margin="10"/>
         <ComboBox x:Name="txtStationId" Grid.Row="6" Grid.Column="1" Margin="10" SelectionChanged="txtStationId_SelectionChanged"/>
@@ -71,7 +71,7 @@
                 HorizontalAlignment="Right" VerticalAlignment="Center" Width="78" Height="60"/>
         <Button x:Name="charge" Content="send drone&#xD;&#xA;to charge" Click="SendDroneToCharge" Grid.Column="1" Grid.Row="9" 
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="114,0,0,0" Visibility="Hidden"/>
-        <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="9" Text="{Binding  CurrentLocation}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="56"/>
+        <TextBox Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="9" Text="{Binding  CurrentLocation}" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" Height="26"/>
 
         <!--<Button x:Name="sendDeliver" Content="send drone&#xD;&#xA;to delivery" Click="SendDroneToDelivery" Grid.Row="8" Grid.ColumnSpan="2" 
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="110,0,0,0" Visibility="Hidden"/>

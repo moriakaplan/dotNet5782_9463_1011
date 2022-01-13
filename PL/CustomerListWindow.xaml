@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <DataGrid x:Name="customerToListDataGrid" Grid.Row="1" IsReadOnly="True"
                   AutoGenerateColumns="False" EnableRowVirtualization="True" Height="auto"
-                  ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" MouseDoubleClick="ViewCustomer">
+                  ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" MouseDoubleClick="ViewCustomer" Margin="50,0,50,80" Grid.RowSpan="2">
             <!--<DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
                     <EventSetter Event="PreviewMouseDoubleClick"  Handler="ViewCustomer"/>

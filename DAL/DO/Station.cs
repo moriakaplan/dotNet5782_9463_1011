@@ -15,11 +15,13 @@ namespace DO
         public int ChargeSlots { get; set; }
         public override string ToString()
         {
-            Location coordinate = new Location { Longi = Longitude, Latti = Lattitude };
+            Coordinate longi = new Coordinate { Value = Longitude, IsLongitude = true };
+            Coordinate latti = new Coordinate { Value = Lattitude, IsLongitude = false };
             return @$"station #{Id}:
 number- {Name}, 
-{coordinate}, 
-charge slots- {ChargeSlots}
+charge slots- {ChargeSlots},
+longitude- {longi},
+lattitude- {latti}
 ";
         }
     }

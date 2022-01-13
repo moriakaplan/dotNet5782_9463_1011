@@ -87,6 +87,16 @@ namespace Dal
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
+        public DroneCharge GetDroneCharge(int droneId)
+        {
+            List<DroneCharge> droneCharges = XmlTools.LoadListFromXmlSerializer<DroneCharge>(droneChargesPath);
+            if (!droneCharges.Exists(item => item.DroneId == droneId))
+                throw new DroneChargeException($"DroneCharge for drone {droneId} does not exist");
+            DroneCharge dc = droneCharges.Find(item => item.DroneId == droneId);
+            return dc;
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> GetDroneChargesList(Predicate<DroneCharge> pre)
         {
             List<DroneCharge> list = XmlTools.LoadListFromXmlSerializer<DroneCharge>(droneChargesPath);

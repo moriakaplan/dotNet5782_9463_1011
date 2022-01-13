@@ -22,7 +22,7 @@ namespace Dal
             public static double easy=0.012;      //per kill
             public static double medium=0.013;    //per kill
             public static double heavy=0.014;     //per kill
-            public static double ratePerHour=30;
+            public static double ratePerMinute = 10;
 
             
         }

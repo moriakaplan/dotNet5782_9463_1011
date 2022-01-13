@@ -32,17 +32,18 @@ namespace BL
         }
 
         private List<DroneToList> lstdrn;
-        private readonly IDal dl;
+        internal readonly IDal dl;
         private double BatteryForAvailable;
         private double BatteryForEasy; //per kill
         private double BatteryForMedium; //per kill
         private double BatteryForHeavy; //per kill
-        private double ChargeRatePerHour;
+        private double ChargeRatePerMinute;
         private static Random random = new Random();
 
-        void RunsTheSimulator(int droneId, Action UpdateDisplayDelegate, Func<bool> checkStop)
+        public void RunsTheSimulator(int droneId, Action UpdateDisplayDelegate, Func<bool> checkStop)
         {
             //call the constructor of the class simulator
+            new Simulator(this, droneId, UpdateDisplayDelegate, checkStop);
         }
 
         /// <summary>
@@ -60,14 +61,14 @@ namespace BL
                 BatteryForEasy = batteryData[1];
                 BatteryForMedium = batteryData[2];
                 BatteryForHeavy = batteryData[3];
-                ChargeRatePerHour = batteryData[4];
+                ChargeRatePerMinute = batteryData[4];
             }
            
             try
             {
                 initializeDrone();
             }
-            catch (Exception) { Console.WriteLine("was a problem in the initialize"); }
+            catch (Exception) { Console.WriteLine("was a problem in the BL initialize"); }
 
         }
         /// <summary>
@@ -92,18 +93,19 @@ namespace BL
                 {
                     foreach (DO.Parcel parcel in dl.GetParcelsList())
                     {
-                        Location locOfCus = GetCustomer(parcel.Senderld).Location;
+                        Location locOfSender = GetCustomer(parcel.Senderld).Location;
+                        Location locOfTarget = GetCustomer(parcel.TargetId).Location;
                         if ((parcel.Droneld == drone.Id) && (parcel.AssociateTime != null) && (parcel.DeliverTime == null)) //If there is a parcel that has not yet been delivered but the drone is associated
                         {
                             if (parcel.PickUpTime == null) //If the parcel was associated but not picked up
                             {
                                 drone.Status = DroneStatus.Associated;
-                                drone.CurrentLocation = closestStation(locOfCus);
+                                drone.CurrentLocation = closestStation(locOfSender);
                             }
                             else //If the parcel was picked up but not delivered
                             {
                                 drone.Status = DroneStatus.Delivery;
-                                drone.CurrentLocation = locOfCus;//The location of the drone is in the location of the sender
+                                drone.CurrentLocation = locOfSender;//The location of the drone is in the location of the sender
                             }
 
                             double batteryForKil = 0;
@@ -112,44 +114,71 @@ namespace BL
                             if (weight == DO.WeightCategories.Medium) batteryForKil = BatteryForMedium;
                             if (weight == DO.WeightCategories.Heavy) batteryForKil = BatteryForHeavy;
 
-                            double batteryNeeded = BatteryForAvailable * distance(drone.CurrentLocation, locOfCus) + //=0 if the drone already took the parcel
-                                batteryForKil * distance(locOfCus, closestStation(locOfCus));
+                            //double batteryNeeded = BatteryForAvailable * distance(drone.CurrentLocation, locOfSender) + //=0 if the drone already took the parcel
+                            //    batteryForKil * distance(locOfSender, closestStation(locOfSender));
+                            double batteryNeeded = BatteryForAvailable * distance(drone.CurrentLocation, locOfSender) + //=0 if the drone already took the parcel
+                                batteryForKil * distance(locOfSender, locOfTarget)+
+                                BatteryForAvailable* distance(locOfTarget, closestStationWithChargeSlots(locOfTarget).Location);
                             //double batteryNeeded = 
                             //    minBattery(drone.Id, drone.CurrentLocation, locOfCus) +
                             //    minBattery(drone.Id, locOfCus, closestStation(locOfCus));
-                            if (batteryNeeded > 100) throw new DroneCantTakeParcelException("the drone has not enugh battery for take the parcel he suppose to take.");
-                            drone.Battery = random.Next((int)batteryNeeded /*+ 1*/, 100);
+                            if (batteryNeeded >= 100) throw new DroneCantTakeParcelException("the drone has not enugh battery for take the parcel he suppose to take.");
+                            drone.Battery = random.Next((int)batteryNeeded + 1, 100);
                             drone.ParcelId = parcel.Id;
                             break;
                         }
                     }
                 }
                
-                if (DroneNotInDelivery(drone))//If the drone does not ship
+                if (/*DroneNotInDelivery(drone)*/ drone.Status==DroneStatus.Zero)//If the drone does not ship
                 {
                     //drone.Status = (DroneStatus)random.Next(0, 2);//Maintenance or availability
-                    try { lock (dl) { dl.ReleaseDroneFromeCharge(drone.Id); } }
-                    catch (DO.DroneChargeException) { }
-                    if (drone.Status == DroneStatus.Maintenance)
-                    {
-                        //the location is in random station
-                        lock (dl) 
-                        { IEnumerable<DO.Station> stations = dl.GetStationsList();
-                            int index = random.Next(0, stations.Count());
-                            DO.Station stationForLocation = stations.ElementAt(index);
-                            drone.CurrentLocation = new Location { Latti = stationForLocation.Lattitude, Longi = stationForLocation.Longitude };
-                            drone.Battery = random.Next(0, 19) /*+ random.NextDouble()*/;//random battery mode between 0 and 20
-                            dl.SendDroneToCharge(drone.Id, stationForLocation.Id);
-                        }    
-                    }
-                    if (drone.Status == DroneStatus.Available)//the drone is available
-                    {
-                        IEnumerable<CustomerToList> customersWhoGotParcels = GetCustomersList().Where (x=>x.numOfParclReceived > 0);
+                    //try { lock (dl) { dl.ReleaseDroneFromeCharge(drone.Id); } }
+                    //catch (DO.DroneChargeException) { } //לא היה בטעינה. עבור דאל אובגקט נגריל ועבור דאל אקסאמאל נעשה אוויילבל?
+                    
+                    try { lock (dl) {
+                            DO.DroneCharge dc = dl.GetDroneCharge(drone.Id); 
+                            drone.Status = DroneStatus.Maintenance;
+                            drone.Battery = random.Next(0, 19);//random battery mode between 0 and 20
+                            DO.Station st = dl.GetStation(dc.StationId);
+                            drone.CurrentLocation = new Location { Latti = st.Lattitude, Longi = st.Longitude };
+                        } }
+                    catch (DO.DroneChargeException) 
+                    { 
+                        drone.Status = DroneStatus.Available;
+                        IEnumerable<CustomerToList> customersWhoGotParcels = GetCustomersList().Where(x => x.numOfParclReceived > 0);
                         int index = random.Next(0, customersWhoGotParcels.Count());
                         CustomerToList customerForLocation = customersWhoGotParcels.ElementAt(index);
                         drone.CurrentLocation = GetCustomer(customerForLocation.Id).Location;
-                        drone.Battery = random.Next((int)minBattery(drone.Id, drone.CurrentLocation, closestStation(drone.CurrentLocation)) + 1, 99) /*+ random.NextDouble()*/;//random  between a minimal charge that allows it to reach the nearest station and a full charge
+                        int battery = (int)minBattery(drone.Id, drone.CurrentLocation, closestStation(drone.CurrentLocation)) + 1;
+                        if(battery>100) throw new DroneCantTakeParcelException("the drone has not enugh battery for go to the closest station.");
+                        drone.Battery = random.Next(battery, 100); //random  between a minimal charge that allows it to reach the nearest station and a full charge
                     }
+                    //if (drone.Status == DroneStatus.Maintenance)
+                    //{
+                    //    //the location is in random station
+                    //    lock (dl) 
+                    //    {
+                    //        //in the dal
+                    //        //IEnumerable<DO.Station> stations = dl.GetStationsList();
+                    //        //int index = random.Next(0, stations.Count());
+                    //        //DO.Station stationForLocation = stations.ElementAt(index);
+                    //        //drone.CurrentLocation = new Location { Latti = stationForLocation.Lattitude, Longi = stationForLocation.Longitude };
+                    //        //dl.SendDroneToCharge(drone.Id, stationForLocation.Id);
+                            
+                    //        drone.Battery = random.Next(0, 19) ;//random battery mode between 0 and 20
+                    //        DO.Station st = dl.GetStation(dc.StationId);
+                    //        drone.CurrentLocation = new Location { Latti = st.Lattitude, Longi = st.Longitude };
+                    //    }
+                    //}
+                    //if (drone.Status == DroneStatus.Available)//the drone is available
+                    //{
+                    //    IEnumerable<CustomerToList> customersWhoGotParcels = GetCustomersList().Where (x=>x.numOfParclReceived > 0);
+                    //    int index = random.Next(0, customersWhoGotParcels.Count());
+                    //    CustomerToList customerForLocation = customersWhoGotParcels.ElementAt(index);
+                    //    drone.CurrentLocation = GetCustomer(customerForLocation.Id).Location;
+                    //    drone.Battery = random.Next((int)minBattery(drone.Id, drone.CurrentLocation, closestStation(drone.CurrentLocation)) + 1, 99) /*+ random.NextDouble()*/;//random  between a minimal charge that allows it to reach the nearest station and a full charge
+                    //}
                 }
             }
         }
@@ -250,9 +279,5 @@ namespace BL
             }
         }
 
-        void IBL.RunsTheSimulator(int droneId, Action UpdateDisplayDelegate, Func<bool> checkStop)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

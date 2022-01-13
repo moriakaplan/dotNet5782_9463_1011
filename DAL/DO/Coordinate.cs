@@ -10,42 +10,43 @@ namespace DO
     /// <summary>
     /// The class represents coordinates (for the first bonus).
     /// </summary>
-    internal class Location
+    public class Coordinate
     {
-        public double Longi { get; init; }
-        public double Latti { get; init; }
+        public double Value { get; init; }
+        public bool IsLongitude { get; init; }
         public override string ToString()
         {
-            return @$"longitude- {SexagesimalCoordinates(Longi, true)},
-lattitude- {SexagesimalCoordinates(Latti, false)}";
+            return SexagesimalCoordinates();
         }
 
         /// <summary>
         /// Returns a Sexagesimal representation of the coordinate
         /// </summary>
         /// <returns></returns>
-        private String SexagesimalCoordinates(double value, bool isLongitude)
+        private String SexagesimalCoordinates()
         {
+            double val;
             char direction;
             double minutes, seconds;
-            if (isLongitude)
+            if (IsLongitude)
                 direction = 'N';
             else
                 direction = 'E';
             string result;
-            if (value < 0)
+            if (Value < 0)
             {
-                value = -value;
-                if (isLongitude)
+                val = -Value;
+                if (IsLongitude)
                     direction = 'S';
                 else
                     direction = 'W';
             }
-            value = (value - (int)value) * 60;
-            minutes = (int)value;
-            value -= minutes;
-            seconds = value * 60;
-            result = (int)value + "° " + minutes + "' " + seconds + "'' " + direction;
+            else { val = Value; }
+            val = (val - (int)val) * 60;
+            minutes = (int)val;
+            val -= minutes;
+            seconds = val * 60;
+            result = (int)val + "° " + minutes + "' " + seconds + "'' " + direction;
             return result;
         }
 

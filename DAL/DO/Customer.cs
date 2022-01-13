@@ -15,11 +15,13 @@ namespace DO
         public double Lattitude { get; set; }
         public override string ToString()
         {
-            Location coordinate = new Location { Longi = Longitude, Latti = Lattitude };
+            Coordinate longi = new Coordinate { Value = Longitude, IsLongitude = true };
+            Coordinate latti = new Coordinate { Value = Lattitude, IsLongitude = false };
             return @$"customer #{Id}:
 number- {Name},
 phone- {Phone},
-{coordinate}
+longitude- {longi},
+lattitude- {latti}
 ";
         }
     }

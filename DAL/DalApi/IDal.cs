@@ -85,6 +85,12 @@ namespace DalApi
         /// <returns></returns>
         Drone GetDrone(int droneId);
         /// <summary>
+        /// display a drone charge
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <returns></returns>
+        DroneCharge GetDroneCharge(int droneId);
+        /// <summary>
         /// display a parcel
         /// </summary>
         /// <param name="parcelId"></param>

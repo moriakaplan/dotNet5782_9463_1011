@@ -513,7 +513,7 @@ namespace PL
             if (intValue >= 20 && intValue < 30) return Brushes.Yellow;
             if (intValue >= 30 && intValue < 50) return Brushes.GreenYellow;
             if (intValue >= 50 && intValue <=80) return Brushes.YellowGreen;
-            return Brushes.DarkGreen;
+            return Brushes.ForestGreen;
         }
         //convert from target property type to source property type
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

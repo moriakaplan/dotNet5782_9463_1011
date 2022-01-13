@@ -6,5 +6,5 @@
   <easy>0.012</easy>
   <medium>0.013</medium>
   <heavy>0.014</heavy>
-  <ratePerHour>30</ratePerHour>
+  <ratePerMinute>10</ratePerMinute>
 </configData>

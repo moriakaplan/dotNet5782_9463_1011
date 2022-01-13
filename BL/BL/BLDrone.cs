@@ -188,8 +188,8 @@ namespace BL
             catch (InvalidOperationException ex) { throw new NotExistIDException(ex.Message); }
             //אמור להיות פה
             TimeSpan time =DateTime.Now - dc.StartedChargeTime;
-            double b = time.TotalSeconds * ChargeRatePerHour;
-            drone.Battery += (int)(b / 3600);
+            double b = time.TotalSeconds * ChargeRatePerMinute;
+            drone.Battery += (int)(b / 60);
             if (drone.Battery > 100) drone.Battery = 100;
             drone.Status = DroneStatus.Available;
             

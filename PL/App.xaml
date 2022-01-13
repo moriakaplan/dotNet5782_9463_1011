@@ -12,6 +12,13 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.LightBlue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Blue.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="brownButton"  TargetType="Button">
+                <Setter Property="Background"  Value="#d0ae80" />
+                <Setter Property="BorderBrush"  Value="#fbe2ba" />
+                <Setter Property="BorderThickness"  Value="2" />
+                <Setter Property="FontSize"  Value="25" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
+    
 </Application>
