@@ -23,6 +23,7 @@ namespace BL
             }
             else throw new DeleteException($"parcel {id} can't be deleted");
         }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public int AddParcelToDelivery(int senderId, int targetId, WeightCategories weight, Priorities pri)
         {
@@ -51,6 +52,7 @@ namespace BL
                 throw new ExistIdException(ex.Message, "-parcel");
             }
         }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AssignParcelToDrone(int droneId)
         {
@@ -97,6 +99,7 @@ namespace BL
             }
 
         }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void PickParcelByDrone(int droneId)
         {
@@ -120,6 +123,7 @@ namespace BL
             }
 
         }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeliverParcelByDrone(int droneId)
         {
@@ -147,6 +151,7 @@ namespace BL
                 }
             }
         }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int parcelId)
         {
@@ -198,6 +203,7 @@ namespace BL
                 Weight = (WeightCategories)parcelFromDal.Weight
             };
         }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelToList> GetParcelsList()
         {
@@ -232,6 +238,7 @@ namespace BL
             }
             
         }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelToList> GetListOfUnassignedParcels()
         {
@@ -279,6 +286,7 @@ namespace BL
                 }
             }
         }
+
         /// <summary>
         /// Returns all parcels with the highest weight the drone can take
         /// </summary>
@@ -304,6 +312,7 @@ namespace BL
                 }
             }
         }
+
         /// <summary>
         /// find Closest Pacel
         /// </summary>
