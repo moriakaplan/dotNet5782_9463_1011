@@ -5,7 +5,7 @@
     <Name>big station</Name>
     <Longitude>32</Longitude>
     <Lattitude>32</Lattitude>
-    <ChargeSlots>21</ChargeSlots>
+    <ChargeSlots>20</ChargeSlots>
   </Station>
   <Station>
     <Id>2345</Id>
@@ -26,6 +26,6 @@
     <Name>shuva</Name>
     <Longitude>0</Longitude>
     <Lattitude>0</Lattitude>
-    <ChargeSlots>501233344</ChargeSlots>
+    <ChargeSlots>501233345</ChargeSlots>
   </Station>
 </ArrayOfStation>
