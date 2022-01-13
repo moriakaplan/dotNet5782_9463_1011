@@ -24,7 +24,7 @@ namespace Dal
                 throw new CustomerException($"id: {customerId} does not exist");
             return (Customer)cus;
         }
-
+        
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> GetCustomersList(Predicate<Customer> pre)
         {

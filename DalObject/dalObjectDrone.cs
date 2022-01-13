@@ -70,6 +70,16 @@ namespace Dal
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
+        public DroneCharge GetDroneCharge(int droneId)
+        {
+            DroneCharge? dc = DataSource.droneCharges.Find(item => item.DroneId == droneId);
+            if (dc == null)
+                throw new DroneChargeException($"DroneCharge for drone {droneId} does not exist");
+            return (DroneCharge)dc;
+        }
+
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> GetDroneChargesList(Predicate<DroneCharge> pre)
         {
             List<DroneCharge> result = new List<DroneCharge>(DataSource.droneCharges);

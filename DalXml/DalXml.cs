@@ -110,7 +110,7 @@ namespace Dal
             configRoot.Add(new XElement("easy", 0.012));
             configRoot.Add(new XElement("medium", 0.013));
             configRoot.Add(new XElement("heavy", 0.014));
-            configRoot.Add(new XElement("ratePerHour", 1000));
+            configRoot.Add(new XElement("ratePerMinute", 10));
             configRoot.Save(configPath);
         }
         private string getGoodPass()
@@ -290,7 +290,7 @@ namespace Dal
                 double.Parse(configRoot.Element("easy").Value),
                 double.Parse(configRoot.Element("medium").Value),
                 double.Parse(configRoot.Element("heavy").Value),
-                double.Parse(configRoot.Element("ratePerHour").Value)
+                double.Parse(configRoot.Element("ratePerMinute").Value)
             };
         }
     }

@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-    public enum WeightCategories { Easy, Medium, Heavy };
+    public enum WeightCategories { Light, Medium, Heavy };
     public enum Priorities { Regular, Fast, Emergency };
     public enum ParcelStatus { Created, Associated, PickedUp, Delivered };
     public enum DroneStatus 
     {
+        Zero,
         Maintenance,
         Available,
         Associated, 

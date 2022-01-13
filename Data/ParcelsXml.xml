@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <ArrayOfParcel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Parcel>
-    <Id>10000001</Id>
-    <Senderld>222222222</Senderld>
-    <TargetId>123456789</TargetId>
+    <Id>10000006</Id>
+    <Senderld>123456789</Senderld>
+    <TargetId>222222222</TargetId>
     <Droneld>0</Droneld>
-    <Weight>Easy</Weight>
-    <Priority>Fast</Priority>
-    <CreateTime>2022-01-10T13:43:24.6524623+02:00</CreateTime>
+    <Weight>Light</Weight>
+    <Priority>Emergency</Priority>
+    <CreateTime>2022-01-11T22:19:41.5258138+02:00</CreateTime>
     <AssociateTime xsi:nil="true" />
     <PickUpTime xsi:nil="true" />
     <DeliverTime xsi:nil="true" />

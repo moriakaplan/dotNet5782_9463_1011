@@ -26,7 +26,7 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomer(int customerId)
         {
-            XElement? cus = customersRoot.Elements().Where(item => int.Parse(item.Element("Id").Value) == customerId).SingleOrDefault(); 
+            XElement cus = customersRoot.Elements().Where(item => int.Parse(item.Element("Id").Value) == customerId).SingleOrDefault(); 
             if (cus==null)
             {
                 throw new CustomerException($"id: {customerId} does not exist");

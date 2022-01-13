@@ -24,13 +24,14 @@ namespace PL
     public partial class ParcelWindow : Window 
     {
         IBL blObject;
-        public ParcelWindow(IBL obj, int Id)//update, need to add delete
+        public ParcelWindow(IBL obj, int Id)//update
         {
             InitializeComponent();
             blObject = obj;
             InitializeComponent();
             grid.IsEnabled = false;
             delete.IsEnabled = true;
+            timesVisibility.Visibility = Visibility.Visible;
 
             Parcel parcel = blObject.GetParcel(Id);
             DataContext = parcel;
@@ -49,27 +50,17 @@ namespace PL
             }
         }
 
-        public ParcelWindow(IBL obj) //add
+        public ParcelWindow(IBL obj) //add, need to add option to add from the user
         {
             InitializeComponent();
             blObject = obj;
-            //(this.Resources.FindName("myVisibility") as TextBlock).Visibility= Visibility.Collapsed;
-            lblId.Visibility = Visibility.Collapsed;
+            timesVisibility.Visibility = Visibility.Collapsed;
+
             lblDrone.Visibility = Visibility.Collapsed;
-            lblCreateTime.Visibility = Visibility.Collapsed;
-            lblAssociateTime.Visibility = Visibility.Collapsed;
-            lblPickUpTime.Visibility = Visibility.Collapsed;
-            lblDeliverTime.Visibility = Visibility.Collapsed;
-            
-            txtId.Visibility = Visibility.Collapsed;
-            txtDeliverTime.Visibility = Visibility.Collapsed;
             txtDrone.Visibility = Visibility.Collapsed;
             btnDrone.Visibility = Visibility.Collapsed;
-            txtCreateTime.Visibility = Visibility.Collapsed;
-            txtAssociateTime.Visibility = Visibility.Collapsed;
-            txtPickUpTime.Visibility = Visibility.Collapsed;
-            txtDeliverTime.Visibility = Visibility.Collapsed;
-            delete.Visibility = Visibility.Hidden;
+            delete.Visibility = Visibility.Collapsed;
+
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
             var customersId = blObject.GetCustomersList().Select(x => x.Id);
@@ -77,13 +68,7 @@ namespace PL
             txtTarget.ItemsSource = customersId;
             
         }
-        public ParcelWindow(IBL obj, bool isFromSender, int cusId) //updat
-        {
-            InitializeComponent();
-            blObject = obj;
-
-        }
-
+        
         private void viewSender(object sender, RoutedEventArgs e)
         {
             new CustomerWindow(blObject, int.Parse(txtSender.Text)).Show();
@@ -134,18 +119,5 @@ namespace PL
                 catch (DeleteException) { MessageBox.Show("the parcel can't be deleted. apperently it associated to a drone."); }
             }
         }
-
-        //private void viewCustomer(object sender, RoutedEventArgs e)
-        //{
-        //    if(sender==viewSender)
-        //    {
-        //        new CustomerWindow(blObject, int.Parse(txtSender.Text)).ShowDialog();
-        //    }
-        //    if(sender==viewSender)
-        //    {
-        //        new CustomerWindow(blObject, int.Parse(txtTarget.Text)).ShowDialog();
-        //    }
-
-        //}
     }
 }

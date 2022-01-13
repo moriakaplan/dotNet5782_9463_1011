@@ -36,7 +36,7 @@ namespace BL
                 lstdrn.Add(new DroneToList  //add drone to the list of the drone in the logical layer
                 {
                     Id = id,
-                    Battery = random.Next(20, 39) + random.NextDouble(),
+                    Battery = random.Next(20, 40),
                     CurrentLocation = location,
                     MaxWeight = weight,
                     Model = model,
@@ -137,7 +137,7 @@ namespace BL
             lock (dl)
             {
                 Station st = closestStationWithChargeSlots(loc);
-                double batteryNeed = minBattery(drone.Id, loc, st.Location);
+                int batteryNeed = (int)minBattery(drone.Id, loc, st.Location);
                 if (batteryNeed > drone.Battery)
                 {
                     throw new DroneCantGoToChargeException($"the battery of drone {droneId} is not enugh so it can't be sended to charging"); //if the drone dont have enough battery
@@ -188,8 +188,8 @@ namespace BL
             catch (InvalidOperationException ex) { throw new NotExistIDException(ex.Message); }
             //אמור להיות פה
             TimeSpan time =DateTime.Now - dc.StartedChargeTime;
-            double b = time.TotalSeconds * ChargeRatePerHour;
-            drone.Battery += (double)(b / 3600);
+            double b = time.TotalSeconds * ChargeRatePerMinute;
+            drone.Battery += (int)(b / 60);
             if (drone.Battery > 100) drone.Battery = 100;
             drone.Status = DroneStatus.Available;
             
