@@ -15,4 +15,9 @@
     <Model>mkm</Model>
     <MaxWeight>Medium</MaxWeight>
   </Drone>
+  <Drone>
+    <Id>555555</Id>
+    <Model>moria</Model>
+    <MaxWeight>Medium</MaxWeight>
+  </Drone>
 </ArrayOfDrone>
