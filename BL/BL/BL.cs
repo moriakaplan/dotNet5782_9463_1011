@@ -147,9 +147,20 @@ namespace BL
                     { 
                         drone.Status = DroneStatus.Available;
                         IEnumerable<CustomerToList> customersWhoGotParcels = GetCustomersList().Where(x => x.numOfParclReceived > 0);
-                        int index = random.Next(0, customersWhoGotParcels.Count());
-                        CustomerToList customerForLocation = customersWhoGotParcels.ElementAt(index);
-                        drone.CurrentLocation = GetCustomer(customerForLocation.Id).Location;
+                        int count = customersWhoGotParcels.Count();
+                        if (count > 0)
+                        {
+                            int index = random.Next(0, count);
+                            CustomerToList customerForLocation = customersWhoGotParcels.ElementAt(index);
+                            drone.CurrentLocation = GetCustomer(customerForLocation.Id).Location;
+                        }
+                        else
+                        {
+                            IEnumerable<DO.Station> stations = dl.GetStationsList();
+                            int index = random.Next(0, stations.Count());
+                            DO.Station stationForLocation = stations.ElementAt(index);
+                            drone.CurrentLocation = new Location { Latti = stationForLocation.Lattitude, Longi = stationForLocation.Longitude };
+                        }
                         int battery = (int)minBattery(drone.Id, drone.CurrentLocation, closestStation(drone.CurrentLocation)) + 1;
                         if(battery>100) throw new DroneCantTakeParcelException("the drone has not enugh battery for go to the closest station.");
                         drone.Battery = random.Next(battery, 100); //random  between a minimal charge that allows it to reach the nearest station and a full charge
