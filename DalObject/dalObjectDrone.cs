@@ -103,6 +103,8 @@ namespace Dal
             {
                 throw new DroneException($"id: {droneId} does not exist");
             }
+            try { DataSource.droneCharges.Remove(GetDroneCharge(droneId)); }
+            catch { }
         }
     }
 }

@@ -14,7 +14,6 @@ using System.Windows.Shapes;
 using BLApi;
 using BO;
 using System.ComponentModel;
-using System.Globalization;
 
 namespace PL
 {
@@ -501,24 +500,5 @@ namespace PL
 
         
     }
-    public class BatteryToColorConverter : IValueConverter
-    {
-        //convert from source property type(int) to target property type(brush)
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            int intValue = (int)value;
-            if (intValue <  5)                   return Brushes.DarkRed; 
-            if (intValue >= 5  && intValue < 10) return Brushes.OrangeRed;
-            if (intValue >= 10 && intValue < 20) return Brushes.Orange;
-            if (intValue >= 20 && intValue < 30) return Brushes.Yellow;
-            if (intValue >= 30 && intValue < 50) return Brushes.GreenYellow;
-            if (intValue >= 50 && intValue <=80) return Brushes.YellowGreen;
-            return Brushes.ForestGreen;
-        }
-        //convert from target property type to source property type
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    
 }

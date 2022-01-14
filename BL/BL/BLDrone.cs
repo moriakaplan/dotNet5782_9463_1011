@@ -197,7 +197,7 @@ namespace BL
             lstdrn.Add(drone);
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<DroneToList> GetDronesList(Func<DroneToList, bool> pre)
+        public IEnumerable<DroneToList> GetDronesList(Func<DroneToList, bool> pre = null)
         {
             if (pre != null)
                 return lstdrn.Where(pre);

@@ -28,7 +28,7 @@
             <Button Content="Customers" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"  VerticalAlignment="Center" Click="displayCustomerList" Height="69" Width="170"/>
 
         </Grid>
-        <Button x:Name="btnPass" Content="see managment password" Click="seePassword" Margin="9,30,546,391" Background="LightBlue"/>
+        <Button x:Name="btnPass" Content="see managment password" Click="seePassword" Margin="10,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="LightBlue"/>
         <!--<Button.Style>
                 <Style TargetType="Button">
                     <Style.Triggers>
@@ -43,7 +43,7 @@
                     </Style.Triggers>
                 </Style>
             </Button.Style>-->
-        <Label x:Name="pass" Margin="270,16,437,392" Foreground="white"/>
-        <Button Content="change the managment password" Height="auto" Width="auto" Click="changePass" Background="LightBlue" Margin="10,67,544,354"/>
+        <Label x:Name="pass" Margin="230,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="white" Height="32" Width="103"/>
+        <Button Content="change the managment password" Height="auto" Width="auto" Click="changePass" Background="LightBlue" Margin="10,67,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
     </Grid>
 </Window>

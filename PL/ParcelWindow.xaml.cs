@@ -15,6 +15,7 @@ using BLApi;
 using BO;
 using System.ComponentModel;
 using System.Xml.Linq;
+using System.Globalization;
 
 namespace PL
 {
@@ -119,5 +120,6 @@ namespace PL
                 catch (DeleteException) { MessageBox.Show("the parcel can't be deleted. apperently it associated to a drone."); }
             }
         }
+
     }
 }

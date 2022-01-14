@@ -81,7 +81,7 @@ namespace BLApi
         void DeliverParcelByDrone(int droneId);
         #endregion updating
 
-        #region display
+        #region gets
         /// <summary>
         /// Returns the customer with the requested ID
         /// </summary>
@@ -115,7 +115,7 @@ namespace BLApi
         ///  returns the list of the drones
         /// </summary>
         /// <returns></returns>
-        IEnumerable<DroneToList> GetDronesList(Func<DroneToList, bool> pre=null);
+        IEnumerable<DroneToList> GetDronesList(Func<DroneToList, bool> pre = null);
         /// <summary>
         /// returns the list of the customers
         /// </summary>

@@ -117,12 +117,16 @@ namespace Dal
         public void DeleteDrone(int droneId)
         {
             List<Drone> drones = XmlTools.LoadListFromXmlSerializer<Drone>(dronesPath);
+            List<DroneCharge> droneCharges = XmlTools.LoadListFromXmlSerializer<DroneCharge>(droneChargesPath);
             try { drones.Remove(GetDrone(droneId)); }
             catch (ArgumentNullException)
             {
                 throw new DroneException($"id: {droneId} does not exist");
             }
+            try { droneCharges.Remove(GetDroneCharge(droneId)); }
+            catch { }
             XmlTools.SaveListToXmlSerializer<Drone>(drones, dronesPath);
+            XmlTools.SaveListToXmlSerializer<DroneCharge>(droneCharges, droneChargesPath);
         }
     }
 }

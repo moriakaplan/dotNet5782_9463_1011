@@ -6,10 +6,6 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="DroneList" Height="auto" Width="800">
-    <Window.Resources>
-        <local:BatteryToColorConverter
-            x:Key="batteryToColorConverter"/>
-    </Window.Resources>
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>

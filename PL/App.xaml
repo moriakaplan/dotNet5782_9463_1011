@@ -18,6 +18,12 @@
                 <Setter Property="BorderThickness"  Value="2" />
                 <Setter Property="FontSize"  Value="25" />
             </Style>
+            <local:NullableToVisibilityConverter
+                x:Key="nullableToVisibilityConverter"/>
+            <local:TextToVisibilityConverter
+                x:Key="textToVisibilityConverter"/>
+            <local:BatteryToColorConverter
+                x:Key="batteryToColorConverter"/>
         </ResourceDictionary>
     </Application.Resources>
     

@@ -68,10 +68,17 @@ namespace BL
                     Location = new Location { Latti = dstation.Lattitude, Longi = dstation.Longitude },
                     Name = dstation.Name
                 };
-                IEnumerable<DO.DroneCharge> droneCharges = dl.GetDroneChargesList();
-                bstation.DronesInCharge = from item in droneCharges
-                                          select new DroneInCharge { Id = item.DroneId, Battery = GetDrone(item.DroneId).Battery };
-                int count = droneCharges.Count(x => x.StationId == stationId);
+                //IEnumerable<DO.DroneCharge> droneCharges = dl.GetDroneChargesList(); //option A, according to chargeDrone
+                //bstation.DronesInCharge = from item in droneCharges
+                //                          where item.StationId == stationId
+                //                          select new DroneInCharge { Id = item.DroneId, Battery = GetDrone(item.DroneId).Battery };
+
+                IEnumerable<DroneToList> drones = GetDronesList(); //option B, according to Drones
+                bstation.DronesInCharge = from item in drones
+                                          where item.Status == DroneStatus.Maintenance && item.CurrentLocation==bstation.Location
+                                          select new DroneInCharge { Id = item.Id, Battery = item.Battery };
+
+                int count = bstation.DronesInCharge.Count();
                 bstation.AvailableChargeSlots = dstation.ChargeSlots - count;
                 return bstation;
             }      

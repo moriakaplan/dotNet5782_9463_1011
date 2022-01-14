@@ -21,11 +21,4 @@
     <Lattitude>32</Lattitude>
     <ChargeSlots>19</ChargeSlots>
   </Station>
-  <Station>
-    <Id>0</Id>
-    <Name>shuva</Name>
-    <Longitude>0</Longitude>
-    <Lattitude>0</Lattitude>
-    <ChargeSlots>501233345</ChargeSlots>
-  </Station>
 </ArrayOfStation>

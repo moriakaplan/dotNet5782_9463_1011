@@ -62,12 +62,12 @@
                     </Style>
                 </TextBox.Style>
             </TextBox>
-            <ComboBox x:Name="txtWeight" Text="{Binding  Path=Weight}" Grid.Row="4" Grid.Column="1" Margin="10" />
-            <ComboBox x:Name="txtPriority" Text="{Binding  Path=Priority}" Grid.Row="5" Grid.Column="1" Margin="10" />
-            <TextBox x:Name="txtCreateTime" Text="{Binding  Path=CreateTime}" Visibility="{Binding ElementName=timesVisibility, Path=Visibility}" Grid.Row="6" Grid.Column="1" Margin="10" />
-            <TextBox x:Name="txtAssociateTime" Text="{Binding  Path=AssociateTime}" Visibility="{Binding ElementName=timesVisibility, Path=Visibility}" Grid.Row="7" Grid.Column="1" Margin="10" />
-            <TextBox x:Name="txtPickUpTime" Text="{Binding  Path=PickUpTime}" Visibility="{Binding ElementName=timesVisibility, Path=Visibility}" Grid.Row="8" Grid.Column="1" Margin="10" />
-            <TextBox x:Name="txtDeliverTime" Text="{Binding  Path=DeliverTime}" Visibility="{Binding ElementName=timesVisibility, Path=Visibility}" Grid.Row="9" Grid.Column="1" Margin="10" />
+            <ComboBox x:Name="txtWeight" Text="{Binding  Weight}" Grid.Row="4" Grid.Column="1" Margin="10" />
+            <ComboBox x:Name="txtPriority" Text="{Binding  Priority}" Grid.Row="5" Grid.Column="1" Margin="10" />
+            <TextBox x:Name="txtCreateTime" Text="{Binding  CreateTime}" Visibility="{Binding  Path=Text, Converter={StaticResource textToVisibilityConverter}}" Grid.Row="6" Grid.Column="1" Margin="10" />
+            <TextBox x:Name="txtAssociateTime" Text="{Binding  AssociateTime}" Visibility="{Binding ElementName=timesVisibility, Path=Visibility}" Grid.Row="7" Grid.Column="1" Margin="10" />
+            <TextBox x:Name="txtPickUpTime" Text="{Binding  PickUpTime}" Visibility="{Binding ElementName=timesVisibility, Path=Visibility}" Grid.Row="8" Grid.Column="1" Margin="10" />
+            <TextBox x:Name="txtDeliverTime" Text="{Binding  DeliverTime}" Visibility="{Binding Path=Text, Converter={StaticResource textToVisibilityConverter}}" Grid.Row="9" Grid.Column="1" Margin="10" />
 
             <!--<Button x:Name="add" Content="Add parcel" Grid.Row="10" Grid.Column="1"  Click="AddParcel"
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="377,0,0,0"/>
@@ -76,11 +76,11 @@
         <Button x:Name="Update" Content="Update parcel" Grid.Row="10" Grid.Column="1"  Click="UpdateParcel"
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" Margin="235,0,0,0"/>-->
         </Grid>
-        <Button x:Name="add" Content="add" Click="AddParcel" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,467,0,0" />
-        <Button x:Name="delete" Content="Delete" HorizontalAlignment="Center"  VerticalAlignment="Top" Click="DeleteParcel" Margin="0,467,0,0"/>
-        <Button x:Name="btnSender" Background="LightBlue" Click="viewSender" Content="view this customer" HorizontalAlignment="Left" Margin="339,50,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnTarget" Background="LightBlue" Click="viewTarget" Content="view this customer" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="339,94,0,0"/>
-        <Button x:Name="btnDrone" Click="viewDrone" Content="view this drone" Background="LightBlue" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="339,138,0,0" Width="151"/>
+        <Button x:Name="add" Content="add" Click="AddParcel" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="30"/>
+        <Button x:Name="delete" Content="Delete" Click="DeleteParcel" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="30"/>
+        <Button x:Name="btnSender" Background="LightBlue" Click="viewSender" Content="view this customer" HorizontalAlignment="Right" Margin="0,50,10,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnTarget" Background="LightBlue" Click="viewTarget" Content="view this customer" HorizontalAlignment="Right" Margin="0,94,10,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnDrone" Click="viewDrone" Content="view this drone" Background="LightBlue" HorizontalAlignment="Right" Margin="0,138,10,0" VerticalAlignment="Top" Width="151"/>
 
     </Grid>
 </Window>
