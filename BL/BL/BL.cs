@@ -136,13 +136,17 @@ namespace BL
                     //try { lock (dl) { dl.ReleaseDroneFromeCharge(drone.Id); } }
                     //catch (DO.DroneChargeException) { } //לא היה בטעינה. עבור דאל אובגקט נגריל ועבור דאל אקסאמאל נעשה אוויילבל?
                     
-                    try { lock (dl) {
+                    try
+                    {
+                        lock (dl)
+                        {
                             DO.DroneCharge dc = dl.GetDroneCharge(drone.Id); 
                             drone.Status = DroneStatus.Maintenance;
                             drone.Battery = random.Next(0, 19);//random battery mode between 0 and 20
                             DO.Station st = dl.GetStation(dc.StationId);
                             drone.CurrentLocation = new Location { Latti = st.Lattitude, Longi = st.Longitude };
-                        } }
+                        }
+                    }
                     catch (DO.DroneChargeException) 
                     { 
                         drone.Status = DroneStatus.Available;
