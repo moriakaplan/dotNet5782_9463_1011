@@ -122,8 +122,8 @@ namespace BL
                             //double batteryNeeded = 
                             //    minBattery(drone.Id, drone.CurrentLocation, locOfCus) +
                             //    minBattery(drone.Id, locOfCus, closestStation(locOfCus));
-                            if (batteryNeeded >= 100) throw new DroneCantTakeParcelException("the drone has not enugh battery for take the parcel he suppose to take.");
-                            drone.Battery = random.Next((int)batteryNeeded + 1, 100);
+                            if (batteryNeeded > 100) throw new DroneCantTakeParcelException("the drone has not enugh battery for take the parcel he suppose to take.");
+                            drone.Battery = random.Next((int)Math.Ceiling(batteryNeeded), 99) + random.NextDouble();
                             drone.ParcelId = parcel.Id;
                             break;
                         }
@@ -142,7 +142,7 @@ namespace BL
                         {
                             DO.DroneCharge dc = dl.GetDroneCharge(drone.Id); 
                             drone.Status = DroneStatus.Maintenance;
-                            drone.Battery = random.Next(0, 19);//random battery mode between 0 and 20
+                            drone.Battery = random.Next(0, 19) + random.NextDouble();//random battery mode between 0 and 20
                             DO.Station st = dl.GetStation(dc.StationId);
                             drone.CurrentLocation = new Location { Latti = st.Lattitude, Longi = st.Longitude };
                         }
@@ -161,13 +161,17 @@ namespace BL
                         else
                         {
                             IEnumerable<DO.Station> stations = dl.GetStationsList();
-                            int index = random.Next(0, stations.Count());
-                            DO.Station stationForLocation = stations.ElementAt(index);
-                            drone.CurrentLocation = new Location { Latti = stationForLocation.Lattitude, Longi = stationForLocation.Longitude };
+                            if (stations.Count() > 0)
+                            {
+                                int index = random.Next(0, stations.Count());
+                                DO.Station stationForLocation = stations.ElementAt(index);
+                                drone.CurrentLocation = new Location { Latti = stationForLocation.Lattitude, Longi = stationForLocation.Longitude };
+                            }
+                            else drone.CurrentLocation = new Location { Latti = 30, Longi = 30 };
                         }
-                        int battery = (int)minBattery(drone.Id, drone.CurrentLocation, closestStation(drone.CurrentLocation)) + 1;
+                        double battery = minBattery(drone.Id, drone.CurrentLocation, closestStation(drone.CurrentLocation)) + 1;
                         if(battery>100) throw new DroneCantTakeParcelException("the drone has not enugh battery for go to the closest station.");
-                        drone.Battery = random.Next(battery, 100); //random  between a minimal charge that allows it to reach the nearest station and a full charge
+                        drone.Battery = random.Next((int)Math.Ceiling(battery), 99) + random.NextDouble(); //random  between a minimal charge that allows it to reach the nearest station and a full charge
                     }
                     //if (drone.Status == DroneStatus.Maintenance)
                     //{
