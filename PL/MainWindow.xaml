@@ -12,12 +12,16 @@
     <Window.Background>
         <ImageBrush ImageSource="\Images\mainIm2.jpg"/>
     </Window.Background>
-    
-    <Grid Margin="553,185,0,13">
 
-        <Button Content="log in" Style="{StaticResource brownButton}" HorizontalAlignment="Left" VerticalAlignment="Top" Click="LogIn" Height="76" Width="179" Margin="36,43,0,0"/>
-        <Button Content="sign up" Style="{StaticResource brownButton}" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Sign" Height="72" Width="179" Margin="36,138,0,0"/>
-    
+    <Grid Height="250" Width="230" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button Content="log in" Style="{StaticResource brownButton}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="LogIn" Height="76" Width="179" />
+        <Button Content="sign up" Style="{StaticResource brownButton}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Sign" Height="72" Width="179" Grid.Row="1"/>
+
     </Grid>
 
 </Window>

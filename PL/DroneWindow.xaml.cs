@@ -35,20 +35,15 @@ namespace PL
             isInActionsState = false;
             blObject = obj;
 
-            rowBattery.Height = new GridLength(0);
-            lblBattery.Visibility = Visibility.Hidden;
-            txtBattery.Visibility = Visibility.Hidden;
-            rowStatus.Height = new GridLength(0);
-            lblStatus.Visibility = Visibility.Hidden;
-            txtStatus.Visibility = Visibility.Hidden;
-            rowParcel.Height = new GridLength(0);
-            lblParcel.Visibility = Visibility.Hidden;
-            txtParcel.Visibility = Visibility.Hidden;
+            lblBattery.Visibility= Visibility.Collapsed;
+            txtBattery.Visibility= Visibility.Collapsed;
+            lblStatus.Visibility = Visibility.Collapsed;
+            txtStatus.Visibility = Visibility.Collapsed;
+            lblParcel.Visibility = Visibility.Collapsed;
+            txtParcel.Visibility = Visibility.Collapsed;
 
-            txtId.Foreground = Brushes.Black;
-            txtId.Text = "6 digits";
+            //txtId.Text = "6 digits";
             options.Visibility = Visibility.Hidden;
-
             update.Visibility = Visibility.Hidden;
             charge.Visibility = Visibility.Hidden;
             
@@ -57,7 +52,7 @@ namespace PL
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
         /// <summary>
-        /// constructor for making window for actions with specific drone
+        /// constructor for open window for actions with specific drone
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="droneId"></param>
@@ -80,26 +75,22 @@ namespace PL
             txtId.IsEnabled = false;
             txtWeight.IsEnabled = false;
 
-            rowStation.Height = new GridLength(0);
-            txtStationId.Visibility = Visibility.Hidden;
-            lblStation.Visibility = Visibility.Hidden;
+            txtStationId.Visibility = Visibility.Collapsed;
+            lblStation.Visibility = Visibility.Collapsed;
             add.Visibility = Visibility.Hidden;
 
-            switch (drone.Status)
+            switch (drone.Status) //show to thw user the right option according to the status of the drone
             {
                 case DroneStatus.Available:
                     charge.Visibility = Visibility.Visible;
-                    //sendDeliver.Visibility = Visibility.Visible;
                     options.Content = "send drone\nto delivery";
                     options.Click += SendDroneToDelivery;
                     break;
                 case DroneStatus.Maintenance:
-                    //releaseFromCharge.Visibility = Visibility.Visible;
                     options.Content = "release drone\nfrom charge";
                     options.Click += ReleaseDroneFromCharge;
                     break;
                 case DroneStatus.Associated:
-                    //pickParcel.Visibility = Visibility.Visible;
                     options.Content = "pick up\nparcel";
                     options.Click += PickUpParcel;
                     break;

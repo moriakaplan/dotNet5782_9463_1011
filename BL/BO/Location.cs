@@ -29,7 +29,7 @@ namespace BO
         {
             //return @$"longitude- {Longi}, lattitude- {Latti}";
             //return $"{SexagesimalCoordinates(Longi, true)}, \n{SexagesimalCoordinates(Latti, false)}";
-            return $"{longi}, \n{Latti}";
+            return $"{longi},\n{Latti}";
         }
 
         ///// <summary>

@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="CustomerListWindow" Height="auto" Width="840"
-        Closing="DataWindow_Closing">
+        Title="CustomerListWindow" Height="auto" Width="840">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>

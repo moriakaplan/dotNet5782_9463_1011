@@ -5,13 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        Closing="DataWindow_Closing">
+        Title="MainWindow" Height="450" Width="800">
     <Window.Background>
         <ImageBrush ImageSource="\Images\Background3.jpg"/>
     </Window.Background>
     <Grid Margin="0,-19,0,0">
-        <Grid Margin="132,95,132,79">
+        <Grid Margin="52,168,52,75">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -21,11 +20,11 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Button Content="Drones" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                Click="displayDronesList_Click" Height="69" Width="170"/>
-            <Button Content="Stations" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Height="69" VerticalAlignment="Center" Width="170" Click="displayStationList"/>
-            <Button Content="Parcels" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="displayParcelList" Height="69" Width="170"/>
-            <Button Content="Customers" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"  VerticalAlignment="Center" Click="displayCustomerList" Height="69" Width="170"/>
+            <Button Content="Drones" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                Click="displayDronesList_Click" Height="69" Width="284"/>
+            <Button Content="Stations" Grid.Column="1" HorizontalAlignment="Center" Height="69" VerticalAlignment="Center" Width="284" Click="displayStationList"/>
+            <Button Content="Parcels" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="displayParcelList" Height="69" Width="284"/>
+            <Button Content="Customers" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"  VerticalAlignment="Center" Click="displayCustomerList" Height="69" Width="284"/>
 
         </Grid>
         <Button x:Name="btnPass" Content="see managment password" Click="seePassword" Margin="10,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="LightBlue"/>
@@ -44,6 +43,7 @@
                 </Style>
             </Button.Style>-->
         <Label x:Name="pass" Margin="230,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="white" Height="32" Width="103"/>
-        <Button Content="change the managment password" Height="auto" Width="auto" Click="changePass" Background="LightBlue" Margin="10,67,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button Content="change the managment password" Height="auto" Width="auto" Click="changePass" Background="LightBlue" Margin="10,70,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button Content="back to the main window" HorizontalAlignment="Right" Margin="0,30,10,0" VerticalAlignment="Top" Background="LightBlue" Click="BackToMain"/>
     </Grid>
 </Window>

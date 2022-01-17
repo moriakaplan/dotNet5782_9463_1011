@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ParcelListWindow" Height="auto" Width="800"
-        Closing="DataWindow_Closing">
+        Title="ParcelListWindow" Height="auto" Width="800">
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>

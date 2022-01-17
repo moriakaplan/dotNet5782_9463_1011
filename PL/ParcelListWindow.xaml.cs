@@ -46,14 +46,6 @@ namespace PL
             else parcelToListDataGrid.DataContext = blObject.GetParcelsList();
         }
 
-        void DataWindow_Closing(object sender, CancelEventArgs e)
-        {
-            //MessageBoxResult mb;
-            //mb = MessageBox.Show("do you want to close the window?", "close", MessageBoxButton.YesNo);
-            //if (mb == MessageBoxResult.No) e.Cancel=true;
-            new ManagerWindow(blObject).Show();
-        }
-
         private void weightFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             
