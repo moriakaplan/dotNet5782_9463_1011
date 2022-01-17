@@ -15,13 +15,13 @@ namespace PL
         //convert from source property type(int) to target property type(brush)
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int intValue = (int)value;
-            if (intValue < 5) return Brushes.DarkRed;
-            if (intValue >= 5 && intValue < 10) return Brushes.OrangeRed;
-            if (intValue >= 10 && intValue < 20) return Brushes.Orange;
-            if (intValue >= 20 && intValue < 30) return Brushes.Yellow;
-            if (intValue >= 30 && intValue < 50) return Brushes.GreenYellow;
-            if (intValue >= 50 && intValue <= 80) return Brushes.YellowGreen;
+            double doubleValue = (double)value;
+            if (doubleValue < 5) return Brushes.DarkRed;
+            if (doubleValue >= 5 && doubleValue < 10) return Brushes.OrangeRed;
+            if (doubleValue >= 10 && doubleValue < 20) return Brushes.Orange;
+            if (doubleValue >= 20 && doubleValue < 30) return Brushes.Yellow;
+            if (doubleValue >= 30 && doubleValue < 50) return Brushes.GreenYellow;
+            if (doubleValue >= 50 && doubleValue <= 80) return Brushes.YellowGreen;
             return Brushes.ForestGreen;
         }
         //convert from target property type to source property type

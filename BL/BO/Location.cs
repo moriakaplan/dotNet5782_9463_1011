@@ -29,36 +29,7 @@ namespace BO
         {
             //return @$"longitude- {Longi}, lattitude- {Latti}";
             //return $"{SexagesimalCoordinates(Longi, true)}, \n{SexagesimalCoordinates(Latti, false)}";
-            return $"{longi},\n{Latti}";
+            return $"{longi},\n{latti}";
         }
-
-        ///// <summary>
-        ///// Returns a Sexagesimal representation of the coordinate
-        ///// </summary>
-        ///// <returns></returns>
-        //private String SexagesimalCoordinates(double value, bool isLongitude)
-        //{
-        //    char direction;
-        //    double minutes, seconds;
-        //    if (isLongitude)
-        //        direction = 'N';
-        //    else
-        //        direction = 'E';
-        //    string result;
-        //    if (value < 0)
-        //    {
-        //        value = -value;
-        //        if (isLongitude)
-        //            direction = 'S';
-        //        else
-        //            direction = 'W';
-        //    }
-        //    value = (value - (int)value) * 60;
-        //    minutes = (int)value;
-        //    value -= minutes;
-        //    seconds = value * 60;
-        //    result = (int)value + "° " + minutes + "' " + string.Format($"{seconds:0.000}") + "'' " + direction;
-        //    return result;
-        //}
     }
 }

@@ -47,7 +47,7 @@ namespace DO
             val -= minutes;
             seconds = val * 60;
             //result = (int)val + "° " + minutes + "' " + string.Format($"{seconds:0.000}") + "'' " + direction;
-            result = $"{val}° {minutes}' {seconds:0.000}'' {direction}";
+            result = $"{(int)val}° {minutes}' {seconds:0.000}'' {direction}";
             return result;
         }
 
