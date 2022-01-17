@@ -113,7 +113,7 @@ namespace PL
             //MessageBoxResult mb;
             //mb = MessageBox.Show("do you want to close the window?", "close", MessageBoxButton.YesNo);
             //if (mb == MessageBoxResult.No) e.Cancel=true;
-            new ManagerWindow(blObject).Show();
+            //new ManagerWindow(blObject).Show();
         }
 
     }

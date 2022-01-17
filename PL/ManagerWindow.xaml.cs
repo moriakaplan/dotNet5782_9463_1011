@@ -23,48 +23,37 @@ namespace PL
     public partial class ManagerWindow : Window
     {
         IBL blObject;
-        bool closeX = true;
         public ManagerWindow(IBL obj)
         {
             InitializeComponent();
             blObject = obj;
             btnPass.DataContext = blObject;
         }
-        void DataWindow_Closing(object sender, CancelEventArgs e)
-        {
-            //MessageBoxResult mb;
-            //mb = MessageBox.Show("do you want to close the window?", "close", MessageBoxButton.YesNo);
-            //if (mb == MessageBoxResult.No) e.Cancel=true;
-            if (closeX) new MainWindow().Show();
-        }
-
+        
         private void displayDronesList_Click(object sender, RoutedEventArgs e)
         {
             new DroneListWindow(blObject).Show();
-            closeX = false;
-            this.Close();
         }
 
         private void displayStationList(object sender, RoutedEventArgs e)
         {
-            new StationListWindow(blObject).Show();
-            closeX = false;
             this.Close();
-            
+            new StationListWindow(blObject).ShowDialog();
+            new ManagerWindow(blObject).Show();
         }
 
         private void displayParcelList(object sender, RoutedEventArgs e)
         {
-            new ParcelListWindow(blObject).Show();
-            closeX = false;
             this.Close();
+            new ParcelListWindow(blObject).Show();
+            new ManagerWindow(blObject).Show();
         }
 
         private void displayCustomerList(object sender, RoutedEventArgs e)
         {
-            new CustomerListWindow(blObject).Show();
-             closeX = false;
             this.Close();
+            new CustomerListWindow(blObject).Show();
+            new ManagerWindow(blObject).Show();
         }
 
         private void seePassword(object sender, RoutedEventArgs e)
@@ -92,6 +81,12 @@ namespace PL
                     pass.Content = newPass;
                 }
             }
+        }
+
+        private void BackToMain(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            this.Close();
         }
     }
 }

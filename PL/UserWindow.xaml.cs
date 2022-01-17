@@ -49,5 +49,11 @@ namespace PL
         {
 
         }
+
+        private void BackToMain(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            this.Close();
+        }
     }
 }
