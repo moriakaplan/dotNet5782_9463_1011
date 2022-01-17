@@ -266,7 +266,8 @@ namespace BL
             IEnumerable<ParcelToList> parcelsList= GetListOfUnassignedParcels();
             Priorities max = parcelsList.Max(x => x.Priority);
             return from parcel in parcelsList
-                   where parcel.Priority == max;
+                   where parcel.Priority == max
+                   select parcel;
         }
 
         /// <summary>

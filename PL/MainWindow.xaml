@@ -6,8 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <!--Icon="\Images\Drone2.ico"-->
+        Title="MainWindow" Height="450" Width="800"
+        Icon="\Images\droneDelivery2.ico">
 
     <Window.Background>
         <ImageBrush ImageSource="\Images\mainIm2.jpg"/>

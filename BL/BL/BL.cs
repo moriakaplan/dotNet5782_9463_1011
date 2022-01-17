@@ -33,11 +33,11 @@ namespace BL
 
         private List<DroneToList> lstdrn;
         internal readonly IDal dl;
-        internal double BatteryForAvailable;
-        internal double BatteryForLight; //per kill
-        internal double BatteryForMedium; //per kill
-        internal double BatteryForHeavy; //per kill
-        internal double ChargeRatePerMinute;
+        internal double batteryForAvailable;
+        internal double batteryForLight; //per kill
+        internal double batteryForMedium; //per kill
+        internal double batteryForHeavy; //per kill
+        internal double chargeRatePerMinute;
         internal static Random random = new Random();
 
         public void RunsTheSimulator(int droneId, Action UpdateDisplayDelegate, Func<bool> checkStop)
@@ -57,11 +57,11 @@ namespace BL
             lock(dl)
             {
                 double[] batteryData = dl.GetBatteryData();
-                BatteryForAvailable = batteryData[0];
-                BatteryForLight = batteryData[1];
-                BatteryForMedium = batteryData[2];
-                BatteryForHeavy = batteryData[3];
-                ChargeRatePerMinute = batteryData[4];
+                batteryForAvailable = batteryData[0];
+                batteryForLight = batteryData[1];
+                batteryForMedium = batteryData[2];
+                batteryForHeavy = batteryData[3];
+                chargeRatePerMinute = batteryData[4];
             }
            
             try
@@ -110,15 +110,15 @@ namespace BL
 
                             double batteryForKil = 0;
                             DO.WeightCategories weight = parcel.Weight;
-                            if (weight == DO.WeightCategories.Light) batteryForKil = BatteryForLight;
-                            if (weight == DO.WeightCategories.Medium) batteryForKil = BatteryForMedium;
-                            if (weight == DO.WeightCategories.Heavy) batteryForKil = BatteryForHeavy;
+                            if (weight == DO.WeightCategories.Light) batteryForKil = batteryForLight;
+                            if (weight == DO.WeightCategories.Medium) batteryForKil = batteryForMedium;
+                            if (weight == DO.WeightCategories.Heavy) batteryForKil = batteryForHeavy;
 
                             //double batteryNeeded = BatteryForAvailable * distance(drone.CurrentLocation, locOfSender) + //=0 if the drone already took the parcel
                             //    batteryForKil * distance(locOfSender, closestStation(locOfSender));
-                            double batteryNeeded = BatteryForAvailable * distance(drone.CurrentLocation, locOfSender) + //=0 if the drone already took the parcel
+                            double batteryNeeded = batteryForAvailable * distance(drone.CurrentLocation, locOfSender) + //=0 if the drone already took the parcel
                                 batteryForKil * distance(locOfSender, locOfTarget)+
-                                BatteryForAvailable* distance(locOfTarget, closestStationWithChargeSlots(locOfTarget).Location);
+                                batteryForAvailable* distance(locOfTarget, closestStationWithChargeSlots(locOfTarget).Location);
                             //double batteryNeeded = 
                             //    minBattery(drone.Id, drone.CurrentLocation, locOfCus) +
                             //    minBattery(drone.Id, locOfCus, closestStation(locOfCus));
@@ -130,7 +130,7 @@ namespace BL
                     }
                 }
                
-                if (/*DroneNotInDelivery(drone)*/ drone.Status==DroneStatus.Zero)//If the drone does not ship
+                if (/*DroneNotInDelivery(drone)*/ drone.Status==DroneStatus.Maintenance)//If the drone does not ship (maintanence is the brerat mehdal)
                 {
                     //drone.Status = (DroneStatus)random.Next(0, 2);//Maintenance or availability
                     //try { lock (dl) { dl.ReleaseDroneFromeCharge(drone.Id); } }
@@ -273,13 +273,13 @@ namespace BL
         {
             Drone drone = GetDrone(droneId);
             double batteryForKil = 0;
-            if (drone.Status == DroneStatus.Available) batteryForKil = BatteryForAvailable;
+            if (drone.Status == DroneStatus.Available) batteryForKil = batteryForAvailable;
             else
             {
                 WeightCategories weight = drone.ParcelInT.Weight;
-                if (weight == WeightCategories.Light) batteryForKil = BatteryForLight;
-                if (weight == WeightCategories.Medium) batteryForKil = BatteryForMedium;
-                if (weight == WeightCategories.Heavy) batteryForKil = BatteryForHeavy;
+                if (weight == WeightCategories.Light) batteryForKil = batteryForLight;
+                if (weight == WeightCategories.Medium) batteryForKil = batteryForMedium;
+                if (weight == WeightCategories.Heavy) batteryForKil = batteryForHeavy;
             }
             double kils = distance(from, to);
             return batteryForKil * kils;
@@ -290,7 +290,7 @@ namespace BL
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        private double distance(Location a, Location b)
+        internal double distance(Location a, Location b)
         {
             lock (dl)
             {

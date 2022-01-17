@@ -105,7 +105,7 @@ using BLApi;
 
 namespace BL
 {
-    class Simulation
+    class Simulator
     {
         private static double V = 50;
         private static int delayMS = 500;
@@ -121,7 +121,7 @@ namespace BL
 
 
 
-        public Simulation(BL bl, int droneId, Action updateDisplay, Func<bool> stop)
+        public Simulator(BL bl, int droneId, Action updateDisplay, Func<bool> stop)
         {
             lock (bl)
             {
@@ -167,21 +167,21 @@ namespace BL
                                 drone.Battery = currentBattery;
                                 droneStatus = status.charge;
                                 int stationId = 0;//איפוס התחנה שבה נמצא הרחפן
-                                foreach (StationToList station in bl.GetStationList)//לממש תפונקציה
+                                foreach (StationToList station in bl.GetStationsList())//לממש תפונקציה
                                 {
                                    
-                                    if (bl.displayDronesInCharge(station.Id).Any(d => d == drone.Id))//לממש תפונקציה
-                                        stationId = station.Id;
+                                    //if (bl.GetDroneCharges(station.Id).Any(d => d == drone.Id))//לממש תפונקציה
+                                    //    stationId = station.Id;
                                 }
-                                Location stationLoc = bl.GetStation(stationId).location;
+                                Location stationLoc = bl.GetStation(stationId).Location;
                                 targetLocation = stationLoc;
                                 
-                                distanceFromTarget = bl.calcDistance(drone.CurrentLocation, stationLoc);//לממד תפונקציה
-                                batteryUsage = bl.availablePK;
+                                distanceFromTarget = bl.distance(drone.CurrentLocation, stationLoc);//לממד תפונקציה
+                                batteryUsage = bl.batteryForAvailable;
 
                             }
                         }
-                        catch (Exception ex) when (ex is BO.exceptions.TimeException || ex is BO.exceptions.NotFoundException)
+                        catch (Exception ex) when (/*ex is TimeException ||*/ ex is NotExistIDException)
                         {
                             //if the closest station did not have open charging slots
                             drone.Status = DroneStatus.Maintenance;
@@ -199,8 +199,8 @@ namespace BL
                         }
                         break;
                     case status.charge:
-                        double timePassed = (double)delayMS / 1000;
-                        drone.Battery += bl.chargingPH * timePassed;
+                        double timePassed = (double)delayMS / 1000;//****
+                        drone.Battery += bl.chargeRatePerMinute * timePassed;
                         drone.Battery = Min(drone.Battery, 100);
                         if (drone.Battery == 100)
                             lock (bl)
@@ -235,18 +235,18 @@ namespace BL
                         switch (parcel.Weight)
                         {
                             case WeightCategories.Light:
-                                batteryUsage = bl.lightPK;
+                                batteryUsage = bl.batteryForLight;
                                 break;
                             case WeightCategories.Medium:
-                                batteryUsage = bl.mediumPK;
+                                batteryUsage = bl.batteryForMedium;
                                 break;
                             case WeightCategories.Heavy:
-                                batteryUsage = bl.heavyPK;
+                                batteryUsage = bl.batteryForHeavy;
                                 break;
                         }
                     }
                     else
-                        batteryUsage = bl.AvailablePK;
+                        batteryUsage = bl.batteryForAvailable;
                     calculate(bl);
                     if (distanceFromTarget == 0)
                     {
@@ -255,7 +255,7 @@ namespace BL
                         else
                         {
                             bl.DeliverParcelByDrone(drone.Id);
-                            batteryUsage = bl.availablePK;
+                            batteryUsage = bl.batteryForAvailable;
                         }
                     }
                 }
@@ -272,7 +272,7 @@ namespace BL
                     {
                         bl.AssignParcelToDrone(drone.Id);
                     }
-                    catch (BO.exceptions.NotFoundException ex)
+                    catch (NotExistIDException ex)
                     {
                         if (drone.Battery == 100) //drone cant collect any parcel at all
                             return;
@@ -302,11 +302,11 @@ namespace BL
             return true;
         }
 
-        private void calculate(IBL bl)
+        private void calculate(BL bl)
         {
             lock (bl)
             {
-                distanceFromTarget = bl.calcDistance(drone.CurrentLocation, targetLocation);//לממש תפונקציה
+                distanceFromTarget = bl.distance(drone.CurrentLocation, targetLocation);//לממש תפונקציה
                 if (distanceFromTarget < accuracy)
                 {
                     distanceFromTarget = 0;
@@ -325,7 +325,7 @@ namespace BL
                 double lat = droneLat + (targetLat - droneLat) * proportionalChange; //we ignore the shipua of earth
                 double lon = droneLong + (targetLong - droneLong) * proportionalChange;
                 drone.CurrentLocation = new Location { Longi = lon, Latti = lat };
-                distanceFromTarget = bl.calcDistance(drone.currentLocation, targetLocation);//לממש תפונקציה
+                distanceFromTarget = bl.distance(drone.CurrentLocation, targetLocation);//לממש תפונקציה
             }
 
         }

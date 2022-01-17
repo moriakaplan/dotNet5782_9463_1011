@@ -212,7 +212,7 @@ namespace BL
         {
             DO.DroneCharge dc = dl.GetDroneChargesList().Where(x => x.DroneId == droneId).Single();//לא עובד
             TimeSpan time = DateTime.Now - dc.StartedChargeTime;
-            return time.TotalSeconds * ChargeRatePerMinute / 60.0;
+            return time.TotalSeconds * chargeRatePerMinute / 60.0;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
