@@ -37,23 +37,23 @@ namespace PL
 
         private void displayStationList(object sender, RoutedEventArgs e)
         {
-            this.Close();
+           // this.Close();
             new StationListWindow(blObject).ShowDialog();
-            new ManagerWindow(blObject).Show();
+           // new ManagerWindow(blObject).Show();
         }
 
         private void displayParcelList(object sender, RoutedEventArgs e)
         {
-            this.Close();
-            new ParcelListWindow(blObject).Show();
-            new ManagerWindow(blObject).Show();
+            //this.Close();
+            new ParcelListWindow(blObject).ShowDialog();
+            //new ManagerWindow(blObject).Show();
         }
 
         private void displayCustomerList(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            //this.Close();
             new CustomerListWindow(blObject).Show();
-            new ManagerWindow(blObject).Show();
+            //new ManagerWindow(blObject).Show();
         }
 
         private void seePassword(object sender, RoutedEventArgs e)
