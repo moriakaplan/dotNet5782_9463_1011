@@ -244,47 +244,29 @@ namespace BL
         {
             lock(dl)
             {
-                IEnumerable<DO.Parcel> listFromDal = dl.GetParcelsList(x => x.AssociateTime == null);
-                foreach (DO.Parcel parcel in listFromDal)
-                {
-                    ParcelToList answer = new ParcelToList
-                    {
-                        Id = parcel.Id,
-                        Priority = (Priorities)parcel.Priority,
-                        SenderName = GetCustomer(parcel.Senderld).Name,
-                        TargetName = GetCustomer(parcel.TargetId).Name,
-                        Status = ParcelStatus.Created,
-                        Weight = (WeightCategories)parcel.Weight
-                    };
-                    yield return answer;
-                }
+                return from parcel in dl.GetParcelsList(x => x.AssociateTime == null)
+                       select new ParcelToList
+                       {
+                           Id = parcel.Id,
+                           Priority = (Priorities)parcel.Priority,
+                           SenderName = GetCustomer(parcel.Senderld).Name,
+                           TargetName = GetCustomer(parcel.TargetId).Name,
+                           Status = ParcelStatus.Created,
+                           Weight = (WeightCategories)parcel.Weight
+                       };
             }
-           
         }
 
         /// <summary>
         /// Returns all parcels with the highest priority
         /// </summary>
         /// <returns></returns>
-        private IEnumerable<Parcel> findHighesPrioritiy()
+        private IEnumerable<ParcelToList> findHighesPrioritiy()
         {
-            Priorities temp = Priorities.Regular;//gets the highest priority 
-            foreach (ParcelToList parcelList in GetParcelsList())
-            {
-                if (parcelList.Priority > temp)
-                {
-                    temp = parcelList.Priority;
-                }
-            }
-            Parcel parcel = new Parcel();
-            foreach (ParcelToList parcelList in GetParcelsList())
-            {
-                if (parcelList.Priority == temp)
-                {
-                    yield return GetParcel(parcelList.Id);
-
-                }
-            }
+            IEnumerable<ParcelToList> parcelsList= GetListOfUnassignedParcels();
+            Priorities max = parcelsList.Max(x => x.Priority);
+            return from parcel in parcelsList
+                   where parcel.Priority == max;
         }
 
         /// <summary>
@@ -295,22 +277,28 @@ namespace BL
         private IEnumerable<Parcel> findHighesWeight(WeightCategories weight)
         {
 
-            WeightCategories temp = WeightCategories.Light;
-            foreach (Parcel parcel in findHighesPrioritiy())
-            {
-                if ((parcel.Weight < weight) && (parcel.Weight > temp))
-                {
-                    temp = parcel.Weight;
-                }
-            }
-            foreach (Parcel parcel in findHighesPrioritiy())
-            {
-                if (parcel.Weight == temp)
-                {
-                    yield return GetParcel(parcel.Id);
+            //WeightCategories temp = WeightCategories.Light;
+            //foreach (Parcel parcel in findHighesPrioritiy())
+            //{
+            //    if ((parcel.Weight < weight) && (parcel.Weight > temp))
+            //    {
+            //        temp = parcel.Weight;
+            //    }
+            //}
+            //foreach (Parcel parcel in findHighesPrioritiy())
+            //{
+            //    if (parcel.Weight == temp)
+            //    {
+            //        yield return GetParcel(parcel.Id);
 
-                }
-            }
+            //    }
+            //}
+
+            IEnumerable<ParcelToList> parcelsList = findHighesPrioritiy();
+            WeightCategories max = parcelsList.Max(p => p.Weight < weight ? p.Weight : WeightCategories.Light);
+            return from parcel in parcelsList
+                   where parcel.Weight == max
+                   select GetParcel(parcel.Id);
         }
 
         /// <summary>
@@ -320,14 +308,16 @@ namespace BL
         /// <returns></returns>
         private Parcel findClosestParcel(int droneId)
         {
-            Parcel result = findHighesWeight(GetDrone(droneId).MaxWeight).First();
-            Location DroneLocation = new Location { Latti = GetDrone(droneId).CurrentLocation.Latti, Longi = GetDrone(droneId).CurrentLocation.Longi };
+            IEnumerable<Parcel> parcelsList = findHighesWeight(GetDrone(droneId).MaxWeight);
+            Parcel result = parcelsList.First();
+            Location DroneLocation = GetDrone(droneId).CurrentLocation;
             double minDistance = distance(GetCustomer(result.Sender.Id).Location, DroneLocation);
-            foreach (Parcel parcel in findHighesWeight(GetDrone(droneId).MaxWeight))
+            foreach (Parcel parcel in parcelsList)
             {
-                if (distance(GetCustomer(parcel.Sender.Id).Location, DroneLocation) < minDistance)
+                double dis = distance(GetCustomer(parcel.Sender.Id).Location, DroneLocation);
+                if (dis < minDistance)
                 {
-                    minDistance = distance(GetCustomer(parcel.Sender.Id).Location, DroneLocation);
+                    minDistance = dis;
                     result = parcel;
                 }
             }

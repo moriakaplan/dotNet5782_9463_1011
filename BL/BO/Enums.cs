@@ -11,7 +11,6 @@ namespace BO
     public enum ParcelStatus { Created, Associated, PickedUp, Delivered };
     public enum DroneStatus 
     {
-        Zero,
         Maintenance,
         Available,
         Associated, 

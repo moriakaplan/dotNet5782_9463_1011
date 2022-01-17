@@ -33,12 +33,12 @@ namespace BL
 
         private List<DroneToList> lstdrn;
         internal readonly IDal dl;
-        private double BatteryForAvailable;
-        private double BatteryForEasy; //per kill
-        private double BatteryForMedium; //per kill
-        private double BatteryForHeavy; //per kill
-        private double ChargeRatePerMinute;
-        private static Random random = new Random();
+        internal double BatteryForAvailable;
+        internal double BatteryForLight; //per kill
+        internal double BatteryForMedium; //per kill
+        internal double BatteryForHeavy; //per kill
+        internal double ChargeRatePerMinute;
+        internal static Random random = new Random();
 
         public void RunsTheSimulator(int droneId, Action UpdateDisplayDelegate, Func<bool> checkStop)
         {
@@ -58,7 +58,7 @@ namespace BL
             {
                 double[] batteryData = dl.GetBatteryData();
                 BatteryForAvailable = batteryData[0];
-                BatteryForEasy = batteryData[1];
+                BatteryForLight = batteryData[1];
                 BatteryForMedium = batteryData[2];
                 BatteryForHeavy = batteryData[3];
                 ChargeRatePerMinute = batteryData[4];
@@ -110,7 +110,7 @@ namespace BL
 
                             double batteryForKil = 0;
                             DO.WeightCategories weight = parcel.Weight;
-                            if (weight == DO.WeightCategories.Light) batteryForKil = BatteryForEasy;
+                            if (weight == DO.WeightCategories.Light) batteryForKil = BatteryForLight;
                             if (weight == DO.WeightCategories.Medium) batteryForKil = BatteryForMedium;
                             if (weight == DO.WeightCategories.Heavy) batteryForKil = BatteryForHeavy;
 
@@ -277,7 +277,7 @@ namespace BL
             else
             {
                 WeightCategories weight = drone.ParcelInT.Weight;
-                if (weight == WeightCategories.Light) batteryForKil = BatteryForEasy;
+                if (weight == WeightCategories.Light) batteryForKil = BatteryForLight;
                 if (weight == WeightCategories.Medium) batteryForKil = BatteryForMedium;
                 if (weight == WeightCategories.Heavy) batteryForKil = BatteryForHeavy;
             }
