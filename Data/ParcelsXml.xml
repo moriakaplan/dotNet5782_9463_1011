@@ -4,10 +4,22 @@
     <Id>10000006</Id>
     <Senderld>123456789</Senderld>
     <TargetId>222222222</TargetId>
-    <Droneld>0</Droneld>
+    <Droneld>123456</Droneld>
     <Weight>Light</Weight>
     <Priority>Emergency</Priority>
     <CreateTime>2022-01-11T22:19:41.5258138+02:00</CreateTime>
+    <AssociateTime>2022-01-16T17:10:31.8715377+02:00</AssociateTime>
+    <PickUpTime>2022-01-16T17:11:29.0209304+02:00</PickUpTime>
+    <DeliverTime>2022-01-16T17:11:38.5795789+02:00</DeliverTime>
+  </Parcel>
+  <Parcel>
+    <Id>10000007</Id>
+    <Senderld>123456789</Senderld>
+    <TargetId>111111111</TargetId>
+    <Droneld>0</Droneld>
+    <Weight>Light</Weight>
+    <Priority>Emergency</Priority>
+    <CreateTime>2022-01-16T16:53:00.3401554+02:00</CreateTime>
     <AssociateTime xsi:nil="true" />
     <PickUpTime xsi:nil="true" />
     <DeliverTime xsi:nil="true" />
