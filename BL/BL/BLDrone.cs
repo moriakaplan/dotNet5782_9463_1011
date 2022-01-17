@@ -179,7 +179,9 @@ namespace BL
             {
                 lock (dl)
                 {
-                    dc = dl.GetDroneChargesList().Where(x => x.DroneId == droneId).Single();//לא עובד
+                    //dc = dl.GetDroneChargesList().Where(x => x.DroneId == droneId).Single();//לא עובד
+                    drone.Battery += (int)batteryToAdd(droneId);
+                    if (drone.Battery > 100) drone.Battery = 100;
                     dl.ReleaseDroneFromeCharge(droneId); //Deletes the charging entity and adds 1 to the charging slots of the station
                 }
             }
@@ -187,10 +189,10 @@ namespace BL
             catch (ArgumentNullException ex) { throw new NotExistIDException(ex.Message); }
             catch (InvalidOperationException ex) { throw new NotExistIDException(ex.Message); }
             //אמור להיות פה
-            TimeSpan time =DateTime.Now - dc.StartedChargeTime;
-            double b = time.TotalSeconds * ChargeRatePerMinute;
-            drone.Battery += (int)(b / 60);
-            if (drone.Battery > 100) drone.Battery = 100;
+            //TimeSpan time =DateTime.Now - dc.StartedChargeTime;
+            //double b = time.TotalSeconds * ChargeRatePerMinute;
+            //drone.Battery += (int)(b / 60);
+            //if (drone.Battery > 100) drone.Battery = 100;
             drone.Status = DroneStatus.Available;
             
             lstdrn.RemoveAt(index);
@@ -203,6 +205,22 @@ namespace BL
                 return lstdrn.Where(pre);
             else
                 return lstdrn.Select(x => x);
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        internal double batteryToAdd(int droneId)
+        {
+            DO.DroneCharge dc = dl.GetDroneChargesList().Where(x => x.DroneId == droneId).Single();//לא עובד
+            TimeSpan time = DateTime.Now - dc.StartedChargeTime;
+            return time.TotalSeconds * ChargeRatePerMinute / 60.0;
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        internal void moveDrone(int droneId, Location location)
+        {
+            //לגרום לזה לעבוד ולהבין מה מוריה רוצהץ
+            drone.CurrentLocation = bl.closestStation(drone.CurrentLocation);
+
         }
     }
 }

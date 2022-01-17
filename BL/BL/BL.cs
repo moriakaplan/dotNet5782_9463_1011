@@ -217,7 +217,7 @@ namespace BL
         /// <param name="lattitude"></param>
         /// <param name="longitude"></param>
         /// <returns></returns>
-        private Location closestStation(Location loc)
+        internal Location closestStation(Location loc)
         {
             IEnumerable<StationToList> stations = GetStationsList();
             if (stations.Count() == 0) throw new Exception("there not stations");
@@ -242,7 +242,7 @@ namespace BL
         /// </summary>
         /// <param name="location"></param>
         /// <returns></returns>
-        private Station closestStationWithChargeSlots(Location loc)
+        internal Station closestStationWithChargeSlots(Location loc)
         {
             IEnumerable<StationToList> stations = GetListOfStationsWithAvailableCargeSlots();
             Station station = GetStation(stations.First().Id); ;
