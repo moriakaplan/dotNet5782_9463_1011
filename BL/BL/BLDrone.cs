@@ -219,7 +219,7 @@ namespace BL
         internal void moveDrone(int droneId, Location location)
         {
             //לגרום לזה לעבוד ולהבין מה מוריה רוצהץ
-            drone.CurrentLocation = bl.closestStation(drone.CurrentLocation);
+            //drone.CurrentLocation = bl.closestStation(drone.CurrentLocation);
 
         }
     }
