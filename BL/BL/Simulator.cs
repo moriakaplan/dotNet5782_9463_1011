@@ -136,15 +136,15 @@ namespace BL
             {
                 if (drone.Status == DroneStatus.Available)//אם הרחפן זמין
                 {
-                    //availableDrone(bl);
+                    availableDrone(bl);
                 }
                 else if (drone.Status == DroneStatus.Delivery)//אם הרחפו במשלוח
                 {
-                    //deliveryDrone(bl);
+                    deliveryDrone(bl);
                 }
                 else if (drone.Status == DroneStatus.Maintenance)//אם הרחפו בטעינה
                 {
-                   // chargedDrone(bl);
+                    chargedDrone(bl);
                 }
                 updateDisplay();
             }
@@ -175,15 +175,14 @@ namespace BL
                                 int stationId = 0;//איפוס התחנה שבה נמצא הרחפן
                                 foreach (StationToList station in bl.GetStationsList())
                                 {
-                                    if (bl.GetDroneChargesList(station.Id).Any(x => x.DroneId == drone.Id))//לממש תפונקציה
+                                    if (bl.GetDroneChargesList(station.Id).Any(x => x.DroneId == drone.Id))//בודק אם הרחפן טעון בתחנה
                                         stationId = station.Id;
                                 }
                                 Location stationLoc = bl.GetStation(stationId).Location;
                                 targetLocation = stationLoc;
                                 
-                                distanceFromTarget = bl.distance(drone.CurrentLocation, stationLoc);//לממד תפונקציה
+                                distanceFromTarget = bl.distance(drone.CurrentLocation, stationLoc);//מוצא את המרחק בין המיקום של הרחפן לתחנה שהוא צריך להיטען בה
                                 batteryUsage = bl.batteryForAvailable;
-
                             }
                         }
                         catch (Exception ex) when (/*ex is TimeException ||*/ ex is NotExistIDException)
@@ -193,27 +192,27 @@ namespace BL
                             droneStatus = status.wait;
                         }
                         break;
-                    case status.fly:
+                    case status.fly://אם הרחפן עף
                         lock (bl)
                         {
                             calculateDistance(bl);
                         }
-                        if (distanceFromTarget == 0)
+                        if (distanceFromTarget == 0)//אם הוא הגיע ליעד שלו(לתחנה שהוא צירך להיטען בה)ץ
                         {
-                            droneStatus = status.charge;
+                            droneStatus = status.charge;//הרחפן בטעינה. מזל טוב
                         }
                         break;
-                    case status.charge:
-                        double timePassed = (double)delayMS / 1000;//****
+                    case status.charge://למקרה שהוא בטעינה
+                        double timePassed = (double)delayMS / 1000;
                         drone.Battery += bl.chargeRatePerMinute * timePassed;
                         drone.Battery = Min(drone.Battery, 100);
                         if (drone.Battery == 100)
                             lock (bl)
                             {
-                                bl.ReleaseDroneFromeCharge(drone.Id);
+                                bl.ReleaseDroneFromeCharge(drone.Id);//אם הרחפן סיים את הטעינה שלו אז הוא משתחרר מהטעינה
                             }
                         break;
-                    case status.wait: //try sending drone to charge - waiting until a station close enough has empty charge slots
+                    case status.wait: //מנסה לשלוח את הרחפן לטעינה, אם אם הוא לא מצליח אז הוא צריך לחכות עד שיתפנה מקום ולכן הוא במצבהזה.
                         droneStatus = status.toCharge;
                         break;
                     default:
@@ -223,19 +222,24 @@ namespace BL
             }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bl"></param>
         private void deliveryDrone(BL bl)
         {
             if (delay())
             {
                 lock (bl)
                 {
-                    Parcel parcel = bl.GetParcel(drone.ParcelInT.Id);
+                    Parcel parcel = bl.GetParcel(drone.ParcelInT.Id);//מציאת החבילה שהרחפן מעביר
                     //bool pickedUp = parcel.pickup is not null;
-                    bool pickedUp = parcel.PickUpTime is not null;
+                    bool pickedUp = parcel.PickUpTime is not null;//אם החבילה נאספה
                     
                     //targetLocation = pickedUp ? bl.targetLocation(parcel.Id) : bl.senderLocation(parcel.Id);
-                    targetLocation = pickedUp ? bl.GetCustomer(parcel.Target.Id).Location: bl.GetCustomer(parcel.Sender.Id).Location;//לא יודעת אם עובד!!!
-                    if (pickedUp)
+                    targetLocation = pickedUp ? bl.GetCustomer(parcel.Target.Id).Location: bl.GetCustomer(parcel.Sender.Id).Location;//מוצא האם החבילה נאספה כן או לא ומעדכן בהתאם את המיקום
+                    if (pickedUp)//אם החבילה נאספה כבר ייאי
                     {
                         switch (parcel.Weight)
                         {
@@ -253,20 +257,24 @@ namespace BL
                     else
                         batteryUsage = bl.batteryForAvailable;
                     calculateDistance(bl);
-                    if (distanceFromTarget == 0)
+                    if (distanceFromTarget == 0)//אם הרחפן הגיע ליעד שלו
                     {
-                        if (!pickedUp)
-                            bl.PickParcelByDrone(drone.Id);
+                        if (!pickedUp)//אם החבילה עוד לא נאספה
+                            bl.PickParcelByDrone(drone.Id);//אוסף את החבילה
                         else
                         {
-                            bl.DeliverParcelByDrone(drone.Id);
-                            batteryUsage = bl.batteryForAvailable;
+                            bl.DeliverParcelByDrone(drone.Id);//אוסף את החבילה
+                            batteryUsage = bl.batteryForAvailable;//?
                         }
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// אם הרחפן פנוי
+        /// </summary>
+        /// <param name="bl"></param>
         private void availableDrone(BL bl)
         {
             if (delay())
@@ -275,17 +283,17 @@ namespace BL
                 {
                     try
                     {
-                        bl.AssignParcelToDrone(drone.Id);
+                        bl.AssignParcelToDrone(drone.Id);//שיוך הרחפן לחבילה
                     }
-                    catch (NotExistIDException ex)
+                    catch (ThereNotGoodParcelToTakeException  ex)//NotExistIDException
                     {
-                        if (drone.Battery == 100) //drone cant collect any parcel at all
+                        if (drone.Battery == 100) //אם הוא סתם טיפש ופשוט אין חבילה שהוא יכול לאסוף לא משנה מה
                             return;
-                        else if (ex.Message.Equals("no parcel can be matched to the drone"))
+                        else if (ex.Message.Equals("we did not found a good parcel that the drone" /*{droneId}*/+ "can take"))//אם הוא לא הצליח לאסוף את החבילה כי אין לו סוללה
                         {
-                            drone.Status = DroneStatus.Maintenance;
-                            droneStatus = status.toCharge;
-                        } //drone cant collect any parcel because of his battery
+                            drone.Status = DroneStatus.Maintenance;//לשים את הרחפן בטעינה
+                            droneStatus = status.toCharge;//מצב שהוא מחכה לטעינה
+                        }
                         else
                         {
                             return;
@@ -294,6 +302,11 @@ namespace BL
                 }
             }
         }
+
+        /// <summary>
+        /// מרדים את הסימולטור
+        /// </summary>
+        /// <returns></returns>
         private static bool delay()
         {
             try
