@@ -107,10 +107,9 @@ namespace BL
 {
     class Simulator
     {
-        private static double V = 50;
-        private static int delayMS = 500;
-        private static double accuracy = 0.0001;
-        private static BO.Drone/*ToList*/ drone;
+        private const double velocity = 5; //kilometers per second.
+        private const int delayMS = 500; //miliseconds, half of second.
+        private static Drone/*ToList*/ drone;
 
         enum status { fly, charge, wait, toCharge };//charge-בטיענה
                                                     //toCharge-כשהוא מוצא את התחנה שהוא הולך להיטען בה
@@ -187,7 +186,7 @@ namespace BL
 
                             }
                         }
-                        catch (Exception ex) when (ex is TimeException || ex is NotExistIDException)
+                        catch (Exception ex) when (/*ex is TimeException ||*/ ex is NotExistIDException)
                         {
                             //if the closest station did not have open charging slots
                             drone.Status = DroneStatus.Maintenance;
@@ -197,7 +196,7 @@ namespace BL
                     case status.fly:
                         lock (bl)
                         {
-                            calculate(bl);
+                            calculateDistance(bl);
                         }
                         if (distanceFromTarget == 0)
                         {
@@ -253,7 +252,7 @@ namespace BL
                     }
                     else
                         batteryUsage = bl.batteryForAvailable;
-                    calculate(bl);
+                    calculateDistance(bl);
                     if (distanceFromTarget == 0)
                     {
                         if (!pickedUp)
@@ -308,30 +307,39 @@ namespace BL
             return true;
         }
 
-        private void calculate(BL bl)
+        /// <summary>
+        /// calculate the updated distance between the drone and the target and update the field distanceFromTarget
+        /// </summary>
+        /// <param name="bl"></param>
+        private void calculateDistance(BL bl) 
         {
             lock (bl)
             {
-                distanceFromTarget = bl.distance(drone.CurrentLocation, targetLocation);//לממש תפונקציה
-                if (distanceFromTarget < accuracy)
+                distanceFromTarget = bl.distance(drone.CurrentLocation, targetLocation);
+                //if (distanceFromTarget < 0.0001)
+                //{
+                //    distanceFromTarget = 0;
+                //    drone.CurrentLocation = targetLocation;
+                //    return;
+                //}
+                double change =        velocity * delayMS           / 1000; //calculate the change in the distance, according to the delay- the time that passed since the previous calculation.
+                //              (זמן במילי שניות)*(מהירות לשנייה) 
+                //change = Min(change, distanceFromTarget); //in case the drone has theoretically passed the target
+                if(change > distanceFromTarget) //in case the drone has theoretically passed the target
                 {
                     distanceFromTarget = 0;
                     drone.CurrentLocation = targetLocation;
                     return;
                 }
-                double timePassed = (double)delayMS / 1000;
-                double distanceChange = V * timePassed;
-                double change = Min(distanceChange, distanceFromTarget); //in case the drone has theoretically passed the target
                 double proportionalChange = change / distanceFromTarget;
-                drone.Battery = Max(0.0, drone.Battery - change * batteryUsage);
-                double droneLat = drone.CurrentLocation.Latti;
-                double droneLong = drone.CurrentLocation.Longi;
-                double targetLat = targetLocation.Latti;
-                double targetLong = targetLocation.Longi;
-                double lat = droneLat + (targetLat - droneLat) * proportionalChange; //we ignore the shipua of earth
-                double lon = droneLong + (targetLong - droneLong) * proportionalChange;
-                drone.CurrentLocation = new Location { Longi = lon, Latti = lat };
-                distanceFromTarget = bl.distance(drone.CurrentLocation, targetLocation);//לממש תפונקציה
+                drone.Battery = Max(0.0, drone.Battery - distanceFromTarget * batteryUsage);
+                Location loc = drone.CurrentLocation;
+                drone.CurrentLocation = new Location //update the location of the drone
+                { 
+                    Longi = loc.Latti + ((targetLocation.Latti - loc.Latti) * proportionalChange), //ignore the shipua of earth 
+                    Latti = loc.Longi + ((targetLocation.Longi - loc.Longi) * proportionalChange)
+                };
+                distanceFromTarget = bl.distance(drone.CurrentLocation, targetLocation);
             }
 
         }

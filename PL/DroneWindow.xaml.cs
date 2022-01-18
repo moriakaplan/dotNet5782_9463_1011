@@ -526,19 +526,9 @@ namespace PL
             }
         }
 
-        private void wParcelInTransfer(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void txtParcel_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
         private void simolator(object sender, RoutedEventArgs e)
         {
-            blObject.RunsTheSimulator(int.Parse(txtId.Text), )
+            //blObject.RunsTheSimulator(int.Parse(txtId.Text), );
         }
     }
     
