@@ -111,11 +111,11 @@ namespace BL
         private const int delayMS = 500; //miliseconds, half of second.
         private static Drone/*ToList*/ drone;
 
-        enum status { fly, charge, wait, toCharge };//charge-בטיענה
+        enum status { fly, inCharge, wait, toCharge };//charge-בטיענה
                                                     //toCharge-כשהוא מוצא את התחנה שהוא הולך להיטען בה
                                                     //wait- אם אין לו לאן ללכת בטעינה הוא מחכה עד שיתפנה מקום
                                                     //fly-כשהוא נוסע
-        private status droneStatus = status.charge;
+        private status droneStatus = status.inCharge;
 
         private Location targetLocation;
         private double distanceFromTarget = 0;
@@ -130,7 +130,6 @@ namespace BL
                 //מציאת הרחפו שאיתו נעבוד
                 //drone = bl.DisplayDroneList(d => d.id == dId).FirstOrDefault();
                 drone = bl.GetDrone(droneId); //ממשיך לזרוק. זה בסדר?
-
             }
             while (!stop())//כל עוד לא רצו להפסיק את הסימולציה
             {
@@ -188,7 +187,7 @@ namespace BL
                                 bl.SendDroneToCharge(drone.Id);//שליחת הרחפן לטעינה
                                 drone.CurrentLocation = currentLoc;//שינוי מיקום הרחפן להיות המיקום המקורי שלו
                                 drone.Battery = currentBattery;//שינוי בטרית הרפן להיות הבטריה המקורית שלו
-                                droneStatus = status.charge;
+                                droneStatus = status.inCharge;
                                 int stationId = 0;//איפוס התחנה שבה נמצא הרחפן
                                 foreach (StationToList station in bl.GetStationsList())
                                 {
@@ -216,17 +215,18 @@ namespace BL
                         }
                         if (distanceFromTarget == 0)//אם הוא הגיע ליעד שלו(לתחנה שהוא צירך להיטען בה)ץ
                         {
-                            droneStatus = status.charge;//הרחפן בטעינה. מזל טוב
+                            droneStatus = status.inCharge;//הרחפן בטעינה. מזל טוב
                         }
                         break;
-                    case status.charge://למקרה שהוא בטעינה
+                    case status.inCharge://למקרה שהוא בטעינה
                         double timePassed = (double)delayMS / 1000;
-                        drone.Battery += bl.chargeRatePerMinute * timePassed;
+                        drone.Battery += bl.chargeRatePerMinute * timePassed /60;
                         drone.Battery = Min(drone.Battery, 100);
                         if (drone.Battery == 100)
                             lock (bl)
                             {
                                 bl.ReleaseDroneFromeCharge(drone.Id);//אם הרחפן סיים את הטעינה שלו אז הוא משתחרר מהטעינה
+                                drone.Status = DroneStatus.Available;
                             }
                         break;
                     case status.wait: //מנסה לשלוח את הרחפן לטעינה, אם אם הוא לא מצליח אז הוא צריך לחכות עד שיתפנה מקום ולכן הוא במצבהזה.
@@ -277,10 +277,14 @@ namespace BL
                     if (distanceFromTarget == 0)//אם הרחפן הגיע ליעד שלו
                     {
                         if (!pickedUp)//אם החבילה עוד לא נאספה
+                        {
                             bl.PickParcelByDrone(drone.Id);//אוסף את החבילה
+                            drone.Status = DroneStatus.Delivery;
+                        }
                         else
                         {
                             bl.DeliverParcelByDrone(drone.Id);//אוסף את החבילה
+                            drone.Status = DroneStatus.Available;
                             batteryUsage = bl.batteryForAvailable;//?
                         }
                     }
