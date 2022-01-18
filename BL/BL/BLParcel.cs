@@ -71,7 +71,7 @@ namespace BL
                 minBattery(droneId, locOfTarget, closestStationWithChargeSlots(locOfTarget).Location);//לבדוק אם צריך את התחנה הכי קרובה עם עמדות טעינה
             if (batteryNeeded > bdrone.Battery)
             {
-                throw new ThereNotGoodParcelToTakeException($"did not found a good parcel that the drone {droneId} can take");
+                throw new ThereNotGoodParcelToTakeException($"we did not found a good parcel that the drone" /*{droneId}*/+ "can take");
             }
             try
             {
