@@ -529,6 +529,8 @@ namespace PL
         private void simolator(object sender, RoutedEventArgs e)
         {
             //blObject.RunsTheSimulator(int.Parse(txtId.Text), );
+            blObject.RunsTheSimulator(int.Parse(txtId.Text), () => worker.ReportProgress(0), () => worker.CancellationPending);
+
         }
     }
     
