@@ -206,8 +206,12 @@ namespace BL
             else
                 return lstdrn.Select(x => x);
         }
+        
+        internal IEnumerable<DO.DroneCharge> GetDroneChargesList(int stationId)
+        {
+            return dl.GetDroneChargesList(x=>x.StationId==stationId);
+        }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
         internal double batteryToAdd(int droneId)
         {
             DO.DroneCharge dc = dl.GetDroneChargesList().Where(x => x.DroneId == droneId).Single();//לא עובד
@@ -215,7 +219,6 @@ namespace BL
             return time.TotalSeconds * chargeRatePerMinute / 60.0;
         }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
         internal void moveDrone(int droneId, Location location)
         {
             //לגרום לזה לעבוד ולהבין מה מוריה רוצהץ

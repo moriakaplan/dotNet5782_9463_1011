@@ -26,6 +26,9 @@ namespace PL
         private IBL blObject;
         bool isInActionsState;
         bool canClose = false;
+        BackgroundWorker worker;
+
+        #region constructors
         /// <summary>
         /// constructor for making window for add drone
         /// </summary>
@@ -62,11 +65,10 @@ namespace PL
             InitializeComponent();
             isInActionsState = true;
             blObject = obj;
-            Drone drone = blObject.GetDrone(droneId);
-            DataContext = drone;
+            txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+
             //txtBattery.Text = string.Format($"{drone.Battery:0.000}");
             //txtStatus.Text = drone.Status.ToString();
-            txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             //txtWeight.Text = drone.MaxWeight.ToString();
             //if (drone.ParcelInT == null)
             //    txtParcel.Text = " -";
@@ -80,29 +82,43 @@ namespace PL
             lblStation.Visibility = Visibility.Collapsed;
             add.Visibility = Visibility.Hidden;
 
-            switch (drone.Status) //show to thw user the right option according to the status of the drone
+            refresh();
+        }
+#endregion
+
+        #region simulation
+        private void HandleCheck(object sender, RoutedEventArgs e)
+        {
+            worker = new()
             {
-                case DroneStatus.Available:
-                    charge.Visibility = Visibility.Visible;
-                    options.Content = "send drone\nto delivery";
-                    options.Click += SendDroneToDelivery;
-                    break;
-                case DroneStatus.Maintenance:
-                    options.Content = "release drone\nfrom charge";
-                    options.Click += ReleaseDroneFromCharge;
-                    break;
-                case DroneStatus.Associated:
-                    options.Content = "pick up\nparcel";
-                    options.Click += PickUpParcel;
-                    break;
-                case DroneStatus.Delivery:
-                    //deliver.Visibility = Visibility.Visible;
-                    options.Content = "deliver\nparcel";
-                    options.Click += DeliverParcel;
-                    break;
-            }
+                WorkerReportsProgress = true,
+                WorkerSupportsCancellation = true
+            };
+            worker.DoWork += Worker_DoWork;
+            worker.ProgressChanged += Worker_ProgressChanged;
+            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+            worker.RunWorkerAsync(int.Parse(txtId.Text));
+        }
+        private void HandleUnchecked(object sender, RoutedEventArgs e)
+        {
+            worker.CancelAsync();
+        }
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            blObject.RunsTheSimulator((int)e.Argument, () => worker.ReportProgress(0), () => worker.CancellationPending);
         }
 
+        private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            refresh();
+        }
+        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            worker = null; //if the window need to be closed - boolean variable, that is true if the user want to close the window in the middle of auto mode
+        }
+        #endregion
+
+        #region actions and buttons
         /// <summary>
         /// add new drone to the data source
         /// </summary>
@@ -480,6 +496,36 @@ namespace PL
             if (txtParcel.Text != "")
                 new ParcelWindow(blObject, int.Parse(txtParcel.Text)).ShowDialog();
         }
+
+        #endregion
+
+        private void refresh()//just for action state
+        {
+            Drone drone = blObject.GetDrone(int.Parse(txtId.Text));
+            DataContext = drone;
+            
+            switch (drone.Status) //show to thw user the right option according to the status of the drone
+            {
+                case DroneStatus.Available:
+                    charge.Visibility = Visibility.Visible;
+                    options.Content = "send drone\nto delivery";
+                    options.Click += SendDroneToDelivery;
+                    break;
+                case DroneStatus.Maintenance:
+                    options.Content = "release drone\nfrom charge";
+                    options.Click += ReleaseDroneFromCharge;
+                    break;
+                case DroneStatus.Associated:
+                    options.Content = "pick up\nparcel";
+                    options.Click += PickUpParcel;
+                    break;
+                case DroneStatus.Delivery:
+                    options.Content = "deliver\nparcel";
+                    options.Click += DeliverParcel;
+                    break;
+            }
+        }
+
         private void wParcelInTransfer(object sender, MouseButtonEventArgs e)
         {
 

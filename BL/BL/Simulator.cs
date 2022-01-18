@@ -174,11 +174,10 @@ namespace BL
                                 drone.Battery = currentBattery;//שינוי בטרית הרפן להיות הבטריה המקורית שלו
                                 droneStatus = status.charge;
                                 int stationId = 0;//איפוס התחנה שבה נמצא הרחפן
-                                foreach (StationToList station in bl.GetStationsList())//לממש תפונקציה
+                                foreach (StationToList station in bl.GetStationsList())
                                 {
-                                   
-                                    //if (bl.GetDroneCharges(station.Id).Any(d => d == drone.Id))//לממש תפונקציה
-                                    //    stationId = station.Id;
+                                    if (bl.GetDroneChargesList(station.Id).Any(x => x.DroneId == drone.Id))//לממש תפונקציה
+                                        stationId = station.Id;
                                 }
                                 Location stationLoc = bl.GetStation(stationId).Location;
                                 targetLocation = stationLoc;
@@ -188,7 +187,7 @@ namespace BL
 
                             }
                         }
-                        catch (Exception ex) when (/*ex is TimeException ||*/ ex is NotExistIDException)
+                        catch (Exception ex) when (ex is TimeException || ex is NotExistIDException)
                         {
                             //if the closest station did not have open charging slots
                             drone.Status = DroneStatus.Maintenance;
