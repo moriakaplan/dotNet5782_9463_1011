@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using BLApi;
 using BO;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace PL
 {
@@ -30,7 +31,12 @@ namespace PL
             //blObject = obj;
             blObject = BLFactory.GetBl();
             //IEnumerable<DroneToList> drones = blObject.DisplayListOfDrones().OrderBy(x => x.Id);
-            DroneListView.ItemsSource = blObject.GetDronesList()
+            //IEnumerable<DroneToList> drones = blObject.GetDronesList()
+            //        .OrderBy(x => x.Id)
+            //        .OrderBy(x => x.Status);
+            //ObservableCollection<DroneToList> obDrones = new ObservableCollection<DroneToList>(drones);
+            //DroneListView.DataContext = obDrones;
+            DroneListView.DataContext = blObject.GetDronesList()
                     .OrderBy(x => x.Id)
                     .OrderBy(x => x.Status);
             StatusFilter.ItemsSource = Enum.GetValues(typeof(DroneStatus));
@@ -117,7 +123,7 @@ namespace PL
         /// <param name="e"></param>
         private void ViewDrone(object sender, MouseButtonEventArgs e)
         {
-            new DroneWindow(blObject, ((BO.DroneToList)DroneListView.SelectedItem).Id).ShowDialog();
+            new DroneWindow(blObject, ((BO.DroneToList)DroneListView.SelectedItem).Id).Show();
             //update the drones list
             if (StatusFilter.SelectedItem != null) statusFilter_SelectionChanged(StatusFilter, null);
             else

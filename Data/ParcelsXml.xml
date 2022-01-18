@@ -94,7 +94,7 @@
     <CreateTime>2022-01-18T16:44:46.7199975+02:00</CreateTime>
     <AssociateTime>2022-01-18T16:50:17.1560794+02:00</AssociateTime>
     <PickUpTime>2022-01-18T21:28:30.7880297+02:00</PickUpTime>
-    <DeliverTime xsi:nil="true" />
+    <DeliverTime>2022-01-18T22:56:25.0056732+02:00</DeliverTime>
   </Parcel>
   <Parcel>
     <Id>10000014</Id>
@@ -118,6 +118,6 @@
     <CreateTime>2022-01-18T16:45:18.4222953+02:00</CreateTime>
     <AssociateTime>2022-01-18T16:46:13.4636298+02:00</AssociateTime>
     <PickUpTime>2022-01-18T21:36:13.2439294+02:00</PickUpTime>
-    <DeliverTime xsi:nil="true" />
+    <DeliverTime>2022-01-18T23:43:27.4785761+02:00</DeliverTime>
   </Parcel>
 </ArrayOfParcel>
