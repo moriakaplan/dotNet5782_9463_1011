@@ -112,7 +112,10 @@ namespace BL
         private static double accuracy = 0.0001;
         private static BO.Drone/*ToList*/ drone;
 
-        enum status { deliver, charge, wait, toCharge };
+        enum status { fly, charge, wait, toCharge };//charge-בטיענה
+                                                    //toCharge-כשהוא מוצא את התחנה שהוא הולך להיטען בה
+                                                    //wait- אם אין לו לאן ללכת בטעינה הוא מחכה עד שיתפנה מקום
+                                                    //fly-כשהוא נוסע
         private status droneStatus = status.charge;
 
         private Location targetLocation;
@@ -148,23 +151,27 @@ namespace BL
             }
         }
 
+        /// <summary>
+        /// כשהמצב של הרחפן הוא טעינה
+        /// </summary>
+        /// <param name="bl"></param>
         private void chargedDrone(BL bl)
         {
-            if (delay())//אם לא נגמרה ההשהייה
+            if (delay())//פונקציה 
             {
                 switch (droneStatus)
                 {
-                    case status.toCharge:
+                    case status.toCharge://אם הרחפן צריך לחפש תחנה שבה הוא צריך להיטען
                         try
                         {
                             lock (bl)
                             {
                                 Location currentLoc = drone.CurrentLocation;
                                 double currentBattery = drone.Battery;
-                                drone.Status = DroneStatus.Available;
+                                drone.Status = DroneStatus.Available;//שינוי הסטטוס של הרחפן לזמין
                                 bl.SendDroneToCharge(drone.Id);//שליחת הרחפן לטעינה
-                                drone.CurrentLocation = currentLoc;
-                                drone.Battery = currentBattery;
+                                drone.CurrentLocation = currentLoc;//שינוי מיקום הרחפן להיות המיקום המקורי שלו
+                                drone.Battery = currentBattery;//שינוי בטרית הרפן להיות הבטריה המקורית שלו
                                 droneStatus = status.charge;
                                 int stationId = 0;//איפוס התחנה שבה נמצא הרחפן
                                 foreach (StationToList station in bl.GetStationsList())//לממש תפונקציה
@@ -188,7 +195,7 @@ namespace BL
                             droneStatus = status.wait;
                         }
                         break;
-                    case status.deliver:
+                    case status.fly:
                         lock (bl)
                         {
                             calculate(bl);

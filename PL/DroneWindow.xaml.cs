@@ -22,6 +22,7 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
+        
         private IBL blObject;
         bool isInActionsState;
         bool canClose = false;
@@ -489,7 +490,10 @@ namespace PL
 
         }
 
-        
+        private void simolator(object sender, RoutedEventArgs e)
+        {
+            blObject.RunsTheSimulator(int.Parse(txtId.Text), )
+        }
     }
     
 }
