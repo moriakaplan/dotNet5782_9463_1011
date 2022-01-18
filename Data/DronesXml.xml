@@ -20,4 +20,9 @@
     <Model>moria</Model>
     <MaxWeight>Medium</MaxWeight>
   </Drone>
+  <Drone>
+    <Id>444444</Id>
+    <Model>shuva</Model>
+    <MaxWeight>Heavy</MaxWeight>
+  </Drone>
 </ArrayOfDrone>

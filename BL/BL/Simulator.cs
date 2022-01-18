@@ -134,18 +134,35 @@ namespace BL
             }
             while (!stop())//כל עוד לא רצו להפסיק את הסימולציה
             {
-                if (drone.Status == DroneStatus.Available)//אם הרחפן זמין
+                //lock (bl)
+                //{
+                //    drone = bl.GetDrone(droneId);
+                //}
+                switch(drone.Status)
                 {
-                    availableDrone(bl);
+                    case(DroneStatus.Maintenance):
+                        chargedDrone(bl);
+                        break;
+                    case(DroneStatus.Available):
+                        availableDrone(bl);
+                        break;
+                    case(DroneStatus.Associated):
+                    case(DroneStatus.Delivery):
+                        deliveryDrone(bl);
+                        break;
                 }
-                else if (drone.Status == DroneStatus.Delivery)//אם הרחפו במשלוח
-                {
-                    deliveryDrone(bl);
-                }
-                else if (drone.Status == DroneStatus.Maintenance)//אם הרחפו בטעינה
-                {
-                    chargedDrone(bl);
-                }
+                //if (drone.Status == DroneStatus.Available)//אם הרחפן זמין
+                //{
+                //    availableDrone(bl);
+                //}
+                //else if (drone.Status == DroneStatus.Delivery)//אם הרחפו במשלוח
+                //{
+                //    deliveryDrone(bl);
+                //}
+                //else if (drone.Status == DroneStatus.Maintenance)//אם הרחפו בטעינה
+                //{
+                //    chargedDrone(bl);
+                //}
                 updateDisplay();
             }
         }
@@ -284,6 +301,7 @@ namespace BL
                     try
                     {
                         bl.AssignParcelToDrone(drone.Id);//שיוך הרחפן לחבילה
+                        drone.Status=DroneStatus.Associated;
                     }
                     catch (ThereNotGoodParcelToTakeException  ex)//NotExistIDException
                     {

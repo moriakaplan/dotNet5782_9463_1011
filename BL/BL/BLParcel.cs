@@ -114,10 +114,11 @@ namespace BL
                 {
                     double batteryNeeded = minBattery(droneId, drone.CurrentLocation, GetCustomer(parcelToPick.Sender.Id).Location);
                     if (batteryNeeded > drone.Battery) throw new DroneCantTakeParcelException("the battery of the drone is not enugh for pick the parcel");
-                    drone.CurrentLocation = GetCustomer(parcelToPick.Sender.Id).Location;
-                    drone.Status = DroneStatus.Delivery;
                     try { lock (dl) { dl.PickParcelByDrone(parcelToPick.Id); } } //update pick up time in the parcel
                     catch (DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
+                    drone.Battery -= batteryNeeded;
+                    drone.CurrentLocation = GetCustomer(parcelToPick.Sender.Id).Location;
+                    drone.Status = DroneStatus.Delivery;
                     return;
                 }
             }
@@ -138,7 +139,6 @@ namespace BL
                 {
                     double batteryNeeded = minBattery(droneId, drone.CurrentLocation, GetCustomer(parcelToDeliver.Target.Id).Location);
                     if(batteryNeeded>drone.Battery) throw new DroneCantTakeParcelException("the battery of the drone is not enugh for deliver the parcel");
-                    drone.CurrentLocation = GetCustomer(parcelToDeliver.Target.Id).Location;
                     try
                     {
                         lock(dl)
@@ -147,6 +147,8 @@ namespace BL
                         }
                     }
                     catch(DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
+                    drone.Battery -= batteryNeeded;
+                    drone.CurrentLocation = GetCustomer(parcelToDeliver.Target.Id).Location;
                     drone.Status = DroneStatus.Available;
                 }
             }
@@ -261,10 +263,11 @@ namespace BL
         /// Returns all parcels with the highest priority
         /// </summary>
         /// <returns></returns>
-        private IEnumerable<ParcelToList> findHighesPrioritiy()
+        private IEnumerable<ParcelToList> findParcelsWithHighesPrioritiy(Priorities maxPriority)
         {
             IEnumerable<ParcelToList> parcelsList= GetListOfUnassignedParcels();
-            Priorities max = parcelsList.Max(x => x.Priority);
+            if(parcelsList.Count()==0) throw new ThereNotGoodParcelToTakeException("we did not found a good parcel that the drone" /*{droneId}*/+ "can take");
+            Priorities max = parcelsList.Max(p => p.Priority <= maxPriority ? p.Priority : Priorities.Regular); //find the highest priority that is not bigger than the parameter we got.
             return from parcel in parcelsList
                    where parcel.Priority == max
                    select parcel;
@@ -275,31 +278,31 @@ namespace BL
         /// </summary>
         /// <param name="weight"></param>
         /// <returns></returns>
-        private IEnumerable<Parcel> findHighesWeight(WeightCategories weight)
+        private IEnumerable<Parcel> findParcelsWithHighesWeight(WeightCategories weight)
         {
-
-            //WeightCategories temp = WeightCategories.Light;
-            //foreach (Parcel parcel in findHighesPrioritiy())
-            //{
-            //    if ((parcel.Weight < weight) && (parcel.Weight > temp))
-            //    {
-            //        temp = parcel.Weight;
-            //    }
-            //}
-            //foreach (Parcel parcel in findHighesPrioritiy())
-            //{
-            //    if (parcel.Weight == temp)
-            //    {
-            //        yield return GetParcel(parcel.Id);
-
-            //    }
-            //}
-
-            IEnumerable<ParcelToList> parcelsList = findHighesPrioritiy();
-            WeightCategories max = parcelsList.Max(p => p.Weight < weight ? p.Weight : WeightCategories.Light);
-            return from parcel in parcelsList
-                   where parcel.Weight == max
-                   select GetParcel(parcel.Id);
+            IEnumerable<ParcelToList> parcelsList = findParcelsWithHighesPrioritiy(Priorities.Emergency);
+            WeightCategories max = parcelsList.Max(p => p.Weight <= weight ? p.Weight : WeightCategories.Light);
+            IEnumerable<Parcel> result = from parcel in parcelsList
+                                         where parcel.Weight == max
+                                         select GetParcel(parcel.Id);
+            if(result.Count()==0)
+            {
+                parcelsList = findParcelsWithHighesPrioritiy(Priorities.Fast);
+                max = parcelsList.Max(p => p.Weight <= weight ? p.Weight : WeightCategories.Light);
+                result = from parcel in parcelsList
+                                             where parcel.Weight == max
+                                             select GetParcel(parcel.Id);
+                if (result.Count() == 0)
+                {
+                    parcelsList = findParcelsWithHighesPrioritiy(Priorities.Regular);
+                    max = parcelsList.Max(p => p.Weight <= weight ? p.Weight : WeightCategories.Light);
+                    result = from parcel in parcelsList
+                             where parcel.Weight == max
+                             select GetParcel(parcel.Id);
+                }
+            }
+            if (result.Count() == 0) throw new ThereNotGoodParcelToTakeException("we did not found a good parcel that the drone" /*{droneId}*/+ "can take");
+            return result;
         }
 
         /// <summary>
@@ -309,7 +312,7 @@ namespace BL
         /// <returns></returns>
         private Parcel findClosestParcel(int droneId)
         {
-            IEnumerable<Parcel> parcelsList = findHighesWeight(GetDrone(droneId).MaxWeight);
+            IEnumerable<Parcel> parcelsList = findParcelsWithHighesWeight(GetDrone(droneId).MaxWeight);
             Parcel result = parcelsList.First();
             Location DroneLocation = GetDrone(droneId).CurrentLocation;
             double minDistance = distance(GetCustomer(result.Sender.Id).Location, DroneLocation);
@@ -324,6 +327,8 @@ namespace BL
             }
             return result;
         }
+
+        private Parcel find;
 
     }
 }
