@@ -107,9 +107,9 @@ namespace BL
 {
     class Simulator
     {
-        private const double velocity = 5; //kilometers per second.
+        private const double velocity = 50; //kilometers per second.
         private const int delayMS = 500; //miliseconds, half of second.
-        private static Drone/*ToList*/ drone;
+        private static DroneToList drone;
 
         enum status { fly, inCharge, wait, toCharge };//charge-בטיענה
                                                     //toCharge-כשהוא מוצא את התחנה שהוא הולך להיטען בה
@@ -129,7 +129,8 @@ namespace BL
             {
                 //מציאת הרחפו שאיתו נעבוד
                 //drone = bl.DisplayDroneList(d => d.id == dId).FirstOrDefault();
-                drone = bl.GetDrone(droneId); //ממשיך לזרוק. זה בסדר?
+                drone = bl.GetDronesList(x=>x.Id==droneId).SingleOrDefault(); //ממשיך לזרוק. זה בסדר?
+                if (drone == null) throw new NotExistIDException();//****
             }
             while (!stop())//כל עוד לא רצו להפסיק את הסימולציה
             {
@@ -161,7 +162,6 @@ namespace BL
                 //else if (drone.Status == DroneStatus.Maintenance)//אם הרחפו בטעינה
                 //{
                 //    chargedDrone(bl);
-                //}
                 updateDisplay();
             }
         }
@@ -250,7 +250,7 @@ namespace BL
             {
                 lock (bl)
                 {
-                    Parcel parcel = bl.GetParcel(drone.ParcelInT.Id);//מציאת החבילה שהרחפן מעביר
+                    Parcel parcel = bl.GetParcel(drone.ParcelId);//מציאת החבילה שהרחפן מעביר
                     //bool pickedUp = parcel.pickup is not null;
                     bool pickedUp = parcel.PickUpTime is not null;//אם החבילה נאספה
                     
@@ -279,12 +279,12 @@ namespace BL
                         if (!pickedUp)//אם החבילה עוד לא נאספה
                         {
                             bl.PickParcelByDrone(drone.Id);//אוסף את החבילה
-                            drone = bl.GetDrone(drone.Id);
+                            //drone = bl.GetDrone(drone.Id);
                         }
                         else
                         {
                             bl.DeliverParcelByDrone(drone.Id);//אוסף את החבילה
-                            drone = bl.GetDrone(drone.Id);
+                            //drone = bl.GetDrone(drone.Id);
                             batteryUsage = bl.batteryForAvailable;//?
                         }
                     }
@@ -305,7 +305,7 @@ namespace BL
                     try
                     {
                         bl.AssignParcelToDrone(drone.Id);//שיוך הרחפן לחבילה
-                        drone = bl.GetDrone(drone.Id);
+                        //drone = bl.GetDrone(drone.Id);
                     }
                     catch (ThereNotGoodParcelToTakeException  ex)//NotExistIDException
                     {
@@ -351,12 +351,12 @@ namespace BL
             lock (bl)
             {
                 distanceFromTarget = bl.distance(drone.CurrentLocation, targetLocation);
-                //if (distanceFromTarget < 0.0001)
-                //{
-                //    distanceFromTarget = 0;
-                //    drone.CurrentLocation = targetLocation;
-                //    return;
-                //}
+                if (distanceFromTarget < 0.01)
+                {
+                    distanceFromTarget = 0;
+                    drone.CurrentLocation = targetLocation;
+                    return;
+                }
                 double change =        velocity * delayMS           / 1000; //calculate the change in the distance, according to the delay- the time that passed since the previous calculation.
                 //              (זמן במילי שניות)*(מהירות לשנייה) 
                 //change = Min(change, distanceFromTarget); //in case the drone has theoretically passed the target
@@ -364,15 +364,16 @@ namespace BL
                 {
                     distanceFromTarget = 0;
                     drone.CurrentLocation = targetLocation;
+                   
                     return;
                 }
                 double proportionalChange = change / distanceFromTarget;
                 drone.Battery = Max(0.0, drone.Battery - distanceFromTarget * batteryUsage);
                 Location loc = drone.CurrentLocation;
-                drone.CurrentLocation = new Location //update the location of the drone
-                { 
-                    Longi = loc.Latti + ((targetLocation.Latti - loc.Latti) * proportionalChange), //ignore the shipua of earth 
-                    Latti = loc.Longi + ((targetLocation.Longi - loc.Longi) * proportionalChange)
+                drone.CurrentLocation = new Location
+                {
+                    Latti = loc.Latti + ((targetLocation.Latti - loc.Latti) * proportionalChange), //ignore the shipua of earth 
+                    Longi = loc.Longi + ((targetLocation.Longi - loc.Longi) * proportionalChange)
                 };
                 distanceFromTarget = bl.distance(drone.CurrentLocation, targetLocation);
             }

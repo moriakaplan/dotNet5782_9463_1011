@@ -16,7 +16,7 @@ namespace DO
         public bool IsLongitude { get; init; }
         public override string ToString()
         {
-            return SexagesimalCoordinates();
+            return Value.ToString() /*SexagesimalCoordinates()*/;
         }
 
         /// <summary>

@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="StationWindow" Height="450" Width="643">
+        Title="StationWindow" Height="450" Width="643"
+        Icon="\Images\droneDelivery2.ico">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>

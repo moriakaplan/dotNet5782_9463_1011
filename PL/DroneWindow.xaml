@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="AddDrone" Height="591" Width="400"
-        Closing="DataWindow_Closing">
+        Closing="DataWindow_Closing"
+        Icon="\Images\droneDelivery2.ico">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>

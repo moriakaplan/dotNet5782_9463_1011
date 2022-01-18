@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ParcelWindow" Height="525" Width="500">
+        Title="ParcelWindow" Height="525" Width="500"
+        Icon="\Images\droneDelivery2.ico">
     <!--<Window.Resources>
         <TextBlock x:Key="myVisibility" Visibility="Visible"/>
     </Window.Resources>-->

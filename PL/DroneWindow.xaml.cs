@@ -106,7 +106,7 @@ namespace PL
         }
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            blObject.RunsTheSimulator((int)e.Argument, () => worker.ReportProgress(0), () => worker.CancellationPending);
+            blObject.RunsTheSimulator((int)e.Argument, ()=>worker.ReportProgress(0), () => worker.CancellationPending);
         }
 
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -502,8 +502,12 @@ namespace PL
 
         private void refresh()//just for action state
         {
-            Drone drone = blObject.GetDrone(int.Parse(txtId.Text));
-            DataContext = drone;
+            Drone drone;
+            lock (blObject)
+            {
+                drone = blObject.GetDrone(int.Parse(txtId.Text));
+                DataContext = drone;
+            }
 
             options.Click -= SendDroneToDelivery;
             options.Click -= ReleaseDroneFromCharge;

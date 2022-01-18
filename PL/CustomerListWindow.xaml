@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="CustomerListWindow" Height="auto" Width="840">
+        Title="CustomerListWindow" Height="auto" Width="840"
+        Icon="\Images\droneDelivery2.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
