@@ -173,7 +173,7 @@ namespace BL
         /// <param name="bl"></param>
         private void chargedDrone(BL bl)
         {
-            if (delay())//פונקציה 
+            if (delay())// 
             {
                 switch (droneStatus)
                 {
