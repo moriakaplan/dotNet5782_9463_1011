@@ -279,12 +279,12 @@ namespace BL
                         if (!pickedUp)//אם החבילה עוד לא נאספה
                         {
                             bl.PickParcelByDrone(drone.Id);//אוסף את החבילה
-                            drone.Status = DroneStatus.Delivery;
+                            drone = bl.GetDrone(drone.Id);
                         }
                         else
                         {
                             bl.DeliverParcelByDrone(drone.Id);//אוסף את החבילה
-                            drone.Status = DroneStatus.Available;
+                            drone = bl.GetDrone(drone.Id);
                             batteryUsage = bl.batteryForAvailable;//?
                         }
                     }
@@ -305,7 +305,7 @@ namespace BL
                     try
                     {
                         bl.AssignParcelToDrone(drone.Id);//שיוך הרחפן לחבילה
-                        drone.Status=DroneStatus.Associated;
+                        drone = bl.GetDrone(drone.Id);
                     }
                     catch (ThereNotGoodParcelToTakeException  ex)//NotExistIDException
                     {
@@ -313,7 +313,7 @@ namespace BL
                             return;
                         else if (ex.Message.Equals("we did not found a good parcel that the drone" /*{droneId}*/+ "can take"))//אם הוא לא הצליח לאסוף את החבילה כי אין לו סוללה
                         {
-                            drone.Status = DroneStatus.Maintenance;//לשים את הרחפן בטעינה
+                            drone.Status=DroneStatus.Maintenance;//לשים את הרחפן בטעינה
                             droneStatus = status.toCharge;//מצב שהוא מחכה לטעינה
                         }
                         else
