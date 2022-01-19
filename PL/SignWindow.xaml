@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="SignWindow" Height="450" Width="366"
         Closing="DataWindow_Closing"
-        Background="#b5cdd7">
+        Background="#b5cdd7"
+        Icon="\Images\droneDelivery2.ico">
     <!--<Window.Background>
         <ImageBrush ImageSource="\Images\background2.jpg"/>
     </Window.Background>-->

@@ -88,8 +88,11 @@ namespace PL
         #endregion
 
         #region simulation
-        private void simolator(object sender, RoutedEventArgs e)
+        private void simulator(object sender, RoutedEventArgs e)
         {
+            btnSimulator.Content = "manual state";
+            btnSimulator.Click -= simulator;
+            btnSimulator.Click += manual;
             worker = new()
             {
                 WorkerReportsProgress = true,
@@ -100,13 +103,16 @@ namespace PL
             worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
             worker.RunWorkerAsync(int.Parse(txtId.Text));
         }
-        private void HandleUnchecked(object sender, RoutedEventArgs e)
+        private void manual(object sender, RoutedEventArgs e)
         {
+            btnSimulator.Content = "automatic state";
+            btnSimulator.Click -= manual;
+            btnSimulator.Click += simulator;
             worker.CancelAsync();
         }
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            blObject.RunsTheSimulator((int)e.Argument, () => worker.ReportProgress(0), () => worker.CancellationPending);
+            blObject.RunsTheSimulator((int)e.Argument, ()=>worker.ReportProgress(0), () => worker.CancellationPending);
         }
 
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -502,8 +508,12 @@ namespace PL
 
         private void refresh()//just for action state
         {
-            Drone drone = blObject.GetDrone(int.Parse(txtId.Text));
-            DataContext = drone;
+            Drone drone;
+            lock (blObject)
+            {
+                drone = blObject.GetDrone(int.Parse(txtId.Text));
+                DataContext = drone;
+            }
 
             options.Click -= SendDroneToDelivery;
             options.Click -= ReleaseDroneFromCharge;

@@ -21,8 +21,8 @@
     <Priority>Emergency</Priority>
     <CreateTime>2022-01-16T16:53:00.3401554+02:00</CreateTime>
     <AssociateTime>2022-01-18T15:29:26.2286201+02:00</AssociateTime>
-    <PickUpTime xsi:nil="true" />
-    <DeliverTime xsi:nil="true" />
+    <PickUpTime>2022-01-18T22:30:48.1482826+02:00</PickUpTime>
+    <DeliverTime>2022-01-18T22:30:50.7277657+02:00</DeliverTime>
   </Parcel>
   <Parcel>
     <Id>10000008</Id>
@@ -93,8 +93,8 @@
     <Priority>Emergency</Priority>
     <CreateTime>2022-01-18T16:44:46.7199975+02:00</CreateTime>
     <AssociateTime>2022-01-18T16:50:17.1560794+02:00</AssociateTime>
-    <PickUpTime xsi:nil="true" />
-    <DeliverTime xsi:nil="true" />
+    <PickUpTime>2022-01-18T21:28:30.7880297+02:00</PickUpTime>
+    <DeliverTime>2022-01-18T22:56:25.0056732+02:00</DeliverTime>
   </Parcel>
   <Parcel>
     <Id>10000014</Id>
@@ -105,8 +105,8 @@
     <Priority>Fast</Priority>
     <CreateTime>2022-01-18T16:45:05.2185692+02:00</CreateTime>
     <AssociateTime>2022-01-18T16:53:43.7012964+02:00</AssociateTime>
-    <PickUpTime xsi:nil="true" />
-    <DeliverTime xsi:nil="true" />
+    <PickUpTime>2022-01-18T22:42:22.6508666+02:00</PickUpTime>
+    <DeliverTime>2022-01-18T22:42:24.6860629+02:00</DeliverTime>
   </Parcel>
   <Parcel>
     <Id>10000015</Id>
@@ -117,8 +117,8 @@
     <Priority>Emergency</Priority>
     <CreateTime>2022-01-18T16:45:18.4222953+02:00</CreateTime>
     <AssociateTime>2022-01-18T16:46:13.4636298+02:00</AssociateTime>
-    <PickUpTime xsi:nil="true" />
-    <DeliverTime xsi:nil="true" />
+    <PickUpTime>2022-01-18T21:36:13.2439294+02:00</PickUpTime>
+    <DeliverTime>2022-01-18T23:43:27.4785761+02:00</DeliverTime>
   </Parcel>
   <Parcel>
     <Id>10000016</Id>
