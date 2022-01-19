@@ -30,4 +30,9 @@
     <Model>fgh</Model>
     <MaxWeight>Heavy</MaxWeight>
   </Drone>
+  <Drone>
+    <Id>673456</Id>
+    <Model>dgh</Model>
+    <MaxWeight>Heavy</MaxWeight>
+  </Drone>
 </ArrayOfDrone>
