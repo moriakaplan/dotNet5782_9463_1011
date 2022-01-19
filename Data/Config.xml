@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configData>
   <managmentPassword>FWmH8zyx</managmentPassword>
-  <parcelCode>10000015</parcelCode>
+  <parcelCode>10000017</parcelCode>
   <available>0.001</available>
   <easy>0.002</easy>
   <medium>0.003</medium>
   <heavy>0.004</heavy>
-  <ratePerMinute>100</ratePerMinute>
+  <ratePerMinute>1000</ratePerMinute>
 </configData>

@@ -111,7 +111,8 @@ namespace BL
         private const int delayMS = 500; //miliseconds, half of second.
         private static Drone/*ToList*/ drone;
 
-        enum status { fly, inCharge, wait, toCharge };//charge-בטיענה
+        enum status { fly, inCharge, wait, toCharge };
+                                                    //charge-בטיענה
                                                     //toCharge-כשהוא מוצא את התחנה שהוא הולך להיטען בה
                                                     //wait- אם אין לו לאן ללכת בטעינה הוא מחכה עד שיתפנה מקום
                                                     //fly-כשהוא נוסע

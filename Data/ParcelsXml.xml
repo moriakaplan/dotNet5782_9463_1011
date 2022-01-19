@@ -120,4 +120,28 @@
     <PickUpTime xsi:nil="true" />
     <DeliverTime xsi:nil="true" />
   </Parcel>
+  <Parcel>
+    <Id>10000016</Id>
+    <Senderld>111111111</Senderld>
+    <TargetId>333333333</TargetId>
+    <Droneld>123455</Droneld>
+    <Weight>Light</Weight>
+    <Priority>Emergency</Priority>
+    <CreateTime>2022-01-18T18:36:57.527241+02:00</CreateTime>
+    <AssociateTime>2022-01-18T18:37:26.0772989+02:00</AssociateTime>
+    <PickUpTime xsi:nil="true" />
+    <DeliverTime xsi:nil="true" />
+  </Parcel>
+  <Parcel>
+    <Id>10000017</Id>
+    <Senderld>222222222</Senderld>
+    <TargetId>123456789</TargetId>
+    <Droneld>673456</Droneld>
+    <Weight>Light</Weight>
+    <Priority>Emergency</Priority>
+    <CreateTime>2022-01-18T18:42:26.3252555+02:00</CreateTime>
+    <AssociateTime>2022-01-18T18:48:31.0051865+02:00</AssociateTime>
+    <PickUpTime xsi:nil="true" />
+    <DeliverTime xsi:nil="true" />
+  </Parcel>
 </ArrayOfParcel>
