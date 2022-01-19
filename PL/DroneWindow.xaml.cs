@@ -40,11 +40,12 @@ namespace PL
             blObject = obj;
 
             lblBattery.Visibility= Visibility.Collapsed;
-            txtBattery.Visibility= Visibility.Collapsed;
+            //txtBattery.Visibility= Visibility.Collapsed;
+            //prgrsBattery.Visibility= Visibility.Collapsed;
             lblStatus.Visibility = Visibility.Collapsed;
-            txtStatus.Visibility = Visibility.Collapsed;
+            //txtStatus.Visibility = Visibility.Collapsed;
             lblParcel.Visibility = Visibility.Collapsed;
-            txtParcel.Visibility = Visibility.Collapsed;
+            //txtParcel.Visibility = Visibility.Collapsed;
 
             //txtId.Text = "6 digits";
             options.Visibility = Visibility.Hidden;
@@ -79,7 +80,7 @@ namespace PL
             txtWeight.IsEnabled = false;
 
             txtStationId.Visibility = Visibility.Collapsed;
-            lblStation.Visibility = Visibility.Collapsed;
+            //lblStation.Visibility = Visibility.Collapsed;
             add.Visibility = Visibility.Hidden;
 
             txtId.Text = droneId.ToString();
@@ -515,6 +516,7 @@ namespace PL
                 DataContext = drone;
             }
 
+            if (drone.ParcelInT == null) lblParcel.Visibility = Visibility.Collapsed;
             options.Click -= SendDroneToDelivery;
             options.Click -= ReleaseDroneFromCharge;
             options.Click -= PickUpParcel;

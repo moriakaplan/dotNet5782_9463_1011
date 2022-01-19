@@ -5,87 +5,102 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="AddDrone" Height="591" Width="400"
+        Title="AddDrone" Height="591" Width="auto"
         Closing="DataWindow_Closing">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Button x:Name="close" Content="Close The Window" Grid.Column="1" Click="Close_Click" Height="30" Background="Orange"
-                HorizontalAlignment="Right"/>
-        <Label Content="Id:" Grid.Row="1" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label Content="Model:" Grid.Row="2" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label x:Name="lblBattery" Content="Battery:" Grid.Row="3" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label x:Name="lblStatus" Content="Status:" Grid.Row="4" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label Content="Max Weight:" Grid.Row="5" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label x:Name="lblParcel" Content="Parcel In Transfer" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Label Content="Location:" Grid.Row="8" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-        <Label x:Name="lblStation" Content="Station For First Location:" Grid.Row="6" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-
-        <TextBox x:Name="txtId" Text="{Binding  Id}" Grid.Row="1" Grid.Column="1" Margin="10" TextChanged="IdColor"/>
-        <TextBox x:Name="txtModel" Text="{Binding  Model}" Grid.Row="2" Grid.Column="1" Margin="10" TextChanged="ModelColor"/>
-        <ProgressBar Grid.Column="1" Grid.Row="3" Margin="10" Height="22" Width="152" HorizontalAlignment="Left" VerticalAlignment="Center"  
-                     Minimum="0" Maximum="100" Value="{Binding  Battery}" Background="WhiteSmoke" BorderBrush="LightGray"
-                     Foreground="{Binding Path=Battery, Converter={StaticResource batteryToColorConverter}}"/>
-        <Label x:Name="txtBattery" Content="{Binding  Battery}" ContentStringFormat="{}{0:0}%" Grid.Column="1" Grid.Row="3" Margin="10" Width="152" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"/>
-        <TextBox x:Name="txtStatus" Text="{Binding  Status}" Grid.Row="4" Grid.Column="1" Margin="10" IsEnabled="false"/>
-        <ComboBox x:Name="txtWeight" Text="{Binding  MaxWeight}" Grid.Row="5" Grid.Column="1" Margin="10"/>
-        <ComboBox x:Name="txtStationId" Grid.Row="6" Grid.Column="1" Margin="10" SelectionChanged="txtStationId_SelectionChanged"/>
-        <TextBox x:Name="txtParcel" Text="{Binding  ParcelInT.Id}" Grid.Row="7" Grid.Column="1" Margin="10" IsEnabled="false" />
-        <Grid Grid.Column="1" Grid.Row="8">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+        
+        <Button x:Name="close" Content="Close The Window" Click="Close_Click" Grid.ColumnSpan="2" Height="30" Background="Orange" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        
+        <Grid Grid.Column="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Lattitude::" Grid.Row="0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
-            <Label Content="longitude:" Grid.Row="1" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
-            <TextBox x:Name="txtLatti" Text="{Binding  Path=CurrentLocation.Latti}" Grid.Row="0" Grid.Column="1" Margin="10" IsEnabled="false"/>
-            <TextBox x:Name="txtLongi" Text="{Binding  Path=CurrentLocation.Longi}" Grid.Row="1" Grid.Column="1" Margin="10" IsEnabled="false"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="1" Content="Id:" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label Grid.Row="2" Content="Model:" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label Grid.Row="3" x:Name="lblBattery" Content="Battery:" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label Grid.Row="4" x:Name="lblStatus" Content="Status:" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label Grid.Row="5" Content="Max Weight:" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label Grid.Row="6" x:Name="lblStation" Content="Station For First Location:" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label Grid.Row="7" x:Name="lblParcel" Content="Parcel In Transfer" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Label Grid.Row="8" Content="Location:" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+
+            <TextBox x:Name="txtId"    Text="{Binding  Id}"    Grid.Row="1" Grid.Column="1" Margin="10" TextChanged="IdColor"/>
+            <TextBox x:Name="txtModel" Text="{Binding  Model}" Grid.Row="2" Grid.Column="1" Margin="10" TextChanged="ModelColor"/>
+            <ProgressBar x:Name="prgrsBattery" Grid.Row="3" Grid.Column="1" Margin="10" Height="22" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"  
+                     Minimum="0" Maximum="100" Value="{Binding  Battery}" Background="WhiteSmoke" BorderBrush="LightGray"
+                     Foreground="{Binding Path=Battery, Converter={StaticResource batteryToColorConverter}}" Visibility="{Binding ElementName=lblBattery, Path=Visibility}"/>
+            <Label x:Name="txtBattery" Content="{Binding  Battery}" ContentStringFormat="{}{0:0}%" Visibility="{Binding ElementName=lblStatus, Path=Visibility}" Grid.Column="1" Grid.Row="3" Margin="10" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"/>
+            <TextBox  x:Name="txtStatus"  Text="{Binding  Status}" Grid.Row="4" Grid.Column="1" Margin="10" IsEnabled="false" Visibility="{Binding ElementName=lblBattery, Path=Visibility}"/>
+            <ComboBox x:Name="txtWeight"  Text="{Binding  MaxWeight}" Grid.Row="5" Grid.Column="1" Margin="10"/>
+            <ComboBox x:Name="txtStationId" Grid.Row="6" Grid.Column="1" Margin="10" SelectionChanged="txtStationId_SelectionChanged" Visibility="{Binding ElementName=lblStation, Path=Visibility}"/>
+            <TextBox  x:Name="txtParcel"  Text="{Binding  ParcelInT.Id}" Grid.Row="7" Grid.Column="1" Margin="10" IsEnabled="false" Visibility="{Binding ElementName=lblParcel, Path=Visibility}"/>
+            <Grid Grid.Column="1" Grid.Row="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Lattitude::" Grid.Row="0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                <Label Content="longitude:"  Grid.Row="1" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="txtLatti" Text="{Binding  CurrentLocation.Latti}" Grid.Row="0" Grid.Column="1" Margin="10" IsEnabled="false"/>
+                <TextBox x:Name="txtLongi" Text="{Binding  CurrentLocation.Longi}" Grid.Row="1" Grid.Column="1" Margin="10" IsEnabled="false"/>
+            </Grid>
+            <Button x:Name="add" Content="Add The &#xD;&#xA;Drone" Grid.Row="9"  Click="AddDrone_Click"
+                HorizontalAlignment="Left" VerticalAlignment="Top" Width="107" Height="60" Grid.ColumnSpan="2" Margin="146,29,0,0"/>
+            <Button x:Name="options" Content="options" Grid.Row="9" Grid.Column="1"
+                HorizontalAlignment="Left" VerticalAlignment="Top" Width="107" Height="60" Margin="118,31,0,0"/>
+            <Button x:Name="update" Content="update the&#xD;&#xA;model" Click="UpdateDroneModel" Grid.Row="9"
+                HorizontalAlignment="Left" VerticalAlignment="Top" Width="106" Height="60" Margin="26,31,0,0"/>
+            <Button x:Name="charge" Content="send drone&#xD;&#xA;to charge" Click="SendDroneToCharge" Grid.Row="9" 
+                HorizontalAlignment="Left" VerticalAlignment="Top" Width="107" Height="60" Grid.ColumnSpan="2" Margin="146,31,0,0"/>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="10,11,0,0" Grid.Row="9" Text="{Binding  CurrentLocation}" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Height="26"/>
+            <Button x:Name="btnSimulator"  Content="automatic" HorizontalAlignment="Center" Height="45" Grid.Row="9" VerticalAlignment="Bottom" Margin="0,0,0,20" Width="198" Style="{StaticResource brownButton}" Grid.ColumnSpan="2" Click="simulator"/>
+
         </Grid>
-        <Button x:Name="add" Content="Add The &#xD;&#xA;Drone" Grid.Row="9"  Click="AddDrone_Click"
-                HorizontalAlignment="Left" VerticalAlignment="Top" Width="107" Height="60" Grid.ColumnSpan="2" Margin="146,10,0,0"/>
-        <Button x:Name="options" Content="options" Grid.Row="9" Grid.Column="1"
-                HorizontalAlignment="Left" VerticalAlignment="Top" Width="107" Height="60" Margin="118,10,0,0"/>
-        <Button x:Name="update" Content="update the&#xD;&#xA;model" Click="UpdateDroneModel" Grid.Row="9"
-                HorizontalAlignment="Left" VerticalAlignment="Top" Width="106" Height="60" Margin="26,10,0,0"/>
-        <Button x:Name="charge" Content="send drone&#xD;&#xA;to charge" Click="SendDroneToCharge" Grid.Column="1" Grid.Row="9" 
-                HorizontalAlignment="Left" VerticalAlignment="Center" Width="107" Visibility="Hidden" Height="61"/>
-        <TextBox Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="9" Text="{Binding  CurrentLocation}" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" Height="26"/>
-        <Button x:Name="btnSimulator"  Content="automatic" HorizontalAlignment="Center" Height="35" Grid.Row="9" VerticalAlignment="Bottom" Margin="0,0,0,20" Width="198" Style="{StaticResource brownButton}" Grid.ColumnSpan="2" Click="simulator"/>
+        <Grid Grid.Column="1" Background="LightBlue" DataContext="{Binding  ParcelInT}" Visibility="{Binding ElementName=lblParcel, Path=Visibility}" Margin="0,57,0,155">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <Label Content="Parcel In Transfer"   HorizontalAlignment="Center" VerticalAlignment="Top" Grid.ColumnSpan="2" FontSize="20"/>
+            <Label Content="{Binding  Id}"        HorizontalAlignment="Center" Margin="0,38,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+            <Label Content="Sender"               HorizontalAlignment="Left" Margin="15, 60,0,0" VerticalAlignment="Top"/>
+            <Label Content="Target"               HorizontalAlignment="Left" Margin="15,106,0,0" VerticalAlignment="Top"/>
+            <Label Content="Weight"               HorizontalAlignment="Left" Margin="15,152,0,0" VerticalAlignment="Top"/>
+            <Label Content="Priority"             HorizontalAlignment="Left" Margin="15,198,0,0" VerticalAlignment="Top"/>
+            <Label Content="Picking place"        HorizontalAlignment="Left" Margin="15,244,0,0" VerticalAlignment="Top"/>
+            <Label Content="Destination place"    HorizontalAlignment="Left" Margin="15,290,0,0" VerticalAlignment="Top"/>
+            <Label Content="Distance from target" HorizontalAlignment="Left" Margin="15,336,0,0" VerticalAlignment="Top"/>
 
-        <!--<Button x:Name="sendDeliver" Content="send drone&#xD;&#xA;to delivery" Click="SendDroneToDelivery" Grid.Row="8" Grid.ColumnSpan="2" 
-                HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="110,0,0,0" Visibility="Hidden"/>
-        <Button x:Name="releaseFromCharge" Content="release drone&#xD;&#xA;from charge" Click="ReleaseDroneFromCharge" Grid.Row="8" 
-                HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Width="78" Visibility="Hidden"/>
-        <Button x:Name="pickParcel" Content="pick up &#xD;&#xA;parcel" Click="PickUpParcel" Grid.Row="8" Grid.Column="1" 
-                HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Visibility="Hidden"/>
-        <Button x:Name="deliver" Content="deliver&#xD;&#xA;parcel" Click="DeliverParcel" Grid.Row="8" Grid.Column="1"
-                HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Visibility="Hidden"/>-->
-        <!--<ComboBox x:Name="updateOptions" HorizontalAlignment="Left" Margin="0,43,0,0" Grid.Row="8" VerticalAlignment="Top" Width="120" Grid.Column="1" SelectionChanged="selectOption"/>-->
-        <!--<Label x:Name="lblOptions" Content="Choose the option you want:" HorizontalAlignment="Left" Margin="139,18,0,0" Grid.Row="8" VerticalAlignment="Top" Grid.ColumnSpan="2"/>-->
-
-        <!--<Label x:Name="lblTimeInCharge" Content="Time in charge-" Grid.Row="8"
-               HorizontalAlignment="Left" Margin="99,55,0,0" VerticalAlignment="Top" Height="26" Grid.Column="1" Visibility="Hidden"/>
-        <TextBox x:Name="txtTimeInCharge" Grid.Row="8" Grid.Column="1"
-                 HorizontalAlignment="Left" Margin="104,77,0,0" VerticalAlignment="Top" Width="84" TextChanged="TimeColor" Visibility="Hidden"/>
-        <Button x:Name="OKrelease" Content="OK" Grid.Row="8" Grid.Column="1" 
-                HorizontalAlignment="Left" Margin="136,98,0,0" VerticalAlignment="Top" Click="ReleaseAfterGetTime" Visibility="Hidden"/>-->
+            <Label Content="{Binding Sender           }" Grid.Column="1" HorizontalAlignment="Left" Margin="15, 60,0,0" VerticalAlignment="Top"/>
+            <Label Content="{Binding Target           }" Grid.Column="1" HorizontalAlignment="Left" Margin="15,106,0,0" VerticalAlignment="Top"/>
+            <Label Content="{Binding Weight           }" Grid.Column="1" HorizontalAlignment="Left" Margin="15,152,0,0" VerticalAlignment="Top"/>
+            <Label Content="{Binding Priority         }" Grid.Column="1" HorizontalAlignment="Left" Margin="15,198,0,0" VerticalAlignment="Top"/>
+            <Label Content="{Binding PickingPlace     }" Grid.Column="1" HorizontalAlignment="Left" Margin="15,244,0,0" VerticalAlignment="Top"/>
+            <Label Content="{Binding DestinationPlace }" Grid.Column="1" HorizontalAlignment="Left" Margin="15,290,0,0" VerticalAlignment="Top"/>
+            <Label Content="{Binding TransportDistance}" Grid.Column="1" HorizontalAlignment="Left" Margin="15,336,0,0" VerticalAlignment="Top"/>
+        </Grid>
     </Grid>
 </Window>

@@ -39,7 +39,7 @@ namespace PL
 
         private void LoginClick(object sender, RoutedEventArgs e)
         {
-            if (blObject.ExistManager(txtUserName.Text, txtPassword.Text))
+            if (blObject.ExistManager(txtUserName.Text, PPassword.Password))
             {
                 new ManagerWindow(blObject).Show();
                 closeX = false;
@@ -49,7 +49,7 @@ namespace PL
             
             try
             {
-                int id = blObject.GetUserId(txtUserName.Text, txtPassword.Text);
+                int id = blObject.GetUserId(txtUserName.Text, PPassword.Password);
                 new UserWindow(blObject, id).ShowDialog();
                 closeX = false;
                 this.Close();
