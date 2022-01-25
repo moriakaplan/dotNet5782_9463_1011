@@ -69,7 +69,30 @@ namespace PL
             txtTarget.ItemsSource = customersId;
             
         }
-        
+
+        public ParcelWindow(IBL obj, int id, bool flag)
+        {
+            InitializeComponent();
+            blObject = obj;
+            timesVisibility.Visibility = Visibility.Collapsed;
+            lblDrone.Visibility = Visibility.Collapsed;
+            txtDrone.Visibility = Visibility.Collapsed;
+            btnDrone.Visibility = Visibility.Collapsed;
+            delete.Visibility = Visibility.Collapsed;
+            txtSender.Visibility = Visibility.Collapsed;
+            lblSender.Visibility = Visibility.Collapsed;
+            btnSender.Visibility = Visibility.Collapsed;
+
+            txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
+            var customersId = blObject.GetCustomersList().Select(x => x.Id);
+            txtSender.ItemsSource = customersId;
+            //לתפוס חריגה
+            txtSender.SelectedItem = /*id.ToString()*/ customersId.Where(x => x == id).SingleOrDefault();
+            //לתפוס חריגה
+            txtTarget.ItemsSource = customersId;
+        }
+
         private void viewSender(object sender, RoutedEventArgs e)
         {
             new CustomerWindow(blObject, int.Parse(txtSender.Text)).Show();
@@ -117,7 +140,7 @@ namespace PL
                     this.Close();
                 }
                 catch (NotExistIDException) { MessageBox.Show("something strange"); }
-                catch (DeleteException) { MessageBox.Show("the parcel can't be deleted. apperently it associated to a drone."); }
+                catch (DeleteException) { MessageBox.Show("the parcel can't be deleted. it associated to a drone."); }
             }
         }
 
