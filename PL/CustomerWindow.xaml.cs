@@ -34,11 +34,11 @@ namespace PL
                 return;
             }
             DataContext = cus;
-            if (cus.parcelFrom.Count() == 0 && cus.parcelTo.Count() == 0) parcels.Visibility = Visibility.Collapsed;
+            if (cus.ParcelsFrom.Count() == 0 && cus.ParcelsTo.Count() == 0) parcels.Visibility = Visibility.Collapsed;
             else
             {
-                lstParcelsFrom.DataContext = cus.parcelFrom.Select(x => x.Id);
-                lstParcelsTo.DataContext = cus.parcelTo.Select(x => x.Id);
+                lstParcelsFrom.DataContext = cus.ParcelsFrom.Select(x => x.Id);
+                lstParcelsTo.DataContext = cus.ParcelsTo.Select(x => x.Id);
             }
 
             txtId.IsEnabled = false;

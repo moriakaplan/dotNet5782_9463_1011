@@ -26,11 +26,10 @@ namespace PL
         {
             InitializeComponent();
             blObject = obj;
-            txtId.Text = customerId.ToString();
+            //txtId.Text = customerId.ToString();
             Customer customer = blObject.GetCustomer(customerId);
-            txtname.Text = customer.Name;
-            txtId.IsEnabled = false;
-            txtname.IsEnabled = false;
+            DataContext = customer;
+            //txtname.Text = customer.Name;
             //txtParcelsFrom.DataContext = cus.parcelFrom.Select(x => x.Id);
             //txtParcelsTo.DataContext = cus.parcelTo.Select(x => x.Id);
         }

@@ -106,10 +106,10 @@ namespace Dal
             configRoot.Add(new XElement("managmentPassword", getGoodPass()));
             configRoot.Add(new XElement("parcelCode", 10000000));
             configRoot.Add(new XElement("available", 0.01));
-            configRoot.Add(new XElement("light", 0.012));
-            configRoot.Add(new XElement("medium", 0.013));
-            configRoot.Add(new XElement("heavy", 0.014));
-            configRoot.Add(new XElement("ratePerMinute", 10));
+            configRoot.Add(new XElement("light", 0.015));
+            configRoot.Add(new XElement("medium", 0.02));
+            configRoot.Add(new XElement("heavy", 0.025));
+            configRoot.Add(new XElement("ratePerMinute", 120));
             configRoot.Save(configPath);
         }
         private string getGoodPass()
@@ -313,6 +313,7 @@ namespace Dal
             List<Customer> customers = new List<Customer>();
             List<Station> stations = new List<Station>();
             Random random = new Random();
+            configRoot = XElement.Load(configPath);
             int parcelCode = int.Parse(configRoot.Element("parcelCode").Value);
             stations.Add(new Station
             {
@@ -360,88 +361,169 @@ namespace Dal
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "AnaAref",
             });
-            customersRoot = XElement.Load(customersPath);
-            customersRoot.Add(ConvertCus(new Customer
+            //customersRoot = new XElement("Customers");
+            //customersRoot.Add(ConvertCus(new Customer
+            //{
+            //    Id = random.Next(100000000, 1000000000),
+            //    Name = "Yosef",
+            //    Phone = "0501234567",
+            //    Longitude = 35.2,
+            //    Lattitude = 31.1
+            //}));
+            //customersRoot.Add(ConvertCus(new Customer
+            //{
+            //    Id = random.Next(100000000, 1000000000),
+            //    Name = "Avi",
+            //    Phone = "0503456789",
+            //    Longitude = 34.8,
+            //    Lattitude = 31.8
+            //}));
+            //customersRoot.Add(ConvertCus(new Customer
+            //{
+            //    Id = random.Next(100000000, 1000000000),
+            //    Name = "Nahum",
+            //    Phone = "0545678901",
+            //    Longitude = 35.2,
+            //    Lattitude = 31.7
+            //}));
+            //customersRoot.Add(ConvertCus(new Customer
+            //{
+            //    Id = random.Next(100000000, 1000000000),
+            //    Name = "Moshe",
+            //    Phone = "0523456789",
+            //    Longitude = 34.7,
+            //    Lattitude = 32
+            //}));
+            //customersRoot.Add(ConvertCus(new Customer
+            //{
+            //    Id = random.Next(100000000, 1000000000),
+            //    Name = "Shlomo",
+            //    Phone = "0521234567",
+            //    Longitude = 34.6,
+            //    Lattitude = 31.2
+            //}));
+            //customersRoot.Add(ConvertCus(new Customer
+            //{
+            //    Id = random.Next(100000000, 1000000000),
+            //    Name = "Shira",
+            //    Phone = "0502345678",
+            //    Longitude = 35,
+            //    Lattitude = 29.5
+            //}));
+            //customersRoot.Add(ConvertCus(new Customer
+            //{
+            //    Id = random.Next(100000000, 1000000000),
+            //    Name = "Naama",
+            //    Phone = "0531234567",
+            //    Longitude = 35.2,
+            //    Lattitude = 32.9
+            //}));
+            //customersRoot.Add(ConvertCus(new Customer
+            //{
+            //    Id = random.Next(100000000, 1000000000),
+            //    Name = "Etya",
+            //    Phone = "0501234569",
+            //    Longitude = 34.8,
+            //    Lattitude = 32.15
+            //}));
+            //customersRoot.Add(ConvertCus(new Customer
+            //{
+            //    Id = random.Next(100000000, 1000000000),
+            //    Name = "Yosefa",
+            //    Phone = "0501237567",
+            //    Longitude = 34.78,
+            //    Lattitude = 32.23
+            //}));
+            //customersRoot.Add(ConvertCus(new Customer
+            //{
+            //    Id = random.Next(100000000, 1000000000),
+            //    Name = "Yosi",
+            //    Phone = "0541234567",
+            //    Longitude = 35.2,
+            //    Lattitude = 31.7
+            //}));
+            //customersRoot.Save(customersPath);
+            customers.Add(new Customer
             {
                 Id = random.Next(100000000, 1000000000),
                 Name = "Yosef",
                 Phone = "0501234567",
                 Longitude = 35.2,
                 Lattitude = 31.1
-            }));
-            customersRoot.Add(ConvertCus(new Customer
+            });
+            customers.Add(new Customer
             {
                 Id = random.Next(100000000, 1000000000),
                 Name = "Avi",
                 Phone = "0503456789",
                 Longitude = 34.8,
                 Lattitude = 31.8
-            }));
-            customersRoot.Add(ConvertCus(new Customer
+            });
+            customers.Add(new Customer
             {
                 Id = random.Next(100000000, 1000000000),
                 Name = "Nahum",
                 Phone = "0545678901",
                 Longitude = 35.2,
                 Lattitude = 31.7
-            }));
-            customersRoot.Add(ConvertCus(new Customer
+            });
+            customers.Add(new Customer
             {
                 Id = random.Next(100000000, 1000000000),
                 Name = "Moshe",
                 Phone = "0523456789",
                 Longitude = 34.7,
                 Lattitude = 32
-            }));
-            customersRoot.Add(ConvertCus(new Customer
+            });
+            customers.Add(new Customer
             {
                 Id = random.Next(100000000, 1000000000),
                 Name = "Shlomo",
                 Phone = "0521234567",
                 Longitude = 34.6,
                 Lattitude = 31.2
-            }));
-            customersRoot.Add(ConvertCus(new Customer
+            });
+            customers.Add(new Customer
             {
                 Id = random.Next(100000000, 1000000000),
                 Name = "Shira",
                 Phone = "0502345678",
                 Longitude = 35,
                 Lattitude = 29.5
-            }));
-            customersRoot.Add(ConvertCus(new Customer
+            });
+            customers.Add(new Customer
             {
                 Id = random.Next(100000000, 1000000000),
                 Name = "Naama",
                 Phone = "0531234567",
                 Longitude = 35.2,
                 Lattitude = 32.9
-            }));
-            customersRoot.Add(ConvertCus(new Customer
+            });
+            customers.Add(new Customer
             {
                 Id = random.Next(100000000, 1000000000),
                 Name = "Etya",
                 Phone = "0501234569",
                 Longitude = 34.8,
                 Lattitude = 32.15
-            }));
-            customersRoot.Add(ConvertCus(new Customer
+            });
+            customers.Add(new Customer
             {
                 Id = random.Next(100000000, 1000000000),
                 Name = "Yosefa",
                 Phone = "0501237567",
                 Longitude = 34.78,
                 Lattitude = 32.23
-            }));
-            customersRoot.Add(ConvertCus(new Customer
+            });
+            customers.Add(new Customer
             {
                 Id = random.Next(100000000, 1000000000),
                 Name = "Yosi",
                 Phone = "0541234567",
                 Longitude = 35.2,
                 Lattitude = 31.7
-            }));
-            customersRoot.Save(customersPath);
+            });
+
             parcels.Add(new Parcel
             {
                 Id = ++parcelCode,

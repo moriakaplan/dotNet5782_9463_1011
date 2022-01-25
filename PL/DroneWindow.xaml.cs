@@ -27,6 +27,7 @@ namespace PL
         bool isInActionsState;
         bool canClose = false;
         BackgroundWorker worker;
+        Visibility myVisibility = Visibility.Visible;
 
         #region constructors
         /// <summary>
@@ -80,7 +81,7 @@ namespace PL
             txtWeight.IsEnabled = false;
 
             txtStationId.Visibility = Visibility.Collapsed;
-            //lblStation.Visibility = Visibility.Collapsed;
+            lblStation.Visibility = Visibility.Collapsed;
             add.Visibility = Visibility.Hidden;
 
             txtId.Text = droneId.ToString();
@@ -94,6 +95,7 @@ namespace PL
             btnSimulator.Content = "manual state";
             btnSimulator.Click -= simulator;
             btnSimulator.Click += manual;
+            myVisibility = Visibility.Hidden;
             worker = new()
             {
                 WorkerReportsProgress = true,
@@ -109,6 +111,7 @@ namespace PL
             btnSimulator.Content = "automatic state";
             btnSimulator.Click -= manual;
             btnSimulator.Click += simulator;
+            myVisibility = Visibility.Visible;
             worker.CancelAsync();
         }
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
@@ -242,8 +245,8 @@ namespace PL
             }
             MessageBox.Show("drone sent successfully");
             //InitialiseData(id);
-            DataContext = blObject.GetDrone(id);//?צריך
-            charge.Visibility = Visibility.Hidden;
+            //DataContext = blObject.GetDrone(id);//?צריך
+            //charge.Visibility = Visibility.Hidden;
             //sendDeliver.Visibility = Visibility.Hidden;
             //releaseFromCharge.Visibility = Visibility.Visible;
             //options.Content = "release drone\nfrom charge";
@@ -517,6 +520,11 @@ namespace PL
             }
 
             if (drone.ParcelInT == null) lblParcel.Visibility = Visibility.Collapsed;
+            else lblParcel.Visibility = Visibility.Visible;
+            options.Visibility = myVisibility;
+            update.Visibility = myVisibility;
+            charge.Visibility = Visibility.Hidden;
+            if (myVisibility == Visibility.Hidden) return;
             options.Click -= SendDroneToDelivery;
             options.Click -= ReleaseDroneFromCharge;
             options.Click -= PickUpParcel;
@@ -524,7 +532,7 @@ namespace PL
             switch (drone.Status) //show to thw user the right option according to the status of the drone
             {
                 case DroneStatus.Available:
-                    charge.Visibility = Visibility.Visible;
+                    charge.Visibility = myVisibility; //Visibility.Visible;
                     options.Content = "send drone\nto delivery";
                     options.Click += SendDroneToDelivery;
                     break;

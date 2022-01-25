@@ -15,8 +15,8 @@ namespace BO
         public string Name { get; set; }
         public string Phone { get; set; }
         public Location Location { get; set; }
-        public IEnumerable<ParcelInCustomer> parcelFrom { get; set; }
-        public IEnumerable<ParcelInCustomer> parcelTo { get; set; }
+        public IEnumerable<ParcelInCustomer> ParcelsFrom { get; set; }
+        public IEnumerable<ParcelInCustomer> ParcelsTo { get; set; }
         public override string ToString()
         {
             string result = "";
@@ -24,8 +24,8 @@ namespace BO
             result += $"Name - { Name},\n";
             result += $"Phone - { Phone},\n";
             result += $"Location - { Location},\n";
-            result += $"parcels From The Customer- { parcelFrom},\n";
-            result += $"parcels To The Customer- { parcelTo}.\n";
+            result += $"parcels From The Customer- { ParcelsFrom},\n";
+            result += $"parcels To The Customer- { ParcelsTo}.\n";
 
             return result;
           }

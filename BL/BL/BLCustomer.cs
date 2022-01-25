@@ -80,8 +80,8 @@ namespace BL
             bCustomer.Name = dCustomer.Name;
             bCustomer.Phone = dCustomer.Phone;
             bCustomer.Location = new Location() { Latti = dCustomer.Lattitude, Longi = dCustomer.Longitude };
-            bCustomer.parcelFrom = getCustomerParcelFrom(customerId);
-            bCustomer.parcelTo = getCustomerParcelTo(customerId);
+            bCustomer.ParcelsFrom = getCustomerParcelFrom(customerId);
+            bCustomer.ParcelsTo = getCustomerParcelTo(customerId);
             return bCustomer;
         }
         [MethodImpl(MethodImplOptions.Synchronized)]

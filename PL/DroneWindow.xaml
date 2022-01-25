@@ -75,7 +75,7 @@
             <Button x:Name="charge" Content="send drone&#xD;&#xA;to charge" Click="SendDroneToCharge" Grid.Row="9" 
                 HorizontalAlignment="Left" VerticalAlignment="Top" Width="107" Height="60" Grid.ColumnSpan="2" Margin="146,31,0,0"/>
             <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="10,11,0,0" Grid.Row="9" Text="{Binding  CurrentLocation}" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Height="26"/>
-            <Button x:Name="btnSimulator"  Content="automatic" HorizontalAlignment="Center" Height="45" Grid.Row="9" VerticalAlignment="Bottom" Margin="0,0,0,20" Width="198" Style="{StaticResource brownButton}" Grid.ColumnSpan="2" Click="simulator"/>
+            <Button x:Name="btnSimulator"  Content="automatic state" HorizontalAlignment="Center" Height="45" Grid.Row="9" VerticalAlignment="Bottom" Margin="0,0,0,20" Width="198" Style="{StaticResource brownButton}" Grid.ColumnSpan="2" Click="simulator"/>
 
         </Grid>
         <Grid Grid.Column="1" Background="LightBlue" DataContext="{Binding  ParcelInT}" Visibility="{Binding ElementName=lblParcel, Path=Visibility}" Margin="0,57,0,155">
