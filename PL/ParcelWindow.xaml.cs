@@ -73,6 +73,7 @@ namespace PL
         public ParcelWindow(IBL obj, int id, bool flag)
         {
             InitializeComponent();
+
             blObject = obj;
             timesVisibility.Visibility = Visibility.Collapsed;
             lblDrone.Visibility = Visibility.Collapsed;
@@ -90,6 +91,8 @@ namespace PL
             //לתפוס חריגה
             txtTarget.ItemsSource = customersId;
             txtSender.IsEnabled = false;
+            InitializeComponent();
+
 
         }
 
