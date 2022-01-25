@@ -20,11 +20,11 @@
     </Window.Resources>
     <Grid>
         <Button Content="sign" Style="{StaticResource brownButton}" BorderThickness="0.7" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Sighn" Margin="0,330,0,0" Width="190" Height="49"/>
-        <Label x:Name="lblId" Content="yuor id" HorizontalAlignment="Left" Margin="42,128,0,0" VerticalAlignment="Top" Width="56"/>
+        <Label x:Name="lblId" Content="yuor id" HorizontalAlignment="Left" Margin="42,128,0,0" VerticalAlignment="Top" Width="58"/>
         <Label Content="choose a username" HorizontalAlignment="Left" Margin="42,164,0,0" VerticalAlignment="Top" Width="auto"/>
         <Label Content="choose a password" HorizontalAlignment="Left" Margin="42,198,0,0" VerticalAlignment="Top" Width="auto"/>
         <Label x:Name="lblManager" Content="enter the managment password" HorizontalAlignment="Left" Margin="42,128,0,0" VerticalAlignment="Top" Width="auto"/>
-        <TextBox x:Name="txtId" HorizontalAlignment="Left" Margin="98,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="216"/>
+        <TextBox x:Name="txtId" HorizontalAlignment="Left" Margin="98,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="214"/>
         <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="188,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
         <TextBox x:Name="txtPassword" TextChanged="passChange" HorizontalAlignment="Left" Margin="188,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
         <TextBox x:Name="txtManager" Text="8 digits" HorizontalAlignment="Left" Margin="232,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82"/>
@@ -44,6 +44,6 @@
         </Label>
         <Label Content="I am:" HorizontalAlignment="Left" Margin="112,55,0,0" VerticalAlignment="Top" Width="auto"/>
         <ComboBox x:Name="typeOfUser" HorizontalAlignment="Left" Margin="155,55,0,0" VerticalAlignment="Top" Width="104" SelectionChanged="typeOfUserChanged"/>
-        <Label x:Name="lblGoodOrWrong" HorizontalAlignment="Left" Margin="320,193,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.5,-0.891"/>
+        <Label x:Name="lblGoodOrWrong" HorizontalAlignment="Left" Margin="48,240,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.5,-0.891"/>
     </Grid>
 </Window>

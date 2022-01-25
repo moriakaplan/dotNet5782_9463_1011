@@ -121,7 +121,7 @@ namespace PL
             }
             else
             {
-                lblGoodOrWrong.Content = "not strong password";
+                lblGoodOrWrong.Content = $"not strong password\nThe password must be at least 8 chars (6 different) and with big letters, small letters and numbers.";
                 lblGoodOrWrong.Foreground = Brushes.Red;
             }
         }
