@@ -7,12 +7,6 @@
     <IsManager>true</IsManager>
   </User>
   <User>
-    <Id>123456789</Id>
-    <UserName>shuva</UserName>
-    <Password>1234567890</Password>
-    <IsManager>false</IsManager>
-  </User>
-  <User>
     <Id xsi:nil="true" />
     <UserName>shuvad</UserName>
     <Password>123</Password>
@@ -23,5 +17,11 @@
     <UserName />
     <Password />
     <IsManager>true</IsManager>
+  </User>
+  <User>
+    <Id>975102665</Id>
+    <UserName>avi</UserName>
+    <Password>123456aA</Password>
+    <IsManager>false</IsManager>
   </User>
 </ArrayOfUser>

@@ -83,13 +83,13 @@ namespace Dal
             //if (!File.Exists(parcelsPath))
             //    //CreateFiles(parcelsRoot, parcelsPath, "parcels");
             //    XmlTools.SaveListToXmlSerializer<Parcel>(new List<Parcel>(), parcelsPath);
-            if (!File.Exists(usersPath))
-            {
-                List<User> u = new List<User>();
-                u.Add(new User { Id = null, UserName = "general manager", Password = "123456", IsManager = true });
-                XmlTools.SaveListToXmlSerializer<User>(u, usersPath);
-            }
-            if (!File.Exists(configPath)||!File.Exists(dronesPath)||!File.Exists(droneChargesPath)||!File.Exists(stationsPath)||!File.Exists(customersPath)||!File.Exists(parcelsPath))
+            //if (!File.Exists(usersPath))
+            //{
+            //    List<User> u = new List<User>();
+            //    u.Add(new User { Id = null, UserName = "general manager", Password = "123456", IsManager = true });
+            //    XmlTools.SaveListToXmlSerializer<User>(u, usersPath);
+            //}
+            if (!File.Exists(configPath)||!File.Exists(dronesPath)||!File.Exists(droneChargesPath)||!File.Exists(stationsPath)||!File.Exists(customersPath)||!File.Exists(parcelsPath)||!File.Exists(usersPath))
                 CreateFiles();
             LoadData();
         }
@@ -303,10 +303,14 @@ namespace Dal
         }
 
         /// <summary>
-        /// create the xml files of the drones, customers, station and drone charges (prussume the config file is updated.
+        /// create the xml files of the drones, customers, station, drone charges and users (prussume the config file is updated).
         /// </summary>
         private void CreateFiles()
         {
+            List<User> u = new List<User>();
+            u.Add(new User { Id = null, UserName = "general manager", Password = "123456", IsManager = true });
+            XmlTools.SaveListToXmlSerializer<User>(u, usersPath);
+
             List<Drone> drones = new List<Drone>();
             List<DroneCharge> droneCharges = new List<DroneCharge>();
             List<Parcel> parcels = new List<Parcel>();
