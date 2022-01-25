@@ -47,7 +47,7 @@ namespace PL
 
         private void updateCustomer(object sender, RoutedEventArgs e)
         {
-            new CustomerWindow(blObject, int.Parse(txtId.Text)).ShowDialog() ;
+            new CustomerWindow(blObject, int.Parse(txtId.Content.ToString())).ShowDialog() ;
         }
 
         private void BackToMain(object sender, RoutedEventArgs e)
