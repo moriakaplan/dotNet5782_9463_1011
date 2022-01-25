@@ -352,16 +352,9 @@ namespace BL
             lock (bl)
             {
                 distanceFromTarget = bl.distance(drone.CurrentLocation, targetLocation);
-                if (distanceFromTarget < 0.01)
-                {
-                    distanceFromTarget = 0;
-                    drone.CurrentLocation = targetLocation;
-                    return;
-                }
                 double change =        velocity * delayMS           / 1000; //calculate the change in the distance, according to the delay- the time that passed since the previous calculation.
                 //              (זמן במילי שניות)*(מהירות לשנייה) 
-                //change = Min(change, distanceFromTarget); //in case the drone has theoretically passed the target
-                if(change > distanceFromTarget) //in case the drone has theoretically passed the target
+                if(change > distanceFromTarget) //if the drone already passed the target in this half of decond
                 {
                     distanceFromTarget = 0;
                     drone.CurrentLocation = targetLocation;

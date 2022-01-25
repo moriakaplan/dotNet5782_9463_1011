@@ -12,7 +12,7 @@
     <Name>station2</Name>
     <Longitude>32.1</Longitude>
     <Lattitude>32.1</Lattitude>
-    <ChargeSlots>34</ChargeSlots>
+    <ChargeSlots>36</ChargeSlots>
   </Station>
   <Station>
     <Id>3456</Id>

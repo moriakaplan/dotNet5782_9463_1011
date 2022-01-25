@@ -12,7 +12,7 @@ namespace BO
     public class ParcelInTransfer
     {
         public int Id { get; set; }
-        public bool InTheWay { get; set; }//in the way to the destination or wating for collection
+        public bool InTheWay { get; set; }//in the way to the destination or wating for pick up
         public CustomerInParcel Sender { get; set; }
         public CustomerInParcel Target { get; set; }
         public WeightCategories Weight { get; set; }
