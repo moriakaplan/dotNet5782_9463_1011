@@ -79,18 +79,18 @@ namespace PL
             txtDrone.Visibility = Visibility.Collapsed;
             btnDrone.Visibility = Visibility.Collapsed;
             delete.Visibility = Visibility.Collapsed;
-            txtSender.Visibility = Visibility.Collapsed;
-            lblSender.Visibility = Visibility.Collapsed;
             btnSender.Visibility = Visibility.Collapsed;
 
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
-            var customersId = blObject.GetCustomersList().Select(x => x.Id);
+            IEnumerable<int> /*var*/ customersId = blObject.GetCustomersList().Select(x => x.Id);
             txtSender.ItemsSource = customersId;
             //לתפוס חריגה
             txtSender.SelectedItem = /*id.ToString()*/ customersId.Where(x => x == id).SingleOrDefault();
             //לתפוס חריגה
             txtTarget.ItemsSource = customersId;
+            txtSender.IsEnabled = false;
+
         }
 
         private void viewSender(object sender, RoutedEventArgs e)
@@ -115,17 +115,17 @@ namespace PL
             this.Close();
         }
 
-        private void txtSender_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            txtTarget.ItemsSource = blObject.GetCustomersList().Select(x => x.Id).Where(x => x != (int)txtSender.SelectedItem);
-            //txtSenderName.Content = blObject.GetCustomer(int.Parse(txtSender.Text)).Name;
-        }
+        //private void txtSender_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    //txtTarget.ItemsSource = blObject.GetCustomersList().Select(x => x.Id).Where(x => x != (int)txtSender.SelectedItem);
+        //    //txtSenderName.Content = blObject.GetCustomer(int.Parse(txtSender.Text)).Name;
+        //}
 
-        private void txtTarget_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            txtSender.ItemsSource = blObject.GetCustomersList().Select(x => x.Id).Where(x => x != (int)txtTarget.SelectedItem);
-            //txtTargetName.Content = blObject.GetCustomer(int.Parse(txtTarget.Text)).Name;
-        }
+        //private void txtTarget_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    //txtSender.ItemsSource = blObject.GetCustomersList().Select(x => x.Id).Where(x => x != (int)txtTarget.SelectedItem);
+        //    //txtTargetName.Content = blObject.GetCustomer(int.Parse(txtTarget.Text)).Name;
+        //}
 
         private void DeleteParcel(object sender, RoutedEventArgs e)
         {
