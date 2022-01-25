@@ -1,31 +1,73 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <ArrayOfCustomer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Customer>
-    <Id>123456789</Id>
-    <Name>shuva</Name>
-    <Phone>0501233344</Phone>
-    <Longitude>33</Longitude>
+    <Id>133422195</Id>
+    <Name>Yosef</Name>
+    <Phone>0501234567</Phone>
+    <Longitude>35.2</Longitude>
+    <Lattitude>31.1</Lattitude>
+  </Customer>
+  <Customer>
+    <Id>975102665</Id>
+    <Name>Avi</Name>
+    <Phone>0503456789</Phone>
+    <Longitude>34.8</Longitude>
+    <Lattitude>31.8</Lattitude>
+  </Customer>
+  <Customer>
+    <Id>964804083</Id>
+    <Name>Nahum</Name>
+    <Phone>0545678901</Phone>
+    <Longitude>35.2</Longitude>
+    <Lattitude>31.7</Lattitude>
+  </Customer>
+  <Customer>
+    <Id>921137024</Id>
+    <Name>Moshe</Name>
+    <Phone>0523456789</Phone>
+    <Longitude>34.7</Longitude>
     <Lattitude>32</Lattitude>
   </Customer>
   <Customer>
-    <Id>111111111</Id>
-    <Name>moria</Name>
-    <Phone>0501111111</Phone>
-    <Longitude>33</Longitude>
-    <Lattitude>33</Lattitude>
+    <Id>216595696</Id>
+    <Name>Shlomo</Name>
+    <Phone>0521234567</Phone>
+    <Longitude>34.6</Longitude>
+    <Lattitude>31.2</Lattitude>
   </Customer>
   <Customer>
-    <Id>222222222</Id>
-    <Name>naty</Name>
-    <Phone>0909090909</Phone>
-    <Longitude>32</Longitude>
-    <Lattitude>32.12</Lattitude>
+    <Id>666125931</Id>
+    <Name>Shira</Name>
+    <Phone>0502345678</Phone>
+    <Longitude>35</Longitude>
+    <Lattitude>29.5</Lattitude>
   </Customer>
   <Customer>
-    <Id>333333333</Id>
-    <Name>efrat</Name>
-    <Phone>0888888888</Phone>
-    <Longitude>32</Longitude>
-    <Lattitude>32.121</Lattitude>
+    <Id>719193184</Id>
+    <Name>Naama</Name>
+    <Phone>0531234567</Phone>
+    <Longitude>35.2</Longitude>
+    <Lattitude>32.9</Lattitude>
+  </Customer>
+  <Customer>
+    <Id>832333003</Id>
+    <Name>Etya</Name>
+    <Phone>0501234569</Phone>
+    <Longitude>34.8</Longitude>
+    <Lattitude>32.15</Lattitude>
+  </Customer>
+  <Customer>
+    <Id>424315782</Id>
+    <Name>Yosefa</Name>
+    <Phone>0501237567</Phone>
+    <Longitude>34.78</Longitude>
+    <Lattitude>32.23</Lattitude>
+  </Customer>
+  <Customer>
+    <Id>913376798</Id>
+    <Name>Yosi</Name>
+    <Phone>0541234567</Phone>
+    <Longitude>35.2</Longitude>
+    <Lattitude>31.7</Lattitude>
   </Customer>
 </ArrayOfCustomer>
