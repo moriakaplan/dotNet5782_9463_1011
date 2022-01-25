@@ -124,11 +124,11 @@
     <Id>10000016</Id>
     <Senderld>111111111</Senderld>
     <TargetId>333333333</TargetId>
-    <Droneld>673456</Droneld>
+    <Droneld>111111</Droneld>
     <Weight>Light</Weight>
     <Priority>Emergency</Priority>
     <CreateTime>2022-01-18T18:36:57.527241+02:00</CreateTime>
-    <AssociateTime>2022-01-25T18:49:37.1272157+02:00</AssociateTime>
+    <AssociateTime>2022-01-25T18:54:18.3506203+02:00</AssociateTime>
     <PickUpTime>2022-01-19T10:01:03.5234002+02:00</PickUpTime>
     <DeliverTime>2022-01-19T10:01:06.5919429+02:00</DeliverTime>
   </Parcel>
