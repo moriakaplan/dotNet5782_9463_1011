@@ -18,12 +18,7 @@ namespace BO
         public CustomerInParcel SenderOrTarget { get; set; }
         public override string ToString()
         {
-            return @$"Id: #{Id}:
-weight- {Weight},
-priority- {Priority},
-status- {Status},
-Customer In Parcel- {SenderOrTarget}.
-";//*מה זה אמור להיות השדה האחרון?
+            return $"parcel {Id}: weight- {Weight}, priority- {Priority}, status- {Status}, sender or target- {SenderOrTarget}.";//*מה זה אמור להיות השדה האחרון?
         }
     }
 }
