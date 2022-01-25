@@ -3,9 +3,9 @@
   <managmentPassword>FWmH8zyx</managmentPassword>
   <parcelCode>10000026</parcelCode>
   <available>0.01</available>
-  <light>0.02</light>
-  <medium>0.03</medium>
-  <heavy>0.04</heavy>
-  <ratePerMinute>100</ratePerMinute>
+  <light>0.015</light>
+  <medium>0.02</medium>
+  <heavy>0.025</heavy>
+  <ratePerMinute>120</ratePerMinute>
   <managmentPassword>P06ZLd7u</managmentPassword>
 </configData>

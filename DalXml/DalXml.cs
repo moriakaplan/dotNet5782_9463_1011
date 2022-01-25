@@ -106,10 +106,10 @@ namespace Dal
             configRoot.Add(new XElement("managmentPassword", getGoodPass()));
             configRoot.Add(new XElement("parcelCode", 10000000));
             configRoot.Add(new XElement("available", 0.01));
-            configRoot.Add(new XElement("light", 0.012));
-            configRoot.Add(new XElement("medium", 0.013));
-            configRoot.Add(new XElement("heavy", 0.014));
-            configRoot.Add(new XElement("ratePerMinute", 10));
+            configRoot.Add(new XElement("light", 0.015));
+            configRoot.Add(new XElement("medium", 0.02));
+            configRoot.Add(new XElement("heavy", 0.025));
+            configRoot.Add(new XElement("ratePerMinute", 120));
             configRoot.Save(configPath);
         }
         private string getGoodPass()

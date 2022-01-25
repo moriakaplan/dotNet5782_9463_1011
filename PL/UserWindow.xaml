@@ -11,26 +11,31 @@
         <ImageBrush ImageSource="\Images\background3.jpg"/>
     </Window.Background>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="230"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Button Content="send new parcel" Grid.Row="0" HorizontalAlignment="Left" Height="42" Margin="43,356,0,0" VerticalAlignment="Top" Width="147" Click="sendNewParcel"/>
-        <TextBox Name="txtId" Grid.Row="0" HorizontalAlignment="Left"  Margin="90,227,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="91"/>
-        <TextBox Name="txtname" Grid.Row="0"  HorizontalAlignment="Left"  Margin="90,257,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="91"/>
+        <Label Name="txtId"   Content="{Binding Id}" Grid.Row="0" HorizontalAlignment="Left" Margin="90,237,0,0" VerticalAlignment="Top" Width="91"/>
+        <Label Name="txtname" Content="{Binding Name}" Grid.Row="0" HorizontalAlignment="Left" Margin="90,270,0,0" VerticalAlignment="Top" Width="91"/>
 
         <Label Content="id:" Grid.Row="0" HorizontalAlignment="Left" Height="24" Margin="63,229,0,0" VerticalAlignment="Top" Width="20"/>
         <Label Content="name:" Grid.Row="0" HorizontalAlignment="Left" Height="26" Margin="43,257,0,0" VerticalAlignment="Top" Width="40"/>
         <Button Content="settings" HorizontalAlignment="Left" Grid.Row="0" Margin="76,309,0,0" VerticalAlignment="Top" Click="updateCustomer"/>
-        <Button Content="Button" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Background="orange" Width="298" Grid.ColumnSpan="2" />
-        <Image HorizontalAlignment="Left" Height="184" Margin="30,30,0,0" VerticalAlignment="Top" Width="172" Source="/Images/user.png"/>
+        <Image HorizontalAlignment="Center" Height="184" Margin="0,30,0,0" VerticalAlignment="Top" Width="170" Source="/Images/user.png"/>
         <!--<ListView x:Name="txtParcelsTo"  Grid.Row="1" Grid.Column="0" MouseDoubleClick="viewParcelTo" Margin="-484,-133,484,132"/>
         <ListView x:Name="txtParcelsFrom" Grid.Row="1" Grid.Column="1" MouseDoubleClick="viewParcelFrom" Margin="-484,-200,484,200"/>-->
         <Button Content="back to the main window" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Background="LightBlue" Click="BackToMain" Grid.Column="1"/>
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" DataContext="{Binding ParcelsFrom}" Background="Transparent"
+                  ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" MouseDoubleClick="ViewParcel" Grid.Column="1" Margin="58,70,288,57">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id"/>
+                <DataGridTextColumn x:Name="priorityColumn" Binding="{Binding Priority}" Header="Priority"/>
+                <DataGridTextColumn x:Name="senderNameColumn" Binding="{Binding SenderOrTarget}" Header="Cus Name"/>
+                <DataGridTextColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Status"/>
+                <DataGridTextColumn x:Name="weightColumn" Binding="{Binding Weight}" Header="Weight"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

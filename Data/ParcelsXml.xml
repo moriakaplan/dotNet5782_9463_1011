@@ -4,49 +4,49 @@
     <Id>10000017</Id>
     <Senderld>975102665</Senderld>
     <TargetId>964804083</TargetId>
-    <Droneld>0</Droneld>
+    <Droneld>597229</Droneld>
     <Weight>Medium</Weight>
     <Priority>Fast</Priority>
     <CreateTime>2021-01-01T00:00:00</CreateTime>
-    <AssociateTime xsi:nil="true" />
-    <PickUpTime xsi:nil="true" />
-    <DeliverTime xsi:nil="true" />
+    <AssociateTime>2022-01-25T20:58:00.8029428+02:00</AssociateTime>
+    <PickUpTime>2022-01-25T20:58:01.819419+02:00</PickUpTime>
+    <DeliverTime>2022-01-25T20:58:02.8599323+02:00</DeliverTime>
   </Parcel>
   <Parcel>
     <Id>10000018</Id>
     <Senderld>921137024</Senderld>
     <TargetId>216595696</TargetId>
-    <Droneld>0</Droneld>
+    <Droneld>597229</Droneld>
     <Weight>Light</Weight>
     <Priority>Regular</Priority>
     <CreateTime>2021-01-01T00:00:00</CreateTime>
-    <AssociateTime xsi:nil="true" />
-    <PickUpTime xsi:nil="true" />
-    <DeliverTime xsi:nil="true" />
+    <AssociateTime>2022-01-25T20:58:20.0350789+02:00</AssociateTime>
+    <PickUpTime>2022-01-25T20:58:21.0465334+02:00</PickUpTime>
+    <DeliverTime>2022-01-25T20:58:23.064644+02:00</DeliverTime>
   </Parcel>
   <Parcel>
     <Id>10000019</Id>
     <Senderld>666125931</Senderld>
     <TargetId>719193184</TargetId>
-    <Droneld>0</Droneld>
+    <Droneld>597229</Droneld>
     <Weight>Light</Weight>
     <Priority>Fast</Priority>
     <CreateTime>2021-10-19T00:00:00</CreateTime>
-    <AssociateTime xsi:nil="true" />
-    <PickUpTime xsi:nil="true" />
-    <DeliverTime xsi:nil="true" />
+    <AssociateTime>2022-01-25T20:58:03.3755919+02:00</AssociateTime>
+    <PickUpTime>2022-01-25T20:58:08.4119532+02:00</PickUpTime>
+    <DeliverTime>2022-01-25T20:58:16.4731088+02:00</DeliverTime>
   </Parcel>
   <Parcel>
     <Id>10000020</Id>
     <Senderld>832333003</Senderld>
     <TargetId>424315782</TargetId>
-    <Droneld>0</Droneld>
+    <Droneld>597229</Droneld>
     <Weight>Medium</Weight>
     <Priority>Regular</Priority>
     <CreateTime>2021-10-01T00:00:00</CreateTime>
-    <AssociateTime xsi:nil="true" />
-    <PickUpTime xsi:nil="true" />
-    <DeliverTime xsi:nil="true" />
+    <AssociateTime>2022-01-25T20:58:16.9909938+02:00</AssociateTime>
+    <PickUpTime>2022-01-25T20:58:19.0131297+02:00</PickUpTime>
+    <DeliverTime>2022-01-25T20:58:19.5239832+02:00</DeliverTime>
   </Parcel>
   <Parcel>
     <Id>10000021</Id>
@@ -57,8 +57,8 @@
     <Priority>Fast</Priority>
     <CreateTime>2021-01-01T00:00:00</CreateTime>
     <AssociateTime>2021-01-02T00:00:00</AssociateTime>
-    <PickUpTime xsi:nil="true" />
-    <DeliverTime xsi:nil="true" />
+    <PickUpTime>2022-01-25T20:57:59.2143868+02:00</PickUpTime>
+    <DeliverTime>2022-01-25T20:58:00.244619+02:00</DeliverTime>
   </Parcel>
   <Parcel>
     <Id>10000022</Id>
@@ -82,7 +82,7 @@
     <CreateTime>2021-01-05T00:00:00</CreateTime>
     <AssociateTime>2021-01-08T00:00:00</AssociateTime>
     <PickUpTime>2021-01-12T00:00:00</PickUpTime>
-    <DeliverTime xsi:nil="true" />
+    <DeliverTime>2022-01-25T21:51:55.3100386+02:00</DeliverTime>
   </Parcel>
   <Parcel>
     <Id>10000024</Id>
@@ -94,7 +94,7 @@
     <CreateTime>2021-08-20T00:00:00</CreateTime>
     <AssociateTime>2021-08-21T00:00:00</AssociateTime>
     <PickUpTime>2021-08-24T00:00:00</PickUpTime>
-    <DeliverTime xsi:nil="true" />
+    <DeliverTime>2022-01-25T21:55:01.5619406+02:00</DeliverTime>
   </Parcel>
   <Parcel>
     <Id>10000025</Id>
