@@ -10,6 +10,10 @@ namespace Dal
 {
     public partial class DalXml
     {
+        /// <summary>
+        /// add drone
+        /// </summary>
+        /// <param name="drone"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone drone)
         {
@@ -19,6 +23,11 @@ namespace Dal
             XmlTools.SaveListToXmlSerializer<Drone>(drones, dronesPath);
         }
 
+        /// <summary>
+        /// send drone to charge
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <param name="stationId"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void SendDroneToCharge(int droneId, int stationId)
         {
@@ -26,7 +35,6 @@ namespace Dal
             List<Drone> drones = XmlTools.LoadListFromXmlSerializer<Drone>(dronesPath);
             List<DroneCharge> dCharge = XmlTools.LoadListFromXmlSerializer<DroneCharge>(droneChargesPath);
             List<Station> stations = XmlTools.LoadListFromXmlSerializer<Station>(stationsPath);
-            //if (drones.Exists(item => item.Id == droneId)) throw new DroneException($"id: {droneId} already exist");
             if (!drones.Exists(item => item.Id == droneId))
             {
                 throw new DroneException($"id: {droneId} does not exist");
@@ -39,7 +47,7 @@ namespace Dal
                {
                    if (stations[i].ChargeSlots < 1) throw new StationException("");
                     Station s = stations[i];
-                    s.ChargeSlots--; //++?
+                    s.ChargeSlots--; 
                     stations[i] = s;
                     XmlTools.SaveListToXmlSerializer<Drone>(drones, dronesPath);
                     XmlTools.SaveListToXmlSerializer<DroneCharge>(dCharge, droneChargesPath);
@@ -50,6 +58,10 @@ namespace Dal
             throw new StationException($"id: {stationId} does not exist");
         }
 
+        /// <summary>
+        /// release the drone from charge
+        /// </summary>
+        /// <param name="droneId"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReleaseDroneFromeCharge(int droneId)
         {
@@ -76,6 +88,11 @@ namespace Dal
             throw new StationException($"id: {dCharge.StationId} does not exist");
         }
 
+        /// <summary>
+        /// returns the drone with the requested id
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int droneId)
         {
@@ -86,6 +103,11 @@ namespace Dal
             return (Drone)dr;
         }
 
+        /// <summary>
+        /// return drone charge with the requested id
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public DroneCharge GetDroneCharge(int droneId)
         {
@@ -96,6 +118,11 @@ namespace Dal
             return dc;
         }
 
+        /// <summary>
+        /// returns all drone charge
+        /// </summary>
+        /// <param name="pre"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> GetDroneChargesList(Predicate<DroneCharge> pre)
         {
@@ -104,6 +131,11 @@ namespace Dal
             return list.FindAll(pre);
         }
 
+        /// <summary>
+        /// return all drone list
+        /// </summary>
+        /// <param name="pre"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> GetDronesList(Predicate<Drone> pre)
         {
@@ -113,6 +145,10 @@ namespace Dal
             return result.FindAll(pre);
         }
 
+        /// <summary>
+        /// delete the drone
+        /// </summary>
+        /// <param name="droneId"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDrone(int droneId)
         {

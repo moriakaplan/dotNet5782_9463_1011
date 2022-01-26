@@ -17,6 +17,12 @@ namespace Dal
                 Directory.CreateDirectory(dir);
         }
 
+        /// <summary>
+        /// Save list to Xml serializer
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="filePath"></param>
         public static void SaveListToXmlSerializer<T>(List<T> list, string filePath)
         {
             try
@@ -26,11 +32,17 @@ namespace Dal
                 x.Serialize(file, list);
                 file.Close();
             }
-            catch (Exception ex) //****
+            catch (Exception ex) 
             {
                 throw new Exception(ex.Message + $"fail to save {filePath}");
             }
         }
+        /// <summary>
+        /// Load list from Xml serializer
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         public static List<T> LoadListFromXmlSerializer<T>(string filePath)
         {
             try
@@ -47,7 +59,7 @@ namespace Dal
                 else
                     return new List<T>();
             }
-            catch (Exception ex) //****
+            catch (Exception ex) 
             {
                 Console.WriteLine(ex.Message+$"fail to load {filePath}");
                 throw new Exception(ex.Message+$"fail to load {filePath}");

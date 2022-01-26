@@ -12,6 +12,11 @@ namespace Dal
 {
     public partial class DalXml
     {
+        /// <summary>
+        /// add new parcel
+        /// </summary>
+        /// <param name="parcel"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public int AddParcel(Parcel parcel)
         {
@@ -26,6 +31,11 @@ namespace Dal
             return newCode;
         }
 
+        /// <summary>
+        /// return the parcel with the requested id
+        /// </summary>
+        /// <param name="parcelId"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int parcelId)
         {
@@ -36,6 +46,11 @@ namespace Dal
             return (Parcel)result;
         }
 
+        /// <summary>
+        /// returns all the parcels
+        /// </summary>
+        /// <param name="pre"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> GetParcelsList(Predicate<Parcel> pre)
         {
@@ -45,6 +60,10 @@ namespace Dal
             return result.FindAll(pre);
         }
 
+        /// <summary>
+        /// delete the parcel
+        /// </summary>
+        /// <param name="parcelId"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(int parcelId)
         {
@@ -61,6 +80,11 @@ namespace Dal
 
         }
 
+        /// <summary>
+        /// assign the parcel to the drone
+        /// </summary>
+        /// <param name="parcelId"></param>
+        /// <param name="droneId"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AssignParcelToDrone(int parcelId, int droneId)
         {
@@ -86,6 +110,10 @@ namespace Dal
             throw new ParcelException($"id: {parcelId} does not exist");
         }
 
+        /// <summary>
+        /// pick the parel by the drone
+        /// </summary>
+        /// <param name="parcelId"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void PickParcelByDrone(int parcelId)
         {
@@ -103,7 +131,10 @@ namespace Dal
             }
             throw new ParcelException($"id: {parcelId} does not exist");
         }
-
+        /// <summary>
+        /// deliver the parcel
+        /// </summary>
+        /// <param name="parcelId"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeliverParcelToCustomer(int parcelId)
         {

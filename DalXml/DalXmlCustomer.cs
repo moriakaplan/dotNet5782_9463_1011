@@ -14,15 +14,24 @@ namespace Dal
 {
     public partial class DalXml
     {
+        /// <summary>
+        /// add customer
+        /// </summary>
+        /// <param name="cus"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(Customer cus)
         {
             if (customersRoot.Elements().Any(item => item.Element("Id").Value == cus.Id.ToString()))
-                throw new CustomerException($"id: {cus.Id} already exist"); //it suppose to be this type of exception????**** 
+                throw new CustomerException($"id: {cus.Id} already exist"); 
             customersRoot.Add(ConvertCus(cus));
             customersRoot.Save(customersPath);
         }
 
+        /// <summary>
+        /// return the customer with the requested id
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomer(int customerId)
         {
@@ -34,6 +43,11 @@ namespace Dal
             return ConvertCus(cus);
         }
 
+        /// <summary>
+        /// returns all the customers
+        /// </summary>
+        /// <param name="pre"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> GetCustomersList(Predicate<Customer> pre)
         {
@@ -43,6 +57,10 @@ namespace Dal
                 return customersRoot.Elements().Select(x => ConvertCus(x));
         }
 
+        /// <summary>
+        /// delete a customer
+        /// </summary>
+        /// <param name="customerId"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteCustomer(int customerId)
         {

@@ -45,7 +45,6 @@ namespace Dal
         XElement customersRoot;
         XElement parcelsRoot;
         XElement configRoot;
-        XElement usersRoot;
         string dronesPath = @"Data\DronesXml.xml";
         string droneChargesPath = @"Data\DroneChargesXml.xml";
         string stationsPath = @"Data\StationsXml.xml";
@@ -54,53 +53,27 @@ namespace Dal
         string configPath = @"Data\Config.xml";
         string usersPath = @"Data\Users.xml";
 
-        //static string path = @"Data\";
-        //string dronesPath = path + "DronesXml.xml";
-        //string droneChargesPath = path + "DroneChargesXml.xml";
-        //string stationsPath = path + "StationsXml.xml";
-        //string customersPath = path + "CustomersXml.xml";
-        //string parcelsPath = path + "ParcelsXml.xml";
-        //string configPath = path + "Config.xml";
+        
         #endregion
 
         #region create, load and convert
+        /// <summary>
+        /// constractor
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public DalXml()
         {
-            //DataSource.Initialize();
-            //if (!File.Exists(dronesPath))
-            //    //CreateFiles(dronesRoot, dronesPath, "drones");
-            //    XmlTools.SaveListToXmlSerializer<Drone>(new List<Drone>(), dronesPath);
-            //if (!File.Exists(droneChargesPath))
-            //    //CreateFiles(droneChargesRoot, droneChargesPath, "droneCharges");
-            //    XmlTools.SaveListToXmlSerializer<DroneCharge>(new List<DroneCharge>(), droneChargesPath);
-            //if (!File.Exists(stationsPath))
-            //    //CreateFiles(stationsRoot, stationsPath, "stations");
-            //    XmlTools.SaveListToXmlSerializer<Station>(new List<Station>(), stationsPath);
-            //if (!File.Exists(customersPath))
-            //    //CreateFiles(customersRoot, customersPath, "customers");
-            //    XmlTools.SaveListToXmlSerializer<Customer>(new List<Customer>(), customersPath);
-            //if (!File.Exists(parcelsPath))
-            //    //CreateFiles(parcelsRoot, parcelsPath, "parcels");
-            //    XmlTools.SaveListToXmlSerializer<Parcel>(new List<Parcel>(), parcelsPath);
-            //if (!File.Exists(usersPath))
-            //{
-            //    List<User> u = new List<User>();
-            //    u.Add(new User { Id = null, UserName = "general manager", Password = "123456", IsManager = true });
-            //    XmlTools.SaveListToXmlSerializer<User>(u, usersPath);
-            //}
+            
             if (!File.Exists(configPath)||!File.Exists(dronesPath)||!File.Exists(droneChargesPath)||!File.Exists(stationsPath)||!File.Exists(customersPath)||!File.Exists(parcelsPath)||!File.Exists(usersPath))
                 CreateFiles();
             LoadData();
         }
 
-        //private void CreateFile(XElement root, string path, string name)
-        //{
-        //    root = new XElement(name);
-        //    root.Save(path);
-        //}
-
-        private void CreateConfig()
+        
+        /// <summary>
+        /// create the config xml
+        /// </summary>
+        private void createConfig()
         {
             configRoot = new XElement("configData");
             configRoot.Add(new XElement("managmentPassword", getGoodPass()));
@@ -112,6 +85,10 @@ namespace Dal
             configRoot.Add(new XElement("ratePerMinute", 120));
             configRoot.Save(configPath);
         }
+        /// <summary>
+        /// get strong password
+        /// </summary>
+        /// <returns></returns>
         private string getGoodPass()
         {
             Random rand = new Random();
@@ -124,6 +101,9 @@ namespace Dal
             return new String(stringChars);
         }
 
+        /// <summary>
+        /// load the xml
+        /// </summary>
         private void LoadData()
         {
             try
@@ -141,7 +121,12 @@ namespace Dal
             }
         }
 
-        XElement ConvertCus(Customer cus)
+        /// <summary>
+        /// Convert Customer to  XElement
+        /// </summary>
+        /// <param name="cus"></param>
+        /// <returns></returns>
+        internal XElement ConvertCus(Customer cus)
         {
             XElement cusElement = new XElement("Customer");
 
@@ -154,6 +139,12 @@ namespace Dal
             return cusElement;
         }
 
+        /// <summary>
+        /// Convert object to XElement
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public XElement ConvertSomething(object obj, string name)
         {
@@ -168,6 +159,11 @@ namespace Dal
             return Element;
         }
 
+        /// <summary>
+        /// Convert XElement to  customer
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer ConvertCus(XElement element)
         {
@@ -179,9 +175,14 @@ namespace Dal
                 Longitude = double.Parse(element.Element("Longitude").Value),
                 Lattitude = double.Parse(element.Element("Lattitude").Value)
             };
-            //return cus;
         }
 
+        /// <summary>
+        ///  Convert XElement to  object
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         object ConvertSomething(XElement element, Type type)
         {
             object obj = new object();
@@ -201,12 +202,20 @@ namespace Dal
 
         #region users functions
 
+        /// <summary>
+        /// returns the manager password
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string GetManagmentPassword()
         {
             return configRoot.Element("managmentPassword").Value;
         }
 
+        /// <summary>
+        /// set new mananger password
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string SetNewManagmentPassword()
         {
@@ -216,6 +225,11 @@ namespace Dal
             return pass;
         }
 
+        /// <summary>
+        /// returns the user with the requested name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public User GetUser(string name)
         {
@@ -226,6 +240,10 @@ namespace Dal
             return (User)result;
         }
 
+        /// <summary>
+        /// add user
+        /// </summary>
+        /// <param name="user"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddUser(User user)
         {
@@ -246,6 +264,11 @@ namespace Dal
             XmlTools.SaveListToXmlSerializer<User>(users, usersPath);
         }
 
+        /// <summary>
+        /// get all the users
+        /// </summary>
+        /// <param name="pre"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<User> GetUsersList(Predicate<User> pre)
         {
@@ -256,27 +279,18 @@ namespace Dal
         }
         #endregion
 
-        //from dalObject, maybe need changes or to be deleted or something
+        /// <summary>
+        /// distance between 2 locations
+        /// </summary>
+        /// <param name="lattitudeA"></param>
+        /// <param name="longitudeA"></param>
+        /// <param name="lattitudeB"></param>
+        /// <param name="longitudeB"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public double Distance(double lattitudeA, double longitudeA, double lattitudeB, double longitudeB)
         {
-            //var radiansOverDegrees = (Math.PI / 180.0);
-
-            //var latitudeRadiansA = lattitudeA * radiansOverDegrees;
-            //var longitudeRadiansA = longitudeA * radiansOverDegrees;
-            //var latitudeRadiansB = lattitudeB * radiansOverDegrees;
-            //var longitudeRadiansB = longitudeB * radiansOverDegrees;
-            //// Haversine formula
-            //double dlon = longitudeB - longitudeA;
-            //double dlat = lattitudeB - lattitudeA;
-            //double a = Math.Pow(Math.Sin(dlat / 2), 2) +
-            //           Math.Cos(lattitudeA) * Math.Cos(lattitudeB) *
-            //           Math.Pow(Math.Sin(dlon / 2), 2);
-            //double c = 2 * Math.Asin(Math.Sqrt(a));
-            ////Radius of earth in kilometers.
-            //double r = 6371;
-            //// calculate the result
-            //return (c * r);
+            
             double lat1 = lattitudeA * (Math.PI / 180.0);
             double long1 = longitudeA * (Math.PI / 180.0);
             double lat2 = lattitudeB * (Math.PI / 180.0);
@@ -321,7 +335,7 @@ namespace Dal
             int parcelCode = int.Parse(configRoot.Element("parcelCode").Value);
             stations.Add(new Station
             {
-                Id = random.Next(1000, 10000)/*1111*/,
+                Id = random.Next(1000, 10000),
                 Name = "the israelian station",
                 Longitude = 34.8,
                 Lattitude = 32,
@@ -365,88 +379,7 @@ namespace Dal
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "AnaAref",
             });
-            //customersRoot = new XElement("Customers");
-            //customersRoot.Add(ConvertCus(new Customer
-            //{
-            //    Id = random.Next(100000000, 1000000000),
-            //    Name = "Yosef",
-            //    Phone = "0501234567",
-            //    Longitude = 35.2,
-            //    Lattitude = 31.1
-            //}));
-            //customersRoot.Add(ConvertCus(new Customer
-            //{
-            //    Id = random.Next(100000000, 1000000000),
-            //    Name = "Avi",
-            //    Phone = "0503456789",
-            //    Longitude = 34.8,
-            //    Lattitude = 31.8
-            //}));
-            //customersRoot.Add(ConvertCus(new Customer
-            //{
-            //    Id = random.Next(100000000, 1000000000),
-            //    Name = "Nahum",
-            //    Phone = "0545678901",
-            //    Longitude = 35.2,
-            //    Lattitude = 31.7
-            //}));
-            //customersRoot.Add(ConvertCus(new Customer
-            //{
-            //    Id = random.Next(100000000, 1000000000),
-            //    Name = "Moshe",
-            //    Phone = "0523456789",
-            //    Longitude = 34.7,
-            //    Lattitude = 32
-            //}));
-            //customersRoot.Add(ConvertCus(new Customer
-            //{
-            //    Id = random.Next(100000000, 1000000000),
-            //    Name = "Shlomo",
-            //    Phone = "0521234567",
-            //    Longitude = 34.6,
-            //    Lattitude = 31.2
-            //}));
-            //customersRoot.Add(ConvertCus(new Customer
-            //{
-            //    Id = random.Next(100000000, 1000000000),
-            //    Name = "Shira",
-            //    Phone = "0502345678",
-            //    Longitude = 35,
-            //    Lattitude = 29.5
-            //}));
-            //customersRoot.Add(ConvertCus(new Customer
-            //{
-            //    Id = random.Next(100000000, 1000000000),
-            //    Name = "Naama",
-            //    Phone = "0531234567",
-            //    Longitude = 35.2,
-            //    Lattitude = 32.9
-            //}));
-            //customersRoot.Add(ConvertCus(new Customer
-            //{
-            //    Id = random.Next(100000000, 1000000000),
-            //    Name = "Etya",
-            //    Phone = "0501234569",
-            //    Longitude = 34.8,
-            //    Lattitude = 32.15
-            //}));
-            //customersRoot.Add(ConvertCus(new Customer
-            //{
-            //    Id = random.Next(100000000, 1000000000),
-            //    Name = "Yosefa",
-            //    Phone = "0501237567",
-            //    Longitude = 34.78,
-            //    Lattitude = 32.23
-            //}));
-            //customersRoot.Add(ConvertCus(new Customer
-            //{
-            //    Id = random.Next(100000000, 1000000000),
-            //    Name = "Yosi",
-            //    Phone = "0541234567",
-            //    Longitude = 35.2,
-            //    Lattitude = 31.7
-            //}));
-            //customersRoot.Save(customersPath);
+            
             customers.Add(new Customer
             {
                 Id = random.Next(100000000, 1000000000),
