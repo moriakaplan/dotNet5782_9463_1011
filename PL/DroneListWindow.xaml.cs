@@ -115,7 +115,7 @@ namespace PL
             else
             {
                 if (WeightFilter.SelectedItem != null) weightFilter(WeightFilter, null);
-                else Restart_Click(Restart, null);
+                else restart(Restart, null);
             }
         }
         /// <summary>
