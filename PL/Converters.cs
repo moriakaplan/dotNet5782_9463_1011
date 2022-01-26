@@ -32,20 +32,20 @@ namespace PL
         }
     }
 
-    public class PassWordToStringConverter : IValueConverter
-    {
-        //convert from source property type(PasswordBox) to target property type(string)
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            PasswordBox pass = (PasswordBox)value;
-            return pass.Password;
-        }
-        //convert from target property type to source property type
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    //public class PassWordToStringConverter : IValueConverter
+    //{
+    //    //convert from source property type(PasswordBox) to target property type(string)
+    //    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        PasswordBox pass = (PasswordBox)value;
+    //        return pass.Password;
+    //    }
+    //    //convert from target property type to source property type
+    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 
     public class NullableToVisibilityConverter : IValueConverter
     {
@@ -61,18 +61,18 @@ namespace PL
             throw new NotImplementedException();
         }
     }
-    public class TextBoxToVisibilityConverter : IValueConverter
-    {
-        //convert from source property type(something nullable) to target property type(visibility)
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if ((value as TextBox).Text != "") return Visibility.Visible;
-            else return Visibility.Collapsed;
-        }
-        //convert from target property type to source property type
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    //public class TextBoxToVisibilityConverter : IValueConverter
+    //{
+    //    //convert from source property type(something nullable) to target property type(visibility)
+    //    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        if ((value as TextBox).Text != "") return Visibility.Visible;
+    //        else return Visibility.Collapsed;
+    //    }
+    //    //convert from target property type to source property type
+    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 }

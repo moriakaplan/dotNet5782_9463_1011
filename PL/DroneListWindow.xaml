@@ -27,9 +27,9 @@
             </Grid.ColumnDefinitions >
             <Label Content="Filter By Status:" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="72,0,0,0"/>
             <Label Content="Filter By Max Weight:" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
-            <ComboBox x:Name="StatusFilter" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" SelectionChanged="statusFilter_SelectionChanged"/>
-            <ComboBox x:Name="WeightFilter" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" SelectionChanged="weightFilter_SelectionChanged"/>
-            <Button x:Name="Restart" Content="Restart selections" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left" Click="Restart_Click" Width="150" Height="auto" Grid.ColumnSpan="3" Margin="10,0,0,0"/>
+            <ComboBox x:Name="StatusFilter" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" SelectionChanged="statusFilter"/>
+            <ComboBox x:Name="WeightFilter" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" SelectionChanged="weightFilter"/>
+            <Button x:Name="Restart" Content="Restart selections" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left" Click="restart" Width="150" Height="auto" Grid.ColumnSpan="3" Margin="10,0,0,0"/>
         </Grid>
         <!--<ListView x:Name="DroneListView" Margin="0,60,0,62" Grid.Row="1" MouseDoubleClick="ViewDrone" Grid.RowSpan="2">
             <ListView.View>

@@ -142,7 +142,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dataWindow(object sender, CancelEventArgs e)
+        private void dataWindowClosing(object sender, CancelEventArgs e)
         {
             if (canClose == false)
             {
