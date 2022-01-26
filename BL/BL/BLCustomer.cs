@@ -80,8 +80,8 @@ namespace BL
             bCustomer.Name = dCustomer.Name;
             bCustomer.Phone = dCustomer.Phone;
             bCustomer.Location = new Location() { Latti = dCustomer.Lattitude, Longi = dCustomer.Longitude };
-            bCustomer.ParcelsFrom = getCustomerParcelFrom(customerId);
-            bCustomer.ParcelsTo = getCustomerParcelTo(customerId);
+            bCustomer.ParcelsFrom = getParcelsFromCustomer(customerId);
+            bCustomer.ParcelsTo = getParcelsToCustomer(customerId);
             return bCustomer;
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -99,7 +99,7 @@ namespace BL
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        private IEnumerable<ParcelInCustomer> getCustomerParcelFrom(int customerId)
+        private IEnumerable<ParcelInCustomer> getParcelsFromCustomer(int customerId)
         {
             lock (dl)
             {
@@ -122,7 +122,7 @@ namespace BL
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        private IEnumerable<ParcelInCustomer> getCustomerParcelTo(int customerId)
+        private IEnumerable<ParcelInCustomer> getParcelsToCustomer(int customerId)
         {
             lock (dl)
             {

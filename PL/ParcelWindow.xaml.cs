@@ -25,69 +25,58 @@ namespace PL
     public partial class ParcelWindow : Window
     {
         IBL blObject;
-        bool isUser;
         int userId;
+
+        #region constructors
         /// <summary>
         /// constractor for update and add in user mode
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="Id"></param>
-        /// <param name="flag"></param>
-        public ParcelWindow(IBL obj, int Id, bool flag = false)
+        public ParcelWindow(IBL obj, int Id)//update
         {
-            if (!flag)//update
-            {
-                isUser = false;
-                InitializeComponent();
-                blObject = obj;
-                InitializeComponent();
-                grid.IsEnabled = false;
-                options.IsEnabled = true;
-                timesVisibility.Visibility = Visibility.Visible;
+            blObject = obj;
+            InitializeComponent();
+            grid.IsEnabled = false;
+            options.IsEnabled = true;
+            //timesVisibility.Visibility = Visibility.Visible;
 
-                Parcel parcel = blObject.GetParcel(Id);
-                DataContext = parcel;
-                txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-                txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
-                var customersId = blObject.GetCustomersList().Select(x => x.Id);
-                txtSender.ItemsSource = customersId;
-                txtTarget.ItemsSource = customersId;
-                add.Visibility = Visibility.Hidden;
-                if (txtDrone.Text == "")
-                {
-                    btnDrone.Visibility = Visibility.Collapsed;
-                    txtDrone.Visibility = Visibility.Collapsed;
-                    lblDrone.Visibility = Visibility.Collapsed;
-                }
-                refresh();
-            }
-            else//user mode
-            {
-                isUser = true;
-                InitializeComponent();
-
-                blObject = obj;
-                timesVisibility.Visibility = Visibility.Collapsed;
-                lblDrone.Visibility = Visibility.Collapsed;
-                txtDrone.Visibility = Visibility.Collapsed;
-                btnDrone.Visibility = Visibility.Collapsed;
-                options.Visibility = Visibility.Collapsed;
-                btnSender.Visibility = Visibility.Collapsed;
-                txtSender.Visibility = Visibility.Collapsed;
-                lblSender.Visibility = Visibility.Collapsed;
+            Parcel parcel = blObject.GetParcel(Id);
+            DataContext = parcel;
+            txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
+            var customersId = blObject.GetCustomersList().Select(x => x.Id);
+            txtSender.ItemsSource = customersId;
+            txtTarget.ItemsSource = customersId;
+            // if (parcel.Drone != null) options.Visibility = Visibility.Hidden;
+            add.Visibility = Visibility.Hidden;
+            //if (txtDrone.Text == "")
+            //{
+            //    lblDrone.Visibility = Visibility.Collapsed;
+            //}
+            refresh();
+        }
+        public ParcelWindow(IBL obj, int senderId, bool flag) //adding from customer
+        {
+            InitializeComponent();
+            blObject = obj;
+            //timesVisibility.Visibility = Visibility.Collapsed;
+            hiddeTimes();
+            lblId.Visibility = Visibility.Hidden;
+            lblDrone.Visibility = Visibility.Collapsed;
+            //txtDrone.Visibility = Visibility.Collapsed;
+            //btnDrone.Visibility = Visibility.Collapsed;
+            options.Visibility = Visibility.Collapsed;
+            //btnSender.Visibility = Visibility.Collapsed;
+            //txtSender.Visibility = Visibility.Collapsed;
+            lblSender.Visibility = Visibility.Collapsed;
 
 
-                txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-                txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
-                IEnumerable<int>  customersId = blObject.GetCustomersList().Select(x => x.Id);
-                txtSender.ItemsSource = customersId;
-               
-                txtSender.SelectedItem = Id;
-                txtTarget.ItemsSource = customersId;
-                userId = Id;
-                InitializeComponent();
-
-            }
+            txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
+            userId = senderId;
+            txtTarget.ItemsSource = blObject.GetCustomersList().Select(x => x.Id).Where(x => x != senderId);
+            InitializeComponent();
         }
 
         /// <summary>
@@ -98,11 +87,12 @@ namespace PL
         {
             InitializeComponent();
             blObject = obj;
-            timesVisibility.Visibility = Visibility.Collapsed;
-            isUser = false;
+            lblId.Visibility = Visibility.Hidden;
+            //timesVisibility.Visibility = Visibility.Collapsed;
+            hiddeTimes();
             lblDrone.Visibility = Visibility.Collapsed;
-            txtDrone.Visibility = Visibility.Collapsed;
-            btnDrone.Visibility = Visibility.Collapsed;
+            //txtDrone.Visibility = Visibility.Collapsed;
+            //btnDrone.Visibility = Visibility.Collapsed;
             options.Visibility = Visibility.Collapsed;
 
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
@@ -112,9 +102,18 @@ namespace PL
             txtTarget.ItemsSource = customersId;
 
         }
+        #endregion
+
+        private void hiddeTimes()
+        {
+            lblCreateTime.Visibility = Visibility.Collapsed;
+            lblAssociateTime.Visibility = Visibility.Collapsed;
+            lblPickUpTime.Visibility = Visibility.Collapsed;
+            lblDeliverTime.Visibility = Visibility.Collapsed;
+        }
 
         /// <summary>
-        /// refresh the window
+        /// refresh the window when its in action state
         /// </summary>
         private void refresh()
         {
@@ -124,63 +123,34 @@ namespace PL
                 parcel = blObject.GetParcel((DataContext as Parcel).Id);
                 DataContext = parcel;
             }
-
-            if (parcel.AssociateTime == null)//if the parcel is not accosiate
+            options.Visibility = Visibility;
+            options.Click -= pickUpParcel;
+            options.Click -= deliverParcel;
+            options.Click -= DeleteParcel;
+            if (parcel.AssociateTime == null) //if the parcel is not accosiated yet
             {
-                lblPickUpTime.Visibility = Visibility.Collapsed;
-                txtPickUpTime.Visibility = Visibility.Collapsed;
-                lblDeliverTime.Visibility = Visibility.Collapsed;
-                txtDeliverTime.Visibility = Visibility.Collapsed;
-                lblAssociateTime.Visibility = Visibility.Collapsed;
-                txtAssociateTime.Visibility= Visibility.Collapsed;
-                options.Content = "delete";//option to delete the parcel 
-                options.Click -= pickUpParcel;
-                options.Click -= deliverParcel;
-                options.Click -= deleteParcel;
-                options.Click += deleteParcel;
+                options.Content = "delete the parcel"; //option to delete the parcel 
+                options.Click += DeleteParcel;
             }
             else
             {
                 if(parcel.PickUpTime==null)//if the parcel is accosiate but not picked up
                 {
-                    lblPickUpTime.Visibility = Visibility.Collapsed;
-                    txtPickUpTime.Visibility = Visibility.Collapsed;
-                    lblDeliverTime.Visibility = Visibility.Collapsed;
-                    txtDeliverTime.Visibility = Visibility.Collapsed;
-                    options.Content = " drone can &#xD;&#xA; pick the parcel";//optin to pick up the parcel
-                    options.Click -= pickUpParcel;
-                    options.Click -= deliverParcel;
-                    options.Click -= deleteParcel;
-
+                    options.Content = "drone can \n pick the parcel"; //optin to pick up the parcel
                     options.Click += pickUpParcel;
                 }
                 else
                 {
                     if (parcel.DeliverTime == null)//if the parcel id accosiated and picked up but not deliverd
                     {
-                        lblPickUpTime.Visibility = Visibility.Visible;
-                        txtPickUpTime.Visibility = Visibility.Visible;
-                        lblDeliverTime.Visibility = Visibility.Collapsed;
-                        txtDeliverTime.Visibility = Visibility.Collapsed;
-                        options.Content = "the drone &#xD;&#xA; deliver the parcel";//option to deliver the parcel
-                        options.Click -= pickUpParcel;
-                        options.Click -= deliverParcel;
-                        options.Click -= deleteParcel;
-
+                        options.Content = "deliver the parcel"; //option to deliver the parcel
                         options.Click += deliverParcel;
                     }
                     else//the parcel deliverd
                     {
-                        lblPickUpTime.Visibility = Visibility.Visible;
-                        txtPickUpTime.Visibility = Visibility.Visible;
-                        lblDeliverTime.Visibility = Visibility.Visible;
-                        txtDeliverTime.Visibility = Visibility.Visible;
-                        lblAssociateTime.Visibility = Visibility.Visible;
-                        txtAssociateTime.Visibility = Visibility.Visible;
                         options.Visibility = Visibility.Collapsed;
                     }
                 }
-               
             }
         }
         /// <summary>
@@ -209,7 +179,7 @@ namespace PL
                 }
                 catch (DroneCantTakeParcelException)
                 {
-                    MessageBox.Show("drone cant deliver the parcel because its battery is not enugh. try to send the drone to charge");
+                    MessageBox.Show("the drone cant deliver the parcel because its battery is not enugh. try to send the drone to charge");
                     return;
                 }
                 catch (TransferException)
@@ -291,16 +261,16 @@ namespace PL
         /// <param name="e"></param>
         private void addParcel(object sender, RoutedEventArgs e)
         {
-            if(!isUser)
+            int id;
+            if (txtSender.Visibility==Visibility.Visible)
             {
-                int id = blObject.AddParcelToDelivery((int)txtSender.SelectedItem, (int)txtTarget.SelectedItem, (WeightCategories)txtWeight.SelectedItem, (Priorities)txtPriority.SelectedItem);
-                MessageBox.Show($"your parcel added successfuly and got the number {id}");
+                id = blObject.AddParcelToDelivery((int)txtSender.SelectedItem, (int)txtTarget.SelectedItem, (WeightCategories)txtWeight.SelectedItem, (Priorities)txtPriority.SelectedItem);
             }
             else
             {
-                int id = blObject.AddParcelToDelivery(userId, (int)txtTarget.SelectedItem, (WeightCategories)txtWeight.SelectedItem, (Priorities)txtPriority.SelectedItem);
-                MessageBox.Show($"your parcel added successfuly and got the number {id}");
+                id = blObject.AddParcelToDelivery(userId, (int)txtTarget.SelectedItem, (WeightCategories)txtWeight.SelectedItem, (Priorities)txtPriority.SelectedItem);
             }
+            MessageBox.Show($"your parcel added successfuly and got the number {id}");
             this.Close();
         }
 
@@ -311,7 +281,7 @@ namespace PL
         /// <param name="e"></param>
         private void txtSenderSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!isUser)
+            if (txtSender.Visibility == Visibility.Visible)
                 txtTarget.ItemsSource = blObject.GetCustomersList().Select(x => x.Id).Where(x => x != (int)txtSender.SelectedItem);
         }
 
@@ -322,7 +292,7 @@ namespace PL
         /// <param name="e"></param>
         private void txtTargetSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!isUser)
+            if (txtSender.Visibility == Visibility.Visible)
                 txtSender.ItemsSource = blObject.GetCustomersList().Select(x => x.Id).Where(x => x != (int)txtTarget.SelectedItem);
         }
 

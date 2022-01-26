@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="CustomerWindow" Height="450" Width="800"
+        Title="CustomerWindow" Height="auto" Width="800"
         Icon="\Images\droneDelivery2.ico">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -18,7 +18,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
         <Grid x:Name="parcels" Grid.Row="4" Grid.Column="1" Margin="10" Background="WhiteSmoke" >
             <Grid.ColumnDefinitions>
@@ -51,10 +51,10 @@
                 <ColumnDefinition Width="80"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Lattitude::" Grid.Row="0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
-            <Label Content="longitude:" Grid.Row="1" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
-            <TextBox x:Name="txtLatti" Text="{Binding  Path=Location.Latti}" Grid.Row="0" Grid.Column="1" Margin="10"/>
-            <TextBox x:Name="txtLongi" Text="{Binding  Path=Location.Longi}" Grid.Row="1" Grid.Column="1" Margin="10"/>
+            <Label Content="Lattitude:" Grid.Row="0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+            <Label Content="Longitude:" Grid.Row="1" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+            <TextBox x:Name="txtLatti" Text="{Binding  Path=Location.Latti}" Grid.Row="0" Grid.Column="1" Margin="10" TextChanged="CoordinateChanged"/>
+            <TextBox x:Name="txtLongi" Text="{Binding  Path=Location.Longi}" Grid.Row="1" Grid.Column="1" Margin="10" TextChanged="CoordinateChanged"/>
         </Grid>
         <Button x:Name="options" Content="options" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="5" VerticalAlignment="Center"/>
         <!--<Button x:Name="add" Content="Add Customer" Grid.Row="6" Grid.Column="1"  Click="AddCustomer"

@@ -195,5 +195,19 @@ namespace PL
                 else txtPhone.Foreground = Brushes.Red;
             }
         }
+
+        /// <summary>
+        /// determine the color of coordinate textBox. if the value is correct the color will be green and else it will be red.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        internal void CoordinateChanged(object sender, TextChangedEventArgs e)
+        {
+            double val;
+            if (double.TryParse((sender as TextBox).Text, out val) && val >= -180 && val <= 180)
+                (sender as TextBox).Foreground = Brushes.Green;
+            else
+                (sender as TextBox).Foreground = Brushes.Red;
+        }
     }
 }

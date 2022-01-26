@@ -20,7 +20,7 @@
     </Window.Resources>
     <Grid>
         <Button Content="sign" Style="{StaticResource brownButton}" BorderThickness="0.7" HorizontalAlignment="Center" VerticalAlignment="Top" Click="sighn" Margin="0,330,0,0" Width="190" Height="49"/>
-        <Label x:Name="lblId" Content="yuor id" HorizontalAlignment="Left" Margin="42,128,0,0" VerticalAlignment="Top" Width="58"/>
+        <Label x:Name="lblId" Content="your id" HorizontalAlignment="Left" Margin="42,128,0,0" VerticalAlignment="Top" Width="58"/>
         <Label Content="choose a username" HorizontalAlignment="Left" Margin="42,164,0,0" VerticalAlignment="Top" Width="auto"/>
         <Label Content="choose a password" HorizontalAlignment="Left" Margin="42,198,0,0" VerticalAlignment="Top" Width="auto"/>
         <Label x:Name="lblManager" Content="enter the managment password" HorizontalAlignment="Left" Margin="42,128,0,0" VerticalAlignment="Top" Width="auto"/>

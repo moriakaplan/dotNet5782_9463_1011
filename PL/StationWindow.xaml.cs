@@ -147,6 +147,15 @@ namespace PL
         private void viewDrone(object sender, MouseButtonEventArgs e)
         {
             new DroneWindow(blObject, ((BO.DroneInCharge)gridDronesInCharge.SelectedItem).Id).ShowDialog();
-        }   
+        }
+
+        private void chargeSlotsColor(object sender, TextChangedEventArgs e)
+        {
+            int val;
+            if(int.TryParse(txtAvailableChargeSlots.Text, out val) && val >= 0)
+                txtAvailableChargeSlots.Foreground = Brushes.Green;
+            else
+                txtAvailableChargeSlots.Foreground = Brushes.Red;
+        }
     }
 }
