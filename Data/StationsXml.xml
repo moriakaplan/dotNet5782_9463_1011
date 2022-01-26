@@ -5,7 +5,7 @@
     <Name>the israelian station</Name>
     <Longitude>34.8</Longitude>
     <Lattitude>32</Lattitude>
-    <ChargeSlots>12</ChargeSlots>
+    <ChargeSlots>13</ChargeSlots>
   </Station>
   <Station>
     <Id>7816</Id>
