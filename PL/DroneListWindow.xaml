@@ -14,7 +14,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
-        <Button Content="Close The Window" HorizontalAlignment="Right" VerticalAlignment="Center" Click="closeClick" Width="auto" Height="auto" Background="Orange"/>
+        <Button Content="Close The Window" HorizontalAlignment="Right" VerticalAlignment="Center" Click="closeClick" Width="auto" Height="auto" Background="Orange" BorderBrush="DarkOrange"/>
         <Grid Name="UpGrid" Height="auto" Grid.Row="1" Width="auto" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80*"/>
@@ -29,7 +29,7 @@
             <Label Content="Filter By Max Weight:" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
             <ComboBox x:Name="StatusFilter" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" SelectionChanged="statusFilter"/>
             <ComboBox x:Name="WeightFilter" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" SelectionChanged="weightFilter"/>
-            <Button x:Name="Restart" Content="Restart selections" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left" Click="restart" Width="150" Height="auto" Grid.ColumnSpan="3" Margin="10,0,0,0"/>
+            <Button x:Name="Restart" Content="Restart selections" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right" Click="restart" Width="150" Height="auto" Grid.ColumnSpan="3"/>
         </Grid>
         <!--<ListView x:Name="DroneListView" Margin="0,60,0,62" Grid.Row="1" MouseDoubleClick="ViewDrone" Grid.RowSpan="2">
             <ListView.View>

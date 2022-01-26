@@ -17,7 +17,7 @@ namespace BL
     {
         private const double velocity = 50; //kilometers per second.
         private const int delayMS = 500; //miliseconds, half of second.
-        private static DroneToList drone;
+        private DroneToList drone;
 
         enum status { fly, inCharge, wait, toCharge };
         //charge-now in charge
@@ -115,11 +115,11 @@ namespace BL
                         drone.Battery += bl.chargeRatePerMinute * timePassed / 60;
                         drone.Battery = Min(drone.Battery, 100);
                         if (drone.Battery == 100)
-                            lock (bl)
-                            {
-                                bl.ReleaseDroneFromeCharge(drone.Id);//If the skimmer has finished charging then it is released from charge
-                                drone.Status = DroneStatus.Available;
-                            }
+                        lock (bl)
+                        {
+                            bl.ReleaseDroneFromeCharge(drone.Id);//If the skimmer has finished charging then it is released from charge
+                            drone.Status = DroneStatus.Available;
+                        }
                         break;
                     case status.wait: //Trying to send the drone to charging, if if he does not succeed then he has to wait until space becomes available so he is in this position.
                         droneStatus = status.toCharge;
@@ -194,20 +194,17 @@ namespace BL
                     {
                         bl.AssignParcelToDrone(drone.Id);//accosiate the drone to the parcel
                     }
-                    catch (ThereNotGoodParcelToTakeException ex)//NotExistIDException
+                    catch (ThereNotGoodParcelToTakeException)//NotExistIDException
                     {
                         if (drone.Battery == 100)
                             return;
-                        else if (ex.Message.Equals("we did not found a good parcel that the drone" + "can take"))
+                        else
                         {
                             drone.Status = DroneStatus.Maintenance;
                             droneStatus = status.toCharge;
                         }
-                        else
-                        {
-                            return;
-                        }
                     }
+                    catch (Exception ex) { Console.WriteLine(ex.Message, drone.Id); }
                 }
             }
         }

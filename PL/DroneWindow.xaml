@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="AddDrone" Height="591" Width="auto"
-        Closing="DataWindow_Closing">
+        Closing="DataWindow_Closing"
+        Icon="\Images\droneDelivery2.ico">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="400"/>
@@ -83,7 +84,7 @@
             <Button x:Name="btnSimulator"  Content="automatic state" HorizontalAlignment="Center" Height="45" Grid.Row="9" VerticalAlignment="Bottom" Margin="0,0,0,20" Width="198" Style="{StaticResource brownButton}" Grid.ColumnSpan="2" Click="simulator"/>
 
         </Grid>
-        <Grid Grid.Column="1" Background="LightBlue" DataContext="{Binding  ParcelInT}" Visibility="{Binding ElementName=lblParcel, Path=Visibility}" Margin="0,57,0,155">
+        <Grid Grid.Column="1" Grid.Row="1"  Background="LightBlue" DataContext="{Binding ParcelInT}" Visibility="{Binding ElementName=lblParcel, Path=Visibility}" Margin="0,10,0,155">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
@@ -107,7 +108,7 @@
             <Label Content="{Binding DestinationPlace }" Grid.Column="1" HorizontalAlignment="Left" Margin="15,290,0,0" VerticalAlignment="Top"/>
             <Label Content="{Binding TransportDistance}" Grid.Column="1" HorizontalAlignment="Left" Margin="15,336,0,0" VerticalAlignment="Top"/>
         </Grid>
-        <TextBlock x:Name="noParcelsNote" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Foreground="Red" Visibility="Collapsed"
+        <TextBlock x:Name="noParcelsNote" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Foreground="Red"
                    Text="There is no available package&#xD;&#xA;to associate the drone to.&#xD;&#xA;You can wait for a package to be added&#xD;&#xA;or stop the simulation."/>
     </Grid>
 </Window>

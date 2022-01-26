@@ -136,12 +136,60 @@
     <Id>10000033</Id>
     <Senderld>133422195</Senderld>
     <TargetId>216595696</TargetId>
-    <Droneld>0</Droneld>
+    <Droneld>597229</Droneld>
     <Weight>Light</Weight>
     <Priority>Fast</Priority>
     <CreateTime>2022-01-26T15:31:15.2234266+02:00</CreateTime>
-    <AssociateTime xsi:nil="true" />
-    <PickUpTime xsi:nil="true" />
+    <AssociateTime>2022-01-27T00:44:50.5899658+02:00</AssociateTime>
+    <PickUpTime>2022-01-27T00:44:52.1018298+02:00</PickUpTime>
     <DeliverTime xsi:nil="true" />
+  </Parcel>
+  <Parcel>
+    <Id>10000034</Id>
+    <Senderld>216595696</Senderld>
+    <TargetId>964804083</TargetId>
+    <Droneld>597229</Droneld>
+    <Weight>Light</Weight>
+    <Priority>Fast</Priority>
+    <CreateTime>2022-01-27T00:42:51.7379524+02:00</CreateTime>
+    <AssociateTime>2022-01-27T00:44:45.5536459+02:00</AssociateTime>
+    <PickUpTime>2022-01-27T00:44:48.0679287+02:00</PickUpTime>
+    <DeliverTime>2022-01-27T00:44:50.0817846+02:00</DeliverTime>
+  </Parcel>
+  <Parcel>
+    <Id>10000035</Id>
+    <Senderld>133422195</Senderld>
+    <TargetId>719193184</TargetId>
+    <Droneld>862732</Droneld>
+    <Weight>Light</Weight>
+    <Priority>Fast</Priority>
+    <CreateTime>2022-01-27T00:43:10.0789078+02:00</CreateTime>
+    <AssociateTime>2022-01-27T00:47:27.6567843+02:00</AssociateTime>
+    <PickUpTime>2022-01-27T00:47:30.6854019+02:00</PickUpTime>
+    <DeliverTime xsi:nil="true" />
+  </Parcel>
+  <Parcel>
+    <Id>10000036</Id>
+    <Senderld>964804083</Senderld>
+    <TargetId>975102665</TargetId>
+    <Droneld>469564</Droneld>
+    <Weight>Medium</Weight>
+    <Priority>Regular</Priority>
+    <CreateTime>2022-01-27T00:43:34.4034597+02:00</CreateTime>
+    <AssociateTime>2022-01-27T01:23:41.1258737+02:00</AssociateTime>
+    <PickUpTime>2022-01-27T01:23:42.1439402+02:00</PickUpTime>
+    <DeliverTime>2022-01-27T01:23:43.1879211+02:00</DeliverTime>
+  </Parcel>
+  <Parcel>
+    <Id>10000037</Id>
+    <Senderld>133422195</Senderld>
+    <TargetId>424315782</TargetId>
+    <Droneld>597229</Droneld>
+    <Weight>Light</Weight>
+    <Priority>Emergency</Priority>
+    <CreateTime>2022-01-27T00:43:55.3436635+02:00</CreateTime>
+    <AssociateTime>2022-01-27T00:44:37.4841818+02:00</AssociateTime>
+    <PickUpTime>2022-01-27T00:44:42.0161425+02:00</PickUpTime>
+    <DeliverTime>2022-01-27T00:44:45.0343533+02:00</DeliverTime>
   </Parcel>
 </ArrayOfParcel>
