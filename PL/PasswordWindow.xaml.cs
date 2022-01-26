@@ -27,6 +27,7 @@ namespace PL
         {
             InitializeComponent();
             blObject = obj;
+            txtUserName.Focus();
         }
         
         void DataWindow_Closing(object sender, CancelEventArgs e)
@@ -63,6 +64,11 @@ namespace PL
             new SignWindow(blObject).Show();
             closeX = false;
             this.Close();
+        }
+
+        private void PassChanged(object sender, RoutedEventArgs e)
+        {
+            txtPassword.Text = PPassword.Password;
         }
     }
 }
