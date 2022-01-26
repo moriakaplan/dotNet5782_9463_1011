@@ -45,9 +45,9 @@
         <Image HorizontalAlignment="Center" Height="184" Margin="0,30,0,0" VerticalAlignment="Top" Width="170" Source="/Images/user.png"/>
         <!--<ListView x:Name="txtParcelsTo"  Grid.Row="1" Grid.Column="0" MouseDoubleClick="viewParcelTo" Margin="-484,-133,484,132"/>
         <ListView x:Name="txtParcelsFrom" Grid.Row="1" Grid.Column="1" MouseDoubleClick="viewParcelFrom" Margin="-484,-200,484,200"/>-->
-        <Button Content="back to the main window" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Background="LightBlue" Click="BackToMain" Grid.Column="2"/>
+        <Button Content="back to the main window" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Background="LightBlue" Click="backToMain" Grid.Column="2"/>
         <Label Content="parcels that you sent:" Style="{StaticResource myLabelStyle}" Grid.Column="1" HorizontalAlignment="Center" Margin="20,50,0,0" VerticalAlignment="Top"/>
-        <DataGrid x:Name="ParcelsFrom" AutoGenerateColumns="False" EnableRowVirtualization="True" DataContext="{Binding ParcelsFrom}" Background="Transparent" Width="auto" MouseDoubleClick="ViewParcel"
+        <DataGrid x:Name="ParcelsFrom" AutoGenerateColumns="False" EnableRowVirtualization="True" DataContext="{Binding ParcelsFrom}" Background="Transparent" Width="auto" MouseDoubleClick="viewParcel"
                   ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" Grid.Column="1" Margin="30,88,10,0" Height="auto">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id"/>
@@ -56,7 +56,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="parcels that you got:" Style="{StaticResource myLabelStyle}" Grid.Column="2" HorizontalAlignment="Center" Margin="0,50,20,0" VerticalAlignment="Top"/>
-        <DataGrid x:Name="ParcelsTo" AutoGenerateColumns="False" MouseDoubleClick="ViewParcel" EnableRowVirtualization="True" DataContext="{Binding ParcelsTo}" Background="Transparent" Width="auto"
+        <DataGrid x:Name="ParcelsTo" AutoGenerateColumns="False" MouseDoubleClick="viewParcel" EnableRowVirtualization="True" DataContext="{Binding ParcelsTo}" Background="Transparent" Width="auto"
                   ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" Grid.Column="2" Margin="10,88,30,0" Height="auto">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="AidColumn" Binding="{Binding Id}" Header="Id"/>

@@ -14,7 +14,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
-        <Button Content="Close The Window" HorizontalAlignment="Right" VerticalAlignment="Center" Click="Close_Click" Width="auto" Height="auto" Background="Orange" BorderBrush="DarkOrange"/>
+        <Button Content="Close The Window" HorizontalAlignment="Right" VerticalAlignment="Center" Click="closeClick" Width="auto" Height="auto" Background="Orange"/>
         <Grid Name="UpGrid" Height="auto" Grid.Row="1" Width="auto" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80*"/>
@@ -29,7 +29,7 @@
             <Label Content="Filter By Max Weight:" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
             <ComboBox x:Name="StatusFilter" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" SelectionChanged="statusFilter_SelectionChanged"/>
             <ComboBox x:Name="WeightFilter" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" SelectionChanged="weightFilter_SelectionChanged"/>
-            <Button x:Name="Restart" Content="Restart selections" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right" Click="Restart_Click" Width="150" Height="auto" Grid.ColumnSpan="3"/>
+            <Button x:Name="Restart" Content="Restart selections" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left" Click="Restart_Click" Width="150" Height="auto" Grid.ColumnSpan="3" Margin="10,0,0,0"/>
         </Grid>
         <!--<ListView x:Name="DroneListView" Margin="0,60,0,62" Grid.Row="1" MouseDoubleClick="ViewDrone" Grid.RowSpan="2">
             <ListView.View>
@@ -38,7 +38,7 @@
                 </GridView>
             </ListView.View>
         </ListView>-->
-        <DataGrid x:Name="DroneListView" IsReadOnly="True" MouseDoubleClick="ViewDrone" Background="WhiteSmoke"
+        <DataGrid x:Name="DroneListView" IsReadOnly="True" MouseDoubleClick="viewDrone" Background="WhiteSmoke"
                   AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="2" Margin="50,0,50,0">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id"/>
@@ -63,6 +63,6 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Add New Drone" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" 
-                Click="AddDrone_Click" Margin="355,0,0,0"/>
+                Click="addDrone" Margin="355,0,0,0"/>
     </Grid>
 </Window>

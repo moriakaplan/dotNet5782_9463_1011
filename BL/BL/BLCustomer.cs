@@ -31,7 +31,7 @@ namespace BL
                     dl.AddCustomer(dCustomer); //add the new customer to the list in the data level
                 }
             }
-             catch(DO.CustomerException ex)
+            catch (DO.CustomerException ex)
             {
                 throw new ExistIdException(ex.Message, "-customer");
             }
@@ -104,7 +104,7 @@ namespace BL
             lock (dl)
             {
                 return from tempparcel in GetParcelsList()
-                       where GetParcel(tempparcel.Id).Sender.Id == customerId
+                       where GetParcel(tempparcel.Id).Sender.Id == customerId//where the parcel sender is the requested customer
                        let target = GetParcel(tempparcel.Id).Target
                        select new ParcelInCustomer
                        {
@@ -116,6 +116,7 @@ namespace BL
                        };
             }
         }
+
         /// <summary>
         /// Returns a list of parcels in the customer - to the customer
         /// </summary>
@@ -126,7 +127,7 @@ namespace BL
             lock (dl)
             {
                 return from tempparcel in GetParcelsList()
-                       where GetParcel(tempparcel.Id).Target.Id == customerId
+                       where GetParcel(tempparcel.Id).Target.Id == customerId//where the parcel target is the requested customer
                        let sender = GetParcel(tempparcel.Id).Sender
                        select new ParcelInCustomer
                        {
@@ -139,51 +140,47 @@ namespace BL
             }
         }
         /// <summary>
-        /// Returns the customer with the requested ID
+        /// Returns the customer- in customer to list
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
         private CustomerToList GetCustomersToList(DO.Customer dcustomer)
         {
-            CustomerToList bCustomer = new CustomerToList
+            CustomerToList bCustomer = new CustomerToList//creats new customer to list
             {
                 Id = dcustomer.Id,
                 Name = dcustomer.Name,
-                phone = dcustomer.Phone, 
-                numOfParcelsDelivered=0, 
-                numOfParcelsInTheWay=0, 
-                numOfParcelsSentAndNotDelivered=0, 
-                numOfParclReceived=0
+                phone = dcustomer.Phone,
+                numOfParcelsDelivered = 0,
+                numOfParcelsInTheWay = 0,
+                numOfParcelsSentAndNotDelivered = 0,
+                numOfParclReceived = 0
             };
             lock (dl)
             {
-                foreach (ParcelToList parcelFromList in GetParcelsList()) //^^^^
+                foreach (ParcelToList parcelFromList in GetParcelsList()) //initialize the values that we dont have in regular customer
                 {
                     Parcel parcel = GetParcel(parcelFromList.Id);
-                    if ((parcel.Sender.Id == dcustomer.Id) && (parcel.DeliverTime != null))
+                    if ((parcel.Sender.Id == dcustomer.Id) && (parcel.DeliverTime != null))//initialize the number the parcel the customer sent and deliverd
                     {
                         bCustomer.numOfParcelsDelivered++;
                     }
-                    if ((parcel.Sender.Id == dcustomer.Id) && ((parcel.DeliverTime == null) && ((parcel.CreateTime != null))))
+                    if ((parcel.Sender.Id == dcustomer.Id) && ((parcel.DeliverTime == null) && ((parcel.CreateTime != null))))//initialize the number of parcel the customer sent but not deliverd
                     {
                         bCustomer.numOfParcelsSentAndNotDelivered++;
                     }
-                    if ((parcel.Target.Id == dcustomer.Id) && (parcel.DeliverTime == null))
+                    if ((parcel.Target.Id == dcustomer.Id) && (parcel.DeliverTime == null)) //initialize the number of parcel in the way to the customer
                     {
                         bCustomer.numOfParcelsInTheWay++;
                     }
-                    if ((parcel.Target.Id == dcustomer.Id) && (parcel.DeliverTime != null))
+                    if ((parcel.Target.Id == dcustomer.Id) && (parcel.DeliverTime != null))//initialize the number of parcel the customer recived
                     {
                         bCustomer.numOfParclReceived++;
                     }
                 }
             }
-            //bCustomer.numOfParcelsDelivered = DisplayListOfParcels()
-            //    .Count(x => (DisplayParcel(x.Id).Sender.Id == customerId) && (DisplayParcel(x.Id).DeliverTime != null));
-            //bCustomer.numOfParcelsDelivered = DisplayListOfParcels()
-            //    .Count(x => (DisplayParcel(x.Id).Sender.Id == customerId) && (DisplayParcel(x.Id).DeliverTime != null));
             return bCustomer;
         }
-        
+
     }
 }

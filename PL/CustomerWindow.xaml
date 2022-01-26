@@ -39,9 +39,9 @@
         <Label x:Name="Phone" Content="Phone:" Grid.Row="2" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
         <Label x:Name="Location" Content="Location:" Grid.Row="3" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
         
-        <TextBox x:Name="txtId" Text="{Binding  Path=Id}" Grid.Row="0" Grid.Column="1" Margin="10" TextChanged="IdColor"/>
+        <TextBox x:Name="txtId" Text="{Binding  Path=Id}" Grid.Row="0" Grid.Column="1" Margin="10" TextChanged="idColor"/>
         <TextBox x:Name="txtName" Text="{Binding  Path=Name}" Grid.Row="1" Grid.Column="1" Margin="10" />
-        <TextBox x:Name="txtPhone" Text="{Binding  Path=Phone}" Grid.Row="2" Grid.Column="1" Margin="10" TextChanged="PhoneColor"/>
+        <TextBox x:Name="txtPhone" Text="{Binding  Path=Phone}" Grid.Row="2" Grid.Column="1" Margin="10" TextChanged="phoneColor"/>
         <Grid Grid.Column="1" Grid.Row="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>

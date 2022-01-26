@@ -54,14 +54,14 @@ namespace ConsoleUI_BL
                         }
                         break;
                     case DisplayListOptions.UnassignedParcels://display the list of the parcels that not assign to a drone.
-                        Console.WriteLine("The parcels that not assigned to drone are:"); //לכתוב תיאור של מה מודפס
+                        Console.WriteLine("The parcels that not assigned to drone are:"); 
                         foreach (ParcelToList item in blObject.GetListOfUnassignedParcels())
                         {
                             Console.WriteLine(item);
                         }
                         break;
                     case DisplayListOptions.StationsWithAvailableCargingSlots://display the list of the stations that have available charge slots
-                        Console.WriteLine("The stations with available charge slots are:"); //לכתוב תיאור של מה מודפס
+                        Console.WriteLine("The stations with available charge slots are:"); 
                         foreach (StationToList item in blObject.GetListOfStationsWithAvailableCargeSlots())
                         {
                             Console.WriteLine(item);

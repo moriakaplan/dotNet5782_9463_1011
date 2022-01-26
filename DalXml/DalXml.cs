@@ -202,13 +202,13 @@ namespace Dal
         #region users functions
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public string getManagmentPassword()
+        public string GetManagmentPassword()
         {
             return configRoot.Element("managmentPassword").Value;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public string setNewManagmentPassword()
+        public string SetNewManagmentPassword()
         {
             string pass = getGoodPass();
             configRoot.Element("managmentPassword").Remove();

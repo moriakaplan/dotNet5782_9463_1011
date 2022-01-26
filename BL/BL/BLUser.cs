@@ -13,19 +13,19 @@ namespace BL
     internal partial class BL
     {
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public string getManagmentPassword()
+        public string GetManagmentPassword()
         {
             lock (dl)
             {
-                return dl.getManagmentPassword();
+                return dl.GetManagmentPassword();
             }
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public string changeManagmentPassword()
+        public string ChangeManagmentPassword()
         {
             lock (dl)
             {
-                return dl.setNewManagmentPassword();
+                return dl.SetNewManagmentPassword();
             }
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -42,7 +42,7 @@ namespace BL
                 if (user.IsManager) throw new NotExistIDException("the user is manager and not a regular user");
                 return (int)user.Id;
             }
-            catch(UserException)
+            catch (UserException)
             {
                 throw new NotExistIDException("not exist user with this user name");
             }
@@ -57,13 +57,12 @@ namespace BL
                 {
                     user = dl.GetUser(name);
                 }
-                if (user.Password != password) return false; //throw new NotExistIDException("the password is not correct");
-                if (user.IsManager==false) return false; //throw new NotExistIDException("the user is a regular user and not a manager");
+                if (user.Password != password) return false;
+                if (user.IsManager == false) return false;
                 return true;
             }
             catch (UserException)
             {
-                //throw new NotExistIDException("not exist user with this user name");
                 return false;
             }
         }
@@ -71,14 +70,13 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddUser(int id, string name, string password)
         {
-            //צריך לבדוק שאין כבר משתמש לאידי הזה ושהשם משתמש לא תפוס
-            //creates a new station in the data level
+
             DO.User user = new DO.User
             {
                 Id = id,
                 UserName = name,
                 Password = password,
-                IsManager=false
+                IsManager = false
             };
             try
             {
@@ -89,20 +87,18 @@ namespace BL
             }
             catch (DO.UserException)
             {
-                throw new ExistIdException("this id or username already exist");//to change to 2 cases****
+                throw new ExistIdException("this id or username already exist");
             }
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddManager(string name, string password)
         {
-            //צריך לבדוק שאין כבר משתמש לאידי הזה ושהשם משתמש לא תפוס
-            //creates a new station in the data level
             DO.User user = new DO.User
             {
                 Id = null,
                 UserName = name,
                 Password = password,
-                IsManager=true
+                IsManager = true
             };
             try
             {

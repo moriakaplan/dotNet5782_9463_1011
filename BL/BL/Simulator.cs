@@ -1,89 +1,4 @@
-﻿////using System;
-////using System.Collections.Generic;
-////using System.Linq;
-////using System.Text;
-////using System.Threading.Tasks;
-//using BO;
-////using System.Threading;
-//using static BL.BL;
-//using BLApi;
-
-//namespace BL
-//{
-//    class Simulator
-//    {
-//        const double VELOCITY = 2; //kilometers per second.
-//        const int DELAY = 500; //miliseconds, half of second.
-//        private static Drone drone;
-//        public Simulator(BL bl, int droneId, Action UpdateDisplayDelegate, Func<bool> checkStop)
-//        {
-//            lock (bl)
-//            {
-//                 drone = bl.GetDrone(droneId); //ממשיך לזרוק. זה בסדר?
-//            }
-//            while (!checkStop())
-//            {
-//                if(drone.Status==DroneStatus.Available)
-//                {
-
-//                }
-//                if(drone.Status == DroneStatus.Delivery)
-//                {
-
-//                }
-//                if(drone.Status==DroneStatus.Maintenance)
-//                {
-
-//                }
-//                //Thread.Sleep(DELAY);
-//                //lock (bl)
-//                //{
-//                //    Drone drone = bl.GetDrone(droneId); //ממשיך לזרוק. זה בסדר?
-//                //    if (drone.Status == DroneStatus.Available)
-//                //    {
-//                //        try
-//                //        {
-//                //            bl.AssignParcelToDrone(droneId);
-//                //        }
-//                //        catch(ThereNotGoodParcelToTakeException)
-//                //        {
-//                //            if(drone.Battery<100)
-//                //            {
-
-//                //                try
-//                //                {
-//                //                    bl.SendDroneToCharge(droneId);
-//                //                }
-//                //                catch(DroneCantGoToChargeException)
-//                //                {
-
-//                //                   drone.CurrentLocation = bl.closestStation(drone.CurrentLocation);//לא נכון!!!!!
-//                //                   //לקרוא לפונקציה moveDrone
-//                //                }
-//                //            }
-//                //            //להחליט מה לעשות
-//                //            //שיחכה עד שיש חבילה?
-//                //        }
-//                //    }
-//                //    if (drone.Status == DroneStatus.Maintenance)
-//                //    {
-//                //        //if(drone.Battery+bl.batteryToAdd(droneId)>=100)
-//                //        //{
-//                //        //    bl.ReleaseDroneFromeCharge(droneId);
-//                //        //}                                                                                                                                                                  
-//                //        if(drone.Battery==100)
-//                //        {
-
-//                //        }
-//                //    }
-
-//                //}
-
-//            }
-//        }
-//    }
-//}
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -91,14 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.ComponentModel;
 using static System.Math;
-//using System.Diagnostics;
 using BO;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using System.Threading;
 using static BL.BL;
 using BLApi;
 
@@ -112,10 +20,10 @@ namespace BL
         private static DroneToList drone;
 
         enum status { fly, inCharge, wait, toCharge };
-                                                    //charge-בטיענה
-                                                    //toCharge-כשהוא מוצא את התחנה שהוא הולך להיטען בה
-                                                    //wait- אם אין לו לאן ללכת בטעינה הוא מחכה עד שיתפנה מקום
-                                                    //fly-כשהוא נוסע
+        //charge-now in charge
+        //toCharge-When he finds the station he is going to charge at
+        //wait- If he has nowhere to go for charging
+        //fly-when the rrone fly
         private status droneStatus = status.inCharge;
 
         private Location targetLocation;
@@ -128,47 +36,30 @@ namespace BL
         {
             lock (bl)
             {
-                //מציאת הרחפו שאיתו נעבוד
-                //drone = bl.DisplayDroneList(d => d.id == dId).FirstOrDefault();
-                drone = bl.GetDronesList(x=>x.Id==droneId).SingleOrDefault(); //ממשיך לזרוק. זה בסדר?
-                if (drone == null) throw new NotExistIDException();//****
+                drone = bl.GetDronesList(x => x.Id == droneId).SingleOrDefault();
+                if (drone == null) throw new NotExistIDException();
             }
-            while (!stop())//כל עוד לא רצו להפסיק את הסימולציה
+            while (!stop())//As long as the simolation didnt stop
             {
-                //lock (bl)
-                //{
-                //    drone = bl.GetDrone(droneId);
-                //}
-                switch(drone.Status)
+                switch (drone.Status)
                 {
-                    case(DroneStatus.Maintenance):
+                    case (DroneStatus.Maintenance):
                         chargedDrone(bl);
                         break;
-                    case(DroneStatus.Available):
+                    case (DroneStatus.Available):
                         availableDrone(bl);
                         break;
-                    case(DroneStatus.Associated):
-                    case(DroneStatus.Delivery):
+                    case (DroneStatus.Associated):
+                    case (DroneStatus.Delivery):
                         deliveryDrone(bl);
                         break;
                 }
-                //if (drone.Status == DroneStatus.Available)//אם הרחפן זמין
-                //{
-                //    availableDrone(bl);
-                //}
-                //else if (drone.Status == DroneStatus.Delivery)//אם הרחפו במשלוח
-                //{
-                //    deliveryDrone(bl);
-                //}
-                //else if (drone.Status == DroneStatus.Maintenance)//אם הרחפו בטעינה
-                //{
-                //    chargedDrone(bl);
                 updateDisplay();
             }
         }
 
         /// <summary>
-        /// כשהמצב של הרחפן הוא טעינה
+        /// when the drone is Maintenance
         /// </summary>
         /// <param name="bl"></param>
         private void chargedDrone(BL bl)
@@ -177,60 +68,60 @@ namespace BL
             {
                 switch (droneStatus)
                 {
-                    case status.toCharge://אם הרחפן צריך לחפש תחנה שבה הוא צריך להיטען
+                    case status.toCharge://If the drone needs to look for a station where it can be charged
                         try
                         {
                             lock (bl)
                             {
                                 Location currentLoc = drone.CurrentLocation;
                                 double currentBattery = drone.Battery;
-                                drone.Status = DroneStatus.Available;//שינוי הסטטוס של הרחפן לזמין
-                                bl.SendDroneToCharge(drone.Id);//שליחת הרחפן לטעינה
-                                drone.CurrentLocation = currentLoc;//שינוי מיקום הרחפן להיות המיקום המקורי שלו
-                                drone.Battery = currentBattery;//שינוי בטרית הרפן להיות הבטריה המקורית שלו
+                                drone.Status = DroneStatus.Available;//Change the status of the drone to available
+                                bl.SendDroneToCharge(drone.Id);//Sending the drone for charging
+                                drone.CurrentLocation = currentLoc;//Change the location of the drone to be its original location
+                                drone.Battery = currentBattery;//Changing the drone battery to be its original battery
                                 droneStatus = status.inCharge;
-                                int stationId = 0;//איפוס התחנה שבה נמצא הרחפן
+                                int stationId = 0;//Reset the station where the drone is located
                                 foreach (StationToList station in bl.GetStationsList())
                                 {
-                                    if (bl.GetDroneChargesList(station.Id).Any(x => x.DroneId == drone.Id))//בודק אם הרחפן טעון בתחנה
+                                    if (bl.GetDroneChargesList(station.Id).Any(x => x.DroneId == drone.Id))//Checks if the drone is charged at the station
                                         stationId = station.Id;
                                 }
                                 Location stationLoc = bl.GetStation(stationId).Location;
                                 targetLocation = stationLoc;
-                                
-                                distanceFromTarget = bl.distance(drone.CurrentLocation, stationLoc);//מוצא את המרחק בין המיקום של הרחפן לתחנה שהוא צריך להיטען בה
+
+                                distanceFromTarget = bl.distance(drone.CurrentLocation, stationLoc);//Finds the distance between the location of the drone and the station where it needs to be charged
                                 batteryUsage = bl.batteryForAvailable;
                             }
                         }
-                        catch (Exception ex) when (/*ex is TimeException ||*/ ex is NotExistIDException)
+                        catch (Exception ex) when (ex is NotExistIDException)
                         {
                             //if the closest station did not have open charging slots
                             drone.Status = DroneStatus.Maintenance;
                             droneStatus = status.wait;
                         }
                         break;
-                    case status.fly://אם הרחפן עף
+                    case status.fly://if the drone is fling to the station
                         lock (bl)
                         {
                             calculateDistance(bl);
                         }
-                        if (distanceFromTarget == 0)//אם הוא הגיע ליעד שלו(לתחנה שהוא צירך להיטען בה)ץ
+                        if (distanceFromTarget == 0)//If he reached his destination (to the station he needed to be charge at)
                         {
-                            droneStatus = status.inCharge;//הרחפן בטעינה. מזל טוב
+                            droneStatus = status.inCharge;
                         }
                         break;
-                    case status.inCharge://למקרה שהוא בטעינה
+                    case status.inCharge://if the drone is in charge
                         double timePassed = (double)delayMS / 1000;
-                        drone.Battery += bl.chargeRatePerMinute * timePassed /60;
+                        drone.Battery += bl.chargeRatePerMinute * timePassed / 60;
                         drone.Battery = Min(drone.Battery, 100);
                         if (drone.Battery == 100)
                             lock (bl)
                             {
-                                bl.ReleaseDroneFromeCharge(drone.Id);//אם הרחפן סיים את הטעינה שלו אז הוא משתחרר מהטעינה
+                                bl.ReleaseDroneFromeCharge(drone.Id);//If the skimmer has finished charging then it is released from charge
                                 drone.Status = DroneStatus.Available;
                             }
                         break;
-                    case status.wait: //מנסה לשלוח את הרחפן לטעינה, אם אם הוא לא מצליח אז הוא צריך לחכות עד שיתפנה מקום ולכן הוא במצבהזה.
+                    case status.wait: //Trying to send the drone to charging, if if he does not succeed then he has to wait until space becomes available so he is in this position.
                         droneStatus = status.toCharge;
                         break;
                     default:
@@ -242,7 +133,7 @@ namespace BL
 
 
         /// <summary>
-        /// 
+        /// if the drone in delivery
         /// </summary>
         /// <param name="bl"></param>
         private void deliveryDrone(BL bl)
@@ -251,13 +142,11 @@ namespace BL
             {
                 lock (bl)
                 {
-                    Parcel parcel = bl.GetParcel(drone.ParcelId);//מציאת החבילה שהרחפן מעביר
-                    //bool pickedUp = parcel.pickup is not null;
-                    bool pickedUp = parcel.PickUpTime is not null;//אם החבילה נאספה
-                    
-                    //targetLocation = pickedUp ? bl.targetLocation(parcel.Id) : bl.senderLocation(parcel.Id);
-                    targetLocation = pickedUp ? bl.GetCustomer(parcel.Target.Id).Location: bl.GetCustomer(parcel.Sender.Id).Location;//מוצא האם החבילה נאספה כן או לא ומעדכן בהתאם את המיקום
-                    if (pickedUp)//אם החבילה נאספה כבר ייאי
+                    Parcel parcel = bl.GetParcel(drone.ParcelId);//Finding the parcel the drone is delivering
+                    bool pickedUp = parcel.PickUpTime is not null;//If the parcel was collected
+
+                    targetLocation = pickedUp ? bl.GetCustomer(parcel.Target.Id).Location : bl.GetCustomer(parcel.Sender.Id).Location;//Finds whether the parcel has been collected and updates the location
+                    if (pickedUp)//If the parcel has been collected 
                     {
                         switch (parcel.Weight)
                         {
@@ -275,18 +164,16 @@ namespace BL
                     else
                         batteryUsage = bl.batteryForAvailable;
                     calculateDistance(bl);
-                    if (distanceFromTarget == 0)//אם הרחפן הגיע ליעד שלו
+                    if (distanceFromTarget == 0)//If the drone reached its destination
                     {
-                        if (!pickedUp)//אם החבילה עוד לא נאספה
+                        if (!pickedUp)//If the parcel has not yet been collected
                         {
-                            bl.PickParcelByDrone(drone.Id);//אוסף את החבילה
-                            //drone = bl.GetDrone(drone.Id);
+                            bl.PickParcelByDrone(drone.Id);//Collects the package
                         }
                         else
                         {
-                            bl.DeliverParcelByDrone(drone.Id);//אוסף את החבילה
-                            //drone = bl.GetDrone(drone.Id);
-                            batteryUsage = bl.batteryForAvailable;//?
+                            bl.DeliverParcelByDrone(drone.Id);//Collects the package
+                            batteryUsage = bl.batteryForAvailable;
                         }
                     }
                 }
@@ -294,7 +181,7 @@ namespace BL
         }
 
         /// <summary>
-        /// אם הרחפן פנוי
+        /// if the drone is available
         /// </summary>
         /// <param name="bl"></param>
         private void availableDrone(BL bl)
@@ -305,17 +192,16 @@ namespace BL
                 {
                     try
                     {
-                        bl.AssignParcelToDrone(drone.Id);//שיוך הרחפן לחבילה
-                        //drone = bl.GetDrone(drone.Id);
+                        bl.AssignParcelToDrone(drone.Id);//accosiate the drone to the parcel
                     }
-                    catch (ThereNotGoodParcelToTakeException  ex)//NotExistIDException
+                    catch (ThereNotGoodParcelToTakeException ex)//NotExistIDException
                     {
-                        if (drone.Battery == 100) //אם הוא סתם טיפש ופשוט אין חבילה שהוא יכול לאסוף לא משנה מה
+                        if (drone.Battery == 100)
                             return;
-                        else if (ex.Message.Equals("we did not found a good parcel that the drone" /*{droneId}*/+ "can take"))//אם הוא לא הצליח לאסוף את החבילה כי אין לו סוללה
+                        else if (ex.Message.Equals("we did not found a good parcel that the drone" + "can take"))
                         {
-                            drone.Status=DroneStatus.Maintenance;//לשים את הרחפן בטעינה
-                            droneStatus = status.toCharge;//מצב שהוא מחכה לטעינה
+                            drone.Status = DroneStatus.Maintenance;
+                            droneStatus = status.toCharge;
                         }
                         else
                         {
@@ -327,7 +213,7 @@ namespace BL
         }
 
         /// <summary>
-        /// מרדים את הסימולטור
+        /// stop the simolator for half a second
         /// </summary>
         /// <returns></returns>
         private static bool delay()
@@ -347,18 +233,18 @@ namespace BL
         /// calculate the updated distance between the drone and the target and update the field distanceFromTarget
         /// </summary>
         /// <param name="bl"></param>
-        private void calculateDistance(BL bl) 
+        private void calculateDistance(BL bl)
         {
             lock (bl)
             {
                 distanceFromTarget = bl.distance(drone.CurrentLocation, targetLocation);
-                double change =        velocity * delayMS           / 1000; //calculate the change in the distance, according to the delay- the time that passed since the previous calculation.
-                //              (זמן במילי שניות)*(מהירות לשנייה) 
-                if(change > distanceFromTarget) //if the drone already passed the target in this half of decond
+                double change = velocity * delayMS / 1000; //calculate the change in the distance, according to the delay- the time that passed since the previous calculation.
+                // (time in milliseconds) * (speed per second)
+                if (change > distanceFromTarget) //if the drone already passed the target in this half of decond
                 {
                     distanceFromTarget = 0;
                     drone.CurrentLocation = targetLocation;
-                   
+
                     return;
                 }
                 double proportionalChange = change / distanceFromTarget;
@@ -366,7 +252,7 @@ namespace BL
                 Location loc = drone.CurrentLocation;
                 drone.CurrentLocation = new Location
                 {
-                    Latti = loc.Latti + ((targetLocation.Latti - loc.Latti) * proportionalChange), //ignore the shipua of earth 
+                    Latti = loc.Latti + ((targetLocation.Latti - loc.Latti) * proportionalChange),
                     Longi = loc.Longi + ((targetLocation.Longi - loc.Longi) * proportionalChange)
                 };
                 distanceFromTarget = bl.distance(drone.CurrentLocation, targetLocation);

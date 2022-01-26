@@ -22,6 +22,11 @@ namespace PL
     public partial class StationWindow : Window
     {
         IBL blObject;
+        /// <summary>
+        /// constractor station window in update mode
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="stationId"></param>
         public StationWindow(IBL obj, int stationId) //updating
         {
             InitializeComponent();
@@ -33,12 +38,15 @@ namespace PL
             txtLongi.IsEnabled = false;
             gridDronesInCharge.DataContext = st.DronesInCharge;
             options.Content = "Update Station Data";
-            options.Click -= AddStation;
-            options.Click += UpdateStation;
+            options.Click -= addStation;
+            options.Click += updateStation;
             
         }
-
-        public StationWindow(IBL obj) //adding
+        /// <summary>
+        /// constractor station window in adding mode
+        /// </summary>
+        /// <param name="obj"></param>
+        public StationWindow(IBL obj)
         {
             InitializeComponent();
             blObject = obj;
@@ -46,30 +54,33 @@ namespace PL
             gridDronesInCharge.Visibility = Visibility.Collapsed;
             txtId.Text = "4 digits";
             options.Content = "Add Station";
-            options.Click -= UpdateStation;
-            options.Click += AddStation;
+            options.Click -= updateStation;
+            options.Click += addStation;
         }
-
-        private void AddStation(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// add the station
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void addStation(object sender, RoutedEventArgs e)
         {
             int id, chargeSlots;
-            if (int.TryParse(txtId.Text, out id) == false)
+            if (int.TryParse(txtId.Text, out id) == false)//if the id is not good
             {
                 MessageBox.Show("the id is not a valid number, please try again\n");
                 return;
             }
-            if (id < 1000 || id > 9999)
+            if (id < 1000 || id > 9999)//if the id is not 4 digits
             {
                 MessageBox.Show("the id suppose to be a number with 4 digits, please choose another id and try again\n");
                 return;
             }
-            if (txtName.Text == null)
+            if (txtName.Text == null)//if there is no name
             {
                 MessageBox.Show("please enter a name\n");
                 return;
             }
-            //לבדוק את הלוקיישן
-            if (int.TryParse(txtAvailableChargeSlots.Text, out chargeSlots)==false || chargeSlots<0)
+            if (int.TryParse(txtAvailableChargeSlots.Text, out chargeSlots)==false || chargeSlots<0)//if the number of charge slots is not good
             {
                 MessageBox.Show("the number of charge slots is not a valid number, please try again\n");
                 return;
@@ -78,7 +89,6 @@ namespace PL
             {
                 blObject.AddStation(id, txtName.Text, new Location { Latti = double.Parse(txtLatti.Text), Longi = double.Parse(txtLongi.Text) }, int.Parse(txtAvailableChargeSlots.Text));
                 MessageBox.Show("The station added successfully");
-                //canClose = true;
                 this.Close();
             }
             catch (ExistIdException)
@@ -88,8 +98,12 @@ namespace PL
             }
             
         }
-
-        private void UpdateStation(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// update the station dateils
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void updateStation(object sender, RoutedEventArgs e)
         {
             int chargeSlots;
             if (txtName.Text == null)
@@ -102,7 +116,6 @@ namespace PL
                 MessageBox.Show("the number of charge slots is not a valid number, please try again\n");
                 return;
             }
-            //צריך לעשות משהו מיוחד כדי שהשינויים יהיו אופציונליים?
             blObject.UpdateStation(int.Parse(txtId.Text), txtName.Text, int.Parse(txtAvailableChargeSlots.Text));
         }
 
@@ -111,7 +124,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void IdColor(object sender, TextChangedEventArgs e)
+        private void idColor(object sender, TextChangedEventArgs e)
         {
             int id;
             if (txtId.IsEnabled == false) return;
@@ -126,6 +139,11 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// By double-clicking on a row in the table of drone in charge a specific drone window opens
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void viewDrone(object sender, MouseButtonEventArgs e)
         {
             new DroneWindow(blObject, ((BO.DroneInCharge)gridDronesInCharge.SelectedItem).Id).ShowDialog();

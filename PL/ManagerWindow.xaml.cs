@@ -23,6 +23,10 @@ namespace PL
     public partial class ManagerWindow : Window
     {
         IBL blObject;
+        /// <summary>
+        /// constractor
+        /// </summary>
+        /// <param name="obj"></param>
         public ManagerWindow(IBL obj)
         {
             InitializeComponent();
@@ -30,38 +34,57 @@ namespace PL
             btnPass.DataContext = blObject;
         }
         
-        private void displayDronesList_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// open drones list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void displayDronesList(object sender, RoutedEventArgs e)
         {
             new DroneListWindow(blObject).Show();
         }
 
+        /// <summary>
+        /// open stations list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void displayStationList(object sender, RoutedEventArgs e)
         {
-           // this.Close();
             new StationListWindow(blObject).ShowDialog();
-           // new ManagerWindow(blObject).Show();
         }
 
+        /// <summary>
+        /// open parcels list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void displayParcelList(object sender, RoutedEventArgs e)
         {
-            //this.Close();
             new ParcelListWindow(blObject).ShowDialog();
-            //new ManagerWindow(blObject).Show();
         }
 
+        /// <summary>
+        /// open customers window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void displayCustomerList(object sender, RoutedEventArgs e)
         {
-            //this.Close();
             new CustomerListWindow(blObject).Show();
-            //new ManagerWindow(blObject).Show();
         }
 
+        /// <summary>
+        /// see or hide the manager password
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void seePassword(object sender, RoutedEventArgs e)
         {
             if (btnPass.Content.ToString() == "see managment password")
             {
                 btnPass.Content = "hide managment password";
-                pass.Content = blObject.getManagmentPassword();
+                pass.Content = blObject.GetManagmentPassword();
             }
             else
             {
@@ -70,12 +93,17 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// change the manager password
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void changePass(object sender, RoutedEventArgs e)
         {
             MessageBoxResult mb = MessageBox.Show($"Do you really want to change the password?\n it will changed in the computer of every manager", "change password", MessageBoxButton.OKCancel);
             if (mb == MessageBoxResult.OK)
             {
-                string newPass = blObject.changeManagmentPassword();
+                string newPass = blObject.ChangeManagmentPassword();
                 if (btnPass.Content.ToString() == "hide managment password")
                 {
                     pass.Content = newPass;
@@ -83,6 +111,11 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// open the main window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BackToMain(object sender, RoutedEventArgs e)
         {
             new MainWindow().Show();

@@ -133,7 +133,7 @@ namespace DalApi
         /// </summary>
         /// <param name="pre"></param>
         /// <returns></returns>
-        IEnumerable<User> GetUsersList(Predicate<User> pre=null);
+        IEnumerable<User> GetUsersList(Predicate<User> pre = null);
         #endregion display
 
         #region delete
@@ -162,20 +162,31 @@ namespace DalApi
         /// <summary>
         /// bonus 2
         /// Calculates the distance between two places.
-        /// (https://www.geeksforgeeks.org/program-distance-two-points-earth/) לקחנו משם את הנוסחא לפונקציה
+        /// (https://www.geeksforgeeks.org/program-distance-two-points-earth/) 
         /// </summary>
         /// <param name="latitudeA"></param>
         /// <param name="longitudeA"></param>
         /// <param name="latitudeB"></param>
         /// <param name="longitudeB"></param>
         /// <returns></returns>
-        double Distance(double lattitudeA, double longitudeA, double lattitudeB, double longitudeB); //maybe need to be deleted from the interface
-        
-        
+        double Distance(double lattitudeA, double longitudeA, double lattitudeB, double longitudeB);
+        /// <summary>
+        /// return the battery data
+        /// </summary>
+        /// <returns></returns>
         double[] GetBatteryData();
 
-        string getManagmentPassword();
-
-        string setNewManagmentPassword();
+        #region password
+        /// <summary>
+        /// return the manager password
+        /// </summary>
+        /// <returns></returns>
+        string GetManagmentPassword();
+        /// <summary>
+        /// change the manager password
+        /// </summary>
+        /// <returns></returns>
+        string SetNewManagmentPassword();
+        #endregion
     }
 }

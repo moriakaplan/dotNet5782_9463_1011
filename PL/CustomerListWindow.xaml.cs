@@ -21,6 +21,10 @@ namespace PL
     public partial class CustomerListWindow : Window
     {
         IBL blObject;
+        /// <summary>
+        /// constractor
+        /// </summary>
+        /// <param name="obj"></param>
         public CustomerListWindow(IBL obj)
         {
             blObject = obj;
@@ -28,8 +32,13 @@ namespace PL
             try { customerToListDataGrid.DataContext = blObject.GetCustomersList(); }
             catch (NotExistIDException ex) { MessageBox.Show(ex.Message); }
         }
-        
-        private void ViewCustomer(object sender, MouseButtonEventArgs e)
+
+        /// <summary>
+        /// Double-clicking on a row in the table opens a specific customer window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void viewCustomer(object sender, MouseButtonEventArgs e)
         {
             try
             {
@@ -39,7 +48,12 @@ namespace PL
             catch (Exception) { }
         }
 
-        private void AddCustomer(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// add customer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void addCustomer(object sender, RoutedEventArgs e)
         {
             new CustomerWindow(blObject).ShowDialog();
             customerToListDataGrid.DataContext = blObject.GetCustomersList();

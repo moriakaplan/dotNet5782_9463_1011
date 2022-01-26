@@ -20,24 +20,34 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        internal readonly IBL blObject = BLFactory.GetBl(); //צריך לדאוג שיהיה שדה של המחלקה
+        internal readonly IBL blObject = BLFactory.GetBl(); 
 
+        /// <summary>
+        /// constractor
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void LogIn(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// open the password window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void logIn(object sender, RoutedEventArgs e)
         {
-            new PasswordWindow(blObject).Show();//צריך להוסיף פרמטרים מתאימים
+            new PasswordWindow(blObject).Show();
             this.Close();
         }
 
-        private void Sign(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// open the sign window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void sign(object sender, RoutedEventArgs e)
         {
-            //MessageBoxResult mb= MessageBox.Show("are you a manager or worker of the company?", "sighn up", MessageBoxButton.YesNoCancel);
-            //if(mb==MessageBoxResult.No) new SignWindow(blObject, false).Show();//צריך להוסיף פרמטרים מתאימים
-            //if(mb==MessageBoxResult.Yes) new SignWindow(blObject, true).Show();//צריך להוסיף פרמטרים מתאימים
             new SignWindow(blObject).Show();
             this.Close();
         }

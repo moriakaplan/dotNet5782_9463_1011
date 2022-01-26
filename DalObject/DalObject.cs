@@ -37,7 +37,7 @@ namespace Dal
         /// </summary>
         internal static DalObject Instance
         {
-            //singelton thread safe and lazy initializion(?)
+            //singelton thread safe and lazy initializion
             get
             {
                 if (instance == null)
@@ -52,6 +52,10 @@ namespace Dal
             }
         }
 
+        /// <summary>
+        /// return strong password
+        /// </summary>
+        /// <returns></returns>
         internal static string getGoodPass()
         {
             Random rand = new Random();
@@ -64,15 +68,15 @@ namespace Dal
             return new String(stringChars);
         }
 
-        
+
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public string getManagmentPassword()
+        public string GetManagmentPassword()
         {
             return DataSource.Config.managmentPassword;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public string setNewManagmentPassword()
+        public string SetNewManagmentPassword()
         {
             string pass = getGoodPass();
             DataSource.Config.managmentPassword = pass;

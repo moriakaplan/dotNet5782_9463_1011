@@ -22,7 +22,12 @@ namespace PL
     public partial class CustomerWindow : Window
     {
         IBL blObject;
-        public CustomerWindow(IBL obj, int cusId) //update
+        /// <summary>
+        /// constractor for update the customer data
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="cusId"></param>
+        public CustomerWindow(IBL obj, int cusId) 
         {
             blObject = obj;
             InitializeComponent();
@@ -34,7 +39,8 @@ namespace PL
                 return;
             }
             DataContext = cus;
-            if (cus.ParcelsFrom.Count() == 0 && cus.ParcelsTo.Count() == 0) parcels.Visibility = Visibility.Collapsed;
+            if (cus.ParcelsFrom.Count() == 0 && cus.ParcelsTo.Count() == 0)//if the customer have no parcel- to or from
+                parcels.Visibility = Visibility.Collapsed;
             else
             {
                 lstParcelsFrom.DataContext = cus.ParcelsFrom.Select(x => x.Id);
@@ -47,11 +53,15 @@ namespace PL
             txtLongi.IsEnabled = false;
 
             options.Content = "Update Customer Data";
-            options.Click -= AddCustomer;
-            options.Click += UpdateCustomer;
+            options.Click -= addCustomer;
+            options.Click += updateCustomer;
 
         }
-        public CustomerWindow(IBL obj) //add
+        /// <summary>
+        /// constractor for adding new customer
+        /// </summary>
+        /// <param name="obj"></param>
+        public CustomerWindow(IBL obj) 
         {
             blObject = obj;
             InitializeComponent();
@@ -61,53 +71,58 @@ namespace PL
             lstParcelsFrom.Visibility = Visibility.Collapsed;
             lstParcelsTo.Visibility = Visibility.Collapsed;
             txtId.Text = "9 digits";
-            //לדאוג שהמספר טלפון יהיה תקין פה ובהמשך
             options.Content = "Add Customer";
-            options.Click -= UpdateCustomer;
-            options.Click += AddCustomer;
+            options.Click -= updateCustomer;
+            options.Click += addCustomer;
         }
 
-
-
+        /// <summary>
+        /// By double-clicking on a row in the table of parcels to the customer a specific parcel window opens 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void viewParcelTo(object sender, MouseButtonEventArgs e)
         {
             new ParcelWindow(blObject, ((int)lstParcelsTo.SelectedItem)).ShowDialog();
         }
 
+        /// <summary>
+        /// By double-clicking on a row in the table of parcels from the customer a specific parcel window opens
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void viewParcelFrom(object sender, MouseButtonEventArgs e)
         {
             new ParcelWindow(blObject, ((int)lstParcelsFrom.SelectedItem)).ShowDialog();
         }
 
-        private void AddCustomer(object sender, RoutedEventArgs e)
+        private void addCustomer(object sender, RoutedEventArgs e)
         {
             int id;
-            if (int.TryParse(txtId.Text, out id) == false)
+            if (int.TryParse(txtId.Text, out id) == false)//if the id is not good
             {
                 MessageBox.Show("the id is not a valid number, please try again\n");
                 return;
             }
-            if (id < 100000000 || id > 999999999)
+            if (id < 100000000 || id > 999999999)//if the id is more or less then 9 digits
             {
                 MessageBox.Show("the id suppose to be a number with 9 digits, please choose another id and try again\n");
                 return;
             }
-            if (txtName.Text == null)
+            if (txtName.Text == null)//if there is no name
             {
                 MessageBox.Show("please enter a name\n");
                 return;
             }
-            if (!phoneIsOk())
+            if (!phoneIsOk())//if the phone is not good
             {
                 MessageBox.Show("please enter a valid phone\n");
                 return;
             }
-            //לבדוק את הלוקיישן
             try
             {
                 blObject.AddCustomer(id, txtName.Text, txtPhone.Text, new Location { Latti = double.Parse(txtLatti.Text), Longi = double.Parse(txtLongi.Text) });
                 MessageBox.Show("The customer added successfully");
-                //canClose = true;
                 this.Close();
             }
             catch (ExistIdException)
@@ -117,31 +132,38 @@ namespace PL
             }
         }
 
-        private void UpdateCustomer(object sender, RoutedEventArgs e)
+        private void updateCustomer(object sender, RoutedEventArgs e)
         {
-            if (txtName.Text == null)
+            if (txtName.Text == null)//if there is no name
             {
                 MessageBox.Show("please enter a name\n");
                 return;
             }
-            if (!phoneIsOk())
+            if (!phoneIsOk())//if the phone is not good
             {
                 MessageBox.Show("the number of charge slots is not a valid number, please try again\n");
                 return;
             }
-            //צריך לעשות משהו מיוחד כדי שהשינויים יהיו אופציונליים?
             blObject.UpdateStation(int.Parse(txtId.Text), txtName.Text, int.Parse(txtPhone.Text));
         }
 
-        bool phoneIsOk()
+        /// <summary>
+        /// check if the phone number is good
+        /// </summary>
+        /// <returns></returns>
+        private bool phoneIsOk()
         {
             int phone;
             if (int.TryParse(txtPhone.Text, out phone) == false || phone<0 || txtPhone.Text.Length!=10) return false;
-            //להוסיף בדיקות
             return true;
         }
 
-        private void IdColor(object sender, TextChangedEventArgs e)
+        /// <summary>
+        /// if the id is good- the color is green. if not- red.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void idColor(object sender, TextChangedEventArgs e)
         {
             int id;
             if (txtId.IsEnabled == false) return;
@@ -155,7 +177,13 @@ namespace PL
                 else txtId.Foreground = Brushes.Red;
             }
         }
-        private void PhoneColor(object sender, TextChangedEventArgs e)
+
+        /// <summary>
+        /// if the phone number is good- the color is green. if not- red
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void phoneColor(object sender, TextChangedEventArgs e)
         {
             if (phoneIsOk())
             {
