@@ -36,7 +36,7 @@ namespace PL
                 blObject = obj;
                 InitializeComponent();
                 grid.IsEnabled = false;
-                delete.IsEnabled = true;
+                options.IsEnabled = true;
                 timesVisibility.Visibility = Visibility.Visible;
 
                 Parcel parcel = blObject.GetParcel(Id);
@@ -46,7 +46,7 @@ namespace PL
                 var customersId = blObject.GetCustomersList().Select(x => x.Id);
                 txtSender.ItemsSource = customersId;
                 txtTarget.ItemsSource = customersId;
-                if (parcel.Drone != null) delete.Visibility = Visibility.Hidden;
+               // if (parcel.Drone != null) options.Visibility = Visibility.Hidden;
                 add.Visibility = Visibility.Hidden;
                 if (txtDrone.Text == "")
                 {
@@ -54,6 +54,8 @@ namespace PL
                     txtDrone.Visibility = Visibility.Collapsed;
                     lblDrone.Visibility = Visibility.Collapsed;
                 }
+                refresh();
+
             }
             else
             {
@@ -65,7 +67,7 @@ namespace PL
                 lblDrone.Visibility = Visibility.Collapsed;
                 txtDrone.Visibility = Visibility.Collapsed;
                 btnDrone.Visibility = Visibility.Collapsed;
-                delete.Visibility = Visibility.Collapsed;
+                options.Visibility = Visibility.Collapsed;
                 btnSender.Visibility = Visibility.Collapsed;
                 txtSender.Visibility = Visibility.Collapsed;
                 lblSender.Visibility = Visibility.Collapsed;
@@ -84,7 +86,6 @@ namespace PL
                 InitializeComponent();
 
             }
-
         }
 
         public ParcelWindow(IBL obj) //add, need to add option to add from the user
@@ -96,7 +97,7 @@ namespace PL
             lblDrone.Visibility = Visibility.Collapsed;
             txtDrone.Visibility = Visibility.Collapsed;
             btnDrone.Visibility = Visibility.Collapsed;
-            delete.Visibility = Visibility.Collapsed;
+            options.Visibility = Visibility.Collapsed;
 
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
@@ -106,6 +107,156 @@ namespace PL
 
         }
 
+        private void refresh()//just for action state
+        {
+            Parcel parcel;
+            lock (blObject)
+            {
+                parcel = blObject.GetParcel((DataContext as Parcel).Id);
+                DataContext = parcel;
+            }
+
+            if (parcel.AssociateTime == null)
+            {
+                lblPickUpTime.Visibility = Visibility.Collapsed;
+                txtPickUpTime.Visibility = Visibility.Collapsed;
+                lblDeliverTime.Visibility = Visibility.Collapsed;
+                txtDeliverTime.Visibility = Visibility.Collapsed;
+                lblAssociateTime.Visibility = Visibility.Collapsed;
+                txtAssociateTime.Visibility= Visibility.Collapsed;
+                options.Content = "delete";
+                options.Click -= pickUpParcel;
+                options.Click -= deliverParcel;
+                options.Click -= DeleteParcel;
+                
+                options.Click += DeleteParcel;
+            }
+            else
+            {
+                if(parcel.PickUpTime==null)
+                {
+                    lblPickUpTime.Visibility = Visibility.Collapsed;
+                    txtPickUpTime.Visibility = Visibility.Collapsed;
+                    lblDeliverTime.Visibility = Visibility.Collapsed;
+                    txtDeliverTime.Visibility = Visibility.Collapsed;
+                    options.Content = "pick the parcel";
+                    options.Click -= pickUpParcel;
+                    options.Click -= deliverParcel;
+                    options.Click -= DeleteParcel;
+
+                    options.Click += pickUpParcel;
+                }
+                else
+                {
+                    if (parcel.DeliverTime == null)
+                    {
+                        lblPickUpTime.Visibility = Visibility.Visible;
+                        txtPickUpTime.Visibility = Visibility.Visible;
+                        lblDeliverTime.Visibility = Visibility.Collapsed;
+                        txtDeliverTime.Visibility = Visibility.Collapsed;
+                        options.Content = "deliver the parcel";
+                        options.Click -= pickUpParcel;
+                        options.Click -= deliverParcel;
+                        options.Click -= DeleteParcel;
+
+                        options.Click += deliverParcel;
+                    }
+                    else
+                    {
+                        lblPickUpTime.Visibility = Visibility.Visible;
+                        txtPickUpTime.Visibility = Visibility.Visible;
+                        lblDeliverTime.Visibility = Visibility.Visible;
+                        txtDeliverTime.Visibility = Visibility.Visible;
+                        lblAssociateTime.Visibility = Visibility.Visible;
+                        txtAssociateTime.Visibility = Visibility.Visible;
+                        options.Visibility = Visibility.Collapsed;
+                    }
+                }
+               
+            }
+        }
+        private void deliverParcel(object sender, RoutedEventArgs e)
+        {
+            int drone;
+            int.TryParse(txtDrone.Text, out drone);
+            if ((blObject.GetDrone(drone)).Status != DroneStatus.Delivery) //DroneStatus.Associated= didnt took the parcel.
+            {
+                MessageBox.Show("the drone is not in delivery");
+                return;
+            }
+            else
+            {
+                //int.TryParse(txtId.Text, out id);
+                try
+                {
+                    blObject.DeliverParcelByDrone(drone);
+                }
+                catch (NotExistIDException)
+                {
+                    MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
+                }
+                catch (DroneCantTakeParcelException)
+                {
+                    MessageBox.Show("drone cant deliver the parcel because its battery is not enugh. try to send the drone to charge");
+                    return;
+                }
+                catch (TransferException)
+                {
+                    MessageBox.Show("there is a problem with the statuses of the parcel or the drone. please check the data and try again");
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+            }
+            MessageBox.Show("drone deliver the parcel successfully");
+            //InitialiseData(id);
+            //deliver.Visibility = Visibility.Hidden;
+            //sendDeliver.Visibility = Visibility.Visible;
+            //charge.Visibility = Visibility.Visible;
+            //options.Content = "send drone\nto delivery";
+            //options.Click -= DeliverParcel;
+            //options.Click += SendDroneToDelivery;
+            refresh();
+        }
+        private void pickUpParcel(object sender, RoutedEventArgs e)
+        {
+            int id;
+            int.TryParse(txtDrone.Text, out id);
+            if ((blObject.GetDrone(id)).Status != DroneStatus.Associated) //DroneStatus.Associated= didnt took the parcel.
+            {
+                MessageBox.Show("the drone is not Associated ");
+                return;
+            }
+            else //רחפן במשלוח, החבילה לא נאספה
+            {
+                //int.TryParse(txtId.Text, out id);
+                try
+                {
+                    blObject.PickParcelByDrone(id);
+                }
+                catch (NotExistIDException)
+                {
+                    MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
+                    return;
+                }
+                catch (DroneCantTakeParcelException) { MessageBox.Show("drone cant deliver the parcel because its battery is not enugh. try to send the drone to charge"); return; }
+                catch (TransferException) { MessageBox.Show("there is a problem with the statuses of the parcel or the drone. please check the data and try again"); return; }
+                catch (Exception ex) { MessageBox.Show(ex.Message); return; }
+            }
+            MessageBox.Show("the drone piked up the parcel");
+            //InitialiseData(id);
+            //DataContext = blObject.GetDrone(id);//?צריך
+            //pickParcel.Visibility = Visibility.Hidden;
+            //deliver.Visibility = Visibility.Visible;
+            //options.Content = "deliver\nparcel";
+            //options.Click -= PickUpParcel;
+            //options.Click += DeliverParcel;
+            
+            refresh();
+        }
         //public ParcelWindow(IBL obj, int id, bool flag)
         //{
         //    InitializeComponent();

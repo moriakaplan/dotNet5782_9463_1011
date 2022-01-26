@@ -19,7 +19,7 @@
 
         <Button Content="send new parcel" Grid.Row="0" HorizontalAlignment="Left" Height="42" Margin="43,356,0,0" VerticalAlignment="Top" Width="147" Click="sendNewParcel"/>
         <Label Name="txtId"   Content="{Binding Id}" Grid.Row="0" HorizontalAlignment="Left" Margin="90,237,0,0" VerticalAlignment="Top" Width="91"/>
-        <Label Name="txtname" Content="{Binding Name}" Grid.Row="0" HorizontalAlignment="Left" Margin="90,270,0,0" VerticalAlignment="Top" Width="91"/>
+        <Label Name="txtname" Content="{Binding Name}" Grid.Row="0" HorizontalAlignment="Left" Margin="90,266,0,0" VerticalAlignment="Top" Width="91"/>
 
         <Label Content="id:" Grid.Row="0" HorizontalAlignment="Left" Height="24" Margin="63,229,0,0" VerticalAlignment="Top" Width="20"/>
         <Label Content="name:" Grid.Row="0" HorizontalAlignment="Left" Height="26" Margin="43,257,0,0" VerticalAlignment="Top" Width="40"/>

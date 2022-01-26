@@ -551,6 +551,7 @@ namespace PL
             }
         }
 
+      
         //private void simolator(object sender, RoutedEventArgs e)
         //{
         //    //blObject.RunsTheSimulator(int.Parse(txtId.Text), );
