@@ -12,9 +12,9 @@
             <ColumnDefinition Width="400"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        
+
         <Button x:Name="close" Content="Close The Window" Click="Close_Click" Grid.ColumnSpan="2" Height="30" Background="Orange" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-        
+
         <Grid Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>
@@ -63,8 +63,8 @@
                 </Grid.ColumnDefinitions>
                 <Label Content="Lattitude::" Grid.Row="0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
                 <Label Content="longitude:"  Grid.Row="1" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
-                <TextBox x:Name="txtLatti" Text="{Binding  CurrentLocation.Latti}" Grid.Row="0" Grid.Column="1" Margin="10" IsEnabled="false"/>
-                <TextBox x:Name="txtLongi" Text="{Binding  CurrentLocation.Longi}" Grid.Row="1" Grid.Column="1" Margin="10" IsEnabled="false"/>
+                <Label x:Name="txtLatti" Content="{Binding  CurrentLocation.Latti}" ContentStringFormat="{}{0:0.000}" Grid.Row="0" Grid.Column="1" Margin="10" IsEnabled="false"/>
+                <Label x:Name="txtLongi" Content="{Binding  CurrentLocation.Longi}" ContentStringFormat="{}{0:0.000}" Grid.Row="1" Grid.Column="1" Margin="10" IsEnabled="false"/>
             </Grid>
             <Button x:Name="add" Content="Add The &#xD;&#xA;Drone" Grid.Row="9"  Click="AddDrone_Click"
                 HorizontalAlignment="Left" VerticalAlignment="Top" Width="107" Height="60" Grid.ColumnSpan="2" Margin="146,29,0,0"/>
@@ -74,7 +74,7 @@
                 HorizontalAlignment="Left" VerticalAlignment="Top" Width="106" Height="60" Margin="26,31,0,0"/>
             <Button x:Name="charge" Content="send drone&#xD;&#xA;to charge" Click="SendDroneToCharge" Grid.Row="9" 
                 HorizontalAlignment="Left" VerticalAlignment="Top" Width="107" Height="60" Grid.ColumnSpan="2" Margin="146,31,0,0"/>
-            <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="10,11,0,0" Grid.Row="9" Text="{Binding  CurrentLocation}" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Height="26"/>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="9" Text="{Binding  CurrentLocation}" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Height="26"/>
             <Button x:Name="btnSimulator"  Content="automatic state" HorizontalAlignment="Center" Height="45" Grid.Row="9" VerticalAlignment="Bottom" Margin="0,0,0,20" Width="198" Style="{StaticResource brownButton}" Grid.ColumnSpan="2" Click="simulator"/>
 
         </Grid>
@@ -83,7 +83,7 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            
+
             <Label Content="Parcel In Transfer"   HorizontalAlignment="Center" VerticalAlignment="Top" Grid.ColumnSpan="2" FontSize="20"/>
             <Label Content="{Binding  Id}"        HorizontalAlignment="Center" Margin="0,38,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
             <Label Content="Sender"               HorizontalAlignment="Left" Margin="15, 60,0,0" VerticalAlignment="Top"/>
