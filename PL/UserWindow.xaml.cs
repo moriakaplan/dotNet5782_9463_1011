@@ -37,7 +37,12 @@ namespace PL
         private void sendNewParcel(object sender, RoutedEventArgs e)
         {
             new ParcelWindow(blObject, int.Parse(txtId.Content.ToString()), true).ShowDialog();
+            refresh();
+        }
 
+        private void refresh()
+        {
+            DataContext = blObject.GetCustomer(int.Parse(txtId.Content.ToString()));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -55,5 +60,19 @@ namespace PL
             new MainWindow().Show();
             this.Close();
         }
+
+        private void ViewParcelTo(object sender, MouseButtonEventArgs e)
+        {
+            
+            new ParcelWindow(blObject, ((BO.ParcelInCustomer)ParcelsTo.SelectedItem).Id).ShowDialog();
+            
+        }
+        private void ViewParcelFrom(object sender, MouseButtonEventArgs e)
+        {
+            
+            new ParcelWindow(blObject, ((BO.ParcelInCustomer)ParcelsFrom.SelectedItem).Id).ShowDialog();
+            
+        }
+       
     }
 }

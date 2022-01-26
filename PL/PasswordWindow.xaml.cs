@@ -54,8 +54,9 @@ namespace PL
                 closeX = false;
                 this.Close();
             }
-            catch (NotExistIDException ex) { MessageBox.Show(/*"the username or the password are not correct, please try again. maybe you are a manger?"*/ ex.Message); }
-            MessageBox.Show("the username or the password are not correct, please try again");
+            catch (NotExistIDException ex) { MessageBox.Show("the username or the password are not correct, please try again" /*ex.Message*/); }
+
+            //MessageBox.Show("the username or the password are not correct, please try again");
         }
 
         private void signUp(object sender, RoutedEventArgs e)

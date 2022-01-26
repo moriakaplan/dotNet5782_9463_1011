@@ -29,25 +29,25 @@
         <ListView x:Name="txtParcelsFrom" Grid.Row="1" Grid.Column="1" MouseDoubleClick="viewParcelFrom" Margin="-484,-200,484,200"/>-->
         <Button Content="back to the main window" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Background="LightBlue" Click="BackToMain" Grid.Column="1"/>
         <Label Content="parcels that you sent:" Grid.Column="1" HorizontalAlignment="Left" Margin="30,41,0,0" VerticalAlignment="Top" Width="155"/>
-        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" DataContext="{Binding ParcelsFrom}" Background="Transparent" Width="auto"
+        <DataGrid x:Name="ParcelsTo" AutoGenerateColumns="False" EnableRowVirtualization="True" DataContext="{Binding ParcelsFrom}" Background="Transparent" Width="auto" MouseDoubleClick="ViewParcelTo"
                   ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" Grid.Column="1" Margin="30,70,0,57">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id"/>
-                <DataGridTextColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Status"/>
-                <DataGridTextColumn x:Name="priorityColumn" Binding="{Binding Priority}" Header="Priority"/>
-                <DataGridTextColumn x:Name="weightColumn" Binding="{Binding Weight}" Header="Weight"/>
+                <!--<DataGridTextColumn x:Name="priorityColumn" Binding="{Binding Priority}" Header="Priority"/>
+                <DataGridTextColumn x:Name="weightColumn" Binding="{Binding Weight}" Header="Weight"/>-->
                 <DataGridTextColumn x:Name="targetNameColumn" Binding="{Binding SenderOrTarget.Name}" Header="Target Name"/>
+                <DataGridTextColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Status"/>
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="parcels that you got:" Grid.Column="2" HorizontalAlignment="Left" Margin="30,41,0,0" VerticalAlignment="Top" Width="155"/>
-        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" DataContext="{Binding ParcelsFrom}" Background="Transparent" Width="auto"
+        <DataGrid x:Name="ParcelsFrom" AutoGenerateColumns="False" MouseDoubleClick="ViewParcelFrom" EnableRowVirtualization="True" DataContext="{Binding ParcelsFrom}" Background="Transparent" Width="auto"
                   ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" Grid.Column="2" Margin="30,70,0,57">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="AidColumn" Binding="{Binding Id}" Header="Id"/>
-                <DataGridTextColumn x:Name="AstatusColumn" Binding="{Binding Status}" Header="Status"/>
-                <DataGridTextColumn x:Name="ApriorityColumn" Binding="{Binding Priority}" Header="Priority"/>
-                <DataGridTextColumn x:Name="AweightColumn" Binding="{Binding Weight}" Header="Weight"/>
+                <!--<DataGridTextColumn x:Name="ApriorityColumn" Binding="{Binding Priority}" Header="Priority"/>
+                <DataGridTextColumn x:Name="AweightColumn" Binding="{Binding Weight}" Header="Weight"/>-->
                 <DataGridTextColumn x:Name="AsenderNameColumn" Binding="{Binding SenderOrTarget.Name}" Header="Sender Name"/>
+                <DataGridTextColumn x:Name="AstatusColumn" Binding="{Binding Status}" Header="Status"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

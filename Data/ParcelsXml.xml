@@ -120,4 +120,16 @@
     <PickUpTime>2021-02-23T00:00:00</PickUpTime>
     <DeliverTime>2021-03-01T00:00:00</DeliverTime>
   </Parcel>
+  <Parcel>
+    <Id>10000027</Id>
+    <Senderld>975102665</Senderld>
+    <TargetId>888888888</TargetId>
+    <Droneld>0</Droneld>
+    <Weight>Heavy</Weight>
+    <Priority>Regular</Priority>
+    <CreateTime>2022-01-26T10:30:02.0892767+02:00</CreateTime>
+    <AssociateTime xsi:nil="true" />
+    <PickUpTime xsi:nil="true" />
+    <DeliverTime xsi:nil="true" />
+  </Parcel>
 </ArrayOfParcel>
