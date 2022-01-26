@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="AddDrone" Height="591" Width="auto"
-        Closing="DataWindow_Closing">
+        Closing="dataWindowClosing">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="400"/>
@@ -17,7 +17,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button x:Name="close" Content="Close The Window" Click="Close_Click" Grid.ColumnSpan="2" Height="30" Background="Orange" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Button x:Name="close" Content="Close The Window" Click="closeClick" Grid.ColumnSpan="2" Height="30" Background="Orange" HorizontalAlignment="Right" VerticalAlignment="Top"/>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -46,15 +46,15 @@
             <Label Grid.Row="7" x:Name="lblParcel" Content="Parcel In Transfer" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Label Grid.Row="8" Content="Location:" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
 
-            <TextBox x:Name="txtId"    Text="{Binding  Id}"    Grid.Row="1" Grid.Column="1" Margin="10" TextChanged="IdColor"/>
-            <TextBox x:Name="txtModel" Text="{Binding  Model}" Grid.Row="2" Grid.Column="1" Margin="10" TextChanged="ModelColor"/>
+            <TextBox x:Name="txtId"    Text="{Binding  Id}"    Grid.Row="1" Grid.Column="1" Margin="10" TextChanged="idColor"/>
+            <TextBox x:Name="txtModel" Text="{Binding  Model}" Grid.Row="2" Grid.Column="1" Margin="10" TextChanged="modelColor"/>
             <ProgressBar x:Name="prgrsBattery" Grid.Row="3" Grid.Column="1" Margin="10" Height="22" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"  
                      Minimum="0" Maximum="100" Value="{Binding  Battery}" Background="WhiteSmoke" BorderBrush="LightGray"
                      Foreground="{Binding Path=Battery, Converter={StaticResource batteryToColorConverter}}" Visibility="{Binding ElementName=lblBattery, Path=Visibility}"/>
             <Label x:Name="txtBattery" Content="{Binding  Battery}" ContentStringFormat="{}{0:0}%" Visibility="{Binding ElementName=lblStatus, Path=Visibility}" Grid.Column="1" Grid.Row="3" Margin="10" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"/>
             <TextBox  x:Name="txtStatus"  Text="{Binding  Status}" Grid.Row="4" Grid.Column="1" Margin="10" IsEnabled="false" Visibility="{Binding ElementName=lblBattery, Path=Visibility}"/>
             <ComboBox x:Name="txtWeight"  Text="{Binding  MaxWeight}" Grid.Row="5" Grid.Column="1" Margin="10"/>
-            <ComboBox x:Name="txtStationId" Grid.Row="6" Grid.Column="1" Margin="10" SelectionChanged="txtStationId_SelectionChanged" Visibility="{Binding ElementName=lblStation, Path=Visibility}"/>
+            <ComboBox x:Name="txtStationId" Grid.Row="6" Grid.Column="1" Margin="10" SelectionChanged="txtStationIdSelectionChanged" Visibility="{Binding ElementName=lblStation, Path=Visibility}"/>
             <TextBox  x:Name="txtParcel"  Text="{Binding  ParcelInT.Id}" Grid.Row="7" Grid.Column="1" Margin="10" IsEnabled="false" Visibility="{Binding ElementName=lblParcel, Path=Visibility}"/>
             <TextBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="8" Text="{Binding  CurrentLocation}" IsEnabled="false"  Width="auto" Height="auto"/>
             <Grid Grid.Column="1" Grid.Row="8">
@@ -72,13 +72,13 @@
                 <Label x:Name="txtLongi" Content="{Binding  CurrentLocation.Longi}" ContentStringFormat="{}{0:0.000}" Grid.Row="1" Grid.Column="1" Margin="10" IsEnabled="false"/>
             </Grid>
             
-            <Button x:Name="add" Content="Add The&#xD;&#xA;Drone" Grid.Row="9"  Click="AddDrone_Click"
+            <Button x:Name="add" Content="Add The&#xD;&#xA;Drone" Grid.Row="9"  Click="addDrone_Click"
                 HorizontalAlignment="Left" VerticalAlignment="Top" Width="107" Height="60" Grid.ColumnSpan="2" Margin="146,29,0,0"/>
             <Button x:Name="options" Content="options" Grid.Row="9" Grid.Column="1"
                 HorizontalAlignment="Left" VerticalAlignment="Top" Width="107" Height="60" Margin="118,31,0,0"/>
-            <Button x:Name="update" Content="update the&#xD;&#xA;model" Click="UpdateDroneModel" Grid.Row="9"
+            <Button x:Name="update" Content="update the&#xD;&#xA;model" Click="updateDroneModel" Grid.Row="9"
                 HorizontalAlignment="Left" VerticalAlignment="Top" Width="106" Height="60" Margin="26,31,0,0"/>
-            <Button x:Name="charge" Content="send drone&#xD;&#xA;to charge" Click="SendDroneToCharge" Grid.Row="9" 
+            <Button x:Name="charge" Content="send drone&#xD;&#xA;to charge" Click="sendDroneToCharge" Grid.Row="9" 
                 HorizontalAlignment="Left" VerticalAlignment="Top" Width="107" Height="60" Grid.ColumnSpan="2" Margin="146,31,0,0"/>
             <Button x:Name="btnSimulator"  Content="automatic state" HorizontalAlignment="Center" Height="45" Grid.Row="9" VerticalAlignment="Bottom" Margin="0,0,0,20" Width="198" Style="{StaticResource brownButton}" Grid.ColumnSpan="2" Click="simulator"/>
 
