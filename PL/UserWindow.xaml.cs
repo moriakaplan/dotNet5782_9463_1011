@@ -42,12 +42,7 @@ namespace PL
 
         private void refresh()
         {
-            DataContext = blObject.GetCustomer(int.Parse(txtId.Content.ToString()));
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
+            DataContext = blObject.GetCustomer((DataContext as Customer).Id);
         }
 
         private void updateCustomer(object sender, RoutedEventArgs e)
@@ -65,13 +60,11 @@ namespace PL
         {
             
             new ParcelWindow(blObject, ((BO.ParcelInCustomer)ParcelsTo.SelectedItem).Id).ShowDialog();
-            
+            refresh();
         }
         private void ViewParcelFrom(object sender, MouseButtonEventArgs e)
         {
-            
             new ParcelWindow(blObject, ((BO.ParcelInCustomer)ParcelsFrom.SelectedItem).Id).ShowDialog();
-            
         }
        
     }
