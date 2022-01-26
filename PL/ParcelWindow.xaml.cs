@@ -22,33 +22,69 @@ namespace PL
     /// <summary>
     /// Interaction logic for ParcelWindow.xaml
     /// </summary>
-    public partial class ParcelWindow : Window 
+    public partial class ParcelWindow : Window
     {
         IBL blObject;
-        public ParcelWindow(IBL obj, int Id)//update
+        bool isUser;
+        int userId;
+        public ParcelWindow(IBL obj, int Id, bool flag = false)//update
         {
-            InitializeComponent();
-            blObject = obj;
-            InitializeComponent();
-            grid.IsEnabled = false;
-            delete.IsEnabled = true;
-            timesVisibility.Visibility = Visibility.Visible;
-
-            Parcel parcel = blObject.GetParcel(Id);
-            DataContext = parcel;
-            txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
-            var customersId = blObject.GetCustomersList().Select(x => x.Id);
-            txtSender.ItemsSource = customersId;
-            txtTarget.ItemsSource = customersId;
-            if (parcel.Drone != null) delete.Visibility = Visibility.Hidden;
-            add.Visibility = Visibility.Hidden;
-            if (txtDrone.Text == "")
+            if (!flag)
             {
-                btnDrone.Visibility = Visibility.Collapsed;
-                txtDrone.Visibility = Visibility.Collapsed;
-                lblDrone.Visibility = Visibility.Collapsed;
+                isUser = false;
+                InitializeComponent();
+                blObject = obj;
+                InitializeComponent();
+                grid.IsEnabled = false;
+                delete.IsEnabled = true;
+                timesVisibility.Visibility = Visibility.Visible;
+
+                Parcel parcel = blObject.GetParcel(Id);
+                DataContext = parcel;
+                txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+                txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
+                var customersId = blObject.GetCustomersList().Select(x => x.Id);
+                txtSender.ItemsSource = customersId;
+                txtTarget.ItemsSource = customersId;
+                if (parcel.Drone != null) delete.Visibility = Visibility.Hidden;
+                add.Visibility = Visibility.Hidden;
+                if (txtDrone.Text == "")
+                {
+                    btnDrone.Visibility = Visibility.Collapsed;
+                    txtDrone.Visibility = Visibility.Collapsed;
+                    lblDrone.Visibility = Visibility.Collapsed;
+                }
             }
+            else
+            {
+                isUser = true;
+                InitializeComponent();
+
+                blObject = obj;
+                timesVisibility.Visibility = Visibility.Collapsed;
+                lblDrone.Visibility = Visibility.Collapsed;
+                txtDrone.Visibility = Visibility.Collapsed;
+                btnDrone.Visibility = Visibility.Collapsed;
+                delete.Visibility = Visibility.Collapsed;
+                btnSender.Visibility = Visibility.Collapsed;
+                txtSender.Visibility = Visibility.Collapsed;
+                lblSender.Visibility = Visibility.Collapsed;
+
+
+                txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+                txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
+                IEnumerable<int> /*var*/ customersId = blObject.GetCustomersList().Select(x => x.Id);
+                txtSender.ItemsSource = customersId;
+                //לתפוס חריגה
+                txtSender.SelectedItem = Id/*id.ToString()*/ /*customersId.Where(x => x == id).SingleOrDefault()*/;
+                //לתפוס חריגה
+                txtTarget.ItemsSource = customersId;
+                userId = Id;
+                //txtSender.IsEnabled = false;
+                InitializeComponent();
+
+            }
+
         }
 
         public ParcelWindow(IBL obj) //add, need to add option to add from the user
@@ -56,7 +92,7 @@ namespace PL
             InitializeComponent();
             blObject = obj;
             timesVisibility.Visibility = Visibility.Collapsed;
-
+            isUser = false;
             lblDrone.Visibility = Visibility.Collapsed;
             txtDrone.Visibility = Visibility.Collapsed;
             btnDrone.Visibility = Visibility.Collapsed;
@@ -67,34 +103,34 @@ namespace PL
             var customersId = blObject.GetCustomersList().Select(x => x.Id);
             txtSender.ItemsSource = customersId;
             txtTarget.ItemsSource = customersId;
-            
-        }
-
-        public ParcelWindow(IBL obj, int id, bool flag)
-        {
-            InitializeComponent();
-
-            blObject = obj;
-            timesVisibility.Visibility = Visibility.Collapsed;
-            lblDrone.Visibility = Visibility.Collapsed;
-            txtDrone.Visibility = Visibility.Collapsed;
-            btnDrone.Visibility = Visibility.Collapsed;
-            delete.Visibility = Visibility.Collapsed;
-            btnSender.Visibility = Visibility.Collapsed;
-
-            txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
-            IEnumerable<int> /*var*/ customersId = blObject.GetCustomersList().Select(x => x.Id);
-            txtSender.ItemsSource = customersId;
-            //לתפוס חריגה
-            txtSender.SelectedItem = /*id.ToString()*/ customersId.Where(x => x == id).SingleOrDefault();
-            //לתפוס חריגה
-            txtTarget.ItemsSource = customersId;
-            txtSender.IsEnabled = false;
-            InitializeComponent();
-
 
         }
+
+        //public ParcelWindow(IBL obj, int id, bool flag)
+        //{
+        //    InitializeComponent();
+
+        //    blObject = obj;
+        //    timesVisibility.Visibility = Visibility.Collapsed;
+        //    lblDrone.Visibility = Visibility.Collapsed;
+        //    txtDrone.Visibility = Visibility.Collapsed;
+        //    btnDrone.Visibility = Visibility.Collapsed;
+        //    delete.Visibility = Visibility.Collapsed;
+        //    btnSender.Visibility = Visibility.Collapsed;
+
+        //    txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+        //    txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
+        //    IEnumerable<int> /*var*/ customersId = blObject.GetCustomersList().Select(x => x.Id);
+        //    txtSender.ItemsSource = customersId;
+        //    //לתפוס חריגה
+        //    txtSender.SelectedItem =  id/*id.ToString()*/ /*customersId.Where(x => x == id).SingleOrDefault()*/;
+        //    //לתפוס חריגה
+        //    txtTarget.ItemsSource = customersId;
+        //    txtSender.IsEnabled = false;
+        //    InitializeComponent();
+
+
+        //}
 
         private void viewSender(object sender, RoutedEventArgs e)
         {
@@ -113,28 +149,38 @@ namespace PL
 
         private void AddParcel(object sender, RoutedEventArgs e)
         {
-            int id = blObject.AddParcelToDelivery((int)txtSender.SelectedItem, (int)txtTarget.SelectedItem, (WeightCategories)txtWeight.SelectedItem, (Priorities)txtPriority.SelectedItem);
-            MessageBox.Show($"your parcel added successfuly and got the number {id}");
+            if(!isUser)
+            {
+                int id = blObject.AddParcelToDelivery((int)txtSender.SelectedItem, (int)txtTarget.SelectedItem, (WeightCategories)txtWeight.SelectedItem, (Priorities)txtPriority.SelectedItem);
+                MessageBox.Show($"your parcel added successfuly and got the number {id}");
+            }
+            else
+            {
+                int id = blObject.AddParcelToDelivery(userId, (int)txtTarget.SelectedItem, (WeightCategories)txtWeight.SelectedItem, (Priorities)txtPriority.SelectedItem);
+                MessageBox.Show($"your parcel added successfuly and got the number {id}");
+            }
             this.Close();
         }
 
-        //private void txtSender_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    //txtTarget.ItemsSource = blObject.GetCustomersList().Select(x => x.Id).Where(x => x != (int)txtSender.SelectedItem);
-        //    //txtSenderName.Content = blObject.GetCustomer(int.Parse(txtSender.Text)).Name;
-        //}
+        private void txtSender_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!isUser)
+                txtTarget.ItemsSource = blObject.GetCustomersList().Select(x => x.Id).Where(x => x != (int)txtSender.SelectedItem);
+            //txtSenderName.Content = blObject.GetCustomer(int.Parse(txtSender.Text)).Name;
+        }
 
-        //private void txtTarget_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    //txtSender.ItemsSource = blObject.GetCustomersList().Select(x => x.Id).Where(x => x != (int)txtTarget.SelectedItem);
-        //    //txtTargetName.Content = blObject.GetCustomer(int.Parse(txtTarget.Text)).Name;
-        //}
+        private void txtTarget_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!isUser)
+                txtSender.ItemsSource = blObject.GetCustomersList().Select(x => x.Id).Where(x => x != (int)txtTarget.SelectedItem);
+            //txtTargetName.Content = blObject.GetCustomer(int.Parse(txtTarget.Text)).Name;
+        }
 
         private void DeleteParcel(object sender, RoutedEventArgs e)
         {
-             MessageBoxResult mb= MessageBox.Show("Do you realy want to delete the parcel?", "delete parcel", MessageBoxButton.YesNo);
-             if (mb == MessageBoxResult.Yes)
-             {
+            MessageBoxResult mb = MessageBox.Show("Do you realy want to delete the parcel?", "delete parcel", MessageBoxButton.YesNo);
+            if (mb == MessageBoxResult.Yes)
+            {
                 try
                 {
 
