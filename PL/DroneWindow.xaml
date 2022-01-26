@@ -61,8 +61,8 @@
                     <ColumnDefinition Width="80"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="Lattitude::" Grid.Row="0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
-                <Label Content="longitude:"  Grid.Row="1" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                <Label Content="Lattitude:" Grid.Row="0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                <Label Content="Longitude:"  Grid.Row="1" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
                 <Label x:Name="txtLatti" Content="{Binding  CurrentLocation.Latti}" ContentStringFormat="{}{0:0.000}" Grid.Row="0" Grid.Column="1" Margin="10" IsEnabled="false"/>
                 <Label x:Name="txtLongi" Content="{Binding  CurrentLocation.Longi}" ContentStringFormat="{}{0:0.000}" Grid.Row="1" Grid.Column="1" Margin="10" IsEnabled="false"/>
             </Grid>
@@ -102,5 +102,7 @@
             <Label Content="{Binding DestinationPlace }" Grid.Column="1" HorizontalAlignment="Left" Margin="15,290,0,0" VerticalAlignment="Top"/>
             <Label Content="{Binding TransportDistance}" Grid.Column="1" HorizontalAlignment="Left" Margin="15,336,0,0" VerticalAlignment="Top"/>
         </Grid>
+        <TextBlock x:Name="noParcelsNote" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Foreground="Red"
+                   Text="There is no available package&#xD;&#xA;to associate the drone to       .&#xD;&#xA;You can wait for a package to be added&#xD;&#xA;or stop the simulation."/>
     </Grid>
 </Window>

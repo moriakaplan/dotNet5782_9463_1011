@@ -448,6 +448,7 @@ namespace PL
         private void refresh()//just for action state
         {
             Drone drone;
+            noParcelsNote.Visibility = Visibility.Collapsed;
             lock (blObject)
             {
                 drone = blObject.GetDrone(int.Parse(txtId.Text));
@@ -459,7 +460,11 @@ namespace PL
             options.Visibility = myVisibility;
             update.Visibility = myVisibility;
             charge.Visibility = Visibility.Hidden;
-            if (myVisibility == Visibility.Hidden) return;
+            if (myVisibility == Visibility.Hidden)
+            {
+                if (drone.Status == DroneStatus.Available) noParcelsNote.Visibility = Visibility.Visible;
+                return;
+            }
             options.Click -= SendDroneToDelivery;
             options.Click -= ReleaseDroneFromCharge;
             options.Click -= PickUpParcel;

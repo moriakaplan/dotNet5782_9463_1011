@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="SignWindow" Height="450" Width="366"
+        Title="SignWindow" Height="450" Width="390" MinWidth="370"
         Closing="DataWindow_Closing"
-        Background="#b5cdd7"
+        Background="#d4e7ee"
         Icon="\Images\droneDelivery2.ico">
     <!--<Window.Background>
         <ImageBrush ImageSource="\Images\background2.jpg"/>
@@ -24,20 +24,19 @@
         <Label Content="choose a username" HorizontalAlignment="Left" Margin="42,164,0,0" VerticalAlignment="Top" Width="auto"/>
         <Label Content="choose a password" HorizontalAlignment="Left" Margin="42,198,0,0" VerticalAlignment="Top" Width="auto"/>
         <Label x:Name="lblManager" Content="enter the managment password" HorizontalAlignment="Left" Margin="42,128,0,0" VerticalAlignment="Top" Width="auto"/>
-        <TextBox x:Name="txtId" HorizontalAlignment="Left" Margin="98,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="214"/>
+        <TextBox x:Name="txtId" HorizontalAlignment="Left" Margin="98,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="216"/>
         <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="188,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
         <TextBox x:Name="txtPassword" TextChanged="passChange" HorizontalAlignment="Left" Margin="188,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
         <TextBox x:Name="txtManager" Text="8 digits" HorizontalAlignment="Left" Margin="232,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82"/>
-        <Label x:Name="help" Content="?" HorizontalAlignment="Left" Margin="319,131,0,0" VerticalAlignment="Top" Foreground="Gray">
+        <Label x:Name="help" Content="?" HorizontalAlignment="Left" Margin="314,129,0,0" VerticalAlignment="Top" Foreground="Gray"/>
+        <Label Content="the signing is just&#xD;&#xA;for customers&#xD;&#xA;of the company" Foreground="gray" FontSize="10" Width="auto" Height="auto" Margin="282,90,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Center">
             <Label.Style>
                 <Style TargetType="Label">
+                    <Setter Property="Visibility" Value="Hidden"/>
                     <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Content" Value="the signing is just for customers of the company.&#xD;&#xA;if you are not please call the company and foin its customers" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="False">
-                            <Setter Property="Content" Value="?" />
-                        </Trigger>
+                        <DataTrigger Binding="{Binding ElementName=help, Path=IsMouseOver}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Label.Style>
