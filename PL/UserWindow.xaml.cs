@@ -55,17 +55,18 @@ namespace PL
             new MainWindow().Show();
             this.Close();
         }
-
-        private void ViewParcelTo(object sender, MouseButtonEventArgs e)
+        /// <summary>
+        /// open the window of specific parcel that the user clicked on (that he sent or got).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ViewParcel(object sender, MouseButtonEventArgs e)
         {
-            
-            new ParcelWindow(blObject, ((BO.ParcelInCustomer)ParcelsTo.SelectedItem).Id).ShowDialog();
-            refresh();
+            try { 
+                new ParcelWindow(blObject, ((sender as DataGrid).SelectedItem as ParcelInCustomer).Id).ShowDialog(); 
+                refresh();  
+            }
+            catch { };
         }
-        private void ViewParcelFrom(object sender, MouseButtonEventArgs e)
-        {
-            new ParcelWindow(blObject, ((BO.ParcelInCustomer)ParcelsFrom.SelectedItem).Id).ShowDialog();
-        }
-       
     }
 }

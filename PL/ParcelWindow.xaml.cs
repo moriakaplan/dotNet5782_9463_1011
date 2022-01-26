@@ -25,78 +25,64 @@ namespace PL
     public partial class ParcelWindow : Window
     {
         IBL blObject;
-        bool isUser;
         int userId;
-        public ParcelWindow(IBL obj, int Id, bool flag = false)//update
+
+        #region constructors
+        public ParcelWindow(IBL obj, int Id)//update
         {
-            if (!flag)
-            {
-                isUser = false;
-                InitializeComponent();
-                blObject = obj;
-                InitializeComponent();
-                grid.IsEnabled = false;
-                options.IsEnabled = true;
-                timesVisibility.Visibility = Visibility.Visible;
+            blObject = obj;
+            InitializeComponent();
+            grid.IsEnabled = false;
+            options.IsEnabled = true;
+            //timesVisibility.Visibility = Visibility.Visible;
 
-                Parcel parcel = blObject.GetParcel(Id);
-                DataContext = parcel;
-                txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-                txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
-                var customersId = blObject.GetCustomersList().Select(x => x.Id);
-                txtSender.ItemsSource = customersId;
-                txtTarget.ItemsSource = customersId;
-               // if (parcel.Drone != null) options.Visibility = Visibility.Hidden;
-                add.Visibility = Visibility.Hidden;
-                if (txtDrone.Text == "")
-                {
-                    btnDrone.Visibility = Visibility.Collapsed;
-                    txtDrone.Visibility = Visibility.Collapsed;
-                    lblDrone.Visibility = Visibility.Collapsed;
-                }
-                refresh();
-
-            }
-            else
-            {
-                isUser = true;
-                InitializeComponent();
-
-                blObject = obj;
-                timesVisibility.Visibility = Visibility.Collapsed;
-                lblDrone.Visibility = Visibility.Collapsed;
-                txtDrone.Visibility = Visibility.Collapsed;
-                btnDrone.Visibility = Visibility.Collapsed;
-                options.Visibility = Visibility.Collapsed;
-                btnSender.Visibility = Visibility.Collapsed;
-                txtSender.Visibility = Visibility.Collapsed;
-                lblSender.Visibility = Visibility.Collapsed;
-
-
-                txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-                txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
-                IEnumerable<int> /*var*/ customersId = blObject.GetCustomersList().Select(x => x.Id);
-                txtSender.ItemsSource = customersId;
-                //לתפוס חריגה
-                txtSender.SelectedItem = Id/*id.ToString()*/ /*customersId.Where(x => x == id).SingleOrDefault()*/;
-                //לתפוס חריגה
-                txtTarget.ItemsSource = customersId;
-                userId = Id;
-                //txtSender.IsEnabled = false;
-                InitializeComponent();
-
-            }
+            Parcel parcel = blObject.GetParcel(Id);
+            DataContext = parcel;
+            txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
+            var customersId = blObject.GetCustomersList().Select(x => x.Id);
+            txtSender.ItemsSource = customersId;
+            txtTarget.ItemsSource = customersId;
+            // if (parcel.Drone != null) options.Visibility = Visibility.Hidden;
+            add.Visibility = Visibility.Hidden;
+            //if (txtDrone.Text == "")
+            //{
+            //    lblDrone.Visibility = Visibility.Collapsed;
+            //}
+            refresh();
         }
-
-        public ParcelWindow(IBL obj) //add, need to add option to add from the user
+        public ParcelWindow(IBL obj, int senderId, bool flag) //adding from customer
         {
             InitializeComponent();
             blObject = obj;
-            timesVisibility.Visibility = Visibility.Collapsed;
-            isUser = false;
+            //timesVisibility.Visibility = Visibility.Collapsed;
+            hiddeTimes();
+            lblId.Visibility = Visibility.Hidden;
             lblDrone.Visibility = Visibility.Collapsed;
-            txtDrone.Visibility = Visibility.Collapsed;
-            btnDrone.Visibility = Visibility.Collapsed;
+            //txtDrone.Visibility = Visibility.Collapsed;
+            //btnDrone.Visibility = Visibility.Collapsed;
+            options.Visibility = Visibility.Collapsed;
+            //btnSender.Visibility = Visibility.Collapsed;
+            //txtSender.Visibility = Visibility.Collapsed;
+            lblSender.Visibility = Visibility.Collapsed;
+
+
+            txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
+            userId = senderId;
+            txtTarget.ItemsSource = blObject.GetCustomersList().Select(x => x.Id).Where(x => x != senderId);
+            InitializeComponent();
+        }
+        public ParcelWindow(IBL obj) //adding
+        {
+            InitializeComponent();
+            blObject = obj;
+            lblId.Visibility = Visibility.Hidden;
+            //timesVisibility.Visibility = Visibility.Collapsed;
+            hiddeTimes();
+            lblDrone.Visibility = Visibility.Collapsed;
+            //txtDrone.Visibility = Visibility.Collapsed;
+            //btnDrone.Visibility = Visibility.Collapsed;
             options.Visibility = Visibility.Collapsed;
 
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
@@ -105,6 +91,15 @@ namespace PL
             txtSender.ItemsSource = customersId;
             txtTarget.ItemsSource = customersId;
 
+        }
+        #endregion
+
+        private void hiddeTimes()
+        {
+            lblCreateTime.Visibility = Visibility.Collapsed;
+            lblAssociateTime.Visibility = Visibility.Collapsed;
+            lblPickUpTime.Visibility = Visibility.Collapsed;
+            lblDeliverTime.Visibility = Visibility.Collapsed;
         }
 
         private void refresh()//just for action state
@@ -115,64 +110,34 @@ namespace PL
                 parcel = blObject.GetParcel((DataContext as Parcel).Id);
                 DataContext = parcel;
             }
-
+            options.Visibility = Visibility;
+            options.Click -= pickUpParcel;
+            options.Click -= deliverParcel;
+            options.Click -= DeleteParcel;
             if (parcel.AssociateTime == null)
             {
-                lblPickUpTime.Visibility = Visibility.Collapsed;
-                txtPickUpTime.Visibility = Visibility.Collapsed;
-                lblDeliverTime.Visibility = Visibility.Collapsed;
-                txtDeliverTime.Visibility = Visibility.Collapsed;
-                lblAssociateTime.Visibility = Visibility.Collapsed;
-                txtAssociateTime.Visibility= Visibility.Collapsed;
-                options.Content = "delete";
-                options.Click -= pickUpParcel;
-                options.Click -= deliverParcel;
-                options.Click -= DeleteParcel;
-                
+                options.Content = "delete the parcel";
                 options.Click += DeleteParcel;
             }
             else
             {
                 if(parcel.PickUpTime==null)
                 {
-                    lblPickUpTime.Visibility = Visibility.Collapsed;
-                    txtPickUpTime.Visibility = Visibility.Collapsed;
-                    lblDeliverTime.Visibility = Visibility.Collapsed;
-                    txtDeliverTime.Visibility = Visibility.Collapsed;
                     options.Content = "pick the parcel";
-                    options.Click -= pickUpParcel;
-                    options.Click -= deliverParcel;
-                    options.Click -= DeleteParcel;
-
                     options.Click += pickUpParcel;
                 }
                 else
                 {
                     if (parcel.DeliverTime == null)
                     {
-                        lblPickUpTime.Visibility = Visibility.Visible;
-                        txtPickUpTime.Visibility = Visibility.Visible;
-                        lblDeliverTime.Visibility = Visibility.Collapsed;
-                        txtDeliverTime.Visibility = Visibility.Collapsed;
                         options.Content = "deliver the parcel";
-                        options.Click -= pickUpParcel;
-                        options.Click -= deliverParcel;
-                        options.Click -= DeleteParcel;
-
                         options.Click += deliverParcel;
                     }
                     else
                     {
-                        lblPickUpTime.Visibility = Visibility.Visible;
-                        txtPickUpTime.Visibility = Visibility.Visible;
-                        lblDeliverTime.Visibility = Visibility.Visible;
-                        txtDeliverTime.Visibility = Visibility.Visible;
-                        lblAssociateTime.Visibility = Visibility.Visible;
-                        txtAssociateTime.Visibility = Visibility.Visible;
                         options.Visibility = Visibility.Collapsed;
                     }
                 }
-               
             }
         }
         private void deliverParcel(object sender, RoutedEventArgs e)
@@ -197,7 +162,7 @@ namespace PL
                 }
                 catch (DroneCantTakeParcelException)
                 {
-                    MessageBox.Show("drone cant deliver the parcel because its battery is not enugh. try to send the drone to charge");
+                    MessageBox.Show("the drone cant deliver the parcel because its battery is not enugh. try to send the drone to charge");
                     return;
                 }
                 catch (TransferException)
@@ -300,29 +265,29 @@ namespace PL
 
         private void AddParcel(object sender, RoutedEventArgs e)
         {
-            if(!isUser)
+            int id;
+            if (txtSender.Visibility==Visibility.Visible)
             {
-                int id = blObject.AddParcelToDelivery((int)txtSender.SelectedItem, (int)txtTarget.SelectedItem, (WeightCategories)txtWeight.SelectedItem, (Priorities)txtPriority.SelectedItem);
-                MessageBox.Show($"your parcel added successfuly and got the number {id}");
+                id = blObject.AddParcelToDelivery((int)txtSender.SelectedItem, (int)txtTarget.SelectedItem, (WeightCategories)txtWeight.SelectedItem, (Priorities)txtPriority.SelectedItem);
             }
             else
             {
-                int id = blObject.AddParcelToDelivery(userId, (int)txtTarget.SelectedItem, (WeightCategories)txtWeight.SelectedItem, (Priorities)txtPriority.SelectedItem);
-                MessageBox.Show($"your parcel added successfuly and got the number {id}");
+                id = blObject.AddParcelToDelivery(userId, (int)txtTarget.SelectedItem, (WeightCategories)txtWeight.SelectedItem, (Priorities)txtPriority.SelectedItem);
             }
+            MessageBox.Show($"your parcel added successfuly and got the number {id}");
             this.Close();
         }
 
         private void txtSender_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!isUser)
+            if (txtSender.Visibility == Visibility.Visible)
                 txtTarget.ItemsSource = blObject.GetCustomersList().Select(x => x.Id).Where(x => x != (int)txtSender.SelectedItem);
             //txtSenderName.Content = blObject.GetCustomer(int.Parse(txtSender.Text)).Name;
         }
 
         private void txtTarget_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!isUser)
+            if (txtSender.Visibility == Visibility.Visible)
                 txtSender.ItemsSource = blObject.GetCustomersList().Select(x => x.Id).Where(x => x != (int)txtTarget.SelectedItem);
             //txtTargetName.Content = blObject.GetCustomer(int.Parse(txtTarget.Text)).Name;
         }

@@ -31,12 +31,6 @@ namespace PL
             txtId.IsEnabled = false;
             txtLatti.IsEnabled = false;
             txtLongi.IsEnabled = false;
-            //locationGrid.DataContext = st.Location;
-            //txtId.Text = st.Id.ToString();
-            //txtName.Text = st.Name;
-            //txtAvailableChargeSlots.Text = st.AvailableChargeSlots.ToString();
-            //txtLatti.Text = st.Location.Latti.ToString();
-            //txtLongi.Text = st.Location.Longi.ToString();
             gridDronesInCharge.DataContext = st.DronesInCharge;
             options.Content = "Update Station Data";
             options.Click -= AddStation;
@@ -137,11 +131,13 @@ namespace PL
             new DroneWindow(blObject, ((BO.DroneInCharge)gridDronesInCharge.SelectedItem).Id).ShowDialog();
         }
 
-        private void txtDronesInCharge_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void chargeSlotsColor(object sender, TextChangedEventArgs e)
         {
-
+            int val;
+            if(int.TryParse(txtAvailableChargeSlots.Text, out val) && val >= 0)
+                txtAvailableChargeSlots.Foreground = Brushes.Green;
+            else
+                txtAvailableChargeSlots.Foreground = Brushes.Red;
         }
-
-        
     }
 }

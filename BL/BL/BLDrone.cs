@@ -202,9 +202,13 @@ namespace BL
         public IEnumerable<DroneToList> GetDronesList(Func<DroneToList, bool> pre = null)
         {
             if (pre != null)
-                return lstdrn.Where(pre);
+                return lstdrn.Where(pre)
+                    .OrderBy(x => x.Id)
+                    .OrderBy(x => x.Status);
             else
-                return lstdrn.Select(x => x);
+                return lstdrn.Select(x => x)
+                    .OrderBy(x => x.Id)
+                    .OrderBy(x => x.Status);
         }
         
         internal IEnumerable<DO.DroneCharge> GetDroneChargesList(int stationId)

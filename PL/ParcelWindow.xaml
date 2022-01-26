@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ParcelWindow" Height="525" Width="500"
+        Title="ParcelWindow" Height="auto" Width="500"
         Icon="\Images\droneDelivery2.ico">
     <!--<Window.Resources>
         <TextBlock x:Key="myVisibility" Visibility="Visible"/>
@@ -15,7 +15,6 @@
             x:Key="BatteryToColorConverter"/>
     </Window.Resources>-->
     <Grid Height="auto">
-        <Label x:Name="timesVisibility"/>
         <Grid x:Name="grid" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>
@@ -32,43 +31,34 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
-            <Label x:Name="lblId" Content="Id:" Visibility="{Binding ElementName=timesVisibility, Path=Visibility}" Grid.Row="0" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label x:Name="lblId" Content="Id:" Grid.Row="0" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
             <!--Visibility="{Binding Source={DynamicResource visibility}, Path=Visibility}"-->
             <Label x:Name="lblSender" Content="Sender:" Grid.Row="1" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
             <Label x:Name="lblTarget" Content="Target:" Grid.Row="2" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-            <Label x:Name="lblDrone" Content="Drone:" Grid.Row="3" HorizontalAlignment="Center" VerticalContentAlignment="Center" Visibility="{Binding ElementName=txtDrone, Path=Visibility}"/>
+            <Label x:Name="lblDrone" Content="Drone:" Grid.Row="3" HorizontalAlignment="Center" VerticalContentAlignment="Center" Visibility="{Binding Drone, Converter={StaticResource nullableToVisibilityConverter}}"/>
             <Label x:Name="lblWeight" Content="Weight:" Grid.Row="4" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
             <Label x:Name="lblPriority" Content="Priority:" Grid.Row="5" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-            <Label x:Name="lblCreateTime" Content="Create time:" Visibility="{Binding ElementName=timesVisibility, Path=Visibility}" 
+            <Label x:Name="lblCreateTime" Content="Create time:" Visibility="{Binding CreateTime, Converter={StaticResource nullableToVisibilityConverter}}" 
                    Grid.Row="6" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-            <Label x:Name="lblAssociateTime" Content="Associate time:" Visibility="{Binding ElementName=timesVisibility, Path=Visibility}"
+            <Label x:Name="lblAssociateTime" Content="Associate time:" Visibility="{Binding AssociateTime, Converter={StaticResource nullableToVisibilityConverter}}"
                    Grid.Row="7" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-            <Label x:Name="lblPickUpTime" Content="Pick up time:" Visibility="{Binding ElementName=timesVisibility, Path=Visibility}"
+            <Label x:Name="lblPickUpTime" Content="Pick up time:" Visibility="{Binding PickUpTime, Converter={StaticResource nullableToVisibilityConverter}}"
                    Grid.Row="8" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-            <Label x:Name="lblDeliverTime" Content="Deliver time:" Visibility="{Binding ElementName=timesVisibility, Path=Visibility}"
+            <Label x:Name="lblDeliverTime" Content="Deliver time:" Visibility="{Binding CreateTime, Converter={StaticResource nullableToVisibilityConverter}}"
                    Grid.Row="9" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
 
-            <TextBox x:Name="txtId" Text="{Binding  Path=Id}" Visibility="{Binding ElementName=timesVisibility, Path=Visibility}" Grid.Row="0" Grid.Column="1" Margin="10" />
-            <ComboBox x:Name="txtSender" Text="{Binding  Path=Sender.Id}" Grid.Row="1" Grid.Column="1" Margin="10,10,200,10" MouseDoubleClick="viewSender" /><!--SelectionChanged="txtSender_SelectionChanged"-->
-            <ComboBox x:Name="txtTarget" Text="{Binding  Path=Target.Id}" Grid.Row="2" Grid.Column="1" Margin="10,10,200,10" MouseDoubleClick="viewTarget" /><!--SelectionChanged="txtTarget_SelectionChanged"--> 
-            <TextBox x:Name="txtDrone" Text="{Binding  Path=Drone.Id}" Grid.Row="3" Grid.Column="1" Margin="10,10,200,10">
-                <TextBox.Style>
-                    <Style TargetType="TextBox">
-                        <Style.Triggers>
-                            <Trigger Property="Text" Value="">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Style>
-            </TextBox>
-            <ComboBox x:Name="txtWeight" Text="{Binding  Weight}" Grid.Row="4" Grid.Column="1" Margin="10" />
-            <ComboBox x:Name="txtPriority" Text="{Binding  Priority}" Grid.Row="5" Grid.Column="1" Margin="10" />
-            <TextBox x:Name="txtCreateTime" Text="{Binding  CreateTime}" Visibility="{Binding ElementName=timesVisibility, Path=Visibility}" Grid.Row="6" Grid.Column="1" Margin="10" />
-            <TextBox x:Name="txtAssociateTime" Text="{Binding  AssociateTime}" Visibility="{Binding ElementName=timesVisibility, Path=Visibility}" Grid.Row="7" Grid.Column="1" Margin="10" />
-            <TextBox x:Name="txtPickUpTime" Text="{Binding  PickUpTime}" Visibility="{Binding ElementName=timesVisibility, Path=Visibility}" Grid.Row="8" Grid.Column="1" Margin="10" />
-            <TextBox x:Name="txtDeliverTime" Text="{Binding  DeliverTime}" Visibility="{Binding ElementName=timesVisibility, Path=Visibility}" Grid.Row="9" Grid.Column="1" Margin="10" />
+            <TextBox  x:Name="txtId"     Text="{Binding Id}" Visibility="{Binding ElementName=lblId, Path=Visibility}" Grid.Row="0" Grid.Column="1" Margin="10" />
+            <ComboBox x:Name="txtSender" Text="{Binding Sender.Id}" Grid.Row="1" Grid.Column="1" Margin="10,10,200,10" MouseDoubleClick="viewSender" Visibility="{Binding ElementName=lblSender, Path=Visibility}" SelectionChanged="txtSender_SelectionChanged"/>
+            <ComboBox x:Name="txtTarget" Text="{Binding Target.Id}" Grid.Row="2" Grid.Column="1" Margin="10,10,200,10" MouseDoubleClick="viewTarget" SelectionChanged="txtTarget_SelectionChanged"/>
+            <TextBox  x:Name="txtDrone"  Text="{Binding Drone.Id}" Grid.Row="3" Grid.Column="1" Margin="10,10,200,10" Visibility="{Binding ElementName=lblDrone, Path=Visibility}"/>
+            <ComboBox x:Name="txtWeight" Text="{Binding Weight}" Grid.Row="4" Grid.Column="1" Margin="10" />
+            <ComboBox x:Name="txtPriority" Text="{Binding Priority}" Grid.Row="5" Grid.Column="1" Margin="10" />
+            <TextBox  x:Name="txtCreateTime"  Text="{Binding CreateTime}"      Visibility="{Binding ElementName=lblCreateTime,    Path=Visibility}" Grid.Row="6" Grid.Column="1" Margin="10" />
+            <TextBox  x:Name="txtAssociateTime" Text="{Binding AssociateTime}" Visibility="{Binding ElementName=lblAssociateTime, Path=Visibility}" Grid.Row="7" Grid.Column="1" Margin="10" />
+            <TextBox  x:Name="txtPickUpTime"  Text="{Binding PickUpTime}"      Visibility="{Binding ElementName=lblPickUpTime,    Path=Visibility}" Grid.Row="8" Grid.Column="1" Margin="10" />
+            <TextBox  x:Name="txtDeliverTime" Text="{Binding DeliverTime}"     Visibility="{Binding ElementName=lblDeliverTime,   Path=Visibility}" Grid.Row="9" Grid.Column="1" Margin="10" />
 
             <!--<Button x:Name="add" Content="Add parcel" Grid.Row="10" Grid.Column="1"  Click="AddParcel"
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="377,0,0,0"/>
@@ -79,9 +69,9 @@
         </Grid>
         <Button x:Name="add" Content="add" Click="AddParcel" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="30"/>
         <Button x:Name="options" Content="options" Click="DeleteParcel" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="30"/>
-        <Button x:Name="btnSender" Background="LightBlue" Click="viewSender" Content="view this customer" HorizontalAlignment="Right" Margin="0,50,10,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnSender" Background="LightBlue" Click="viewSender" Content="view this customer" HorizontalAlignment="Right" Margin="0,50,10,0" VerticalAlignment="Top" Visibility="{Binding ElementName=lblSender, Path=Visibility}"/>
         <Button x:Name="btnTarget" Background="LightBlue" Click="viewTarget" Content="view this customer" HorizontalAlignment="Right" Margin="0,94,10,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnDrone" Click="viewDrone" Content="view this drone" Background="LightBlue" HorizontalAlignment="Right" Margin="0,138,10,0" VerticalAlignment="Top" Width="151" Visibility="{Binding ElementName=txtDrone, Path=Visibility}"/>
+        <Button x:Name="btnDrone" Click="viewDrone" Content="view this drone" Background="LightBlue" HorizontalAlignment="Right" Margin="0,138,10,0" VerticalAlignment="Top" Width="151" Visibility="{Binding ElementName=lblDrone, Path=Visibility}"/>
 
     </Grid>
 </Window>

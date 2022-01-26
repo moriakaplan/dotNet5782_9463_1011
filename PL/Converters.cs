@@ -52,7 +52,7 @@ namespace PL
         //convert from source property type(something nullable) to target property type(visibility)
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null) return Visibility.Hidden;
+            if (value == null) return Visibility.Collapsed;
             else return Visibility.Visible;
         }
         //convert from target property type to source property type
@@ -61,13 +61,13 @@ namespace PL
             throw new NotImplementedException();
         }
     }
-    public class TextToVisibilityConverter : IValueConverter
+    public class TextBoxToVisibilityConverter : IValueConverter
     {
         //convert from source property type(something nullable) to target property type(visibility)
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value as string == "") return Visibility.Hidden;
-            else return Visibility.Visible;
+            if ((value as TextBox).Text != "") return Visibility.Visible;
+            else return Visibility.Collapsed;
         }
         //convert from target property type to source property type
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

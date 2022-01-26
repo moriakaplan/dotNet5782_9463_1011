@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 using BLApi;
 using BO;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace PL
 {
@@ -22,12 +24,14 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        
+
         private IBL blObject;
         bool isInActionsState;
         bool canClose = false;
         BackgroundWorker worker;
-        Visibility myVisibility = Visibility.Visible;
+        ObservableCollection<DroneToList> obDrones;
+        int index;
+        Visibility myVisibility = Visibility.Visible; //for hidde the buttons when the simulator is run.
 
         #region constructors
         /// <summary>
@@ -40,19 +44,14 @@ namespace PL
             isInActionsState = false;
             blObject = obj;
 
-            lblBattery.Visibility= Visibility.Collapsed;
-            //txtBattery.Visibility= Visibility.Collapsed;
-            //prgrsBattery.Visibility= Visibility.Collapsed;
+            lblBattery.Visibility = Visibility.Collapsed;
             lblStatus.Visibility = Visibility.Collapsed;
-            //txtStatus.Visibility = Visibility.Collapsed;
             lblParcel.Visibility = Visibility.Collapsed;
-            //txtParcel.Visibility = Visibility.Collapsed;
 
-            //txtId.Text = "6 digits";
             options.Visibility = Visibility.Hidden;
             update.Visibility = Visibility.Hidden;
             charge.Visibility = Visibility.Hidden;
-            
+
             txtStationId.ItemsSource = blObject.GetStationsList().Select(x => x.Id);
             txtStatus.Text = DroneStatus.Maintenance.ToString();
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
@@ -62,20 +61,17 @@ namespace PL
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="droneId"></param>
-        public DroneWindow(IBL obj, int droneId) //actions
+        public DroneWindow(IBL obj, int droneId, ObservableCollection<DroneToList> obD = null) //actions
         {
+            if (obD == null) obDrones = new ObservableCollection<DroneToList>(blObject.GetDronesList());
+            else obDrones = obD;
+            obDrones.CollectionChanged += updateIndex;
+            try { index = obDrones.IndexOf(obDrones.Where(x => x.Id == droneId).SingleOrDefault()); }
+            catch (InvalidOperationException) { return; }; //more than one drone with this id, not suppose to happen.
             InitializeComponent();
             isInActionsState = true;
             blObject = obj;
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-
-            //txtBattery.Text = string.Format($"{drone.Battery:0.000}");
-            //txtStatus.Text = drone.Status.ToString();
-            //txtWeight.Text = drone.MaxWeight.ToString();
-            //if (drone.ParcelInT == null)
-            //    txtParcel.Text = " -";
-            //else
-            //    txtParcel.Text = drone.ParcelInT.Id.ToString();
 
             txtId.IsEnabled = false;
             txtWeight.IsEnabled = false;
@@ -86,6 +82,16 @@ namespace PL
 
             txtId.Text = droneId.ToString();
             refresh();
+        }
+
+        private void updateIndex(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            try
+            {
+                if (!obDrones.Any(x => x.Id == int.Parse(txtId.Text))) index = -1;
+                else index = obDrones.IndexOf(obDrones.Where(x => x.Id == int.Parse(txtId.Text)).Single());
+            }
+            catch (InvalidOperationException) { return; }; //more than one drone with this id, not suppose to happen.
         }
         #endregion
 
@@ -116,7 +122,7 @@ namespace PL
         }
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            blObject.RunsTheSimulator((int)e.Argument, ()=>worker.ReportProgress(0), () => worker.CancellationPending);
+            blObject.RunsTheSimulator((int)e.Argument, () => worker.ReportProgress(0), () => worker.CancellationPending);
         }
 
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -366,13 +372,7 @@ namespace PL
                 catch (Exception ex) { MessageBox.Show(ex.Message); return; }
             }
             MessageBox.Show("the drone piked up the parcel");
-            //InitialiseData(id);
             DataContext = blObject.GetDrone(id);//?צריך
-            //pickParcel.Visibility = Visibility.Hidden;
-            //deliver.Visibility = Visibility.Visible;
-            //options.Content = "deliver\nparcel";
-            //options.Click -= PickUpParcel;
-            //options.Click += DeliverParcel;
             refresh();
         }
         /// <summary>
@@ -389,49 +389,44 @@ namespace PL
                 MessageBox.Show("the drone is not in delivery");
                 return;
             }
-            else
+            int.TryParse(txtId.Text, out id);
+            try
             {
-                int.TryParse(txtId.Text, out id);
-                try
-                {
-                    blObject.DeliverParcelByDrone(id);
-                }
-                catch (NotExistIDException)
-                {
-                    MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
-                }
-                catch (DroneCantTakeParcelException)
-                {
-                    MessageBox.Show("drone cant deliver the parcel because its battery is not enugh. try to send the drone to charge");
-                    return;
-                }
-                catch (TransferException)
-                {
-                    MessageBox.Show("there is a problem with the statuses of the parcel or the drone. please check the data and try again");
-                    return;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                    return;
-                }
+                blObject.DeliverParcelByDrone(id);
+            }
+            catch (NotExistIDException)
+            {
+                MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again\n");
+            }
+            catch (DroneCantTakeParcelException)
+            {
+                MessageBox.Show("drone cant deliver the parcel because its battery is not enugh. try to send the drone to charge");
+                return;
+            }
+            catch (TransferException)
+            {
+                MessageBox.Show("there is a problem with the statuses of the parcel or the drone. please check the data and try again");
+                return;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
             }
             MessageBox.Show("drone deliver the parcel successfully");
-            //InitialiseData(id);
-            //deliver.Visibility = Visibility.Hidden;
-            //sendDeliver.Visibility = Visibility.Visible;
             charge.Visibility = Visibility.Visible;
-            //options.Content = "send drone\nto delivery";
-            //options.Click -= DeliverParcel;
-            //options.Click += SendDroneToDelivery;
             refresh();
         }
-        
-        bool somethingHasChanged()
+
+        /// <summary>
+        /// return true if the user changed something from the data of the window
+        /// </summary>
+        /// <returns></returns>
+        private bool somethingHasChanged()
         {
             if (isInActionsState)
             {
-                return (txtModel.Foreground == Brushes.Green); //its green if its has changed (and it is the only thing that can be changed).
+                return (txtModel.Foreground == Brushes.Green); //its green if its has changed (and it is the only thing that can be changed in action state).
             }
             else
             {
@@ -439,58 +434,17 @@ namespace PL
             }
         }
 
+        /// <summary>
+        /// open the window of the paercel the drone take.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ViewParcelInTransfer(object sender, MouseButtonEventArgs e)
         {
-            if (txtParcel.Text != "")
-                new ParcelWindow(blObject, int.Parse(txtParcel.Text)).ShowDialog();
+            int parcelId;
+            if (int.TryParse(txtParcel.Text, out parcelId) == true)
+                new ParcelWindow(blObject, parcelId).ShowDialog();
         }
-
-        private void refresh()//just for action state
-        {
-            Drone drone;
-            noParcelsNote.Visibility = Visibility.Collapsed;
-            lock (blObject)
-            {
-                drone = blObject.GetDrone(int.Parse(txtId.Text));
-                DataContext = drone;
-            }
-
-            if (drone.ParcelInT == null) lblParcel.Visibility = Visibility.Collapsed;
-            else lblParcel.Visibility = Visibility.Visible;
-            options.Visibility = myVisibility;
-            update.Visibility = myVisibility;
-            charge.Visibility = Visibility.Hidden;
-            if (myVisibility == Visibility.Hidden)
-            {
-                if (drone.Status == DroneStatus.Available) noParcelsNote.Visibility = Visibility.Visible;
-                return;
-            }
-            options.Click -= SendDroneToDelivery;
-            options.Click -= ReleaseDroneFromCharge;
-            options.Click -= PickUpParcel;
-            options.Click -= DeliverParcel;
-            switch (drone.Status) //show to thw user the right option according to the status of the drone
-            {
-                case DroneStatus.Available:
-                    charge.Visibility = myVisibility; //Visibility.Visible;
-                    options.Content = "send drone\nto delivery";
-                    options.Click += SendDroneToDelivery;
-                    break;
-                case DroneStatus.Maintenance:
-                    options.Content = "release drone\nfrom charge";
-                    options.Click += ReleaseDroneFromCharge;
-                    break;
-                case DroneStatus.Associated:
-                    options.Content = "pick up\nparcel";
-                    options.Click += PickUpParcel;
-                    break;
-                case DroneStatus.Delivery:
-                    options.Content = "deliver\nparcel";
-                    options.Click += DeliverParcel;
-                    break;
-            }
-        }
-
         #endregion
 
         #region close
@@ -505,7 +459,7 @@ namespace PL
             MessageBoxResult mb;
             if (btnSimulator.Content.ToString() == "manual state")
             {
-                mb=MessageBox.Show("you can't close the window whent the simulation is open. Do you want to stop the simulation and close the window?", "close", MessageBoxButton.YesNo);
+                mb = MessageBox.Show("you can't close the window whent the simulation is open. Do you want to stop the simulation and close the window?", "close", MessageBoxButton.YesNo);
                 if (mb == MessageBoxResult.No) return;
                 worker.CancelAsync();
             }
@@ -570,6 +524,69 @@ namespace PL
             }
         }
         #endregion
+
+        /// <summary>
+        /// refresh the wiew according to the data and the status of the drone.
+        /// </summary>
+        private void refresh()//just for action state
+        {
+            Drone drone;
+            noParcelsNote.Visibility = Visibility.Collapsed;
+            lock (blObject)
+            {
+                drone = blObject.GetDrone(int.Parse(txtId.Text));
+                DataContext = drone;
+            }
+            if (index != -1)
+            {
+                obDrones[index] = new DroneToList
+                {
+                    Id = drone.Id,
+                    Battery = drone.Battery,
+                    Model = drone.Model,
+                    MaxWeight = drone.MaxWeight,
+                    Status = drone.Status,
+                    ParcelId = drone.ParcelInT != null ? drone.ParcelInT.Id : 0,
+                    CurrentLocation = drone.CurrentLocation
+                };
+            }
+
+            if (drone.ParcelInT == null) lblParcel.Visibility = Visibility.Collapsed;
+            else lblParcel.Visibility = Visibility.Visible;
+            options.Visibility = myVisibility;
+            update.Visibility = myVisibility;
+            charge.Visibility = Visibility.Hidden;
+            if (myVisibility == Visibility.Hidden)
+            {
+                if (drone.Status == DroneStatus.Available) noParcelsNote.Visibility = Visibility.Visible;
+                return;
+            }
+            options.Click -= SendDroneToDelivery;
+            options.Click -= ReleaseDroneFromCharge;
+            options.Click -= PickUpParcel;
+            options.Click -= DeliverParcel;
+            switch (drone.Status) //show to thw user the right option according to the status of the drone
+            {
+                case DroneStatus.Available:
+                    charge.Visibility = myVisibility; //Visibility.Visible;
+                    options.Content = "send drone\nto delivery";
+                    options.Click += SendDroneToDelivery;
+                    break;
+                case DroneStatus.Maintenance:
+                    options.Content = "release drone\nfrom charge";
+                    options.Click += ReleaseDroneFromCharge;
+                    break;
+                case DroneStatus.Associated:
+                    options.Content = "pick up\nparcel";
+                    options.Click += PickUpParcel;
+                    break;
+                case DroneStatus.Delivery:
+                    options.Content = "deliver\nparcel";
+                    options.Click += DeliverParcel;
+                    break;
+            }
+        }
+
     }
-    
+
 }

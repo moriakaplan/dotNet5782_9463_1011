@@ -80,5 +80,12 @@ namespace PL
                     .OrderBy(x => x.Id)
                     .OrderBy(x => x.Status);
         }
+
+        private void Restart_Click(object sender, RoutedEventArgs e)
+        {
+            StatusFilter.SelectedIndex = -1;
+            WeightFilter.SelectedIndex = -1;
+            parcelToListDataGrid.DataContext = blObject.GetParcelsList();
+        }
     }
 }

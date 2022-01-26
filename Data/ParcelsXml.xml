@@ -132,4 +132,16 @@
     <PickUpTime>2022-01-26T12:42:21.0356398+02:00</PickUpTime>
     <DeliverTime>2022-01-26T12:56:20.7381828+02:00</DeliverTime>
   </Parcel>
+  <Parcel>
+    <Id>10000033</Id>
+    <Senderld>133422195</Senderld>
+    <TargetId>216595696</TargetId>
+    <Droneld>0</Droneld>
+    <Weight>Light</Weight>
+    <Priority>Fast</Priority>
+    <CreateTime>2022-01-26T15:31:15.2234266+02:00</CreateTime>
+    <AssociateTime xsi:nil="true" />
+    <PickUpTime xsi:nil="true" />
+    <DeliverTime xsi:nil="true" />
+  </Parcel>
 </ArrayOfParcel>
