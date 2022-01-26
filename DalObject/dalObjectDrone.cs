@@ -31,7 +31,7 @@ namespace Dal
                 {
                     if (DataSource.stations[i].ChargeSlots < 1) throw new StationException("");
                     Station s = DataSource.stations[i];
-                    s.ChargeSlots--; //++?
+                    s.ChargeSlots--; 
                     DataSource.stations[i] = s;
                     return;
                 }

@@ -25,17 +25,14 @@ namespace PL
     {
         private IBL blObject;
         bool canClose = false;
+        /// <summary>
+        /// constractor
+        /// </summary>
+        /// <param name="obj"></param>
         public DroneListWindow(IBL obj)
         {
             InitializeComponent();
-            //blObject = obj;
             blObject = BLFactory.GetBl();
-            //IEnumerable<DroneToList> drones = blObject.DisplayListOfDrones().OrderBy(x => x.Id);
-            //IEnumerable<DroneToList> drones = blObject.GetDronesList()
-            //        .OrderBy(x => x.Id)
-            //        .OrderBy(x => x.Status);
-            //ObservableCollection<DroneToList> obDrones = new ObservableCollection<DroneToList>(drones);
-            //DroneListView.DataContext = obDrones;
             DroneListView.DataContext = blObject.GetDronesList()
                     .OrderBy(x => x.Id)
                     .OrderBy(x => x.Status);
@@ -47,7 +44,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void statusFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void statusFilter(object sender, SelectionChangedEventArgs e)
         {
             if (StatusFilter.SelectedIndex == -1) return;
             if (WeightFilter.SelectedItem != null) statusAndWeightFilter(sender, e);
@@ -64,7 +61,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void weightFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void weightFilter(object sender, SelectionChangedEventArgs e)
         {
             if (WeightFilter.SelectedIndex == -1) return;
             if (StatusFilter.SelectedItem != null) statusAndWeightFilter(sender, e);
@@ -94,7 +91,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Restart_Click(object sender, RoutedEventArgs e)
+        private void restart(object sender, RoutedEventArgs e)
         {
             StatusFilter.SelectedIndex = -1;
             WeightFilter.SelectedIndex = -1;
@@ -105,14 +102,14 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AddDrone_Click(object sender, RoutedEventArgs e)
+        private void addDrone(object sender, RoutedEventArgs e)
         {
             new DroneWindow(blObject).ShowDialog();
             //update the drones list
-            if (StatusFilter.SelectedItem != null) statusFilter_SelectionChanged(StatusFilter, null);
+            if (StatusFilter.SelectedItem != null) statusFilter(StatusFilter, null);
             else
             {
-                if (WeightFilter.SelectedItem != null) weightFilter_SelectionChanged(WeightFilter, null);
+                if (WeightFilter.SelectedItem != null) weightFilter(WeightFilter, null);
                 else DroneListView.ItemsSource = blObject.GetDronesList();
             }
         }
@@ -121,14 +118,14 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ViewDrone(object sender, MouseButtonEventArgs e)
+        private void viewDrone(object sender, MouseButtonEventArgs e)
         {
             new DroneWindow(blObject, ((BO.DroneToList)DroneListView.SelectedItem).Id).Show();
             //update the drones list
-            if (StatusFilter.SelectedItem != null) statusFilter_SelectionChanged(StatusFilter, null);
+            if (StatusFilter.SelectedItem != null) statusFilter(StatusFilter, null);
             else
             {
-                if (WeightFilter.SelectedItem != null) weightFilter_SelectionChanged(WeightFilter, null);
+                if (WeightFilter.SelectedItem != null) weightFilter(WeightFilter, null);
                 else DroneListView.ItemsSource = blObject.GetDronesList();
             }
         }
@@ -137,18 +134,17 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Close_Click(object sender, RoutedEventArgs e)
+        private void closeClick(object sender, RoutedEventArgs e)
         {
             canClose = true;
             this.Close();
-            //new ManagerWindow(blObject).Show();
         }
         /// <summary>
         /// prevenet closing the window with the X button.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void DataWindow_Closing(object sender, CancelEventArgs e)
+        private void dataWindow(object sender, CancelEventArgs e)
         {
             if (canClose == false)
             {

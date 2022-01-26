@@ -23,6 +23,10 @@ namespace PL
     {
         IBL blObject;
         enum typesOfUsers { RegularUser, Manager };
+        /// <summary>
+        /// constractor
+        /// </summary>
+        /// <param name="obj"></param>
         public SignWindow(IBL obj)
         {
             InitializeComponent();
@@ -31,28 +35,33 @@ namespace PL
             typeOfUser.SelectedItem = typesOfUsers.RegularUser;
         }
 
-        private void Sighn(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// sign up
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void sighn(object sender, RoutedEventArgs e)
         {
-            if(txtName.Text=="")
+            if (txtName.Text == "")///if there is no name
             {
                 MessageBox.Show("Please choose a username");
                 return;
             }
-            if(txtPassword.Text=="")
+            if (txtPassword.Text == "")//if there is no password
             {
                 MessageBox.Show("Please choose a password");
                 return;
             }
-            if(!passIsStrong(txtPassword.Text))
+            if (!passIsStrong(txtPassword.Text))//if the password is not strong
             {
                 MessageBox.Show("this password is not strong enugh, please choose another one.\n in the password must be big letters, small letters and numbers and it must have at least 8 chars.");
                 return;
             }
             try
             {
-                if ((typesOfUsers)typeOfUser.SelectedItem == typesOfUsers.Manager)
+                if ((typesOfUsers)typeOfUser.SelectedItem == typesOfUsers.Manager)//if he is a manager-check if his password is manager password
                 {
-                    if (txtManager.Text == blObject.getManagmentPassword())
+                    if (txtManager.Text == blObject.GetManagmentPassword())
                         blObject.AddManager(txtName.Text, txtPassword.Text);
                     else
                         MessageBox.Show("this is not the right password, \n please ask another manager what is the current password.");
@@ -62,27 +71,37 @@ namespace PL
                 MessageBox.Show("the user added successfully");
                 this.Close();
             }
-            catch(ExistIdException)
+            catch (ExistIdException)
             {
                 MessageBox.Show("the username already exist, try to choose another one");
             }
         }
 
+        /// <summary>
+        /// check if the password is strong
+        /// </summary>
+        /// <param name="pass"></param>
+        /// <returns></returns>
         private bool passIsStrong(string pass)
         {
-            if (pass.Length < 8 || 
-                pass.Distinct().Count() < 6) 
+            if (pass.Length < 8 ||
+                pass.Distinct().Count() < 6)
                 return false;
-            if (pass.Any(x=> x >= 'a' && x <= 'z') && 
-                pass.Any(x => x >= 'A' && x <= 'Z') && 
-                pass.Any(x => x >= '0' && x <= '9')) 
+            if (pass.Any(x => x >= 'a' && x <= 'z') &&
+                pass.Any(x => x >= 'A' && x <= 'Z') &&
+                pass.Any(x => x >= '0' && x <= '9'))
                 return true;
             return false;
         }
 
+        /// <summary>
+        /// Changes the view by user type 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void typeOfUserChanged(object sender, SelectionChangedEventArgs e)
         {
-            if ((typesOfUsers)typeOfUser.SelectedItem==typesOfUsers.Manager)
+            if ((typesOfUsers)typeOfUser.SelectedItem == typesOfUsers.Manager)//if he is a manager
             {
                 txtManager.Visibility = Visibility.Visible;
                 lblManager.Visibility = Visibility.Visible;
@@ -99,14 +118,21 @@ namespace PL
                 lblManager.Visibility = Visibility.Collapsed;
             }
         }
-        void DataWindow_Closing(object sender, CancelEventArgs e)
+        /// <summary>
+        /// return to the main window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataWindowClosing(object sender, CancelEventArgs e)
         {
-            //MessageBoxResult mb;
-            //mb = MessageBox.Show("do you want to close the window?", "close", MessageBoxButton.YesNo);
-            //if (mb == MessageBoxResult.No) e.Cancel=true;
-             new MainWindow().Show();
+            new MainWindow().Show();
         }
 
+        /// <summary>
+        /// show if the password is strong or not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void passChange(object sender, TextChangedEventArgs e)
         {
             if (txtPassword.Text == "")
@@ -114,12 +140,12 @@ namespace PL
                 lblGoodOrWrong.Content = "";
                 return;
             }
-            if (passIsStrong(txtPassword.Text))
+            if (passIsStrong(txtPassword.Text))//if the password is good
             {
                 lblGoodOrWrong.Content = "strong password";
                 lblGoodOrWrong.Foreground = Brushes.Green;
             }
-            else
+            else//if the password is not good
             {
                 lblGoodOrWrong.Content = $"not strong password\nThe password must be at least 8 chars (6 different) and with big letters, small letters and numbers.";
                 lblGoodOrWrong.Foreground = Brushes.Red;

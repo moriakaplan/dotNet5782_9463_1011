@@ -77,8 +77,8 @@
         <Button x:Name="Update" Content="Update parcel" Grid.Row="10" Grid.Column="1"  Click="UpdateParcel"
                 HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" Margin="235,0,0,0"/>-->
         </Grid>
-        <Button x:Name="add" Content="add" Click="AddParcel" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="30"/>
-        <Button x:Name="options" Content="options" Click="DeleteParcel" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="30"/>
+        <Button x:Name="add" Content="add" Click="addParcel" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="30"/>
+        <Button x:Name="options" Content="options" Click="deleteParcel" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="30"/>
         <Button x:Name="btnSender" Background="LightBlue" Click="viewSender" Content="view this customer" HorizontalAlignment="Right" Margin="0,50,10,0" VerticalAlignment="Top"/>
         <Button x:Name="btnTarget" Background="LightBlue" Click="viewTarget" Content="view this customer" HorizontalAlignment="Right" Margin="0,94,10,0" VerticalAlignment="Top"/>
         <Button x:Name="btnDrone" Click="viewDrone" Content="view this drone" Background="LightBlue" HorizontalAlignment="Right" Margin="0,138,10,0" VerticalAlignment="Top" Width="151" Visibility="{Binding ElementName=txtDrone, Path=Visibility}"/>

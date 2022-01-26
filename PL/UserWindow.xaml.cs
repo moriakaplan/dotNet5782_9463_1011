@@ -22,50 +22,78 @@ namespace PL
     public partial class UserWindow : Window
     {
         IBL blObject;
+        /// <summary>
+        /// constractor
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="customerId"></param>
         public UserWindow(IBL obj, int customerId)
         {
             InitializeComponent();
             blObject = obj;
-            //txtId.Text = customerId.ToString();
             Customer customer = blObject.GetCustomer(customerId);
             DataContext = customer;
-            //txtname.Text = customer.Name;
-            //txtParcelsFrom.DataContext = cus.parcelFrom.Select(x => x.Id);
-            //txtParcelsTo.DataContext = cus.parcelTo.Select(x => x.Id);
         }
 
+        /// <summary>
+        /// send new parcel (that the user is the sender)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void sendNewParcel(object sender, RoutedEventArgs e)
         {
             new ParcelWindow(blObject, int.Parse(txtId.Content.ToString()), true).ShowDialog();
             refresh();
         }
 
+        /// <summary>
+        /// refresh the window
+        /// </summary>
         private void refresh()
         {
             DataContext = blObject.GetCustomer((DataContext as Customer).Id);
         }
 
+        /// <summary>
+        /// update the customer data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void updateCustomer(object sender, RoutedEventArgs e)
         {
-            new CustomerWindow(blObject, int.Parse(txtId.Content.ToString())).ShowDialog() ;
+            new CustomerWindow(blObject, int.Parse(txtId.Content.ToString())).ShowDialog();
         }
 
-        private void BackToMain(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// go back to the main window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backToMain(object sender, RoutedEventArgs e)
         {
             new MainWindow().Show();
             this.Close();
         }
-
-        private void ViewParcelTo(object sender, MouseButtonEventArgs e)
+        /// <summary>
+        /// By double-clicking on a row in the table of parcels to the customer a specific parcel window opens
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void viewParcelTo(object sender, MouseButtonEventArgs e)
         {
-            
+
             new ParcelWindow(blObject, ((BO.ParcelInCustomer)ParcelsTo.SelectedItem).Id).ShowDialog();
             refresh();
         }
-        private void ViewParcelFrom(object sender, MouseButtonEventArgs e)
+        /// <summary>
+        /// By double-clicking on a row in the table of parcels from the customer a specific parcel window opens
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void viewParcelFrom(object sender, MouseButtonEventArgs e)
         {
             new ParcelWindow(blObject, ((BO.ParcelInCustomer)ParcelsFrom.SelectedItem).Id).ShowDialog();
         }
-       
+
     }
 }

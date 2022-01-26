@@ -23,6 +23,10 @@ namespace PL
     public partial class StationListWindow : Window
     {
         IBL blObject;
+        /// <summary>
+        /// constractor
+        /// </summary>
+        /// <param name="obj"></param>
         public StationListWindow(IBL obj)
         {
             blObject = obj;
@@ -35,29 +39,42 @@ namespace PL
             groupButton.SelectedItem="regular";
         }
 
-        private void ViewStation(object sender, MouseButtonEventArgs e)
+        /// <summary>
+        /// By double-clicking on a row in the table of station a specific station window opens
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void viewStation(object sender, MouseButtonEventArgs e)
         {
             new StationWindow(blObject, ((sender as DataGrid).SelectedItem as BO.StationToList).Id).ShowDialog();
-
-            //DataGridCell cell = sender as DataGridCell;
-            //StationToList s = cell.DataContext as StationToList;
-            //new StationWindow(blObject, s.Id).ShowDialog();
             nonGroup();
         }
-
-        private void AddStation(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// open station window in add mode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void addStation(object sender, RoutedEventArgs e)
         {
 
             new StationWindow(blObject).ShowDialog();
             nonGroup();
         }
 
+        /// <summary>
+        /// if we want no grouping
+        /// </summary>
         private void nonGroup()
         {
             stationDataGrid.Visibility = Visibility.Visible;
             ListViewStations.Visibility = Visibility.Collapsed;
             stationDataGrid.DataContext = blObject.GetStationsList();
         }
+        /// <summary>
+        /// regresh the station list window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void refresh(object sender, RoutedEventArgs e)
         {
             if (groupButton.SelectedItem.ToString() == "regular")
@@ -65,7 +82,9 @@ namespace PL
             else
                 group();
         }
-
+        /// <summary>
+        /// grouping
+        /// </summary>
         private void group()
         {
             stationDataGrid.Visibility = Visibility.Collapsed;
@@ -73,48 +92,18 @@ namespace PL
             IEnumerable<IGrouping<int, StationToList>> result = from st in blObject.GetStationsList()
                                                                 group st by st.AvailableChargeSlots into gs
                                                                 select gs;
-            //DataGrid func(IGrouping<int, StationToList> g)
-            //{ 
-            //    DataGrid d = new DataGrid(); 
-            //    d.ItemsSource = g.ToList(); 
-            //    return d; 
-            //};
             var datagrids =
                 result.Select(g =>
                 {
                     DataGrid d = new DataGrid();
                     d.ItemsSource = g.ToList();
-                    d.PreviewMouseDoubleClick += ViewStation;
-                    return d /*new { num=g.Key, dataGrid = d }*/;
+                    d.PreviewMouseDoubleClick += viewStation;
+                    return d;
                 });
-            //IEnumerable<DataGrid> datagrids =
-            //    result.Select(g =>
-            //    {
-            //        DataGrid d = new DataGrid();
-            //        d.DataContext = g.ToList();
-            //        List<DataGridTextColumn> l = new List<DataGridTextColumn>();
-            //        //l.Add( { Binding = , });
-            //        //d.Columns = new List<DataGridTextColumn>();
-            //        //= new DataGridTextColumn x: Name = "idColumn" Binding = "{Binding Id}" Header = "Id" />
-
-            //        //  //< DataGridTextColumn x: Name = "nameColumn" Binding = "{Binding Name}" Header = "Name" />
-
-            //        //  //      < DataGridTextColumn x: Name = "notAvailableChargeSlotsColumn" Binding = "{Binding NotAvailableChargeSlots}" Header = "Not Available Charge Slots" />
-
-            //        //  //            < DataGridTextColumn x: Name = "availableChargeSlotsColumn" Binding = "{Binding AvailableChargeSlots}" Header = "Available Charge Slots" />
-
-            //        d.PreviewMouseDoubleClick += ViewStation;
-            //        return d;
-            //    });
+           
             ListViewStations.DataContext = datagrids;
         }
-        void DataWindow_Closing(object sender, CancelEventArgs e)
-        {
-            //MessageBoxResult mb;
-            //mb = MessageBox.Show("do you want to close the window?", "close", MessageBoxButton.YesNo);
-            //if (mb == MessageBoxResult.No) e.Cancel=true;
-            //new ManagerWindow(blObject).Show();
-        }
+       
 
     }
 }

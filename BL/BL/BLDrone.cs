@@ -79,7 +79,7 @@ namespace BL
             }
             if (droneFromList == null) throw new NotExistIDException($"id: {droneId} does not exist - drone");
             ParcelInTransfer parcel = null;
-            if (droneFromList.Status == DroneStatus.Associated || droneFromList.Status == DroneStatus.Delivery)
+            if (droneFromList.Status == DroneStatus.Associated || droneFromList.Status == DroneStatus.Delivery)//if the drone is associated or delivers
             {
                 DO.Parcel parcelFromFunc;
                 Location locOfSender, locOfTarget;
@@ -87,10 +87,10 @@ namespace BL
                 {
                     try { parcelFromFunc = dl.GetParcel(droneFromList.ParcelId); }
                     catch (DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
-                    locOfSender = GetCustomer(parcelFromFunc.Senderld/*SenderId*/).Location;
+                    locOfSender = GetCustomer(parcelFromFunc.Senderld).Location;
                     locOfTarget = GetCustomer(parcelFromFunc.TargetId).Location;
 
-                    parcel = new ParcelInTransfer
+                    parcel = new ParcelInTransfer//initialize the parcel that the drone delivers
                     {
                         Id = parcelFromFunc.Id,
                         InTheWay = (parcelFromFunc.PickUpTime != null && parcelFromFunc.DeliverTime == null),
@@ -120,16 +120,17 @@ namespace BL
         {
             DroneToList drone;
             int index;
-            try 
-            { 
-                index = lstdrn.FindIndex(item => item.Id == droneId); 
-                drone = lstdrn.ElementAt(index); 
+            try
+            {
+                //find the reqeuested drone
+                index = lstdrn.FindIndex(item => item.Id == droneId);
+                drone = lstdrn.ElementAt(index);
             }
             catch (InvalidOperationException)
             {
                 throw new NotExistIDException($"id: {droneId} does not exist - drone");
             }
-            if (drone.Status != DroneStatus.Available)
+            if (drone.Status != DroneStatus.Available)//if the drone is not available it cant go to charge
             {
                 throw new DroneCantGoToChargeException($"the drone {droneId} is not available so it can't be sended to charging"); //if the drone is not available
             }
@@ -138,7 +139,7 @@ namespace BL
             {
                 Station st = closestStationWithChargeSlots(loc);
                 int batteryNeed = (int)minBattery(drone.Id, loc, st.Location);
-                if (batteryNeed > drone.Battery)
+                if (batteryNeed > drone.Battery)//if the drone dont have enugh battery to go to the station
                 {
                     throw new DroneCantGoToChargeException($"the battery of drone {droneId} is not enugh so it can't be sended to charging"); //if the drone dont have enough battery
                 }
@@ -163,6 +164,7 @@ namespace BL
             int index;
             try
             {
+                //find the reqeuested drone
                 index = lstdrn.FindIndex(item => item.Id == droneId);
                 drone = lstdrn.ElementAt(index);
             }
@@ -170,16 +172,14 @@ namespace BL
             {
                 throw new NotExistIDException($"id: {droneId} does not exist - drone");
             }
-            if (drone.Status != DroneStatus.Maintenance) throw new DroneCantReleaseFromChargeException
+            if (drone.Status != DroneStatus.Maintenance) throw new DroneCantReleaseFromChargeException//if the drone id not in charge it cant be released from charge
             {
                 message = $"the drone {droneId} is not in maintenance so it can't be released from charging"
             };
-            DO.DroneCharge dc;
             try
             {
                 lock (dl)
                 {
-                    //dc = dl.GetDroneChargesList().Where(x => x.DroneId == droneId).Single();//לא עובד
                     drone.Battery += (int)batteryToAdd(droneId);
                     if (drone.Battery > 100) drone.Battery = 100;
                     dl.ReleaseDroneFromeCharge(droneId); //Deletes the charging entity and adds 1 to the charging slots of the station
@@ -188,13 +188,7 @@ namespace BL
             catch (DO.DroneChargeException ex) { throw new NotExistIDException(ex.Message); }
             catch (ArgumentNullException ex) { throw new NotExistIDException(ex.Message); }
             catch (InvalidOperationException ex) { throw new NotExistIDException(ex.Message); }
-            //אמור להיות פה
-            //TimeSpan time =DateTime.Now - dc.StartedChargeTime;
-            //double b = time.TotalSeconds * ChargeRatePerMinute;
-            //drone.Battery += (int)(b / 60);
-            //if (drone.Battery > 100) drone.Battery = 100;
             drone.Status = DroneStatus.Available;
-            
             lstdrn.RemoveAt(index);
             lstdrn.Add(drone);
         }
@@ -206,24 +200,30 @@ namespace BL
             else
                 return lstdrn.Select(x => x);
         }
-        
+
+
+        /// <summary>
+        /// return the drone that charge in the requested station
+        /// </summary>
+        /// <param name="stationId"></param>
+        /// <returns></returns>
         internal IEnumerable<DO.DroneCharge> GetDroneChargesList(int stationId)
         {
-            return dl.GetDroneChargesList(x=>x.StationId==stationId);
+            return dl.GetDroneChargesList(x => x.StationId == stationId);
         }
 
+
+        /// <summary>
+        /// Calculates the battery to add in charge
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <returns></returns>
         internal double batteryToAdd(int droneId)
         {
-            DO.DroneCharge dc = dl.GetDroneChargesList().Where(x => x.DroneId == droneId).Single();//לא עובד
+            DO.DroneCharge dc = dl.GetDroneChargesList().Where(x => x.DroneId == droneId).Single();
             TimeSpan time = DateTime.Now - dc.StartedChargeTime;
             return time.TotalSeconds * chargeRatePerMinute / 60.0;
         }
 
-        internal void moveDrone(int droneId, Location location)
-        {
-            //לגרום לזה לעבוד ולהבין מה מוריה רוצהץ
-            //drone.CurrentLocation = bl.closestStation(drone.CurrentLocation);
-
-        }
     }
 }

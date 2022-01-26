@@ -23,6 +23,10 @@ namespace PL
     public partial class ParcelListWindow : Window
     {
         IBL blObject;
+        /// <summary>
+        /// constractor
+        /// </summary>
+        /// <param name="obj"></param>
         public ParcelListWindow(IBL obj)
         {
             blObject = obj;
@@ -32,21 +36,36 @@ namespace PL
             WeightFilter.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
 
-        private void ViewParcel(object sender, MouseButtonEventArgs e)
+        /// <summary>
+        /// By double-clicking on a row in the table of parcels a specific parcel window opens
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void viewParcel(object sender, MouseButtonEventArgs e)
         {
             new ParcelWindow(blObject, ((BO.ParcelToList)parcelToListDataGrid.SelectedItem).Id).ShowDialog();
-            if (StatusFilter.SelectedItem != null) statusFilter_SelectionChanged(null, null);
+            if (StatusFilter.SelectedItem != null) statusFilter(null, null);
             else parcelToListDataGrid.DataContext = blObject.GetParcelsList();
         }
 
-        private void AddParcel(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// open parcel window in add mode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void addParcel(object sender, RoutedEventArgs e)
         {
             new ParcelWindow(blObject).ShowDialog();
-            if (StatusFilter.SelectedItem != null) statusFilter_SelectionChanged(null, null);
+            if (StatusFilter.SelectedItem != null) statusFilter(null, null);
             else parcelToListDataGrid.DataContext = blObject.GetParcelsList();
         }
 
-        private void weightFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// filter by weight
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void weightFilter(object sender, SelectionChangedEventArgs e)
         {
             
             if (WeightFilter.SelectedIndex == -1) return;
@@ -60,7 +79,12 @@ namespace PL
             }
         }
 
-        private void statusFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// filter by status
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void statusFilter(object sender, SelectionChangedEventArgs e)
         {
             if (StatusFilter.SelectedIndex == -1) return;
             if (WeightFilter.SelectedItem != null) statusAndWeightFilter(sender, e);
@@ -72,6 +96,11 @@ namespace PL
                     .OrderBy(x => x.Status);
             }
         }
+        /// <summary>
+        /// status and weight filter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void statusAndWeightFilter(object sender, SelectionChangedEventArgs e)
         {
             ParcelStatus status = (ParcelStatus)StatusFilter.SelectedItem;

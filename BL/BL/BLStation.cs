@@ -25,12 +25,12 @@ namespace BL
             };
             try
             {
-                lock(dl)
+                lock (dl)
                 {
                     dl.AddStation(dstation);//add the new station to the list in the data level
                 }
             }
-            catch(DO.StationException ex)
+            catch (DO.StationException ex)
             {
                 throw new ExistIdException(ex.Message, "-station");
             }
@@ -38,7 +38,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(int id, string name, int cargeSlots)
         {
-            lock(dl)
+            lock (dl)
             {
                 DO.Station dstation = dl.GetStation(id);
                 dl.DeleteStation(id);
@@ -52,12 +52,12 @@ namespace BL
                 }
                 dl.AddStation(dstation);
             }
-           
+
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Station GetStation(int stationId)
         {
-            lock(dl)
+            lock (dl)
             {
                 DO.Station dstation;
                 try { dstation = dl.GetStation(stationId); }
@@ -68,39 +68,35 @@ namespace BL
                     Location = new Location { Latti = dstation.Lattitude, Longi = dstation.Longitude },
                     Name = dstation.Name
                 };
-                //IEnumerable<DO.DroneCharge> droneCharges = dl.GetDroneChargesList(); //option A, according to chargeDrone
-                //bstation.DronesInCharge = from item in droneCharges
-                //                          where item.StationId == stationId
-                //                          select new DroneInCharge { Id = item.DroneId, Battery = GetDrone(item.DroneId).Battery };
 
-                IEnumerable<DroneToList> drones = GetDronesList(); //option B, according to Drones
-                bstation.DronesInCharge = from item in drones
-                                          where item.Status == DroneStatus.Maintenance && item.CurrentLocation==bstation.Location
+                IEnumerable<DroneToList> drones = GetDronesList();
+                bstation.DronesInCharge = from item in drones//find the drones that in charge in the station
+                                          where item.Status == DroneStatus.Maintenance && item.CurrentLocation == bstation.Location
                                           select new DroneInCharge { Id = item.Id, Battery = item.Battery };
 
                 int count = bstation.DronesInCharge.Count();
                 bstation.AvailableChargeSlots = dstation.ChargeSlots - count;
                 return bstation;
-            }      
+            }
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<StationToList> GetStationsList()
         {
-            lock(dl)
+            lock (dl)
             {
                 return from dstation in dl.GetStationsList()
-                       select DisplayStationToList(dstation.Id);
-            }     
+                       select displayStationToList(dstation.Id);
+            }
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<StationToList> GetListOfStationsWithAvailableCargeSlots()
         {
-            lock(dl)
+            lock (dl)
             {
                 return from dstation in dl.GetStationsList(x => x.ChargeSlots > 0)
-                       select DisplayStationToList(dstation.Id);
+                       select displayStationToList(dstation.Id);
             }
-          
+
         }
 
         /// <summary>
@@ -108,9 +104,9 @@ namespace BL
         /// </summary>
         /// <param name="stationId"></param>
         /// <returns></returns>
-        private StationToList DisplayStationToList(int stationId)
+        private StationToList displayStationToList(int stationId)
         {
-            lock(dl)
+            lock (dl)
             {
                 DO.Station dstation = dl.GetStation(stationId);
                 StationToList bstation = new StationToList
@@ -118,7 +114,7 @@ namespace BL
                     Id = dstation.Id,
                     Name = dstation.Name,
                 };
-                int count = dl.GetDroneChargesList()
+                int count = dl.GetDroneChargesList()//find the drones that in charge in the station
                             .Where(drCharge => drCharge.StationId == stationId)
                             .Count();
                 bstation.AvailableChargeSlots = dstation.ChargeSlots - count;
@@ -126,7 +122,7 @@ namespace BL
                 return bstation;
 
             }
-            
-        }  
+
+        }
     }
 }

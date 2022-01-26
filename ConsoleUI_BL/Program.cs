@@ -38,33 +38,6 @@ namespace ConsoleUI_BL
                     case Options.ListsDisplay://if the user wants to display a list
                         displayList(blObject);
                         break;
-//                    case Options.Distance://if the user want to know the distance between two places
-//                        Console.WriteLine(@"Enter Coordinates of place in the world:
-//longitude- ");
-//                        input = Console.ReadLine();
-//                        double.TryParse(input, out longitude);
-//                        Console.WriteLine("lattitude- ");
-//                        input = Console.ReadLine();
-//                        double.TryParse(input, out lattitude);
-//                        Console.WriteLine("Do you want to know the distance to station or customer?");
-//                        input = Console.ReadLine();
-//                        double distance = 0;
-//                        if (input == "station" || input == "Station")//if the user want to know the distance between station and another place
-//                        {
-//                            Console.WriteLine("Enter the station ID: (4 digits) ");
-//                            input = Console.ReadLine();
-//                            int.TryParse(input, out id);
-//                            distance = dalObject.DistanceForStation(longitude, lattitude, id);
-//                        }
-//                        else if (input == "customers" || input == "Customers")//if the user want to know the distance between customer and another place
-//                        {
-//                            Console.WriteLine("Enter the customer ID: (9 digits) ");
-//                            input = Console.ReadLine();
-//                            int.TryParse(input, out id);
-//                            distance = dalObject.DistanceForCustomer(longitude, lattitude, id);
-//                        }
-//                        Console.WriteLine("the distance is: " + distance);
-//                        break;
                     case Options.Exit:
                         break;
                     default:

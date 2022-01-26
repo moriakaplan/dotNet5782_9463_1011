@@ -14,7 +14,6 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            //DalObject.DalObject dalObject = new DalObject.DalObject();
             IDal dalObject = DalFactory.GetDal();
             string input;
             Options options;
@@ -23,10 +22,9 @@ namespace ConsoleUI
             DisplayOptions displayChoise;
             DisplayListOptions displayListChoise;
             int id, senderId, targetId, droneId, chargeSlots;
-            double longitude, lattitude/*, battery*/;
+            double longitude, lattitude;
             string name, phone, model;
             WeightCategories weight;
-            //DroneStatuses status;
             Priorities priority;
          
             Console.Write("Hello! ");
@@ -297,14 +295,14 @@ namespace ConsoleUI
                                 }
                                 break;
                             case DisplayListOptions.UnassignedParcels://display the list of the parcels that not assign to a drone.
-                                Console.WriteLine("The parcels that not assigned to drone are:"); //לכתוב תיאור של מה מודפס
+                                Console.WriteLine("The parcels that not assigned to drone are:"); 
                                 foreach (Parcel item in dalObject.GetParcelsList(x=>x.AssociateTime==null))
                                 {
                                     Console.WriteLine(item);
                                 }
                                 break;
                             case DisplayListOptions.StationsWithAvailableCargingSlots://display the list of the stations that have available charge slots
-                                Console.WriteLine("The stations with available charge slots are:"); //לכתוב תיאור של מה מודפס
+                                Console.WriteLine("The stations with available charge slots are:"); 
                                 foreach (Station item in dalObject.GetStationsList(x=>x.ChargeSlots>0))
                                 {
                                     Console.WriteLine(item);

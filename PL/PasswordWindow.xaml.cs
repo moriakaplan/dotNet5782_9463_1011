@@ -23,6 +23,10 @@ namespace PL
     {
         IBL blObject;
         bool closeX = true;
+        /// <summary>
+        /// constractor
+        /// </summary>
+        /// <param name="obj"></param>
         public PasswordWindow(IBL obj)
         {
             InitializeComponent();
@@ -30,17 +34,25 @@ namespace PL
             txtUserName.Focus();
         }
         
-        void DataWindow_Closing(object sender, CancelEventArgs e)
+        /// <summary>
+        /// close the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DataWindowClosing(object sender, CancelEventArgs e)
         {
-            //MessageBoxResult mb;
-            //mb = MessageBox.Show("do you want to close the window?", "close", MessageBoxButton.YesNo);
-            //if (mb == MessageBoxResult.No) e.Cancel=true;
+            
             if(closeX) new MainWindow().Show();
         }
 
-        private void LoginClick(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// log in- as a user or manager
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void loginClick(object sender, RoutedEventArgs e)
         {
-            if (blObject.ExistManager(txtUserName.Text, PPassword.Password))
+            if (blObject.ExistManager(txtUserName.Text, PPassword.Password))//login as a manager
             {
                 new ManagerWindow(blObject).Show();
                 closeX = false;
@@ -51,15 +63,19 @@ namespace PL
             try
             {
                 int id = blObject.GetUserId(txtUserName.Text, PPassword.Password);
-                new UserWindow(blObject, id).ShowDialog();
+                new UserWindow(blObject, id).ShowDialog();//login as a user
                 closeX = false;
                 this.Close();
             }
             catch (NotExistIDException ex) { MessageBox.Show("the username or the password are not correct, please try again" /*ex.Message*/); }
 
-            //MessageBox.Show("the username or the password are not correct, please try again");
         }
 
+        /// <summary>
+        /// open the sign op window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void signUp(object sender, RoutedEventArgs e)
         {
             new SignWindow(blObject).Show();
@@ -67,7 +83,12 @@ namespace PL
             this.Close();
         }
 
-        private void PassChanged(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// show the password- update
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void passChanged(object sender, RoutedEventArgs e)
         {
             txtPassword.Text = PPassword.Password;
         }

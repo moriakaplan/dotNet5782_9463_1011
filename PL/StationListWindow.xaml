@@ -21,7 +21,7 @@
             <!--<DataGridTextColumn x:Name="numColumn" Binding="{Binding num}" Header="number of"/>
             <DataGridTextColumn x:Name="dataColumn" Binding="{Binding dataGrid}" Header="bknlk"/>-->
         </ListView>
-        <DataGrid x:Name="stationDataGrid" Grid.Row="1" MouseDoubleClick="ViewStation" IsReadOnly="True"
+        <DataGrid x:Name="stationDataGrid" Grid.Row="1" MouseDoubleClick="viewStation" IsReadOnly="True"
                   AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="50,0,50,0" >
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id"/>
@@ -30,7 +30,7 @@
                 <DataGridTextColumn x:Name="availableChargeSlotsColumn" Binding="{Binding AvailableChargeSlots}" Header="Available Charge Slots"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="AddStation" Grid.Row="2" Click="AddStation" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,12"/>
+        <Button Content="AddStation" Grid.Row="2" Click="addStation" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,12"/>
         <ComboBox x:Name="groupButton" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="refresh" Width="auto" Margin="20,0,0,0"/>
     </Grid>
 </Window>

@@ -139,20 +139,71 @@ namespace BLApi
         #endregion display
 
         #region delete
+        /// <summary>
+        /// delete the requedted
+        /// </summary>
+        /// <param name="id"></param>
         void DeleteParcel(int id);
         #endregion
 
         #region users functions
-        string getManagmentPassword();
-        string changeManagmentPassword();
+        /// <summary>
+        /// return the manager password
+        /// </summary>
+        /// <returns></returns>
+        string GetManagmentPassword();
+        /// <summary>
+        /// change the manager password
+        /// </summary>
+        /// <returns></returns>
+        string ChangeManagmentPassword();
+        /// <summary>
+        /// return the id of the user (by the name and the password)
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         int GetUserId(string name, string password);
+        /// <summary>
+        /// checks if the user is a manager
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         bool ExistManager(string name, string password);
+        /// <summary>
+        /// add new user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="password"></param>
         void AddUser(int id, string name, string password);
+        /// <summary>
+        /// add new manager
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="password"></param>
         void AddManager(string name, string password);
+        /// <summary>
+        /// get all the managers name
+        /// </summary>
+        /// <returns></returns>
         IEnumerable<string> GetListOfManagersNames();
+        /// <summary>
+        /// get all the users name
+        /// </summary>
+        /// <returns></returns>
         IEnumerable<string> GetListOfUsersNames();
         #endregion
 
+        #region simolator
+        /// <summary>
+        /// turn on the simolator
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <param name="UpdateDisplayDelegate"></param>
+        /// <param name="checkStop"></param>
         void RunsTheSimulator(int droneId, Action UpdateDisplayDelegate, Func<bool> checkStop);
+        #endregion
     }
 }

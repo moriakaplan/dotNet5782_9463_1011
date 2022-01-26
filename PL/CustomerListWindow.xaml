@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <DataGrid x:Name="customerToListDataGrid" Grid.Row="1" IsReadOnly="True"
                   AutoGenerateColumns="False" EnableRowVirtualization="True" Height="auto"
-                  ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" MouseDoubleClick="ViewCustomer" Margin="50,0,50,80" Grid.RowSpan="2">
+                  ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" MouseDoubleClick="viewCustomer" Margin="50,0,50,80" Grid.RowSpan="2">
             <!--<DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
                     <EventSetter Event="PreviewMouseDoubleClick"  Handler="ViewCustomer"/>
@@ -31,6 +31,6 @@
                 <DataGridTextColumn x:Name="numOfParclReceivedColumn" Binding="{Binding numOfParclReceived}" Header="num Of Parcl&#xD;&#xA;Received"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Add Customer" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Click="AddCustomer"/>
+        <Button Content="Add Customer" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Click="addCustomer"/>
     </Grid>
 </Window>
