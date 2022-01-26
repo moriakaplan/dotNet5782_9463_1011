@@ -32,7 +32,7 @@
             <Label.Style>
                 <Style TargetType="Label">
                     <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
+                        <Trigger  Property="IsMouseOver" Value="True">
                             <Setter Property="Content" Value="the signing is just for customers of the company.&#xD;&#xA;if you are not please call the company and foin its customers" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="False">

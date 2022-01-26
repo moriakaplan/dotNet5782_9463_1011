@@ -52,7 +52,8 @@
             <ComboBox x:Name="txtWeight"  Text="{Binding  MaxWeight}" Grid.Row="5" Grid.Column="1" Margin="10"/>
             <ComboBox x:Name="txtStationId" Grid.Row="6" Grid.Column="1" Margin="10" SelectionChanged="txtStationId_SelectionChanged" Visibility="{Binding ElementName=lblStation, Path=Visibility}"/>
             <TextBox  x:Name="txtParcel"  Text="{Binding  ParcelInT.Id}" Grid.Row="7" Grid.Column="1" Margin="10" IsEnabled="false" Visibility="{Binding ElementName=lblParcel, Path=Visibility}"/>
-            <Grid Grid.Column="1" Grid.Row="8">
+            <TextBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="8" Text="{Binding  CurrentLocation}" IsEnabled="false"  Width="auto" Height="auto"/>
+            <!--<Grid Grid.Column="1" Grid.Row="8">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -65,7 +66,8 @@
                 <Label Content="longitude:"  Grid.Row="1" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
                 <Label x:Name="txtLatti" Content="{Binding  CurrentLocation.Latti}" ContentStringFormat="{}{0:0.000}" Grid.Row="0" Grid.Column="1" Margin="10" IsEnabled="false"/>
                 <Label x:Name="txtLongi" Content="{Binding  CurrentLocation.Longi}" ContentStringFormat="{}{0:0.000}" Grid.Row="1" Grid.Column="1" Margin="10" IsEnabled="false"/>
-            </Grid>
+            </Grid>-->
+            
             <Button x:Name="add" Content="Add The &#xD;&#xA;Drone" Grid.Row="9"  Click="AddDrone_Click"
                 HorizontalAlignment="Left" VerticalAlignment="Top" Width="107" Height="60" Grid.ColumnSpan="2" Margin="146,29,0,0"/>
             <Button x:Name="options" Content="options" Grid.Row="9" Grid.Column="1"
@@ -74,7 +76,6 @@
                 HorizontalAlignment="Left" VerticalAlignment="Top" Width="106" Height="60" Margin="26,31,0,0"/>
             <Button x:Name="charge" Content="send drone&#xD;&#xA;to charge" Click="SendDroneToCharge" Grid.Row="9" 
                 HorizontalAlignment="Left" VerticalAlignment="Top" Width="107" Height="60" Grid.ColumnSpan="2" Margin="146,31,0,0"/>
-            <TextBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="9" Text="{Binding  CurrentLocation}" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Height="26"/>
             <Button x:Name="btnSimulator"  Content="automatic state" HorizontalAlignment="Center" Height="45" Grid.Row="9" VerticalAlignment="Bottom" Margin="0,0,0,20" Width="198" Style="{StaticResource brownButton}" Grid.ColumnSpan="2" Click="simulator"/>
 
         </Grid>

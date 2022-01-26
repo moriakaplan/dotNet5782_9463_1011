@@ -180,8 +180,8 @@ namespace PL
         private void txtStationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Location loc = blObject.GetStation((int)txtStationId.SelectedItem).Location;
-            txtLatti.Content = loc.Latti.ToString();
-            txtLongi.Content = loc.Longi.ToString();
+            //txtLatti.Content = loc.Latti.ToString();
+            //txtLongi.Content = loc.Longi.ToString();
         }
         /// <summary>
         /// update the model of the drone

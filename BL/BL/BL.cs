@@ -19,7 +19,7 @@ namespace BL
         /// </summary>
         internal static BL Instance
         {
-            //singelton thread safe and lazy initializion(?)
+            //singelton thread safe and lazy initializion
             get
             {
                 lock (syncRoot)
