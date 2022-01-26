@@ -180,8 +180,8 @@ namespace PL
         private void txtStationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Location loc = blObject.GetStation((int)txtStationId.SelectedItem).Location;
-            txtLatti.Text = loc.Latti.ToString();
-            txtLongi.Text = loc.Longi.ToString();
+            txtLatti.Content = loc.Latti.ToString();
+            txtLongi.Content = loc.Longi.ToString();
         }
         /// <summary>
         /// update the model of the drone
@@ -498,13 +498,22 @@ namespace PL
         {
             canClose = true;
             MessageBoxResult mb;
-            if (somethingHasChanged())
+            if (btnSimulator.Content.ToString() == "manual state")
             {
-                if (isInActionsState == false)
-                    mb = MessageBox.Show("do you want to close the window? \n the drone will not be added", "cancel adding of drone", MessageBoxButton.YesNo);
-                else
-                    mb = MessageBox.Show("do you want to close the window? \nchanges will not happen", "close", MessageBoxButton.YesNo);
+                mb=MessageBox.Show("you can't close the window whent the simulation is open. Do you want to stop the simulation and close the window?", "close", MessageBoxButton.YesNo);
                 if (mb == MessageBoxResult.No) return;
+                worker.CancelAsync();
+            }
+            else
+            {
+                if (somethingHasChanged())
+                {
+                    if (isInActionsState == false)
+                        mb = MessageBox.Show("do you want to close the window? \n the drone will not be added", "cancel adding of drone", MessageBoxButton.YesNo);
+                    else
+                        mb = MessageBox.Show("do you want to close the window? \nchanges will not happen", "close", MessageBoxButton.YesNo);
+                    if (mb == MessageBoxResult.No) return;
+                }
             }
             this.Close();
         }

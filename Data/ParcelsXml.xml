@@ -69,8 +69,8 @@
     <Priority>Emergency</Priority>
     <CreateTime>2021-10-18T00:00:00</CreateTime>
     <AssociateTime>2021-10-19T00:00:00</AssociateTime>
-    <PickUpTime xsi:nil="true" />
-    <DeliverTime xsi:nil="true" />
+    <PickUpTime>2022-01-26T12:42:17.9242387+02:00</PickUpTime>
+    <DeliverTime>2022-01-26T12:42:19.4719845+02:00</DeliverTime>
   </Parcel>
   <Parcel>
     <Id>10000023</Id>
@@ -124,12 +124,12 @@
     <Id>10000027</Id>
     <Senderld>975102665</Senderld>
     <TargetId>888888888</TargetId>
-    <Droneld>0</Droneld>
+    <Droneld>469564</Droneld>
     <Weight>Heavy</Weight>
     <Priority>Regular</Priority>
     <CreateTime>2022-01-26T10:30:02.0892767+02:00</CreateTime>
-    <AssociateTime xsi:nil="true" />
-    <PickUpTime xsi:nil="true" />
+    <AssociateTime>2022-01-26T12:42:20.0208325+02:00</AssociateTime>
+    <PickUpTime>2022-01-26T12:42:21.0356398+02:00</PickUpTime>
     <DeliverTime xsi:nil="true" />
   </Parcel>
 </ArrayOfParcel>
