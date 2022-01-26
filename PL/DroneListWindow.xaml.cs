@@ -115,7 +115,7 @@ namespace PL
             else
             {
                 if (WeightFilter.SelectedItem != null) weightFilter(WeightFilter, null);
-                else Restart_Click(Restart, null);
+                else restart(Restart, null);
             }
         }
         /// <summary>
@@ -142,7 +142,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dataWindow(object sender, CancelEventArgs e)
+        private void dataWindowClosing(object sender, CancelEventArgs e)
         {
             if (canClose == false)
             {

@@ -50,8 +50,8 @@
                    Grid.Row="9" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
 
             <TextBox  x:Name="txtId"     Text="{Binding Id}" Visibility="{Binding ElementName=lblId, Path=Visibility}" Grid.Row="0" Grid.Column="1" Margin="10" />
-            <ComboBox x:Name="txtSender" Text="{Binding Sender.Id}" Grid.Row="1" Grid.Column="1" Margin="10,10,200,10" MouseDoubleClick="viewSender" Visibility="{Binding ElementName=lblSender, Path=Visibility}" SelectionChanged="txtSender_SelectionChanged"/>
-            <ComboBox x:Name="txtTarget" Text="{Binding Target.Id}" Grid.Row="2" Grid.Column="1" Margin="10,10,200,10" MouseDoubleClick="viewTarget" SelectionChanged="txtTarget_SelectionChanged"/>
+            <ComboBox x:Name="txtSender" Text="{Binding Sender.Id}" Grid.Row="1" Grid.Column="1" Margin="10,10,200,10" MouseDoubleClick="viewSender" Visibility="{Binding ElementName=lblSender, Path=Visibility}" SelectionChanged="txtSenderSelectionChanged"/>
+            <ComboBox x:Name="txtTarget" Text="{Binding Target.Id}" Grid.Row="2" Grid.Column="1" Margin="10,10,200,10" MouseDoubleClick="viewTarget" SelectionChanged="txtTargetSelectionChanged"/>
             <TextBox  x:Name="txtDrone"  Text="{Binding Drone.Id}" Grid.Row="3" Grid.Column="1" Margin="10,10,200,10" Visibility="{Binding ElementName=lblDrone, Path=Visibility}"/>
             <ComboBox x:Name="txtWeight" Text="{Binding Weight}" Grid.Row="4" Grid.Column="1" Margin="10" />
             <ComboBox x:Name="txtPriority" Text="{Binding Priority}" Grid.Row="5" Grid.Column="1" Margin="10" />

@@ -21,12 +21,8 @@
             </Style>
             <local:NullableToVisibilityConverter
                 x:Key="nullableToVisibilityConverter"/>
-            <local:TextBoxToVisibilityConverter
-                x:Key="textBoxToVisibilityConverter"/>
             <local:BatteryToColorConverter
                 x:Key="batteryToColorConverter"/>
-            <local:PassWordToStringConverter
-                x:Key="passwordToStringConverter"/>
         </ResourceDictionary>
     </Application.Resources>
     
