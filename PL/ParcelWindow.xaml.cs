@@ -126,11 +126,11 @@ namespace PL
             options.Visibility = Visibility;
             options.Click -= pickUpParcel;
             options.Click -= deliverParcel;
-            options.Click -= DeleteParcel;
+            options.Click -= deleteParcel;
             if (parcel.AssociateTime == null) //if the parcel is not accosiated yet
             {
                 options.Content = "delete the parcel"; //option to delete the parcel 
-                options.Click += DeleteParcel;
+                options.Click += deleteParcel;
             }
             else
             {
