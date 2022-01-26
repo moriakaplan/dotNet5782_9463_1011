@@ -25,6 +25,8 @@
                 x:Key="textToVisibilityConverter"/>
             <local:BatteryToColorConverter
                 x:Key="batteryToColorConverter"/>
+            <local:PassWordToStringConverter
+                x:Key="passwordToStringConverter"/>
         </ResourceDictionary>
     </Application.Resources>
     

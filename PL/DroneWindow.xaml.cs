@@ -129,7 +129,7 @@ namespace PL
         }
         #endregion
 
-        #region actions and buttons
+        #region actions etc
         /// <summary>
         /// add new drone to the data source
         /// </summary>
@@ -426,79 +426,16 @@ namespace PL
             //options.Click += SendDroneToDelivery;
             refresh();
         }
-        /// <summary>
-        /// determinate the color of the id text box, according to wich is valid or not
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void IdColor(object sender, TextChangedEventArgs e)
-        {
-            int id;
-            if (isInActionsState == true) return;
-            if (int.TryParse(txtId.Text, out id) && id >= 100000 && id <= 999999)
-            {
-                txtId.Foreground = Brushes.Green;
-            }
-            else
-            {
-                if (txtId.Text == "6 digits") txtId.Foreground = Brushes.Black;
-                else txtId.Foreground = Brushes.Red;
-            }
-        }
-        /// <summary>
-        /// in actions window- paint the model green when the user change it
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ModelColor(object sender, TextChangedEventArgs e) //color for model
-        {
-            if (isInActionsState && txtModel.Text == blObject.GetDrone(int.Parse(txtId.Text)).Model)
-                txtModel.Foreground = Brushes.Black;
-            else
-                txtModel.Foreground = Brushes.Green;
-        }
-        /// <summary>
-        /// close the window after clicking the close button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            canClose = true;
-            MessageBoxResult mb;
-            if (somethingHasChanged())
-            {
-                if (isInActionsState == false)
-                    mb = MessageBox.Show("do you want to close the window? \n the drone will not be added", "cancel adding of drone", MessageBoxButton.YesNo);
-                else
-                    mb = MessageBox.Show("do you want to close the window? \nchanges will not happen", "close", MessageBoxButton.YesNo);
-                if (mb == MessageBoxResult.No) return;
-            }
-            this.Close();
-        }
-
+        
         bool somethingHasChanged()
         {
             if (isInActionsState)
             {
-                return (txtModel.Foreground == Brushes.Green); //its green if 
+                return (txtModel.Foreground == Brushes.Green); //its green if its has changed (and it is the only thing that can be changed).
             }
             else
             {
-                return (txtId.Text != "" || txtModel.Text != "" || /*txtBattery.Text != "" ||*/ txtWeight.SelectedItem != null || txtStationId != null);
-            }
-        }
-        /// <summary>
-        /// prevenet closing the window with the X button.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void DataWindow_Closing(object sender, CancelEventArgs e)
-        {
-            if (canClose == false)
-            {
-                MessageBox.Show("don't close with the x button, close with the close window button");
-                e.Cancel = true;
+                return (txtId.Text != "" || txtModel.Text != "" || txtWeight.SelectedItem != null || txtStationId != null);
             }
         }
 
@@ -507,8 +444,6 @@ namespace PL
             if (txtParcel.Text != "")
                 new ParcelWindow(blObject, int.Parse(txtParcel.Text)).ShowDialog();
         }
-
-        #endregion
 
         private void refresh()//just for action state
         {
@@ -551,13 +486,76 @@ namespace PL
             }
         }
 
-      
-        //private void simolator(object sender, RoutedEventArgs e)
-        //{
-        //    //blObject.RunsTheSimulator(int.Parse(txtId.Text), );
-        //    blObject.RunsTheSimulator(int.Parse(txtId.Text), () => worker.ReportProgress(0), () => worker.CancellationPending);
+        #endregion
 
-        //}
+        #region close
+        /// <summary>
+        /// close the window after clicking the close button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            canClose = true;
+            MessageBoxResult mb;
+            if (somethingHasChanged())
+            {
+                if (isInActionsState == false)
+                    mb = MessageBox.Show("do you want to close the window? \n the drone will not be added", "cancel adding of drone", MessageBoxButton.YesNo);
+                else
+                    mb = MessageBox.Show("do you want to close the window? \nchanges will not happen", "close", MessageBoxButton.YesNo);
+                if (mb == MessageBoxResult.No) return;
+            }
+            this.Close();
+        }
+        /// <summary>
+        /// prevenet closing the window with the X button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void DataWindow_Closing(object sender, CancelEventArgs e)
+        {
+            if (canClose == false)
+            {
+                MessageBox.Show("don't close with the x button, close with the close window button");
+                e.Cancel = true;
+            }
+        }
+        #endregion
+
+        #region colors
+        /// <summary>
+        /// in actions window- paint the model green when the user change it
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ModelColor(object sender, TextChangedEventArgs e) //color for model
+        {
+            if (isInActionsState && txtModel.Text == blObject.GetDrone(int.Parse(txtId.Text)).Model)
+                txtModel.Foreground = Brushes.Black;
+            else
+                txtModel.Foreground = Brushes.Green;
+        }
+        /// <summary>
+        /// determinate the color of the id text box, according to wich is valid or not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IdColor(object sender, TextChangedEventArgs e)
+        {
+            int id;
+            if (isInActionsState == true) return;
+            if (int.TryParse(txtId.Text, out id) && id >= 100000 && id <= 999999)
+            {
+                txtId.Foreground = Brushes.Green;
+            }
+            else
+            {
+                if (txtId.Text == "6 digits") txtId.Foreground = Brushes.Black;
+                else txtId.Foreground = Brushes.Red;
+            }
+        }
+        #endregion
     }
     
 }

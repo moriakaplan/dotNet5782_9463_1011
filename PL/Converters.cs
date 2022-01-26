@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -23,6 +24,21 @@ namespace PL
             if (doubleValue >= 30 && doubleValue < 50) return Brushes.GreenYellow;
             if (doubleValue >= 50 && doubleValue <= 80) return Brushes.YellowGreen;
             return Brushes.ForestGreen;
+        }
+        //convert from target property type to source property type
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class PassWordToStringConverter : IValueConverter
+    {
+        //convert from source property type(PasswordBox) to target property type(string)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            PasswordBox pass = (PasswordBox)value;
+            return pass.Password;
         }
         //convert from target property type to source property type
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
