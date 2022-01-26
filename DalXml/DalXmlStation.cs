@@ -11,6 +11,10 @@ namespace Dal
 {
     public partial class DalXml
     {
+        /// <summary>
+        /// add new station
+        /// </summary>
+        /// <param name="station"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(Station station)
         {
@@ -20,7 +24,11 @@ namespace Dal
             XmlTools.SaveListToXmlSerializer<Station>(stations, stationsPath);
 
         }
-
+        /// <summary>
+        /// returns the station with the requested id
+        /// </summary>
+        /// <param name="stationId"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Station GetStation(int stationId)
         {
@@ -30,6 +38,11 @@ namespace Dal
             return (Station)result;
         }
 
+        /// <summary>
+        /// return all the stations
+        /// </summary>
+        /// <param name="pre"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetStationsList(Predicate<Station> pre)
         {
@@ -38,7 +51,10 @@ namespace Dal
             if (pre == null) return result;
             return result.FindAll(pre);
         }
-
+        /// <summary>
+        /// delete the station
+        /// </summary>
+        /// <param name="stationId"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteStation(int stationId)
         {
