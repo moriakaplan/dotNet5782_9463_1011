@@ -20,17 +20,17 @@ namespace Dal
         private DalObject()
         {
             DataSource.Initialize();
-            foreach (Drone drone in DataSource.drones)
-            {
-                Random rand = new Random();
-                int goToMaintanence = rand.Next(1);
-                if (goToMaintanence == 1)
-                {
-                    int index = rand.Next(0, DataSource.stations.Count());
-                    Station stationForFirstCharge = DataSource.stations.ElementAt(index);
-                    SendDroneToCharge(drone.Id, stationForFirstCharge.Id);
-                }
-            }
+            //foreach (Drone drone in DataSource.drones)
+            //{
+            //    Random rand = new Random();
+            //    int goToMaintanence = rand.Next(2);
+            //    if (goToMaintanence == 1)
+            //    {
+            //        int index = rand.Next(0, DataSource.stations.Count());
+            //        Station stationForFirstCharge = DataSource.stations.ElementAt(index);
+            //        SendDroneToCharge(drone.Id, stationForFirstCharge.Id);
+            //    }
+            //}
         }
         /// <summary>
         /// The public Instance property to use

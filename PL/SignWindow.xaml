@@ -23,13 +23,13 @@
         <Label x:Name="lblId" Content="your id" HorizontalAlignment="Left" Margin="42,128,0,0" VerticalAlignment="Top" Width="58"/>
         <Label Content="choose a username" HorizontalAlignment="Left" Margin="42,164,0,0" VerticalAlignment="Top" Width="auto"/>
         <Label Content="choose a password" HorizontalAlignment="Left" Margin="42,198,0,0" VerticalAlignment="Top" Width="auto"/>
-        <Label x:Name="lblManager" Content="enter the managment password" HorizontalAlignment="Left" Margin="42,128,0,0" VerticalAlignment="Top" Width="auto"/>
+        <Label x:Name="lblManager" Content="enter the &#xD;&#xA;managment password" HorizontalAlignment="Left" Margin="42,110,0,0" VerticalAlignment="Top" Width="auto"/>
         <TextBox x:Name="txtId" HorizontalAlignment="Left" Margin="98,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="216"/>
         <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="188,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
         <TextBox x:Name="txtPassword" TextChanged="passChange" HorizontalAlignment="Left" Margin="188,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
         <TextBox x:Name="txtManager" Text="8 digits" HorizontalAlignment="Left" Margin="232,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82"/>
         <Label x:Name="help" Content="?" HorizontalAlignment="Left" Margin="314,129,0,0" VerticalAlignment="Top" Foreground="Gray"/>
-        <Label Content="the signing is just&#xD;&#xA;for customers&#xD;&#xA;of the company" Foreground="gray" FontSize="10" Width="auto" Height="auto" Margin="282,90,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Center">
+        <Label Content="the signing is just&#xD;&#xA;for customers&#xD;&#xA;of the company" Foreground="gray" FontSize="10" Width="auto" Height="50" Margin="282,-200,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Center">
             <Label.Style>
                 <Style TargetType="Label">
                     <Setter Property="Visibility" Value="Hidden"/>
@@ -41,8 +41,8 @@
                 </Style>
             </Label.Style>
         </Label>
-        <Label Content="I am:" HorizontalAlignment="Left" Margin="112,55,0,0" VerticalAlignment="Top" Width="auto"/>
-        <ComboBox x:Name="typeOfUser" HorizontalAlignment="Left" Margin="155,55,0,0" VerticalAlignment="Top" Width="104" SelectionChanged="typeOfUserChanged"/>
+        <Label Content="I am:" HorizontalAlignment="Left" Margin="112,30,0,0" VerticalAlignment="Top" Width="auto"/>
+        <ComboBox x:Name="typeOfUser" HorizontalAlignment="Left" Margin="155,30,0,0" VerticalAlignment="Top" Width="104" SelectionChanged="typeOfUserChanged"/>
         <Label x:Name="lblGoodOrWrong" HorizontalAlignment="Left" Margin="48,240,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.5,-0.891"/>
     </Grid>
 </Window>

@@ -18,20 +18,28 @@ namespace Dal
         {
             internal static string managmentPassword = DalObject.getGoodPass();
             internal static int parcelCode = 10000000;
-            public static double available=0.01; //per kill
-            public static double easy=0.012;      //per kill
-            public static double medium=0.013;    //per kill
-            public static double heavy=0.014;     //per kill
-            public static double ratePerMinute = 10;
+            public static double available=0.01; //per kilometer
+            public static double easy=0.015;      //per kilometer
+            public static double medium=0.02;    //per kilometer
+            public static double heavy=0.025;     //per kilometer
+            public static double ratePerMinute = 120;
 
             
         }
         
         public static void Initialize()//Initializes 2 stations, 5 drones, 10 customers and 10 parcels.
         {
+            users.Add(new User
+            {
+                IsManager = true,
+                UserName = "general manager",
+                Password = "123456aA"
+            });
+
+            #region station
             stations.Add(new Station
             {
-                Id = random.Next(1000, 10000)/*1111*/,
+                Id = random.Next(1000, 10000),
                 Name = "the israelian station",
                 Longitude = 34.8,
                 Lattitude = 32,
@@ -45,25 +53,27 @@ namespace Dal
                 Lattitude = 32,
                 ChargeSlots = 112
             });
-            drones.Add(new Drone
+            #endregion
+            #region drones
+            drones.Add(new Drone //associated
             {
                 Id = random.Next(100000, 1000000),
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "superFalcon",
             });
-            drones.Add(new Drone
+            drones.Add(new Drone //associated
             {
                 Id = random.Next(100000, 1000000), 
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "superFalcon",
             });
-            drones.Add(new Drone
+            drones.Add(new Drone//associated
             {
                 Id = random.Next(100000, 1000000),
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "superFalcon2",
             });
-            drones.Add(new Drone
+            drones.Add(new Drone//associated
             {
                 Id = random.Next(100000, 1000000),
                 MaxWeight = (WeightCategories)random.Next(0, 3),
@@ -75,6 +85,14 @@ namespace Dal
                 MaxWeight = (WeightCategories)random.Next(0, 3),
                 Model = "AnaAref",
             });
+            droneCharges.Add(new DroneCharge 
+            {
+                DroneId = drones[4].Id, 
+                StartedChargeTime = DateTime.Now,
+                StationId = stations[random.Next(0, 2)].Id 
+            });
+            #endregion
+            #region customers
             customers.Add(new Customer
             {
                 Id = random.Next(100000000, 1000000000),
@@ -155,6 +173,8 @@ namespace Dal
                 Longitude = 35.2,
                 Lattitude = 31.7
             });
+            #endregion customers
+            #region parcels
             parcels.Add(new Parcel
             {
                 Id = ++Config.parcelCode,
@@ -285,6 +305,7 @@ namespace Dal
                 PickUpTime = new DateTime(2021, 02, 23),
                 DeliverTime = new DateTime(2021, 03, 01),
             });
+            #endregion parcels
         }
     }
 }
