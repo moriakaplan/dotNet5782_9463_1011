@@ -65,7 +65,7 @@ namespace Dal
             {
                 Id = random.Next(100000, 1000000), 
                 MaxWeight = (WeightCategories)random.Next(0, 3),
-                Model = "superFalcon",
+                Model = "superFalcon1",
             });
             drones.Add(new Drone//associated
             {
