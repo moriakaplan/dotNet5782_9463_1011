@@ -19,10 +19,9 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomer(int customerId)
         {
-            Customer? cus = DataSource.customers.Find(item => item.Id == customerId);
-            if (cus == null) 
+            if (!DataSource.customers.Exists(item => item.Id == customerId)) 
                 throw new CustomerException($"id: {customerId} does not exist");
-            return (Customer)cus;
+            return DataSource.customers.Find(item => item.Id == customerId);
         }
         
         [MethodImpl(MethodImplOptions.Synchronized)]
