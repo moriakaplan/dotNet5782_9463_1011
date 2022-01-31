@@ -60,7 +60,7 @@
             <!--<TextBox x:Name="txtLocation" Grid.Column="1" Grid.Row="8" Text="{Binding CurrentLocation}" IsEnabled="false"  Width="auto" Height="100"/>-->
 
             <TextBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="8" Text="{Binding  CurrentLocation}" IsEnabled="false"  Width="auto" Height="auto"/>
-            <Grid Grid.Column="1" Grid.Row="8">
+            <Grid x:Name="locGrid" Grid.Column="1" Grid.Row="8">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -71,8 +71,8 @@
                 </Grid.ColumnDefinitions>
                 <Label Content="Lattitude:" Grid.Row="0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
                 <Label Content="Longitude:"  Grid.Row="1" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
-                <Label x:Name="txtLatti" Content="{Binding  CurrentLocation.Latti}" ContentStringFormat="{}{0:0.000}" Grid.Row="0" Grid.Column="1" Margin="10" IsEnabled="false"/>
-                <Label x:Name="txtLongi" Content="{Binding  CurrentLocation.Longi}" ContentStringFormat="{}{0:0.000}" Grid.Row="1" Grid.Column="1" Margin="10" IsEnabled="false"/>
+                <Label x:Name="txtLatti" Content="{Binding  Latti}" ContentStringFormat="{}{0:0.000}" Grid.Row="0" Grid.Column="1" Margin="10" IsEnabled="false"/>
+                <Label x:Name="txtLongi" Content="{Binding  Longi}" ContentStringFormat="{}{0:0.000}" Grid.Row="1" Grid.Column="1" Margin="10" IsEnabled="false"/>
             </Grid>
             
             <Button x:Name="add" Content="Add The&#xD;&#xA;Drone" Grid.Row="9"  Click="addDrone_Click"

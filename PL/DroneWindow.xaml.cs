@@ -188,8 +188,7 @@ namespace PL
         /// <param name="e"></param>
         private void txtStationIdSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Location loc = blObject.GetStation((int)txtStationId.SelectedItem).Location;
-           
+            locGrid.DataContext = blObject.GetStation((int)txtStationId.SelectedItem).Location;
         }
         /// <summary>
         /// update the model of the drone
