@@ -18,10 +18,10 @@ namespace Dal
         {
             internal static string managmentPassword = DalObject.getGoodPass();
             internal static int parcelCode = 10000000;
-            public static double available=0.01; //per kilometer
-            public static double easy=0.015;      //per kilometer
-            public static double medium=0.02;    //per kilometer
-            public static double heavy=0.025;     //per kilometer
+            public static double available=0.001; //per kilometer
+            public static double easy=0.0015;      //per kilometer
+            public static double medium=0.002;    //per kilometer
+            public static double heavy=0.0025;     //per kilometer
             public static double ratePerMinute = 120;
 
             
@@ -41,7 +41,7 @@ namespace Dal
             {
                 Id = random.Next(1000, 10000),
                 Name = "the israelian station",
-                Longitude = 34.8,
+                Longitude = 32,
                 Lattitude = 32,
                 ChargeSlots = 13
             });
@@ -49,7 +49,7 @@ namespace Dal
             {
                 Id = random.Next(1000, 10000),
                 Name = "the biggest station",
-                Longitude = 35,
+                Longitude = 32.5,
                 Lattitude = 32,
                 ChargeSlots = 112
             });
@@ -65,7 +65,7 @@ namespace Dal
             {
                 Id = random.Next(100000, 1000000), 
                 MaxWeight = (WeightCategories)random.Next(0, 3),
-                Model = "superFalcon",
+                Model = "superFalcon1",
             });
             drones.Add(new Drone//associated
             {
@@ -98,15 +98,15 @@ namespace Dal
                 Id = random.Next(100000000, 1000000000),
                 Name = "Yosef",
                 Phone = "0501234567",
-                Longitude = 35.2,
-                Lattitude = 31.1
+                Longitude = 32,
+                Lattitude = 31.9
             });
             customers.Add(new Customer
             {
                 Id = random.Next(100000000, 1000000000),
                 Name = "Avi",
                 Phone = "0503456789",
-                Longitude = 34.8,
+                Longitude = 32.6,
                 Lattitude = 31.8
             });
             customers.Add(new Customer
@@ -114,23 +114,23 @@ namespace Dal
                 Id = random.Next(100000000, 1000000000),
                 Name = "Nahum",
                 Phone = "0545678901",
-                Longitude = 35.2,
-                Lattitude = 31.7
+                Longitude = 32.01,
+                Lattitude = 32.8
             });
             customers.Add(new Customer
             {
                 Id = random.Next(100000000, 1000000000),
                 Name = "Moshe",
                 Phone = "0523456789",
-                Longitude = 34.7,
-                Lattitude = 32
+                Longitude = 32.7,
+                Lattitude = 32.8
             });
             customers.Add(new Customer
             {
                 Id = random.Next(100000000, 1000000000),
                 Name = "Shlomo",
                 Phone = "0521234567",
-                Longitude = 34.6,
+                Longitude = 32.7,
                 Lattitude = 31.2
             });
             customers.Add(new Customer
@@ -138,15 +138,15 @@ namespace Dal
                 Id = random.Next(100000000, 1000000000),
                 Name = "Shira",
                 Phone = "0502345678",
-                Longitude = 35,
-                Lattitude = 29.5
+                Longitude = 32.9,
+                Lattitude = 31.9
             });
             customers.Add(new Customer
             {
                 Id = random.Next(100000000, 1000000000),
                 Name = "Naama",
                 Phone = "0531234567",
-                Longitude = 35.2,
+                Longitude = 32.2,
                 Lattitude = 32.9
             });
             customers.Add(new Customer
@@ -154,7 +154,7 @@ namespace Dal
                 Id = random.Next(100000000, 1000000000),
                 Name = "Etya",
                 Phone = "0501234569",
-                Longitude = 34.8,
+                Longitude = 32.8,
                 Lattitude = 32.15
             });
             customers.Add(new Customer
@@ -162,7 +162,7 @@ namespace Dal
                 Id = random.Next(100000000, 1000000000),
                 Name = "Yosefa",
                 Phone = "0501237567",
-                Longitude = 34.78,
+                Longitude = 32.78,
                 Lattitude = 32.23
             });
             customers.Add(new Customer
@@ -170,7 +170,7 @@ namespace Dal
                 Id = random.Next(100000000, 1000000000),
                 Name = "Yosi",
                 Phone = "0541234567",
-                Longitude = 35.2,
+                Longitude = 32.2,
                 Lattitude = 31.7
             });
             #endregion customers
