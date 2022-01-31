@@ -166,7 +166,7 @@
     <CreateTime>2022-01-27T00:43:10.0789078+02:00</CreateTime>
     <AssociateTime>2022-01-27T00:47:27.6567843+02:00</AssociateTime>
     <PickUpTime>2022-01-27T00:47:30.6854019+02:00</PickUpTime>
-    <DeliverTime xsi:nil="true" />
+    <DeliverTime>2022-02-01T01:30:58.6090302+02:00</DeliverTime>
   </Parcel>
   <Parcel>
     <Id>10000036</Id>
