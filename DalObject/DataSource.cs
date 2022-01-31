@@ -18,10 +18,10 @@ namespace Dal
         {
             internal static string managmentPassword = DalObject.getGoodPass();
             internal static int parcelCode = 10000000;
-            public static double available=0.001; //per kilometer
-            public static double easy=0.0015;      //per kilometer
-            public static double medium=0.002;    //per kilometer
-            public static double heavy=0.0025;     //per kilometer
+            public static double available=0.001; //battery per kilometer
+            public static double easy=0.0015;     //battery per kilometer
+            public static double medium=0.002;    //battery per kilometer
+            public static double heavy=0.0025;    //battery per kilometer
             public static double ratePerMinute = 120;
 
             

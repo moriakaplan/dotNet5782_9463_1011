@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="AddDrone" Height="591" Width="auto" MaxWidth="750"
+        Title="AddDrone" Height="591" Width="auto" MaxWidth="740"
         Closing="dataWindowClosing"
         Icon="\Images\droneDelivery2.ico">
     <Grid>
@@ -111,7 +111,7 @@
             <Label Content="{Binding TransportDistance}" Grid.Column="1" HorizontalAlignment="Left" Margin="15,336,0,0" VerticalAlignment="Top"/>
         </Grid>
 
-        <TextBlock x:Name="noParcelsNote" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Foreground="Red"
+        <TextBlock x:Name="noParcelsNote" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Foreground="Red" Visibility="Collapsed"
                    Text="There is no available package&#xD;&#xA;to associate the drone to.&#xD;&#xA;You can wait for a package to be added&#xD;&#xA;or stop the simulation."/>
     </Grid>
 </Window>
