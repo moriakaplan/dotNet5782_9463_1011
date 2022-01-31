@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using BLApi;
 using BO;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace PL
 {
@@ -23,6 +24,7 @@ namespace PL
     public partial class ParcelListWindow : Window
     {
         IBL blObject;
+        ObservableCollection<ParcelToList> parcelsOb;
         /// <summary>
         /// constractor
         /// </summary>
@@ -31,6 +33,7 @@ namespace PL
         {
             blObject = obj;
             InitializeComponent();
+            parcelsOb = new ObservableCollection<ParcelToList>(blObject.GetParcelsList());
             parcelToListDataGrid.DataContext= blObject.GetParcelsList();
             StatusFilter.ItemsSource = Enum.GetValues(typeof(ParcelStatus));
             WeightFilter.ItemsSource = Enum.GetValues(typeof(WeightCategories));
@@ -44,8 +47,9 @@ namespace PL
         private void viewParcel(object sender, MouseButtonEventArgs e)
         {
             new ParcelWindow(blObject, ((BO.ParcelToList)parcelToListDataGrid.SelectedItem).Id).ShowDialog();
-            if (StatusFilter.SelectedItem != null) statusFilter(null, null);
-            else parcelToListDataGrid.DataContext = blObject.GetParcelsList();
+            //if (StatusFilter.SelectedItem != null) statusFilter(null, null);
+            //else parcelToListDataGrid.DataContext = blObject.GetParcelsList();
+            filter(null, null);
         }
 
         /// <summary>
@@ -56,65 +60,137 @@ namespace PL
         private void addParcel(object sender, RoutedEventArgs e)
         {
             new ParcelWindow(blObject).ShowDialog();
-            if (StatusFilter.SelectedItem != null) statusFilter(null, null);
-            else parcelToListDataGrid.DataContext = blObject.GetParcelsList();
+            //if (StatusFilter.SelectedItem != null) statusFilter(null, null);
+            //else parcelToListDataGrid.DataContext = blObject.GetParcelsList();
+            filter(null, null);
         }
 
+        #region filters
+        ///// <summary>
+        ///// filter the list of displayed parcels to contain just parcels with specific weight.
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void weightFilter(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (WeightFilter.SelectedIndex == -1) return;
+        //    WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
+        //    if (StatusFilter.SelectedItem == null)
+        //    {
+        //        parcelToListDataGrid.DataContext = blObject.GetParcelsList().Where(x => x.Weight == weight);
+        //    }
+        //    else
+        //    {
+        //        ParcelStatus status = (ParcelStatus)StatusFilter.SelectedItem;
+        //        parcelToListDataGrid.DataContext = blObject.GetParcelsList().Where(x => (x.Status == status) && (x.Weight == weight));
+        //    }
+        //}
         /// <summary>
-        /// filter by weight
+        /// filter the list of displayed parcels to contain just parcels with specific weight and status.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void weightFilter(object sender, SelectionChangedEventArgs e)
+        private void filter(object sender, SelectionChangedEventArgs e)
         {
-            
-            if (WeightFilter.SelectedIndex == -1) return;
-            if (StatusFilter.SelectedItem != null) statusAndWeightFilter(sender, e);
-            else
+            if (sender is ComboBox && (sender as ComboBox).SelectedIndex == -1) return;
+            Func<ParcelToList, bool> pre = x => true;
+            if (WeightFilter.SelectedItem != null)
             {
                 WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
-                parcelToListDataGrid.ItemsSource = blObject.GetParcelsList().Where(x => x.Weight == weight)
-                    .OrderBy(x => x.Id)
-                    .OrderBy(x => x.Status);
+                if (StatusFilter.SelectedItem != null)
+                {
+                    ParcelStatus status = (ParcelStatus)StatusFilter.SelectedItem;
+                    pre = x => (x.Status == status) && (x.Weight == weight);
+                }
+                else
+                {
+                    pre = x => (x.Weight == weight);
+                }
             }
-        }
-
-        /// <summary>
-        /// filter by status
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void statusFilter(object sender, SelectionChangedEventArgs e)
-        {
-            if (StatusFilter.SelectedIndex == -1) return;
-            if (WeightFilter.SelectedItem != null) statusAndWeightFilter(sender, e);
             else
             {
-                ParcelStatus status = (ParcelStatus)StatusFilter.SelectedItem;
-                parcelToListDataGrid.DataContext = blObject.GetParcelsList().Where(x => x.Status == status)
-                    .OrderBy(x => x.Id)
-                    .OrderBy(x => x.Status);
+                if (StatusFilter.SelectedItem != null)
+                {
+                    ParcelStatus status = (ParcelStatus)StatusFilter.SelectedItem;
+                    pre = x => (x.Status == status);
+                }
             }
+            parcelToListDataGrid.DataContext = parcelsOb.Where(pre);
         }
+
         /// <summary>
-        /// status and weight filter
+        /// filter the list of displayed parcels to contain just parcels with specific status
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void statusAndWeightFilter(object sender, SelectionChangedEventArgs e)
+        //private void statusFilter(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (StatusFilter.SelectedIndex == -1) return;
+        //    ParcelStatus status = (ParcelStatus)StatusFilter.SelectedItem;
+        //    if (WeightFilter.SelectedItem == null)
+        //    {
+        //        parcelToListDataGrid.DataContext = blObject.GetParcelsList().Where(x => x.Status == status);
+        //    }
+        //    else
+        //    {
+        //        WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
+        //        parcelToListDataGrid.DataContext = blObject.GetParcelsList().Where(x => (x.Status == status) && (x.Weight == weight));
+        //    }
+        //}
+
+        ///// <summary>
+        ///// status and weight filter
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void statusAndWeightFilter(object sender, SelectionChangedEventArgs e)
+        //{
+        //    ParcelStatus status = (ParcelStatus)StatusFilter.SelectedItem;
+        //    WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
+        //    parcelToListDataGrid.ItemsSource = blObject.GetParcelsList().Where(x => (x.Status == status) && (x.Weight == weight));
+        //}
+
+        private void timeFilter(object sender, SelectionChangedEventArgs e)
         {
-            ParcelStatus status = (ParcelStatus)StatusFilter.SelectedItem;
-            WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
-            parcelToListDataGrid.ItemsSource = blObject.GetParcelsList().Where(x => (x.Status == status) && (x.Weight == weight))
-                    .OrderBy(x => x.Id)
-                    .OrderBy(x => x.Status);
+            if (CreatedFrom.SelectedDate != null && CreatedTo.SelectedDate != null)
+            {
+                parcelsOb = new ObservableCollection<ParcelToList>(
+                    from p in blObject.GetParcelsList()
+                    let time = blObject.GetParcel(p.Id).CreateTime
+                    where time >= CreatedFrom.SelectedDate && time <= CreatedTo.SelectedDate
+                    select p);
+            }
+            else
+            {
+                if (CreatedFrom.SelectedDate != null)
+                {
+                    parcelsOb = new ObservableCollection<ParcelToList>(
+                        from p in blObject.GetParcelsList()
+                        where blObject.GetParcel(p.Id).CreateTime >= CreatedFrom.SelectedDate
+                        select p);
+                }
+                else if (CreatedTo.SelectedDate != null)
+                {
+                    parcelsOb = new ObservableCollection<ParcelToList>(
+                        from p in blObject.GetParcelsList()
+                        where blObject.GetParcel(p.Id).CreateTime <= CreatedTo.SelectedDate
+                        select p);
+                }
+            }
+            filter(null, null);
         }
 
-        private void Restart_Click(object sender, RoutedEventArgs e)
+            /// <summary>
+            /// restart all the selctions
+            /// </summary>
+            /// <param name="sender"></param>
+            /// <param name="e"></param>
+            private void Restart_Click(object sender, RoutedEventArgs e)
         {
             StatusFilter.SelectedIndex = -1;
             WeightFilter.SelectedIndex = -1;
-            parcelToListDataGrid.DataContext = blObject.GetParcelsList();
+            parcelToListDataGrid.DataContext = parcelsOb; 
         }
+        #endregion
     }
 }

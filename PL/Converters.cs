@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -75,4 +76,25 @@ namespace PL
     //        throw new NotImplementedException();
     //    }
     //}
+
+    public class LocationValidationRule : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            //Location valToValidate = value as Location;
+            //if (valToValidate.Longi < -180 || valToValidate.Longi > 180 || valToValidate.Latti < -180 || valToValidate.Latti > 180)
+            //{
+            //    return new ValidationResult(false, "Location should be in earth");
+            //}
+
+            //return new ValidationResult(true, null);
+            Station valToValidate = value as Station;
+            if (valToValidate.AvailableChargeSlots < 1 )
+            {
+                return new ValidationResult(false, "station havent charge slots");
+            }
+
+            return new ValidationResult(true, null);
+        }
+    }
 }
