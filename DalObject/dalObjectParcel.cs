@@ -12,7 +12,8 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public int AddParcel(Parcel parcel)
         {
-            if (DataSource.parcels.Exists(item => item.Id == parcel.Id)) throw new ParcelException($"id: {parcel.Id} already exist"); //it suppose to be this type of exception????**** 
+            if (DataSource.parcels.Exists(item => item.Id == parcel.Id)) 
+                throw new ParcelException($"id: {parcel.Id} already exist"); //it suppose to be this type of exception????**** 
             parcel.Id = ++DataSource.Config.parcelCode;
             DataSource.parcels.Add(parcel);
             return DataSource.Config.parcelCode;
@@ -21,10 +22,9 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int parcelId)
         {
-            Parcel? result= DataSource.parcels.Find(x => x.Id == parcelId);
-            if (result == null) 
+            if (!DataSource.parcels.Exists(x => x.Id == parcelId)) 
                 throw new ParcelException($"id: {parcelId} does not exist");
-            return (Parcel)result;
+            return DataSource.parcels.Find(x => x.Id == parcelId);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

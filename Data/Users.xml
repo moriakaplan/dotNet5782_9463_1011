@@ -3,7 +3,7 @@
   <User>
     <Id xsi:nil="true" />
     <UserName>general manager</UserName>
-    <Password>123456</Password>
+    <Password>123456aA</Password>
     <IsManager>true</IsManager>
   </User>
   <User>

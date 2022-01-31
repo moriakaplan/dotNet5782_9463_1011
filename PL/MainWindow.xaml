@@ -21,6 +21,7 @@
 
         <Button Content="log in" Style="{StaticResource brownButton}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="logIn" Height="76" Width="179" />
         <Button Content="sign up" Style="{StaticResource brownButton}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="sign" Height="72" Width="179" Grid.Row="1"/>
+        <Image HorizontalAlignment="Left" Height="201" Margin="-49,-130,0,0" VerticalAlignment="Top" Width="279" Source="/Images/met3.png"/>
 
     </Grid>
 

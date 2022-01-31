@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="UserWindow" Height="450" Width="auto"
+        Title="UserWindow" Height="450" Width="902"
         Icon="\Images\droneDelivery2.ico">
     <Window.Background>
         <ImageBrush ImageSource="\Images\background3.jpg"/>
@@ -45,7 +45,7 @@
         <Image HorizontalAlignment="Center" Height="184" Margin="0,30,0,0" VerticalAlignment="Top" Width="170" Source="/Images/user.png"/>
         <!--<ListView x:Name="txtParcelsTo"  Grid.Row="1" Grid.Column="0" MouseDoubleClick="viewParcelTo" Margin="-484,-133,484,132"/>
         <ListView x:Name="txtParcelsFrom" Grid.Row="1" Grid.Column="1" MouseDoubleClick="viewParcelFrom" Margin="-484,-200,484,200"/>-->
-        <Button Content="back to the main window" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Background="LightBlue" Click="backToMain" Grid.Column="2"/>
+        <Button Content="back to the main window" HorizontalAlignment="Right" Margin="10" VerticalAlignment="Top" Background="LightBlue" Click="backToMain" Grid.Column="2"/>
         <Label Content="parcels that you sent:" Style="{StaticResource myLabelStyle}" Grid.Column="1" HorizontalAlignment="Center" Margin="20,50,0,0" VerticalAlignment="Top"/>
         <DataGrid x:Name="ParcelsFrom" AutoGenerateColumns="False" EnableRowVirtualization="True" DataContext="{Binding ParcelsFrom}" Background="Transparent" Width="auto" MouseDoubleClick="viewParcel"
                   ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" Grid.Column="1" Margin="30,88,10,0" Height="auto">

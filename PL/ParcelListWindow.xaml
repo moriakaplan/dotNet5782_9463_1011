@@ -26,7 +26,11 @@
             <Label Content="Filter By Create Time:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <ComboBox x:Name="StatusFilter" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" SelectionChanged="filter"/>
             <ComboBox x:Name="WeightFilter" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" SelectionChanged="filter"/>
-            <DatePicker x:Name="CreatedFrom" Grid.Column="2" HorizontalAlignment="Center" Width="100" SelectedDateChanged="timeFilter" Margin="0, 0, 110,0"/>
+            <DatePicker x:Name="CreatedFrom" Grid.Column="2" HorizontalAlignment="Center" Width="100" SelectedDateChanged="timeFilter" Margin="0, 0, 110,0">
+                <DatePicker.BlackoutDates>
+                    <CalendarDateRange End="2020-12-31" />
+                </DatePicker.BlackoutDates>
+            </DatePicker>
             <DatePicker x:Name="CreatedTo" Grid.Column="2" HorizontalAlignment="Center" Width="100" SelectedDateChanged="timeFilter" Margin="110, 0, 0,0"/>
             <Button x:Name="Restart" Content="Restart selections" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Restart_Click"/>
             <Label Content="-" FontSize="20" Foreground="Gray" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>

@@ -147,9 +147,25 @@ namespace PL
             }
             else//if the password is not good
             {
-                lblGoodOrWrong.Content = $"not strong password\nThe password must be at least 8 chars (6 different) and with big letters, small letters and numbers.";
+                lblGoodOrWrong.Content = $"not strong password\nThe password must be at least 8 chars (6 different)\nand with big letters, small letters and numbers.\n optional password: {getGoodPass()}";
                 lblGoodOrWrong.Foreground = Brushes.Red;
             }
+        }
+
+        /// <summary>
+        /// return strong password
+        /// </summary>
+        /// <returns></returns>
+        private string getGoodPass()
+        {
+            Random rand = new Random();
+            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz0123456789";
+            char[] stringChars = new char[8];
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[rand.Next(chars.Length)];
+            }
+            return new String(stringChars);
         }
     }
 }

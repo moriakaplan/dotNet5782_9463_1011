@@ -12,16 +12,17 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(Station station)
         {
-            if (DataSource.stations.Exists(item => item.Id == station.Id)) throw new StationException($"id: {station.Id} already exist"); //it suppose to be this type of exception????**** 
+            if (DataSource.stations.Exists(item => item.Id == station.Id)) 
+                throw new StationException($"id: {station.Id} already exist"); //it suppose to be this type of exception????**** 
             DataSource.stations.Add(station);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Station GetStation(int stationId)
         {
-            Station? result = DataSource.stations.Find(x => x.Id == stationId);
-            if (result==null) throw new StationException($"id: {stationId} does not exist");
-            return (Station)result;
+            if (!DataSource.stations.Exists(x => x.Id == stationId)) 
+                throw new StationException($"id: {stationId} does not exist");
+            return DataSource.stations.Find(x => x.Id == stationId);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

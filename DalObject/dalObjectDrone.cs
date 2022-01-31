@@ -63,19 +63,17 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int droneId)
         {
-            Drone? dr = DataSource.drones.Find(item => item.Id == droneId);
-            if (dr == null) 
+            if (!DataSource.drones.Exists(item => item.Id == droneId)) 
                 throw new DroneException($"id: {droneId} does not exist");
-            return (Drone)dr;
+            return DataSource.drones.Find(item => item.Id == droneId);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public DroneCharge GetDroneCharge(int droneId)
         {
-            DroneCharge? dc = DataSource.droneCharges.Find(item => item.DroneId == droneId);
-            if (dc == null)
+            if (!DataSource.droneCharges.Exists(item => item.DroneId == droneId))
                 throw new DroneChargeException($"DroneCharge for drone {droneId} does not exist");
-            return (DroneCharge)dc;
+            return DataSource.droneCharges.Find(item => item.DroneId == droneId);
         }
 
 

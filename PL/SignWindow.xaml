@@ -29,10 +29,10 @@
         <TextBox x:Name="txtPassword" TextChanged="passChange" HorizontalAlignment="Left" Margin="188,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
         <TextBox x:Name="txtManager" Text="8 digits" HorizontalAlignment="Left" Margin="232,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82"/>
         <Label x:Name="help" Content="?" HorizontalAlignment="Left" Margin="314,129,0,0" VerticalAlignment="Top" Foreground="Gray"/>
-        <Label Content="the signing is just&#xD;&#xA;for customers&#xD;&#xA;of the company" Foreground="gray" FontSize="10" Width="auto" Height="auto" Margin="282,90,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Center">
+        <Label Content="the signing is just&#xD;&#xA;for customers&#xD;&#xA;of the company" Foreground="gray" FontSize="10" Width="auto" Height="50" Margin="282,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center">
             <Label.Style>
                 <Style TargetType="Label">
-                    <Setter Property="Visibility" Value="Hidden"/>
+                    <Setter Property="Visibility" Value="visible"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ElementName=help, Path=IsMouseOver}" Value="True">
                             <Setter Property="Visibility" Value="Visible" />
