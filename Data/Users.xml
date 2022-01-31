@@ -7,20 +7,32 @@
     <IsManager>true</IsManager>
   </User>
   <User>
-    <Id xsi:nil="true" />
-    <UserName>shuvad</UserName>
-    <Password>123</Password>
-    <IsManager>true</IsManager>
-  </User>
-  <User>
-    <Id xsi:nil="true" />
-    <UserName />
-    <Password />
-    <IsManager>true</IsManager>
-  </User>
-  <User>
     <Id>975102665</Id>
     <UserName>avi</UserName>
+    <Password>123456aA</Password>
+    <IsManager>false</IsManager>
+  </User>
+  <User>
+    <Id>133422195</Id>
+    <UserName>yosef</UserName>
+    <Password>123456aA</Password>
+    <IsManager>false</IsManager>
+  </User>
+  <User>
+    <Id>964804083</Id>
+    <UserName>Noam</UserName>
+    <Password>123456aA</Password>
+    <IsManager>false</IsManager>
+  </User>
+  <User>
+    <Id>921137024</Id>
+    <UserName>moshe</UserName>
+    <Password>123456aA</Password>
+    <IsManager>false</IsManager>
+  </User>
+  <User>
+    <Id>216595696</Id>
+    <UserName>shlomo</UserName>
     <Password>123456aA</Password>
     <IsManager>false</IsManager>
   </User>

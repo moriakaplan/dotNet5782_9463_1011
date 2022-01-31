@@ -201,7 +201,7 @@
     <Priority>Emergency</Priority>
     <CreateTime>2022-01-31T16:33:16.3522334+02:00</CreateTime>
     <AssociateTime>2022-01-31T16:33:33.7926116+02:00</AssociateTime>
-    <PickUpTime xsi:nil="true" />
-    <DeliverTime xsi:nil="true" />
+    <PickUpTime>2022-01-31T21:48:38.779855+02:00</PickUpTime>
+    <DeliverTime>2022-01-31T21:48:41.3795728+02:00</DeliverTime>
   </Parcel>
 </ArrayOfParcel>

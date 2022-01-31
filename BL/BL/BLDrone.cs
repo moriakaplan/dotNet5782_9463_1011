@@ -225,7 +225,12 @@ namespace BL
         /// <returns></returns>
         internal double batteryToAdd(int droneId)
         {
-            DO.DroneCharge dc = dl.GetDroneChargesList().Where(x => x.DroneId == droneId).Single();
+            DO.DroneCharge dc;
+            try
+            {
+                dc = dl.GetDroneChargesList().Where(x => x.DroneId == droneId).Single();
+            }
+            catch (InvalidOperationException) { throw new NotExistIDException(); }
             TimeSpan time = DateTime.Now - dc.StartedChargeTime;
             return time.TotalSeconds * chargeRatePerMinute / 60.0;
         }
