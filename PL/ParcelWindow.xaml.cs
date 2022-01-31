@@ -187,7 +187,7 @@ namespace PL
                     MessageBox.Show("there is a problem with the statuses of the parcel or the drone. please check the data and try again");
                     return;
                 }
-                catch (Exception ex)
+                catch (Exception ex)//***
                 {
                     MessageBox.Show(ex.Message);
                     return;
@@ -218,7 +218,7 @@ namespace PL
                 }
                 catch (DroneCantTakeParcelException) { MessageBox.Show("drone cant deliver the parcel because its battery is not enugh. try to send the drone to charge"); return; }
                 catch (TransferException) { MessageBox.Show("there is a problem with the statuses of the parcel or the drone. please check the data and try again"); return; }
-                catch (Exception ex) { MessageBox.Show(ex.Message); return; }
+                catch (Exception ex) { MessageBox.Show(ex.Message); return; }//***
             }
             MessageBox.Show("the drone piked up the parcel");
             refresh();

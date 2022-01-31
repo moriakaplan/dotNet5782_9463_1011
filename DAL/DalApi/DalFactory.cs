@@ -12,8 +12,7 @@ namespace DalApi
         public static IDal GetDal()
         {
             string dlType;
-            try { dlType = DalConfig.DalName; }
-            catch (Exception ex) { System.Console.WriteLine(ex.Message); throw ex; }
+            dlType = DalConfig.DalName; 
             DalConfig.DalPackage dalPackage;
             try // get dal package info according to dal element value in config file
             {
@@ -32,8 +31,8 @@ namespace DalApi
             {
                 Assembly.Load(dlPackageName);
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) when (ex is System.IO.FileLoadException || ex is System.IO.FileNotFoundException)
+            { 
                 throw new DalConfigException($"Failed loading {dlPackageName}.dll", ex);
             }
             Type type;
@@ -41,7 +40,7 @@ namespace DalApi
             {
                 type = Type.GetType($"{dlNameSpace}.{dlClass}, {dlPackageName}", true);
             }
-            catch (Exception ex)
+            catch (TypeLoadException ex)
             { // If the type is not found 
                 throw new DalConfigException($"Class not found due to a wrong namespace or/and class name: {dlPackageName}:{dlNameSpace}.{dlClass}", ex);
             }

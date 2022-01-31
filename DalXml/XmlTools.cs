@@ -32,7 +32,7 @@ namespace Dal
                 x.Serialize(file, list);
                 file.Close();
             }
-            catch (Exception ex) 
+            catch (InvalidOperationException ex) 
             {
                 throw new Exception(ex.Message + $"fail to save {filePath}");
             }
@@ -52,7 +52,7 @@ namespace Dal
                     List<T> list;
                     XmlSerializer x = new XmlSerializer(typeof(List<T>));
                     FileStream file = new FileStream(dir + filePath, FileMode.Open);
-                    list = (List<T>)x.Deserialize(file);
+                    list = x.Deserialize(file) as List<T>;
                     file.Close();
                     return list;
                 }
@@ -61,8 +61,7 @@ namespace Dal
             }
             catch (Exception ex) 
             {
-                Console.WriteLine(ex.Message+$"fail to load {filePath}");
-                throw new Exception(ex.Message+$"fail to load {filePath}");
+                throw new Exception(ex.Message+$"fail to load {filePath}");//***
             }
         }
     }
