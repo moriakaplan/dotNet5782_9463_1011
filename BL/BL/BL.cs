@@ -73,7 +73,7 @@ namespace BL
             {
                 initializeDrone();
             }
-            catch (Exception) { Console.WriteLine("was a problem in the BL initialize"); }
+            catch (DroneCantTakeParcelException) { Console.WriteLine("was a problem in the BL initialize"); }
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace BL
                             if (parcel.PickUpTime == null) //If the parcel was associated but not picked up
                             {
                                 drone.Status = DroneStatus.Associated;
-                                drone.CurrentLocation = closestStation(locOfSender);//the drone location is the closest station to the sender
+                                drone.CurrentLocation = closestStationLocation(locOfSender) ?? new Location { Latti = 31, Longi = 31 };//the drone location is the closest station to the sender (if there is no station- it is 31,31)
                             }
                             else //If the parcel was picked up but not delivered
                             {
@@ -166,7 +166,8 @@ namespace BL
                             }
                             else drone.CurrentLocation = new Location { Latti = 30, Longi = 30 };
                         }
-                        double battery = minBattery(drone.Id, drone.CurrentLocation, closestStation(drone.CurrentLocation)) + 1;
+                        Location closestStationLoc = closestStationLocation(drone.CurrentLocation) ?? new Location { Latti = 31, Longi = 31 };
+                        double battery = minBattery(drone.Id, drone.CurrentLocation, closestStationLoc) + 1;
                         if (battery > 100) throw new DroneCantTakeParcelException("the drone has not enugh battery for go to the closest station.");
                         drone.Battery = random.Next((int)Math.Ceiling(battery), 99) + random.NextDouble(); //random  between a minimal charge that allows it to reach the nearest station and a full charge
                     }
@@ -191,14 +192,15 @@ namespace BL
 
         /// <summary>
         /// Finds the closest station to the location
+        /// return null if there is no stations
         /// </summary>
         /// <param name="lattitude"></param>
         /// <param name="longitude"></param>
         /// <returns></returns>
-        internal Location closestStation(Location loc)
+        internal Location closestStationLocation(Location loc)
         {
             IEnumerable<StationToList> stations = GetStationsList();
-            if (stations.Count() == 0) throw new Exception("there not stations");
+            if (stations.Count() == 0) return null;
             Station station = GetStation(stations.First().Id); ;
             Location minLocation = station.Location;
             double minDistance = distance(loc, station.Location);

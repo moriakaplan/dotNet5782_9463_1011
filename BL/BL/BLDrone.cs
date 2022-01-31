@@ -148,7 +148,8 @@ namespace BL
                     // Adds a drone charging entity and lowers the amount of available charge slots at the station
                     dl.SendDroneToCharge(droneId, st.Id);
                 }
-                catch (Exception) { throw new DroneCantGoToChargeException(); }
+                catch (DO.DroneException) { throw new DroneCantGoToChargeException(); }
+                catch (DO.StationException) { throw new DroneCantGoToChargeException(); }
                 drone.Battery -= batteryNeed;
                 drone.CurrentLocation = st.Location;
                 drone.Status = DroneStatus.Maintenance;

@@ -16,14 +16,14 @@ namespace DO
         public bool IsLongitude { get; init; }
         public override string ToString()
         {
-            return Value.ToString() /*SexagesimalCoordinates()*/;
+            return /*Value.ToString()*/ SexagesimalCoordinates();
         }
 
         /// <summary>
         /// Returns a Sexagesimal representation of the coordinate
         /// </summary>
         /// <returns></returns>
-        private String SexagesimalCoordinates()
+         String SexagesimalCoordinates()
         {
             double val;
             char direction;
@@ -42,12 +42,13 @@ namespace DO
                     direction = 'W';
             }
             else { val = Value; }
+            int angle = (int)val;
             val = (val - (int)val) * 60;
             minutes = (int)val;
             val -= minutes;
             seconds = val * 60;
             //result = (int)val + "° " + minutes + "' " + string.Format($"{seconds:0.000}") + "'' " + direction;
-            result = $"{(int)val}° {minutes}' {seconds:0.000}'' {direction}";
+            result = $"{angle/*(int)val*/}° {minutes}' {seconds:0.000}'' {direction}";
             return result;
         }
 

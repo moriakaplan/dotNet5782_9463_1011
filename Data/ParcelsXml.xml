@@ -142,7 +142,7 @@
     <CreateTime>2022-01-26T15:31:15.2234266+02:00</CreateTime>
     <AssociateTime>2022-01-27T00:44:50.5899658+02:00</AssociateTime>
     <PickUpTime>2022-01-27T00:44:52.1018298+02:00</PickUpTime>
-    <DeliverTime xsi:nil="true" />
+    <DeliverTime>2022-01-31T12:27:51.6735941+02:00</DeliverTime>
   </Parcel>
   <Parcel>
     <Id>10000034</Id>
@@ -191,5 +191,17 @@
     <AssociateTime>2022-01-27T00:44:37.4841818+02:00</AssociateTime>
     <PickUpTime>2022-01-27T00:44:42.0161425+02:00</PickUpTime>
     <DeliverTime>2022-01-27T00:44:45.0343533+02:00</DeliverTime>
+  </Parcel>
+  <Parcel>
+    <Id>10000038</Id>
+    <Senderld>999999999</Senderld>
+    <TargetId>913376798</TargetId>
+    <Droneld>518833</Droneld>
+    <Weight>Light</Weight>
+    <Priority>Emergency</Priority>
+    <CreateTime>2022-01-31T16:33:16.3522334+02:00</CreateTime>
+    <AssociateTime>2022-01-31T16:33:33.7926116+02:00</AssociateTime>
+    <PickUpTime xsi:nil="true" />
+    <DeliverTime xsi:nil="true" />
   </Parcel>
 </ArrayOfParcel>

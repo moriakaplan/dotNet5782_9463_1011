@@ -143,7 +143,7 @@ namespace ConsoleUI_BL
                         break;
                 };
             }
-            catch (Exception ex)
+            catch (Exception ex)//***
             {
                 Console.WriteLine(ex.Message + ", please try again");
             }

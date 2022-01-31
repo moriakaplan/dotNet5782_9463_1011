@@ -40,12 +40,8 @@ namespace PL
         /// <param name="e"></param>
         private void viewCustomer(object sender, MouseButtonEventArgs e)
         {
-            try
-            {
-                new CustomerWindow(blObject, ((BO.CustomerToList)customerToListDataGrid.SelectedItem).Id).ShowDialog();
-                customerToListDataGrid.DataContext = blObject.GetCustomersList();
-            }
-            catch (Exception) { }
+            new CustomerWindow(blObject, ((BO.CustomerToList)customerToListDataGrid.SelectedItem).Id).ShowDialog();
+            customerToListDataGrid.DataContext = blObject.GetCustomersList();
         }
 
         /// <summary>

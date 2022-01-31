@@ -93,7 +93,7 @@ namespace BL
                                 batteryUsage = bl.batteryForAvailable;
                             }
                         }
-                        catch (Exception ex) when (ex is NotExistIDException)
+                        catch ( NotExistIDException)//***time exception
                         {
                             //if the closest station did not have open charging slots
                             drone.Status = DroneStatus.Maintenance;
@@ -204,7 +204,8 @@ namespace BL
                             droneStatus = status.toCharge;
                         }
                     }
-                    catch (Exception ex) { Console.WriteLine(ex.Message, drone.Id); }
+                    
+
                 }
             }
         }
@@ -219,7 +220,7 @@ namespace BL
             {
                 Thread.Sleep(delayMS);
             }
-            catch (Exception)
+            catch (ArgumentOutOfRangeException)
             {
                 return false;
             }

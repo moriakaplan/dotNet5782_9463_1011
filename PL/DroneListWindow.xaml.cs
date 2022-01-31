@@ -125,6 +125,7 @@ namespace PL
         /// <param name="e"></param>
         private void viewDrone(object sender, MouseButtonEventArgs e)
         {
+            //Drone drone=blObject.GetDrone(((DroneToList)DroneListView.SelectedItem).Id);
             new DroneWindow(blObject, ((DroneToList)DroneListView.SelectedItem).Id, obDrones).Show();
         }
         /// <summary>
