@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="UserWindow" Height="450" Width="902"
+        Title="UserWindow" Height="450" MaxWidth="902"
         Icon="\Images\droneDelivery2.ico">
     <Window.Background>
         <ImageBrush ImageSource="\Images\background3.jpg"/>
@@ -38,9 +38,11 @@
             
             <Label Content="id:" Grid.Row="0" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="20"/>
             <Label Content="name:" Grid.Row="1" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="40"/>
+            
             <Label Name="txtId"   Content="{Binding Id}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" />
             <Label Name="txtname" Content="{Binding Name}" Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" />
         </Grid>
+        
         <Button Content="settings" HorizontalAlignment="Center" Grid.Row="0" Margin="0,0,0,90" VerticalAlignment="Bottom" Click="updateCustomer"/>
         <Image HorizontalAlignment="Center" Height="184" Margin="0,30,0,0" VerticalAlignment="Top" Width="170" Source="/Images/user.png"/>
         <!--<ListView x:Name="txtParcelsTo"  Grid.Row="1" Grid.Column="0" MouseDoubleClick="viewParcelTo" Margin="-484,-133,484,132"/>

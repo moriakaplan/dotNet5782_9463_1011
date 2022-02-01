@@ -150,6 +150,7 @@ namespace BL
                     drone.Battery -= batteryNeeded;
                     drone.CurrentLocation = GetCustomer(parcelToDeliver.Target.Id).Location;
                     drone.Status = DroneStatus.Available;
+                    drone.ParcelId = 0; return;
                 }
             }
         }

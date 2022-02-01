@@ -89,7 +89,9 @@ namespace BL
                     catch (DO.ParcelException ex) { throw new NotExistIDException(ex.Message, " - parcel"); }
                     locOfSender = GetCustomer(parcelFromFunc.Senderld).Location;
                     locOfTarget = GetCustomer(parcelFromFunc.TargetId).Location;
-
+                    double dis = droneFromList.Status == DroneStatus.Associated ? //find the distance to the next stop of the drone.
+                        distance(droneFromList.CurrentLocation, locOfSender) 
+                        : distance(locOfSender, locOfTarget); 
                     parcel = new ParcelInTransfer//initialize the parcel that the drone delivers
                     {
                         Id = parcelFromFunc.Id,
@@ -99,7 +101,7 @@ namespace BL
                         Target = new CustomerInParcel { Id = parcelFromFunc.TargetId, Name = GetCustomer(parcelFromFunc.TargetId).Name },
                         PickingPlace = locOfSender,
                         TargetPlace = locOfTarget,
-                        TransportDistance = distance(locOfSender, locOfTarget),
+                        TransportDistance = dis,
                         Weight = (WeightCategories)parcelFromFunc.Weight
                     };
                 }

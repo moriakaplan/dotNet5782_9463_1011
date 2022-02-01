@@ -48,29 +48,18 @@ namespace PL
             var customersId = blObject.GetCustomersList().Select(x => x.Id);
             txtSender.ItemsSource = customersId;
             txtTarget.ItemsSource = customersId;
-            // if (parcel.Drone != null) options.Visibility = Visibility.Hidden;
             add.Visibility = Visibility.Hidden;
-            //if (txtDrone.Text == "")
-            //{
-            //    lblDrone.Visibility = Visibility.Collapsed;
-            //}
             refresh();
         }
         public ParcelWindow(IBL obj, int senderId, bool flag) //adding from customer
         {
             InitializeComponent();
             blObject = obj;
-            //timesVisibility.Visibility = Visibility.Collapsed;
             hiddeTimes();
             lblId.Visibility = Visibility.Hidden;
             lblDrone.Visibility = Visibility.Collapsed;
-            //txtDrone.Visibility = Visibility.Collapsed;
-            //btnDrone.Visibility = Visibility.Collapsed;
             options.Visibility = Visibility.Collapsed;
-            //btnSender.Visibility = Visibility.Collapsed;
-            //txtSender.Visibility = Visibility.Collapsed;
-            lblSender.Visibility = Visibility.Collapsed;
-
+            lblSender.Visibility = Visibility.Hidden;
 
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             txtPriority.ItemsSource = Enum.GetValues(typeof(Priorities));
@@ -83,16 +72,13 @@ namespace PL
         /// constractor for adding in manager mode
         /// </summary>
         /// <param name="obj"></param>
-        public ParcelWindow(IBL obj) //add -manager mode
+        public ParcelWindow(IBL obj) //adding from manager
         {
             InitializeComponent();
             blObject = obj;
             lblId.Visibility = Visibility.Hidden;
-            //timesVisibility.Visibility = Visibility.Collapsed;
             hiddeTimes();
             lblDrone.Visibility = Visibility.Collapsed;
-            //txtDrone.Visibility = Visibility.Collapsed;
-            //btnDrone.Visibility = Visibility.Collapsed;
             options.Visibility = Visibility.Collapsed;
 
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));

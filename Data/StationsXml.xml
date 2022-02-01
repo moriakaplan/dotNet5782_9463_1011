@@ -5,13 +5,13 @@
     <Name>the israelian station</Name>
     <Longitude>34.8</Longitude>
     <Lattitude>32</Lattitude>
-    <ChargeSlots>10</ChargeSlots>
+    <ChargeSlots>12</ChargeSlots>
   </Station>
   <Station>
     <Id>7816</Id>
     <Name>the biggest station</Name>
     <Longitude>35</Longitude>
     <Lattitude>32</Lattitude>
-    <ChargeSlots>110</ChargeSlots>
+    <ChargeSlots>111</ChargeSlots>
   </Station>
 </ArrayOfStation>

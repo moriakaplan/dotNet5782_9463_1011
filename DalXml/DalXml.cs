@@ -82,7 +82,7 @@ namespace Dal
             configRoot.Add(new XElement("light", 0.015));
             configRoot.Add(new XElement("medium", 0.02));
             configRoot.Add(new XElement("heavy", 0.025));
-            configRoot.Add(new XElement("ratePerMinute", 120));
+            configRoot.Add(new XElement("ratePerMinute", 180));
             configRoot.Save(configPath);
         }
         /// <summary>
@@ -322,7 +322,7 @@ namespace Dal
         private void CreateFiles()
         {
             List<User> u = new List<User>();
-            u.Add(new User { Id = null, UserName = "general manager", Password = "123456", IsManager = true });
+            u.Add(new User { Id = null, UserName = "general manager", Password = "123456aA", IsManager = true });
             XmlTools.SaveListToXmlSerializer<User>(u, usersPath);
 
             List<Drone> drones = new List<Drone>();

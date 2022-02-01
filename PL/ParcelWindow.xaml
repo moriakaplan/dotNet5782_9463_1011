@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="22"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -33,7 +33,14 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
-            <Label x:Name="lblId" Content="Id:" Grid.Row="0" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+            <TextBlock Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="10" VerticalAlignment="Top" >
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="Id: {0} &#xD;&#xA;&#xD;&#xA;Name: {1}">
+                        <Binding Path="Id" />
+                        <Binding Path="Name" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
             <Label x:Name="lblSender" Content="Sender:" Grid.Row="1" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
             <Label x:Name="lblTarget" Content="Target:" Grid.Row="2" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
             <Label x:Name="lblDrone" Content="Drone:" Grid.Row="3" HorizontalAlignment="Center" VerticalContentAlignment="Center" Visibility="{Binding Drone, Converter={StaticResource nullableToVisibilityConverter}}"/>
@@ -48,7 +55,8 @@
             <Label x:Name="lblDeliverTime" Content="Deliver time:" Visibility="{Binding CreateTime, Converter={StaticResource nullableToVisibilityConverter}}"
                    Grid.Row="9" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
 
-            <TextBox  x:Name="txtId"     Text="{Binding Id}" Visibility="{Binding ElementName=lblId, Path=Visibility}" Grid.Row="0" Grid.Column="1" Margin="10" />
+            <TextBlock x:Name="lblId" Text="parcel #" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="0, 5, 70,0" Height="15"/>
+            <TextBlock x:Name="txtId" Text="{Binding Id}" Visibility="{Binding ElementName=lblId, Path=Visibility}" Grid.ColumnSpan="2" Margin="120,5,0,0" Width="150" HorizontalAlignment="Center" Height="15"/>
             <ComboBox x:Name="txtSender" Text="{Binding Sender.Id}" Grid.Row="1" Grid.Column="1" Margin="10,10,200,10" MouseDoubleClick="viewSender" Visibility="{Binding ElementName=lblSender, Path=Visibility}" SelectionChanged="txtSenderSelectionChanged">
                 <!--<ComboBox.Text>
                     <MultiBinding StringFormat="{}{0} + {1}">
@@ -75,9 +83,9 @@
         </Grid>
         <Button x:Name="add" Content="add" Click="addParcel" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="30"/>
         <Button x:Name="options" Content="options" Click="deleteParcel" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="30"/>
-        <Button x:Name="btnSender" Background="LightBlue" Click="viewSender" Content="view this customer" HorizontalAlignment="Right" Margin="0,50,10,0" VerticalAlignment="Top" Visibility="{Binding ElementName=lblSender, Path=Visibility}"/>
-        <Button x:Name="btnTarget" Background="LightBlue" Click="viewTarget" Content="view this customer" HorizontalAlignment="Right" Margin="0,94,10,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnDrone" Click="viewDrone" Content="view this drone" Background="LightBlue" HorizontalAlignment="Right" Margin="0,138,10,0" VerticalAlignment="Top" Width="151" Visibility="{Binding ElementName=lblDrone, Path=Visibility}"/>
+        <Button x:Name="btnSender" Background="LightBlue" Click="viewSender" Content="view this customer" HorizontalAlignment="Right" Margin="0,30,16,0" VerticalAlignment="Top" Visibility="{Binding ElementName=lblSender, Path=Visibility}"/>
+        <Button x:Name="btnTarget" Background="LightBlue" Click="viewTarget" Content="view this customer" HorizontalAlignment="Right" Margin="0,75,16,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnDrone" Click="viewDrone" Content="view this drone" Background="LightBlue" HorizontalAlignment="Right" Margin="0,120,16,0" VerticalAlignment="Top" Width="151" Visibility="{Binding ElementName=lblDrone, Path=Visibility}"/>
 
     </Grid>
 </Window>

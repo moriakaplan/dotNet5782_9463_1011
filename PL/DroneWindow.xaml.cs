@@ -95,7 +95,7 @@ namespace PL
 
         #region simulation
         /// <summary>
-        /// 
+        /// start the simulation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -105,7 +105,7 @@ namespace PL
             btnSimulator.Click -= simulator;
             btnSimulator.Click += manual;
             myVisibility = Visibility.Hidden;
-            worker = new()
+            worker = new() //define the background worker to call the functions.
             {
                 WorkerReportsProgress = true,
                 WorkerSupportsCancellation = true
@@ -115,6 +115,11 @@ namespace PL
             worker.RunWorkerCompleted += worker_RunWorkerCompleted;
             worker.RunWorkerAsync(int.Parse(txtId.Text));
         }
+        /// <summary>
+        /// back to manual state, stop the simulation with the beckground worker.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void manual(object sender, RoutedEventArgs e)
         {
             btnSimulator.Content = "automatic state";
@@ -123,15 +128,29 @@ namespace PL
             myVisibility = Visibility.Visible;
             worker.CancelAsync();
         }
+        /// <summary>
+        /// start the simulation, called from the background worker.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             blObject.RunsTheSimulator((int)e.Argument, () => worker.ReportProgress(0), () => worker.CancellationPending);
         }
-
+        /// <summary>
+        /// called by the background worker for update the window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             refresh();
         }
+        /// <summary>
+        /// delete the information of the background worker when it finish.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             worker = null; //if the window need to be closed - boolean variable, that is true if the user want to close the window in the middle of auto mode

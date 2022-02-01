@@ -13,25 +13,33 @@ using BLApi;
 
 namespace BL
 {
+    /// <summary>
+    /// simulation for one drone- manage the drone actions.
+    /// </summary>
     class Simulator
     {
-        private const double velocity = 50; //kilometers per second.
+        private const double velocity = 30; //kilometers per second.
         private const int delayMS = 500; //miliseconds, half of second.
         private DroneToList drone;
 
         enum status { fly, inCharge, wait, toCharge };
-        //charge-now in charge
-        //toCharge-When he finds the station he is going to charge at
+        //charge- now in charge
+        //toCharge- When he finds the station he is going to charge at
         //wait- If he has nowhere to go for charging
-        //fly-when the rrone fly
+        //fly- when the rrone fly
         private status droneStatus = status.inCharge;
 
         private Location targetLocation;
         private double distanceFromTarget = 0;
         private double batteryUsage;
 
-
-
+        /// <summary>
+        /// constructor, start the simulation
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="droneId"></param>
+        /// <param name="updateDisplay"></param>
+        /// <param name="stop"></param>
         public Simulator(BL bl, int droneId, Action updateDisplay, Func<bool> stop)
         {
             lock (bl)
@@ -39,7 +47,7 @@ namespace BL
                 drone = bl.GetDronesList(x => x.Id == droneId).SingleOrDefault();
                 if (drone == null) throw new NotExistIDException();
             }
-            while (!stop())//As long as the simolation didnt stop
+            while (!stop()) //As long as the simolation didnt stop
             {
                 switch (drone.Status)
                 {
@@ -64,7 +72,7 @@ namespace BL
         /// <param name="bl"></param>
         private void chargedDrone(BL bl)
         {
-            if (delay())// 
+            if (delay()) 
             {
                 switch (droneStatus)
                 {
@@ -255,7 +263,6 @@ namespace BL
                 };
                 distanceFromTarget = bl.distance(drone.CurrentLocation, targetLocation);
             }
-
         }
     }
 }

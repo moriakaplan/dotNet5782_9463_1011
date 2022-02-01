@@ -12,6 +12,33 @@
     <Window.Background>
         <ImageBrush ImageSource="\Images\mainIm2.jpg"/>
     </Window.Background>
+    <Window.Resources>
+        <Style x:Key="bigAndLittle" TargetType="Button">
+            <Setter Property="Background" Value="#d0ae80" />
+            <Setter Property="BorderBrush" Value="#fbe2ba" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.300" Storyboard.TargetProperty="FontSize" To="35" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.600" Storyboard.TargetProperty="FontSize" To="23" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
 
     <Grid Height="250" Width="230" HorizontalAlignment="Right" VerticalAlignment="Bottom">
         <Grid.RowDefinitions>
@@ -19,8 +46,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button Content="log in" Style="{StaticResource brownButton}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="logIn" Height="76" Width="179" />
-        <Button Content="sign up" Style="{StaticResource brownButton}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="sign" Height="72" Width="179" Grid.Row="1"/>
+        <Button Content="log in"  Style="{StaticResource bigAndLittle}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="logIn" Height="76" Width="179" Margin="-1,0,0,0"/>
+        <Button Content="sign up" Style="{StaticResource bigAndLittle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="sign" Height="72" Width="179" Grid.Row="1"/>
         <Image HorizontalAlignment="Left" Height="201" Margin="-49,-130,0,0" VerticalAlignment="Top" Width="279" Source="/Images/met3.png"/>
 
     </Grid>

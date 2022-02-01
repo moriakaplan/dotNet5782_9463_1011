@@ -49,7 +49,7 @@ namespace PL
             new ParcelWindow(blObject, ((BO.ParcelToList)parcelToListDataGrid.SelectedItem).Id).ShowDialog();
             //if (StatusFilter.SelectedItem != null) statusFilter(null, null);
             //else parcelToListDataGrid.DataContext = blObject.GetParcelsList();
-            filter(null, null);
+            timeFilter(null, null);
         }
 
         /// <summary>
@@ -62,29 +62,10 @@ namespace PL
             new ParcelWindow(blObject).ShowDialog();
             //if (StatusFilter.SelectedItem != null) statusFilter(null, null);
             //else parcelToListDataGrid.DataContext = blObject.GetParcelsList();
-            filter(null, null);
+            timeFilter(null, null);
         }
 
         #region filters
-        ///// <summary>
-        ///// filter the list of displayed parcels to contain just parcels with specific weight.
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //private void weightFilter(object sender, SelectionChangedEventArgs e)
-        //{
-        //    if (WeightFilter.SelectedIndex == -1) return;
-        //    WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
-        //    if (StatusFilter.SelectedItem == null)
-        //    {
-        //        parcelToListDataGrid.DataContext = blObject.GetParcelsList().Where(x => x.Weight == weight);
-        //    }
-        //    else
-        //    {
-        //        ParcelStatus status = (ParcelStatus)StatusFilter.SelectedItem;
-        //        parcelToListDataGrid.DataContext = blObject.GetParcelsList().Where(x => (x.Status == status) && (x.Weight == weight));
-        //    }
-        //}
         /// <summary>
         /// filter the list of displayed parcels to contain just parcels with specific weight and status.
         /// </summary>
@@ -119,37 +100,10 @@ namespace PL
         }
 
         /// <summary>
-        /// filter the list of displayed parcels to contain just parcels with specific status
+        /// update the obsevable collection to contain fust parcels that created in specific time range (and update the display).
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        //private void statusFilter(object sender, SelectionChangedEventArgs e)
-        //{
-        //    if (StatusFilter.SelectedIndex == -1) return;
-        //    ParcelStatus status = (ParcelStatus)StatusFilter.SelectedItem;
-        //    if (WeightFilter.SelectedItem == null)
-        //    {
-        //        parcelToListDataGrid.DataContext = blObject.GetParcelsList().Where(x => x.Status == status);
-        //    }
-        //    else
-        //    {
-        //        WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
-        //        parcelToListDataGrid.DataContext = blObject.GetParcelsList().Where(x => (x.Status == status) && (x.Weight == weight));
-        //    }
-        //}
-
-        ///// <summary>
-        ///// status and weight filter
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //private void statusAndWeightFilter(object sender, SelectionChangedEventArgs e)
-        //{
-        //    ParcelStatus status = (ParcelStatus)StatusFilter.SelectedItem;
-        //    WeightCategories weight = (WeightCategories)WeightFilter.SelectedItem;
-        //    parcelToListDataGrid.ItemsSource = blObject.GetParcelsList().Where(x => (x.Status == status) && (x.Weight == weight));
-        //}
-
         private void timeFilter(object sender, SelectionChangedEventArgs e)
         {
             if (CreatedFrom.SelectedDate != null && CreatedTo.SelectedDate != null)
@@ -180,12 +134,12 @@ namespace PL
             filter(null, null);
         }
 
-            /// <summary>
-            /// restart all the selctions
-            /// </summary>
-            /// <param name="sender"></param>
-            /// <param name="e"></param>
-            private void Restart_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// restart all the selctions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Restart_Click(object sender, RoutedEventArgs e)
         {
             StatusFilter.SelectedIndex = -1;
             WeightFilter.SelectedIndex = -1;

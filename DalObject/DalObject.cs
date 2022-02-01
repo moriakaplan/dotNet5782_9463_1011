@@ -15,22 +15,11 @@ namespace Dal
         private static DalObject instance;
         private static object syncRoot = new object();
         /// <summary>
-        /// constructor.call the static function initialize.
+        /// constructor. call the static function initialize().
         /// </summary>
         private DalObject()
         {
             DataSource.Initialize();
-            //foreach (Drone drone in DataSource.drones)
-            //{
-            //    Random rand = new Random();
-            //    int goToMaintanence = rand.Next(2);
-            //    if (goToMaintanence == 1)
-            //    {
-            //        int index = rand.Next(0, DataSource.stations.Count());
-            //        Station stationForFirstCharge = DataSource.stations.ElementAt(index);
-            //        SendDroneToCharge(drone.Id, stationForFirstCharge.Id);
-            //    }
-            //}
         }
         /// <summary>
         /// The public Instance property to use

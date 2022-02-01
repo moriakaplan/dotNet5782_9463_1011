@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ParcelListWindow" Height="auto" Width="800"
+        Title="ParcelListWindow" Width="800" Height="700"
         Icon="\Images\droneDelivery2.ico">
     <Grid >
         <Grid.RowDefinitions>
@@ -35,7 +35,7 @@
             <Button x:Name="Restart" Content="Restart selections" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Restart_Click"/>
             <Label Content="-" FontSize="20" Foreground="Gray" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
-        <DataGrid x:Name="parcelToListDataGrid" Grid.Row="1"  AutoGenerateColumns="False" EnableRowVirtualization="True" 
+        <DataGrid x:Name="parcelToListDataGrid" Grid.Row="1"  AutoGenerateColumns="False" EnableRowVirtualization="True" MaxHeight="550" 
                   ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" MouseDoubleClick="viewParcel" Margin="50,0,50,0" >
             <!--<DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">

@@ -204,4 +204,64 @@
     <PickUpTime>2022-01-31T21:48:38.779855+02:00</PickUpTime>
     <DeliverTime>2022-01-31T21:48:41.3795728+02:00</DeliverTime>
   </Parcel>
+  <Parcel>
+    <Id>10000039</Id>
+    <Senderld>975102665</Senderld>
+    <TargetId>216595696</TargetId>
+    <Droneld>518833</Droneld>
+    <Weight>Light</Weight>
+    <Priority>Fast</Priority>
+    <CreateTime>2022-02-01T11:49:49.9708173+02:00</CreateTime>
+    <AssociateTime>2022-02-01T11:49:59.3155924+02:00</AssociateTime>
+    <PickUpTime>2022-02-01T11:50:00.332095+02:00</PickUpTime>
+    <DeliverTime>2022-02-01T11:50:01.8534074+02:00</DeliverTime>
+  </Parcel>
+  <Parcel>
+    <Id>10000040</Id>
+    <Senderld>975102665</Senderld>
+    <TargetId>666125931</TargetId>
+    <Droneld>597229</Droneld>
+    <Weight>Light</Weight>
+    <Priority>Fast</Priority>
+    <CreateTime>2022-02-01T12:34:05.8482389+02:00</CreateTime>
+    <AssociateTime>2022-02-01T12:34:38.1840398+02:00</AssociateTime>
+    <PickUpTime>2022-02-01T13:14:20.7633207+02:00</PickUpTime>
+    <DeliverTime>2022-02-01T13:14:26.3206653+02:00</DeliverTime>
+  </Parcel>
+  <Parcel>
+    <Id>10000041</Id>
+    <Senderld>133422195</Senderld>
+    <TargetId>964804083</TargetId>
+    <Droneld>518833</Droneld>
+    <Weight>Light</Weight>
+    <Priority>Emergency</Priority>
+    <CreateTime>2022-02-01T13:24:20.6799335+02:00</CreateTime>
+    <AssociateTime>2022-02-01T13:24:33.8898808+02:00</AssociateTime>
+    <PickUpTime>2022-02-01T13:24:35.9176914+02:00</PickUpTime>
+    <DeliverTime>2022-02-01T13:24:37.4338647+02:00</DeliverTime>
+  </Parcel>
+  <Parcel>
+    <Id>10000042</Id>
+    <Senderld>975102665</Senderld>
+    <TargetId>719193184</TargetId>
+    <Droneld>597229</Droneld>
+    <Weight>Medium</Weight>
+    <Priority>Emergency</Priority>
+    <CreateTime>2022-02-01T13:25:04.1771334+02:00</CreateTime>
+    <AssociateTime>2022-02-01T13:25:23.8690015+02:00</AssociateTime>
+    <PickUpTime>2022-02-01T13:25:28.9097955+02:00</PickUpTime>
+    <DeliverTime xsi:nil="true" />
+  </Parcel>
+  <Parcel>
+    <Id>10000043</Id>
+    <Senderld>133422195</Senderld>
+    <TargetId>975102665</TargetId>
+    <Droneld>469564</Droneld>
+    <Weight>Medium</Weight>
+    <Priority>Emergency</Priority>
+    <CreateTime>2022-02-01T13:32:33.6539186+02:00</CreateTime>
+    <AssociateTime>2022-02-01T13:33:33.1958323+02:00</AssociateTime>
+    <PickUpTime>2022-02-01T13:33:37.2329638+02:00</PickUpTime>
+    <DeliverTime>2022-02-01T13:33:40.2593156+02:00</DeliverTime>
+  </Parcel>
 </ArrayOfParcel>
