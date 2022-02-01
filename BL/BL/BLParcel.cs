@@ -281,24 +281,34 @@ namespace BL
         private IEnumerable<Parcel> findParcelsWithHighesWeight(WeightCategories weight)
         {
             IEnumerable<ParcelToList> parcelsList = findParcelsWithHighesPrioritiy(Priorities.Emergency);//find the parcel eith the highest priority
-            WeightCategories max = parcelsList.Max(p => p.Weight <= weight ? p.Weight : WeightCategories.Light);//find the max weight that the drone can take
-            IEnumerable<Parcel> result = from parcel in parcelsList//find the parcel with the max weight
+            IEnumerable<Parcel> result = new List<Parcel>();
+            if (parcelsList.Count() > 0)
+            {
+                WeightCategories max = parcelsList.Max(p => p.Weight <= weight ? p.Weight : WeightCategories.Light);//find the max weight that the drone can take
+                result = from parcel in parcelsList//find the parcel with the max weight
+                                             where parcel.Weight == max
+                                             select GetParcel(parcel.Id);
+                if (result.Count() == 0)//if there are no parcels in that weight (all the parcel are hevy then the weight of the drone weight)
+                {
+                    parcelsList = findParcelsWithHighesPrioritiy(Priorities.Fast);//find all the parcels that there priority is fast
+                    if (parcelsList.Count() > 0)
+                    {
+                        max = parcelsList.Max(p => p.Weight <= weight ? p.Weight : WeightCategories.Light);//find the max weight that the drone can take
+                        result = from parcel in parcelsList//find the parcel with the max weight
+                                 where parcel.Weight == max
+                                 select GetParcel(parcel.Id);
+                        if (result.Count() == 0)//if there are no parcels in that weight 
+                        {
+                            parcelsList = findParcelsWithHighesPrioritiy(Priorities.Regular);//find all the parcels that there priority is ragular
+                            if (parcelsList.Count() > 0)
+                            {
+                                max = parcelsList.Max(p => p.Weight <= weight ? p.Weight : WeightCategories.Light);//find the max weight that the drone can take
+                                result = from parcel in parcelsList//find the parcel with the max weight
                                          where parcel.Weight == max
                                          select GetParcel(parcel.Id);
-            if (result.Count() == 0)//if there are no parcels in that weight (all the parcel are hevy then the weight of the drone weight)
-            {
-                parcelsList = findParcelsWithHighesPrioritiy(Priorities.Fast);//find all the parcels that there priority is fast
-                max = parcelsList.Max(p => p.Weight <= weight ? p.Weight : WeightCategories.Light);//find the max weight that the drone can take
-                result = from parcel in parcelsList//find the parcel with the max weight
-                         where parcel.Weight == max
-                         select GetParcel(parcel.Id);
-                if (result.Count() == 0)//if there are no parcels in that weight 
-                {
-                    parcelsList = findParcelsWithHighesPrioritiy(Priorities.Regular);//find all the parcels that there priority is ragular
-                    max = parcelsList.Max(p => p.Weight <= weight ? p.Weight : WeightCategories.Light);//find the max weight that the drone can take
-                    result = from parcel in parcelsList//find the parcel with the max weight
-                             where parcel.Weight == max
-                             select GetParcel(parcel.Id);
+                            }
+                        }
+                    }
                 }
             }
             if (result.Count() == 0) throw new ThereNotGoodParcelToTakeException("we did not found a good parcel that the drone" + "can take");
