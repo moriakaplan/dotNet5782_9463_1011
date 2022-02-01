@@ -324,7 +324,7 @@ namespace Dal
             List<User> u = new List<User>();
             u.Add(new User { Id = null, UserName = "general manager", Password = "123456", IsManager = true });
             XmlTools.SaveListToXmlSerializer<User>(u, usersPath);
-
+            createConfig();
             List<Drone> drones = new List<Drone>();
             List<DroneCharge> droneCharges = new List<DroneCharge>();
             List<Parcel> parcels = new List<Parcel>();

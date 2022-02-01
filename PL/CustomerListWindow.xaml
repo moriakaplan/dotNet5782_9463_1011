@@ -25,10 +25,10 @@
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id"/>
                 <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name"/>
                 <DataGridTextColumn x:Name="phoneColumn" Binding="{Binding phone}" Header="phone"/>
-                <DataGridTextColumn x:Name="numOfParcelsDeliveredColumn" Binding="{Binding numOfParcelsDelivered}" Header="num Of Parcels&#xD;&#xA;Delivered"/>
-                <DataGridTextColumn x:Name="numOfParcelsInTheWayColumn" Binding="{Binding numOfParcelsInTheWay}" Header="num Of Parcels&#xD;&#xA;In The Way"/>
-                <DataGridTextColumn x:Name="numOfParcelsSentAndNotDeliveredColumn" Binding="{Binding numOfParcelsSentAndNotDelivered}" Header="num Of Parcels Sent&#xD;&#xA;And Not Delivered"/>
-                <DataGridTextColumn x:Name="numOfParclReceivedColumn" Binding="{Binding numOfParclReceived}" Header="num Of Parcl&#xD;&#xA;Received"/>
+                <DataGridTextColumn x:Name="numOfParcelsDeliveredColumn" Binding="{Binding numOfParcelsDelivered}" Header="number Of Parcels&#xD;&#xA;Delivered"/>
+                <DataGridTextColumn x:Name="numOfParcelsInTheWayColumn" Binding="{Binding numOfParcelsInTheWay}" Header="number Of Parcels&#xD;&#xA;In The Way"/>
+                <DataGridTextColumn x:Name="numOfParcelsSentAndNotDeliveredColumn" Binding="{Binding numOfParcelsSentAndNotDelivered}" Header="number Of Parcels Sent&#xD;&#xA;And Not Delivered"/>
+                <DataGridTextColumn x:Name="numOfParclReceivedColumn" Binding="{Binding numOfParclReceived}" Header="number Of Parcls&#xD;&#xA;Received"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Add Customer" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Click="addCustomer"/>

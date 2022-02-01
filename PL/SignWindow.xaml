@@ -32,7 +32,7 @@
         <Label Content="the signing is just&#xD;&#xA;for customers&#xD;&#xA;of the company" Foreground="gray" FontSize="10" Width="auto" Height="50" Margin="282,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center">
             <Label.Style>
                 <Style TargetType="Label">
-                    <Setter Property="Visibility" Value="visible"/>
+                    <Setter Property="Visibility" Value="Hidden"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ElementName=help, Path=IsMouseOver}" Value="True">
                             <Setter Property="Visibility" Value="Visible" />

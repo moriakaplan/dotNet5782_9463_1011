@@ -56,6 +56,7 @@ namespace PL
         /// <param name="droneId"></param>
         public DroneWindow(IBL obj, int droneId, ObservableCollection<DroneToList> obD = null) //actions
         {
+            blObject = obj;
             if (obD == null) obDrones = new ObservableCollection<DroneToList>(blObject.GetDronesList());
             else obDrones = obD;
             obDrones.CollectionChanged += updateIndex;
@@ -63,7 +64,6 @@ namespace PL
             catch (InvalidOperationException) { return; }; //more than one drone with this id, not suppose to happen.
             InitializeComponent();
             isInActionsState = true;
-            blObject = obj;
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
 
             txtId.IsEnabled = false;

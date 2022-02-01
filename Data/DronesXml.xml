@@ -1,27 +1,27 @@
 <?xml version="1.0"?>
 <ArrayOfDrone xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Drone>
-    <Id>597229</Id>
+    <Id>758731</Id>
     <Model>superFalcon</Model>
-    <MaxWeight>Heavy</MaxWeight>
+    <MaxWeight>Medium</MaxWeight>
   </Drone>
   <Drone>
-    <Id>469564</Id>
+    <Id>376404</Id>
     <Model>superFalcon</Model>
-    <MaxWeight>Heavy</MaxWeight>
+    <MaxWeight>Medium</MaxWeight>
   </Drone>
   <Drone>
-    <Id>565449</Id>
+    <Id>787050</Id>
     <Model>superFalcon2</Model>
     <MaxWeight>Light</MaxWeight>
   </Drone>
   <Drone>
-    <Id>518833</Id>
+    <Id>947997</Id>
     <Model>nimbus2000</Model>
-    <MaxWeight>Light</MaxWeight>
+    <MaxWeight>Medium</MaxWeight>
   </Drone>
   <Drone>
-    <Id>862732</Id>
+    <Id>687469</Id>
     <Model>AnaAref</Model>
     <MaxWeight>Heavy</MaxWeight>
   </Drone>
