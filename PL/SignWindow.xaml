@@ -40,6 +40,6 @@
         </Label>
         <Label Content="I am:" HorizontalAlignment="Left" Margin="112,30,0,0" VerticalAlignment="Top" Width="auto"/>
         <ComboBox x:Name="typeOfUser" HorizontalAlignment="Left" Margin="155,30,0,0" VerticalAlignment="Top" Width="104" SelectionChanged="typeOfUserChanged"/>
-        <Label x:Name="lblGoodOrWrong" HorizontalAlignment="Left" Margin="48,240,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.5,-0.891" SizeChanged="10"/>
+        <Label x:Name="lblGoodOrWrong" HorizontalAlignment="Left" Margin="48,240,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.5,-0.891" FontSize="10"/>
     </Grid>
 </Window>
