@@ -56,6 +56,7 @@ namespace PL
         /// <param name="droneId"></param>
         public DroneWindow(IBL obj, int droneId, ObservableCollection<DroneToList> obD = null) //actions
         {
+            blObject = obj;
             if (obD == null) obDrones = new ObservableCollection<DroneToList>(blObject.GetDronesList());
             else obDrones = obD;
             obDrones.CollectionChanged += updateIndex;
@@ -63,7 +64,6 @@ namespace PL
             catch (InvalidOperationException) { return; }; //more than one drone with this id, not suppose to happen.
             InitializeComponent();
             isInActionsState = true;
-            blObject = obj;
             txtWeight.ItemsSource = Enum.GetValues(typeof(WeightCategories));
 
             txtId.IsEnabled = false;
@@ -231,7 +231,7 @@ namespace PL
             {
                 MessageBox.Show("this id not exist, please check again what is the id of the drone that you want to change and try again");
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); return; }//***
+            catch (Exception ex) { MessageBox.Show(ex.Message); return; }
             MessageBox.Show("the model updated successfully");
             txtModel.Foreground = Brushes.Black;
         }
@@ -368,7 +368,7 @@ namespace PL
                 }
                 catch (DroneCantTakeParcelException) { MessageBox.Show("drone cant deliver the parcel because its battery is not enugh. try to send the drone to charge"); return; }
                 catch (TransferException) { MessageBox.Show("there is a problem with the statuses of the parcel or the drone. please check the data and try again"); return; }
-                catch (Exception ex) { MessageBox.Show(ex.Message); return; }//***
+                catch (Exception ex) { MessageBox.Show(ex.Message); return; }
             }
             MessageBox.Show("the drone piked up the parcel");
             DataContext = blObject.GetDrone(id);
@@ -564,10 +564,10 @@ namespace PL
             options.Click -= releaseDroneFromCharge;
             options.Click -= pickUpParcel;
             options.Click -= deliverParcel;
-            switch (drone.Status) //show to thw user the right option according to the status of the drone
+            switch (drone.Status) //show to the user the right option according to the status of the drone
             {
                 case DroneStatus.Available:
-                    charge.Visibility = myVisibility; //Visibility.Visible;
+                    charge.Visibility = myVisibility; 
                     options.Content = "send drone\nto delivery";
                     options.Click += sendDroneToDelivery;
                     break;
