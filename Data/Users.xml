@@ -3,7 +3,31 @@
   <User>
     <Id xsi:nil="true" />
     <UserName>general manager</UserName>
-    <Password>123456</Password>
+    <Password>123456aA</Password>
     <IsManager>true</IsManager>
+  </User>
+  <User>
+    <Id>466030339</Id>
+    <UserName>yosef</UserName>
+    <Password>123456aA</Password>
+    <IsManager>false</IsManager>
+  </User>
+  <User>
+    <Id>623381003</Id>
+    <UserName>avi</UserName>
+    <Password>123456aA</Password>
+    <IsManager>false</IsManager>
+  </User>
+  <User>
+    <Id>666883723</Id>
+    <UserName>moshe</UserName>
+    <Password>123456aA</Password>
+    <IsManager>false</IsManager>
+  </User>
+  <User>
+    <Id>725153588</Id>
+    <UserName>shlomo</UserName>
+    <Password>123456aA</Password>
+    <IsManager>false</IsManager>
   </User>
 </ArrayOfUser>
