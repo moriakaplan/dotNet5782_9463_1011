@@ -107,7 +107,6 @@ namespace BL
                             drone.Status = DroneStatus.Maintenance;
                             droneStatus = status.wait;
                         }
-                        catch()
                         break;
                     case status.fly://if the drone is fling to the station
                         lock (bl)
