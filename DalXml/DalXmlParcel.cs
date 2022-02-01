@@ -21,7 +21,7 @@ namespace Dal
         public int AddParcel(Parcel parcel)
         {
             List<Parcel> parcels = XmlTools.LoadListFromXmlSerializer<Parcel>(parcelsPath);
-            if (parcels.Exists(item => item.Id == parcel.Id)) throw new ParcelException($"id: {parcel.Id} already exist"); //it suppose to be this type of exception????**** 
+            if (parcels.Exists(item => item.Id == parcel.Id)) throw new ParcelException($"id: {parcel.Id} already exist"); 
             int newCode = int.Parse(configRoot.Element("parcelCode").Value) + 1;
             configRoot.Element("parcelCode").Value = newCode.ToString();
             configRoot.Save(configPath);

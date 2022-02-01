@@ -29,13 +29,6 @@
             <ComboBox x:Name="WeightFilter" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" SelectionChanged="weightFilter"/>
             <Button x:Name="Restart" Content="Restart selections" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right" Click="restart" Width="150" Height="auto" Grid.ColumnSpan="3"/>
         </Grid>
-        <!--<ListView x:Name="DroneListView" Margin="0,60,0,62" Grid.Row="1" MouseDoubleClick="ViewDrone" Grid.RowSpan="2">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>-->
         <DataGrid x:Name="DroneListView" IsReadOnly="True" MouseDoubleClick="viewDrone" Background="WhiteSmoke" MaxHeight="550"
                   AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="2" Margin="50,0,50,0">
             <DataGrid.Columns>

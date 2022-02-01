@@ -57,11 +57,5 @@
             <TextBox x:Name="txtLongi" Text="{Binding  Path=Location.Longi}" Grid.Row="1" Grid.Column="1" Margin="10" TextChanged="CoordinateChanged"/>
         </Grid>
         <Button x:Name="options" Content="options" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="5" VerticalAlignment="Center"/>
-        <!--<Button x:Name="add" Content="Add Customer" Grid.Row="6" Grid.Column="1"  Click="AddCustomer"
-                HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="377,0,0,0"/>
-        <Button x:Name="Delete" Content="Delete Customer" Grid.Row="6" Grid.Column="1"  Click="DeleteCustomer"
-                HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" Margin="103,0,0,0"/>
-        <Button x:Name="Update" Content="Update Customer" Grid.Row="6" Grid.Column="1"  Click="UpdateCustomer"
-                HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" Margin="235,0,0,0"/>-->
     </Grid>
 </Window>

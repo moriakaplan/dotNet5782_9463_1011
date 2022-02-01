@@ -117,7 +117,7 @@ namespace Dal
             }
             catch
             {
-                throw new Exception("File upload problem");//***
+                throw new Exception("File upload problem");
             }
         }
 

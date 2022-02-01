@@ -101,12 +101,13 @@ namespace BL
                                 batteryUsage = bl.batteryForAvailable;
                             }
                         }
-                        catch ( NotExistIDException)//***time exception
+                        catch ( NotExistIDException) 
                         {
                             //if the closest station did not have open charging slots
                             drone.Status = DroneStatus.Maintenance;
                             droneStatus = status.wait;
                         }
+                        catch()
                         break;
                     case status.fly://if the drone is fling to the station
                         lock (bl)

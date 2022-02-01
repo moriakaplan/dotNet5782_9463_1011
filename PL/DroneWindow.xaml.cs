@@ -266,7 +266,7 @@ namespace PL
                     MessageBox.Show("Drone can't go to charge, apperantly there is not station that the drone can arrive to it");
                     return;
                 }
-                catch (Exception ex) { MessageBox.Show(ex.Message); return; }//***
+                catch (Exception ex) { MessageBox.Show(ex.Message); return; } 
             }
             MessageBox.Show("drone sent successfully");
            
@@ -296,7 +296,7 @@ namespace PL
                 return;
             }
             catch (DroneCantReleaseFromChargeException ex) { MessageBox.Show(ex.Message); return; }
-            catch (Exception ex) { MessageBox.Show(ex.Message); return; }//***
+            catch (Exception ex) { MessageBox.Show(ex.Message); return; } 
             MessageBox.Show("the drone released successfully");
             DataContext = blObject.GetDrone(id);
             charge.Visibility = Visibility.Visible;   
@@ -335,7 +335,7 @@ namespace PL
                 MessageBox.Show("drone cant take a parcel because its battery not enugh. \nTry to send the drone to charge");
                 return;
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); return; }//***
+            catch (Exception ex) { MessageBox.Show(ex.Message); return; } 
             MessageBox.Show("the drone has send to delivary");
             charge.Visibility = Visibility.Hidden;
             refresh();
@@ -407,7 +407,7 @@ namespace PL
                 MessageBox.Show("there is a problem with the statuses of the parcel or the drone. please check the data and try again");
                 return;
             }
-            catch (Exception ex)//***
+            catch (Exception ex) 
             {
                 MessageBox.Show(ex.Message);
                 return;

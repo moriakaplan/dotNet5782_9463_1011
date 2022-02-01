@@ -61,7 +61,7 @@ namespace Dal
             }
             catch (Exception ex) 
             {
-                throw new Exception(ex.Message+$"fail to load {filePath}");//***
+                throw new Exception(ex.Message+$"fail to load {filePath}"); 
             }
         }
     }

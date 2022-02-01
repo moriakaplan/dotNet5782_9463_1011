@@ -12,9 +12,21 @@ using System.Windows.Media;
 
 namespace PL
 {
+    /// <summary>
+    /// class for converting battery percents to color
+    /// </summary>
     public class BatteryToColorConverter : IValueConverter
     {
-        //convert from source property type(int) to target property type(brush)
+        /// <summary>
+        /// convert from source property type(int) to target property type(brush)
+        /// for convert the battery percents to color- 
+        /// when the number is high the color is greener an when it low the color is redder.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             double doubleValue = (double)value;
@@ -26,61 +38,52 @@ namespace PL
             if (doubleValue >= 50 && doubleValue <= 80) return Brushes.YellowGreen;
             return Brushes.ForestGreen;
         }
-        //convert from target property type to source property type
+        
+        /// <summary>
+        /// convert from target property type to source property type (not implemented)
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
     }
 
-
+    /// <summary>
+    /// class for converting nuulable object to visibility of his display
+    /// </summary>
     public class NullableToVisibilityConverter : IValueConverter
     {
-        //convert from source property type(something nullable) to target property type(visibility)
+        /// <summary>
+        /// convert from source property type(nullable object) to target property type(visibility)-
+        /// collapsed when the object is null and visible if its not.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null) return Visibility.Collapsed;
             else return Visibility.Visible;
         }
-        //convert from target property type to source property type
+        
+        /// <summary>
+        /// convert from target property type to source property type (not implemented)
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
-        }
-    }
-    //public class TextBoxToVisibilityConverter : IValueConverter
-    //{
-    //    //convert from source property type(something nullable) to target property type(visibility)
-    //    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        if ((value as TextBox).Text != "") return Visibility.Visible;
-    //        else return Visibility.Collapsed;
-    //    }
-    //    //convert from target property type to source property type
-    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-    //}
-
-    public class LocationValidationRule : ValidationRule
-    {
-        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
-        {
-            //Location valToValidate = value as Location;
-            //if (valToValidate.Longi < -180 || valToValidate.Longi > 180 || valToValidate.Latti < -180 || valToValidate.Latti > 180)
-            //{
-            //    return new ValidationResult(false, "Location should be in earth");
-            //}
-
-            //return new ValidationResult(true, null);
-            Station valToValidate = value as Station;
-            if (valToValidate.AvailableChargeSlots < 1 )
-            {
-                return new ValidationResult(false, "station havent charge slots");
-            }
-
-            return new ValidationResult(true, null);
         }
     }
 }

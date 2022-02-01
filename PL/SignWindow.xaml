@@ -9,9 +9,6 @@
         Closing="dataWindowClosing"
         Background="#d4e7ee"
         Icon="\Images\droneDelivery2.ico">
-    <!--<Window.Background>
-        <ImageBrush ImageSource="\Images\background2.jpg"/>
-    </Window.Background>-->
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="FontWeight" Value="DemiBold" />

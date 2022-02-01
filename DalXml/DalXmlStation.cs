@@ -19,7 +19,7 @@ namespace Dal
         public void AddStation(Station station)
         {
             List<Station> stations = XmlTools.LoadListFromXmlSerializer<Station>(stationsPath);
-            if (stations.Exists(item => item.Id == station.Id)) throw new StationException($"id: {station.Id} already exist"); //it suppose to be this type of exception????**** 
+            if (stations.Exists(item => item.Id == station.Id)) throw new StationException($"id: {station.Id} already exist");   
             stations.Add(station);
             XmlTools.SaveListToXmlSerializer<Station>(stations, stationsPath);
 

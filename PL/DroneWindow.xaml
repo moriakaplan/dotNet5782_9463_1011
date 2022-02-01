@@ -57,8 +57,7 @@
             <ComboBox x:Name="txtWeight"  Text="{Binding  MaxWeight}" Grid.Row="5" Grid.Column="1" Margin="10"/>
             <ComboBox x:Name="txtStationId" Grid.Row="6" Grid.Column="1" Margin="10" SelectionChanged="txtStationIdSelectionChanged" Visibility="{Binding ElementName=lblStation, Path=Visibility}"/>
             <TextBox  x:Name="txtParcel"  Text="{Binding  ParcelInT.Id}" Grid.Row="7" Grid.Column="1" Margin="10" IsEnabled="false" Visibility="{Binding ElementName=lblParcel, Path=Visibility}"/>
-            <!--<TextBox x:Name="txtLocation" Grid.Column="1" Grid.Row="8" Text="{Binding CurrentLocation}" IsEnabled="false"  Width="auto" Height="100"/>-->
-
+            
             <TextBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="8" Text="{Binding  CurrentLocation}" IsEnabled="false"  Width="auto" Height="auto"/>
             <Grid x:Name="locGrid" Grid.Column="1" Grid.Row="8" DataContext="{Binding CurrentLocation}">
                 <Grid.RowDefinitions>
@@ -102,8 +101,6 @@
             <Label Content="Destination place"    HorizontalAlignment="Left" Margin="15,290,0,0" VerticalAlignment="Top"/>
             <Label Content="Distance from target" HorizontalAlignment="Left" Margin="15,336,0,0" VerticalAlignment="Top"/>
 
-            <!--<Label Content="{Binding Sender           }" Grid.Column="1" HorizontalAlignment="Left" Margin="15, 60,0,0" VerticalAlignment="Top"/>-->
-            <!--<Label Content="{Binding Target           }" Grid.Column="1" HorizontalAlignment="Left" Margin="15,106,0,0" VerticalAlignment="Top"/>-->
             <TextBlock DataContext="{Binding Sender}" Grid.Column="1" HorizontalAlignment="Left" Margin="15, 60,0,0" VerticalAlignment="Top">
                 <TextBlock.Text>
                     <MultiBinding StringFormat="{}{0} (Id {1})">

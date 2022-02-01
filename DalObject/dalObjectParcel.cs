@@ -13,7 +13,7 @@ namespace Dal
         public int AddParcel(Parcel parcel)
         {
             if (DataSource.parcels.Exists(item => item.Id == parcel.Id)) 
-                throw new ParcelException($"id: {parcel.Id} already exist"); //it suppose to be this type of exception????**** 
+                throw new ParcelException($"id: {parcel.Id} already exist"); 
             parcel.Id = ++DataSource.Config.parcelCode;
             DataSource.parcels.Add(parcel);
             return DataSource.Config.parcelCode;

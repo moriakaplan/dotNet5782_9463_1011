@@ -13,7 +13,7 @@ namespace Dal
         public void AddStation(Station station)
         {
             if (DataSource.stations.Exists(item => item.Id == station.Id)) 
-                throw new StationException($"id: {station.Id} already exist"); //it suppose to be this type of exception????**** 
+                throw new StationException($"id: {station.Id} already exist");  
             DataSource.stations.Add(station);
         }
 

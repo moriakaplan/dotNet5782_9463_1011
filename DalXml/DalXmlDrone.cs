@@ -18,7 +18,7 @@ namespace Dal
         public void AddDrone(Drone drone)
         {
             List<Drone> drones = XmlTools.LoadListFromXmlSerializer<Drone>(dronesPath);
-            if (drones.Exists(item => item.Id == drone.Id)) throw new DroneException($"id: {drone.Id} already exist"); //it suppose to be this type of exception????**** 
+            if (drones.Exists(item => item.Id == drone.Id)) throw new DroneException($"id: {drone.Id} already exist"); 
             drones.Add(drone);
             XmlTools.SaveListToXmlSerializer<Drone>(drones, dronesPath);
         }

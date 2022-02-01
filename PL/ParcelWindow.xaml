@@ -7,13 +7,7 @@
         mc:Ignorable="d"
         Title="ParcelWindow" Height="auto" Width="500"
         Icon="\Images\droneDelivery2.ico">
-    <!--<Window.Resources>
-        <TextBlock x:Key="myVisibility" Visibility="Visible"/>
-    </Window.Resources>-->
-    <!--<Window.Resources>
-        <local:
-            x:Key="BatteryToColorConverter"/>
-    </Window.Resources>-->
+    
     <Grid Height="auto">
         <Grid x:Name="grid" >
             <Grid.ColumnDefinitions>
@@ -57,14 +51,7 @@
 
             <TextBlock x:Name="lblId" Text="parcel #" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="0, 5, 70,0" Height="15"/>
             <TextBlock x:Name="txtId" Text="{Binding Id}" Visibility="{Binding ElementName=lblId, Path=Visibility}" Grid.ColumnSpan="2" Margin="120,5,0,0" Width="150" HorizontalAlignment="Center" Height="15"/>
-            <ComboBox x:Name="txtSender" Text="{Binding Sender.Id}" Grid.Row="1" Grid.Column="1" Margin="10,10,200,10" MouseDoubleClick="viewSender" Visibility="{Binding ElementName=lblSender, Path=Visibility}" SelectionChanged="txtSenderSelectionChanged">
-                <!--<ComboBox.Text>
-                    <MultiBinding StringFormat="{}{0} + {1}">
-                        <Binding Path="Weight" />
-                        <Binding Path="Id" />
-                    </MultiBinding>
-                </ComboBox.Text>-->
-            </ComboBox>
+            <ComboBox x:Name="txtSender" Text="{Binding Sender.Id}" Grid.Row="1" Grid.Column="1" Margin="10,10,200,10" MouseDoubleClick="viewSender" Visibility="{Binding ElementName=lblSender, Path=Visibility}" SelectionChanged="txtSenderSelectionChanged"/>
             <ComboBox x:Name="txtTarget" Text="{Binding Target.Id}" Grid.Row="2" Grid.Column="1" Margin="10,10,200,10" MouseDoubleClick="viewTarget" SelectionChanged="txtTargetSelectionChanged"/>
             <TextBox  x:Name="txtDrone"  Text="{Binding Drone.Id}" Grid.Row="3" Grid.Column="1" Margin="10,10,200,10" Visibility="{Binding ElementName=lblDrone, Path=Visibility}"/>
             <ComboBox x:Name="txtWeight" Text="{Binding Weight}" Grid.Row="4" Grid.Column="1" Margin="10" />
@@ -73,13 +60,6 @@
             <TextBox  x:Name="txtAssociateTime" Text="{Binding AssociateTime}" Visibility="{Binding ElementName=lblAssociateTime, Path=Visibility}" Grid.Row="7" Grid.Column="1" Margin="10" />
             <TextBox  x:Name="txtPickUpTime"  Text="{Binding PickUpTime}"      Visibility="{Binding ElementName=lblPickUpTime,    Path=Visibility}" Grid.Row="8" Grid.Column="1" Margin="10" />
             <TextBox  x:Name="txtDeliverTime" Text="{Binding DeliverTime}"     Visibility="{Binding ElementName=lblDeliverTime,   Path=Visibility}" Grid.Row="9" Grid.Column="1" Margin="10" />
-
-            <!--<Button x:Name="add" Content="Add parcel" Grid.Row="10" Grid.Column="1"  Click="AddParcel"
-                HorizontalAlignment="Left" VerticalAlignment="Center" Width="78" Margin="377,0,0,0"/>
-        <Button x:Name="Delete" Content="Delete parcel" Grid.Row="10" Grid.Column="1"  Click="DeleteParcel"
-                HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" Margin="103,0,0,0"/>
-        <Button x:Name="Update" Content="Update parcel" Grid.Row="10" Grid.Column="1"  Click="UpdateParcel"
-                HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" Margin="235,0,0,0"/>-->
         </Grid>
         <Button x:Name="add" Content="add" Click="addParcel" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="30"/>
         <Button x:Name="options" Content="options" Click="deleteParcel" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="30"/>

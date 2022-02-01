@@ -45,8 +45,6 @@
         
         <Button Content="settings" HorizontalAlignment="Center" Grid.Row="0" Margin="0,0,0,90" VerticalAlignment="Bottom" Click="updateCustomer"/>
         <Image HorizontalAlignment="Center" Height="184" Margin="0,30,0,0" VerticalAlignment="Top" Width="170" Source="/Images/user.png"/>
-        <!--<ListView x:Name="txtParcelsTo"  Grid.Row="1" Grid.Column="0" MouseDoubleClick="viewParcelTo" Margin="-484,-133,484,132"/>
-        <ListView x:Name="txtParcelsFrom" Grid.Row="1" Grid.Column="1" MouseDoubleClick="viewParcelFrom" Margin="-484,-200,484,200"/>-->
         <Button Content="back to the main window" HorizontalAlignment="Right" Margin="10" VerticalAlignment="Top" Background="LightBlue" Click="backToMain" Grid.Column="2"/>
         <Label Content="parcels that you sent:" Style="{StaticResource myLabelStyle}" Grid.Column="1" HorizontalAlignment="Center" Margin="20,50,0,0" VerticalAlignment="Top"/>
         <DataGrid x:Name="ParcelsFrom" AutoGenerateColumns="False" EnableRowVirtualization="True" DataContext="{Binding ParcelsFrom}" Background="Transparent" Width="auto" MouseDoubleClick="viewParcel"

@@ -37,11 +37,6 @@
         </Grid>
         <DataGrid x:Name="parcelToListDataGrid" Grid.Row="1"  AutoGenerateColumns="False" EnableRowVirtualization="True" MaxHeight="550" 
                   ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" MouseDoubleClick="viewParcel" Margin="50,0,50,0" >
-            <!--<DataGrid.Resources>
-                <Style TargetType="{x:Type DataGridCell}">
-                    <EventSetter Event="PreviewMouseDoubleClick" Handler="ViewParcel"/>
-                </Style>
-            </DataGrid.Resources>-->
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id"/>
                 <DataGridTextColumn x:Name="priorityColumn" Binding="{Binding Priority}" Header="Priority"/>

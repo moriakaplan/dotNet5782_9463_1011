@@ -58,12 +58,5 @@
                      Grid.Row="1" Grid.Column="1" Margin="10"/>
         </Grid>
         <Button x:Name="options" Content="options" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="5" VerticalAlignment="Center"/>
-        <!--<Button x:Name="UpdateStation" Content="Update Station Data" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="5" VerticalAlignment="Center" Click="UpdateStation"/>-->
-        <!--<Button x:Name="add" Content="Add Station" Grid.Row="5" Grid.Column="1"  Click="AddStation"
-                HorizontalAlignment="Left" VerticalAlignment="Top" Width="78" Margin="381,29,0,0"/>
-        <Button x:Name="Delete" Content="Delete Station" Grid.Row="5" Grid.Column="1"  Click="DeleteStation"
-                HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" Margin="103,0,0,0"/>
-        <Button x:Name="Update" Content="Update Station" Grid.Row="5" Grid.Column="1"  Click="UpdateStation"
-                HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" Margin="235,0,0,0"/>-->
     </Grid>
 </Window>
